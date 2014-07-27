@@ -3,93 +3,75 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Structure extends CI_Controller {
+class Structure extends APP_Controller {
 
-    function index() {
-        $this->load->view('login');
+    function  __construct()  {
+        parent::__construct();
     }
 
-    function login() {
-        global $is_kis;
-        $login_name = $this->input->post('login_name');
-        if ($login_name == "КИС") {
-            $this->load->view('arm_kis');
-            $userdata = array(
-                'username' => 'kis'
-            );
-            $this->session->set_userdata($userdata);
-        } elseif ($login_name == "ИОГВ") {
-            $this->load->view('arm_iogv');
-            $userdata = array(
-                'username' => 'iogv'
-            );
-            $this->session->set_userdata($userdata);
-        } else {
-            $this->load->view('login');
-        }
+    public function index() {
+        redirect('login');
     }
 
-    function arm_kis() {
-        $this->load->view('arm_kis');
+    public function arm_kis() {
+        $this->layout->view('arm_kis');
     }
 
-    function uvedoml() {
+    public function uvedoml() {
         $user = $this->session->userdata('username');
         if ($user == 'kis') {
-            $this->load->view('uvedoml_kis');
+            $this->layout->view('uvedoml_kis');
         } else {
-            $this->load->view('uvedoml_iogv');
+            $this->layout->view('uvedoml_iogv');
         }
     }
 
-    function journal() {
-        $this->load->view('journal');
+    public function journal() {
+        $this->layout->view('journal');
     }
 
-    function chernovik() {
-        $this->load->view('chernovik');
+    public function chernovik() {
+        $this->layout->view('chernovik');
     }
 
-    function comments() {
-        $this->load->view('comments');
+    public function comments() {
+        $this->layout->view('comments');
     }
 
-    function history_polnomoch() {
-        $this->load->view('history_polnomoch');
+    public function history_polnomoch() {
+        $this->layout->view('history_polnomoch');
     }
 
-    function history_usl_func() {
-        $this->load->view('history_usl_func');
+    public function history_usl_func() {
+        $this->layout->view('history_usl_func');
     }
 
-    function timeline() {
-        $this->load->view('timeline');
+    public function timeline() {
+        $this->layout->view('timeline');
     }
 
-    function step1() {
-        $this->load->view('polnomoch');
+    public function step1() {
+        $this->layout->view('polnomoch');
     }
 
-    function step2() {
-        $this->load->view('razgran_p');
+    public function step2() {
+        $this->layout->view('razgran_p');
     }
 
-    function step3() {
-        $this->load->view('step3');
+    public function step3() {
+        $this->layout->view('step3');
     }
 
-    function step4() {
-        $this->load->view('step4');
+    public function step4() {
+        $this->layout->view('step4');
     }
 
-    function step4_1() {
-        $this->load->view('step4_1');
+    public function step4_1() {
+        $this->layout->view('step4_1');
     }
 
-    function arm_iogv() {
-        $this->load->view('arm_iogv');
+    public function arm_iogv() {
+        $this->layout->view('arm_iogv');
     }
 
 }
-
-?>
