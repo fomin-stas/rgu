@@ -5,6 +5,7 @@
         <link href="static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <link href="static/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
         <link href="static/css/ace-fonts.css" type="text/css" rel="stylesheet" />
+        <link href="static/css/datepicker.css" type="text/css" rel="stylesheet" />
         <link href="static/css/ui.jqgrid.css" type="text/css" rel="stylesheet" />
         <link href="static/css/jquery-ui.min.css" type="text/css" rel="stylesheet" />
         <link href="static/css/searchFilter.css" type="text/css" rel="stylesheet" />
@@ -375,6 +376,7 @@
         <script src="static/js/jquery-ui.min.js" type="text/javascript"></script>
         <script src="static/js/jquery-ui.custom.min.js" type="text/javascript"></script>
         <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="static/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="static/js/ui.multiselect.js"></script>
         <script src="static/js/jquery.ui-contextmenu.min.js" type="text/javascript"></script>
         <script src="static/js/jquery.jqGrid.min.js"></script>
@@ -385,7 +387,7 @@
         <script type="text/javascript">
             var grid_data = 
             [ 
-                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Разграничение согласовано</p>",name_usl:"<div class='cell_div_func'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func'><p style='color:#6699ff'>Ожидает согласования КИС</p></div><hr><div class='cell_div_usl'><p style='color:#6699ff'>Разрабатывается регламент</p></div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
+                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Полномочию присвоен статус</p>",name_usl:"<div class='cell_div_func'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func' style='color:#6699ff'>Ожидает согласования КИС</div><hr><div class='cell_div_usl' style='color:#6699ff'>Разрабатывается регламент</div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
                     {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564565",name_iogv:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",id_usl:"4564562", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564564",name_iogv:"Взаимодействует в установленном порядке по вопросам своей компетенции с органами государственной власти, органами местного самоуправления, иными государственными и негосударственными организациями, а также должностными лицами.",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Осуществлять взаимодействие  по вопросам, находящимся в  компетенции исполнительного  органа государственной власти Санкт-Петербурга, с органами государственной власти и органами местного самоуправления, организациями, общественными",id_usl:"4564561", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
@@ -435,19 +437,19 @@
                             altRows : true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб'],
                             colModel:[
                                     {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100'},
                                     {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
-                                    {name:'status_poln',index:'status_poln', editable: false, fixed:true, width:'250'},
+                                    {name:'status_poln',index:'status_poln', stype:'select',edittype:"select",editoptions: {value:"Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"},searchoptions:{sopt:['in'],value:"Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"}, editable: false, fixed:true, width:'250'},
                                     {name:'name_usl',index:'name_usl', editable: false, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
                                     {name:'id_usl',index:'id_usl', sorttype:"int", editable: false, fixed:true, width:'100'},
-                                    {name:'status_usl',index:'status_usl', sortable:true,editable:false, edittype:"select",editoptions: {value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"}, width:'200', fixed:true},
-                                    {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:false, fixed:true, width:'120'},
-                                    {name:'type',index:'type', editable: false, edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"}, fixed:true, width:'100'},
-                                    {name:'status_isp',index:'status_isp', editable: false, edittype:"select",editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'120'},
-                                    {name:'name_iogvspb',index:'name_iogvspb', editable: true, edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true}
+                                    {name:'status_usl',index:'status_usl', sortable:true,editable:false,stype:'select', edittype:"select",editoptions:{value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"},searchoptions:{sopt:['in'],value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"}, width:'200', fixed:true},
+                                    {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:false, fixed:true, width:'120',searchoptions:{dataInit:function(elem){$(elem).datepicker;},sopt:['in']}},
+                                    {name:'type',index:'type', editable: false, stype:'select', edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"},searchoptions:{sopt:['in'],value:"услуга:услуга;функция:функция"}, fixed:true, width:'100'},
+                                    {name:'status_isp',index:'status_isp', editable: false, edittype:"select",stype:'select',editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"},searchoptions:{sopt:['in'],value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'120'},
+                                    {name:'name_iogvspb',index:'name_iogvspb', editable: true,stype:'select', edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"},searchoptions:{sopt:['in'],value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true}
                                     //{name:'nomer_punkta_iogv',index:'nomer_punkta_iogv', editable: true, fixed:true},
                                     //{name:'vnes_izm_npa',index:'vnes_izm_npa', editable: true, fixed:true},
                                     //{name:'isp_is',index:'isp_is', editable: true, fixed:true}
@@ -541,6 +543,7 @@
                             {
                                     width: 450,
                                     recreateForm: true,
+                                    viewPagerButtons:false,
                                     beforeShowForm : function(e) {
                                             var form = $(e[0]);
                                             form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
@@ -593,7 +596,7 @@
                             {
                                     //view record form
                                     width:700,
-                                    
+                                    //viewPagerButtons:true,
                                     recreateForm: true,
                                     beforeShowForm: function(e){
                                             var form = $(e[0]);
@@ -643,12 +646,7 @@
                             
                         }
                     });
-                    
-//                    jQuery("#grid-table").jqGrid('columnChooser', 
-//                        {
-//                            width:700,
-//                            height:500
-//                        });
+
 
                     //to Excel
                     jQuery("#grid-table").jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
@@ -763,7 +761,7 @@
                     function add_hide_btn() 
                     {
                         var row_length=document.getElementsByTagName('th').length;
-                        if (!document.getElementsByClassName('ui-search-inpit')) {row_length/=2;} //check, if there is toolbar-searh
+                        if (!document.getElementsByClassName('ui-search-input')) {row_length/=2;} //check, if there is toolbar-searh
                         for (var i=1; i<=row_length; i++)
                         {
                             $("table[role='grid'] thead tr:first-child th[role='columnheader']:nth-child("+i+")").prepend("<i class='fa fa-times red2 hide_col_btn' id='close_btn_"+i+"' onclick='javascript:hide_column("+i+")'></i>");
@@ -787,7 +785,6 @@
                             }
                         }
                         $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+requested_col_num+")").hide(); //hide all th of this column
-                        //$("table[role='grid'] thead tr th[role='columnheader']:nth-child("+requested_col_num+")").hide();
                         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child("+requested_col_num+")").hide(); //hide all td of this column
                     }
            
@@ -801,14 +798,44 @@
                     {
                         if (ui.target[0].className=='cell_div_func'){$('#info_func').modal();}
                         else if (ui.target[0].className=='cell_div_usl'){$('#info_usl').modal();}
+                        else if (ui.target[0].className=='cell_div_nadz'){$('#info_nadz').modal();}
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                {title:"Редактировать",action:function(event,ui){}},
+                {title:"Редактировать",action:function(event,ui){jQuery("#grid-table").jqGrid('editGridRow',getClickedRowId(event,ui));}},
+
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });
             
+            
+            function getClickedRowId(event,ui) //need to get rowid and colid and so on
+            {
+                var rowid;
+                if (ui.target[0].parentNode.nodeName=='TR')
+                {
+                    rowid=ui.target[0].parentNode.id;
+                }
+                else if (ui.target[0].parentNode.parentNode.nodeName=='TR')
+                {
+                    rowid=ui.target[0].parentNode.parentNode.id;
+                }
+                else {console.log('something is wrong!');}
+                return rowid;
+            }
+            
+            function getClickedColNum(event,ui)
+            {
+                var cellid;
+                var currentRow;
+                currentRow=$('#'+getClickedRowId(event,ui)+' td');
+                for (var i=0; i<=currentRow.length; i++)
+                {
+                    if (ui.target[0]==currentRow[i] | ui.target[0].parentNode==currentRow[i]){cellid=i;}
+                }
+                return cellid;
+            }
+
         </script>
         
     </body>

@@ -81,7 +81,7 @@
                         </li>
                         <li data-target="#step2">
                             <span class="step">2</span>
-                            <span class="title">Разграничение полномочия</span>
+                            <span class="title">Присвоение статуса полномочию</span>
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>

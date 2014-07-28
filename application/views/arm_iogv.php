@@ -385,7 +385,7 @@
         <script type="text/javascript">
             var grid_data = 
             [ 
-                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Разграничение согласовано</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func'><p style='color:#6699ff'>Ожидает согласования КИС</p></div><hr><div class='cell_div_usl'><p style='color:#6699ff'>Разрабатывается регламент</p></div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
+                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Полномочию присвоен статус</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func' style='color:#6699ff'>Ожидает согласования КИС</div><hr><div class='cell_div_usl' style='color:#6699ff'>Разрабатывается регламент</div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
                     {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564565",name_iogv:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",id_usl:"4564562", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564564",name_iogv:"Взаимодействует в установленном порядке по вопросам своей компетенции с органами государственной власти, органами местного самоуправления, иными государственными и негосударственными организациями, а также должностными лицами.",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Осуществлять взаимодействие  по вопросам, находящимся в  компетенции исполнительного  органа государственной власти Санкт-Петербурга, с органами государственной власти и органами местного самоуправления, организациями, общественными",id_usl:"4564561", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
@@ -436,7 +436,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
                             colModel:[
                                     {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100'},
@@ -588,7 +588,7 @@
                     );
                 
                     //set columns
-                    jQuery("#grid-table").jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
+                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
                     {
                         id:"#select_cols",
                         buttonicon:"ace-icon fa fa-cog",
@@ -608,7 +608,7 @@
 //                                    left:29
 //                                });
 //                            return false;
-                            jQuery("#grid-table").columnChooser
+                            jQuery(grid_selector).columnChooser
                             ({
                                 title:"options",
                                 width:1000,
@@ -619,7 +619,7 @@
                     });
 
                     //to Excel
-                    jQuery("#grid-table").jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
+                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
                     {
                         id:"#to_excel_btn",
                         buttonicon:"ace-icon fa fa-external-link red",
@@ -715,7 +715,7 @@
                     function add_hide_btn() //should do what we need, but...
                     {
                         var row_length=document.getElementsByTagName('th').length;
-                        if (!document.getElementsByClassName('ui-search-inpit')) {row_length/=2;} //check, if there is toolbar-searh
+                        if (!document.getElementsByClassName('ui-search-input')) {row_length/=2;} //check, if there is toolbar-searh
                         for (var i=1; i<=row_length; i++)
                         {
                             $("table[role='grid'] thead tr:first-child th[role='columnheader']:nth-child("+i+")").prepend("<i class='fa fa-times red2 hide_col_btn' id='close_btn_"+i+"' onclick='javascript:hide_column("+i+")'></i>");
@@ -742,10 +742,11 @@
                     {
                         if (ui.target[0].className=='cell_div_func'){$('#info_func').modal();}
                         else if (ui.target[0].className=='cell_div_usl'){$('#info_usl').modal();}
+                        else if (ui.target[0].className=='cell_div_nadz'){$('#info_nadz').modal();}
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                {title:"Редактировать",action:function(event,ui){}},
+                //{title:"Редактировать",action:function(event,ui){JQuery("#grid-table").editGridRow('1');}},
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });

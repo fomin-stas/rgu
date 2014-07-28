@@ -169,12 +169,12 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid .ui-jqgrid-view button {
     font-size: 11px
 }
-.cell_div
+.cell_div_usl,.cell_div_func,.cell_div_nadz
 {
     height: 45px;
     overflow-y:hidden;
 }
-.cell_div:hover, #viewcntgrid-table:hover
+#viewcntgrid-table:hover
 {
     overflow-y: scroll;
 }

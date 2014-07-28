@@ -120,7 +120,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['От кого','Кому','Входящий комментарий', 'Исходящий комментарий', 'Операции'],
                             colModel:[
                                     {name:'from',index:'from', sortable:true, editable: false, fixed:true},
