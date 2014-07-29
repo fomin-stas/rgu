@@ -5,6 +5,7 @@
         <link href="static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <link href="static/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
         <link href="static/css/ace-fonts.css" type="text/css" rel="stylesheet" />
+        <link href="static/css/datepicker.css" type="text/css" rel="stylesheet" />
         <link href="static/css/ui.jqgrid.css" type="text/css" rel="stylesheet" />
         <link href="static/css/ace.min.css" type="text/css" rel="stylesheet" />
         <!--[if lte IE 9>
@@ -81,7 +82,7 @@
                         </li>
                         <li data-target="#step2">
                             <span class="step">2</span>
-                            <span class="title">Разграничение полномочия</span>
+                            <span class="title">Присвоение статуса полномочию</span>
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>
@@ -261,8 +262,53 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <a href="structure/step1"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
+                                <button class="btn btn-grey btn-sm pull-right" id="change_btn">Изменить</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="who_changes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="row">
+                                <h4 class="center">Выбирете вносящего изменения</h4>
+                            </div>
+                            <hr>
+                            <form name="change_form">
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <select id="select_who_changes" name="select_who_changes" class="input-xxlarge">
+                                            <option selected value="КИС">КИС
+                                            <option>...
+                                            <option>...
+                                            <option>...
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="info_for_iogv">
+                                    <div class="row">
+                                        <h5 class="center">Комментарий</h5>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <textarea class="col-md-12" name="change_com_4_1"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="space-6"></div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <label for="answer_date">Дата ответа</label>
+                                            <input id="answer_date" name="answer_date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-6"></div>
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <input type="submit" class="btn btn-info btn-sm pull-right" value="Подтвердить">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -279,6 +325,7 @@
         <![endif]-->
         <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="static/js/fuelux.wizard.min.js"></script>
+        <script src="static/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="static/js/ace-elements.min.js" type="text/javascript"></script>
         <script src="static/js/ace.min.js" type="text/javascript"></script>
         <script type="text/javascript">
@@ -287,6 +334,17 @@
                 step: 4 
             }).on('stepclick', function(e) {
                 e.preventDefault();
+            });
+            $('#info_for_iogv').hide();
+            $('#change_btn').on('click',function(){$('#who_changes').modal();});
+            $('#select_who_changes').on('change',function()
+            {
+                if (document.getElementById('select_who_changes').value!=='КИС'){$('#info_for_iogv').show();}
+                else {$('#info_for_iogv').hide();}
+            });
+            $('#answer_date').datepicker({
+                autoclose:true,
+                todayHiglight:true
             });
         </script>
     </body>

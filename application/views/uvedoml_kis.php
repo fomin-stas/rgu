@@ -135,7 +135,7 @@ jQuery(function($) {
 		altRows:true,
 		data: grid_data,
 		datatype: "local",
-		height: 350,
+		height: 700,
 		colNames:['ID','Наименование полномочия в соответствии с положением ИОГВ','Наименование государственной функции (услуги)', 'Уведомление','Дата уведомления'],
 		colModel:[
 			{name:'id_poln',index:'id_poln', sorttype:"int", editable: true, fixed:true, width:'100'},

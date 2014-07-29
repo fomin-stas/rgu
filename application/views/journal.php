@@ -121,7 +121,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['Дата изменения','Кем изменено','Измененное сведение', 'Номер строки таблицы', 'Предыдущее значение','Новое значение'],
                             colModel:[
                                     {name:'date_izm',index:'date_izm', sorttype:"date", editable: false, fixed:true},

@@ -127,7 +127,7 @@
                             altRows:true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['ID услуги/функции','Наименование полномочия','Наименование услуги/функции', 'Дата составления'],
                             colModel:[
                                     {name:'id_usl_func',index:'id_usl_func', sorttype:"int", editable: false, fixed:true, width:'100'},

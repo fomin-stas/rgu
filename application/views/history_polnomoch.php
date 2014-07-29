@@ -151,7 +151,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['Дата изменения статуса полномочия','Статус разграничения полномочия','Комментарии', 'Перечень услуг/функций'],
                             colModel:[
                                     {name:'date_izm',index:'date_izm', sorttype:"date", editable: false, fixed:true},

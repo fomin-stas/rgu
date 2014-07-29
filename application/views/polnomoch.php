@@ -81,7 +81,7 @@
                         </li>
                         <li data-target="#step2">
                             <span class="step">2</span>
-                            <span class="title">Разграничение полномочия</span>
+                            <span class="title">Присвоение статуса полномочию</span>
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>
@@ -98,60 +98,61 @@
                     <div class="step-pane active" id="step1">
                         <form class="form-horizontal" role="form">
                             <fieldset>
-                                <div class="col-md-offset-1">
-                                    <h4 class="col-md-10 center">Добавление нового полномочия</h4>
-                                    <div class="row">
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
                                         <div class="form-group">
-                                            <label for="name_iogv" class="control-label col-md-5">Наименование полномочия в соответствии с Положением об ИОГВ</label>
-                                            <textarea id="name_iogv" class="col-md-5"></textarea>
+                                            <label for="name_iogv" class="control-label col-md-6">Наименование полномочия в соответствии с Положением об ИОГВ</label>
+                                            <textarea id="name_iogv" class="col-md-6"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="changes_in_pol" class="control-label col-md-5">Внесены изменения в Положение об ИОГВ (реквизиты НПА)</label>
-                                            <textarea id="changes_in_pol" class="col-md-5"></textarea>
+                                            <label for="changes_in_pol" class="control-label col-md-6">Внесены изменения в Положение об ИОГВ (реквизиты НПА)</label>
+                                            <textarea id="changes_in_pol" class="col-md-6"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="punkt_iogv" class="control-label col-md-5">№ пункта в Положении об ИОГВ</label>
-                                            <input type="text" id="punkt_iogv" class="col-md-5">
+                                            <label for="punkt_iogv" class="control-label col-md-6">№ пункта в Положении об ИОГВ</label>
+                                            <input type="text" id="punkt_iogv" class="col-md-6">
                                         </div>
                                         <div class="form-group">
-                                            <label for="isp_is" class="control-label col-md-5">Полномочие осуществляется с использованием ИС</label>
-                                            <textarea id="isp_is" class="col-md-5"></textarea>
+                                            <label for="isp_is" class="control-label col-md-6">Полномочие осуществляется с использованием ИС</label>
+                                            <textarea id="isp_is" class="col-md-6"></textarea>
                                         </div>
                                         <br>
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <a href="structure/arm_kis"><input type="button" class="btn btn-grey pull-right btn-sm col-md-3" value="Закрыть"></a>
-                                                <a href="structure/step1"><input type="button" class="btn btn-info pull-right btn-sm col-md-3" value="Сохранить как черновик"></a>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="form-group pull-left">
-                                                <label for="select_org" class="control-label col-md-5">Выберите организацию</label>
-                                                <select id="select_org" class="col-md-5">
-                                                    <option>Архивный комитет</option>
-                                                    <option>Комитет по образованию</option>
-                                                    <option>Комитет по здравоохранению</option>
-                                                    <option>Комитет по социальной политике Санкт-Петербурга</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group pull-right">
-                                                <label class="control-label" for="srok_otveta">Установите срок ответа</label>
-                                                <input type="text" id="srok_otveta">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <span class="col-md-6">
-                                                <input type="file" multiple id="step1_file" name="step1_file[]">
-                                            </span>
-                                            <input type="button" id="send_btn" class="btn btn-info pull-right"  data-toggle="modal" data-target="#comments_modal" value="Отправить в работу">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <a href="structure/step1"><input type="button" class="btn btn-info btn-sm col-md-3" value="Сохранить как черновик"></a>
+                                        <a href="structure/arm_kis"><input type="button" class="btn btn-grey btn-sm col-md-3" value="Закрыть"></a>
+                                        <div class="form-group pull-right">
+                                            <label class="control-label" for="srok_otveta">Установите срок ответа</label>
+                                            <input type="text" id="srok_otveta">
                                         </div>
                                     </div>
                                 </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <div class="form-group pull-left">
+                                            <label for="select_org" class="control-label">Выберите организацию</label>
+                                            <select id="select_org">
+                                                <option>Архивный комитет</option>
+                                                <option>Комитет по образованию</option>
+                                                <option>Комитет по здравоохранению</option>
+                                                <option>Комитет по социальной политике Санкт-Петербурга</option>
+                                            </select>
+                                        </div>
+                                        <span class="pull-right input-xlarge">
+                                            <input type="file" multiple id="step1_file" name="step1_file[]">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        
+                                        <input type="button" id="send_btn" class="btn btn-info pull-right"  data-toggle="modal" data-target="#comments_modal" value="Отправить в работу">
+                                    </div>
+                                </div>
+                                
                             </fieldset>
                         </form>
                     </div>
