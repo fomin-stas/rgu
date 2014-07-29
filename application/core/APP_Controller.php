@@ -8,4 +8,12 @@ class  APP_Controller  extends  CI_Controller  {
         // set layout dir by current controller
         $this->layout->setViewDir($this->router->fetch_class());
     }
+
+    public function is_loggedIn()
+    {
+    	if(FALSE == $this->session->userdata('loggedin')) {
+            $this->session->set_flashdata('message', 'Вам необходимо авторизоваться!');
+            redirect('site/login');
+        }
+    }
 }

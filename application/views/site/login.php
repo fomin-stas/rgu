@@ -18,17 +18,20 @@
                                                         Выполните вход в систему
                                                     </h4>
                                                     <div class="space-6"></div>
+                                                    <?=validation_errors(); ?>
+                                                    <?=$this->session->flashdata('message'); ?>
+                                                    <?=form_open('site/login'); ?>
                                                     <form action="<?=site_url(array('site', 'login'));?>" method="post">
                                                             <fieldset>
                                                                 <label class="block clearfix">
                                                                     <span class="block input-icon input-icon-right">
-                                                                        <input class="form-control" id="login_name" name="login_name" maxlength="50" placeholder="Имя пользователя">
+                                                                        <input class="form-control" id="login_name" name="login_name" maxlength="50" placeholder="Имя пользователя" value="<?=set_value('login_name')?>">
                                                                         <i class="ace-icon fa fa-user"></i>
                                                                     </span>
                                                                 </label>
                                                                     <label class="block clearfix">
                                                                         <span class="block input-icon input-icon-right">
-                                                                            <input class="form-control" id="password" type="password" maxlength="50" placeholder="Пароль">
+                                                                            <input class="form-control" id="login_password" name="login_password" type="password" maxlength="50" placeholder="Пароль" value="<?=set_value('login_password')?>">
                                                                             <i class="ace-icon fa fa-lock"></i>
                                                                         </span>
                                                                     </label>

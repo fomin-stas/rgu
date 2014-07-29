@@ -7,6 +7,8 @@ class Structure extends APP_Controller {
 
     function  __construct()  {
         parent::__construct();
+
+        $this->is_loggedIn();
     }
 
     public function index() {
@@ -14,6 +16,7 @@ class Structure extends APP_Controller {
     }
 
     public function arm_kis() {
+        
         $this->layout->view('arm_kis');
     }
 
