@@ -11,9 +11,9 @@
                 <div class="tab-content">
                     <div class="tab-pane in active" id="nov_uved">
                         <div class="ui-jqgrid ui-corner-all">
-                            <table id="uvedoml-grid"></table>
+                            <table id="grid-table"></table>
                         </div>
-                        <div id="uvedoml-grid-pager"></div>
+                        <div id="grid-pager"></div>
                     </div>
                     <div class="tab-pane" id="arch"></div>
                 </div>
@@ -31,8 +31,8 @@ var grid_data =
 
 
 jQuery(function($) {
-	var grid_selector = "#uvedoml-grid";
-	var pager_selector = "#uvedoml-grid-pager";
+	var grid_selector = "#grid-table";
+	var pager_selector = "#grid-pager";
 	
 	//resize to fit page size
 	$(window).on('resize.jqGrid', function () {
@@ -52,7 +52,7 @@ jQuery(function($) {
 		altRows:true,
 		data: grid_data,
 		datatype: "local",
-		height: 350,
+		height: 700,
 		colNames:['ID','Наименование полномочия в соответствии с положением ИОГВ','Наименование государственной функции (услуги)', 'Уведомление','Дата уведомления'],
 		colModel:[
 			{name:'id_poln',index:'id_poln', sorttype:"int", editable: true, fixed:true, width:'100'},
@@ -62,14 +62,15 @@ jQuery(function($) {
 			{name:'date_uvedoml',index:'date_uvedoml', editable: false, fixed:true},
 		], 
 
-		viewrecords : true,
-		rowNum:10,
+		//viewrecords : true,
+		rowNum:-1,
                 rownumbers:true,
-		rowList:[10,20,30],
+		//rowList:[10,20,30],
 		pager : pager_selector,
-		
+                pgbuttons:false,
+                pginput:false,
 		multiselect: true,
-        multiboxonly: true,
+                multiboxonly: true,
 
 		loadComplete : function() {
 			var table = this;
@@ -171,9 +172,22 @@ jQuery(function($) {
 				form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 			}
 		}
-	)
+	);
 
-
+	//footer (pager) search
+    $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
+    $("#my_pag_search").on('change',function(event,ui)
+    {
+        var rows=$("tr[role='row']"); //get all rows.
+        for (var i=1; i<=rows.length; i++) //start from second row - the first row whith meaning data
+        {
+            if (rows[i].textContent.toLowerCase().match(this.value.toLowerCase())===null) //if row does not contain input content
+            {
+				rows[i].style.display="none"; //hide this row
+            }
+            else {rows[i].style.display="table-row";} // else show  this row.
+        }
+    });
 	
 	function style_edit_form(form) {
 		//update buttons classes

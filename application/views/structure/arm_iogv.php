@@ -189,8 +189,11 @@
                 <div class="modal-content">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <h4 class="center">История изменений</h4>
-                            
+                            <h4 class="center">
+                                История изменений
+                                <input type="text" id="timeline_search_input" class="pull-right input-sm">
+                                <i class="ace-icon fa fa-search nav-search-icon pull-right"></i>
+                            </h4>
                             <div class="timeline-container">
 
                                 <div class="timeline-label">
@@ -346,7 +349,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: "auto",
                             colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
                             colModel:[
                                     {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100'},
@@ -364,11 +367,13 @@
                                     {name:'isp_is',index:'isp_is', editable: true, fixed:true}
                             ], 
 
-                            viewrecords : true,
-                            rowNum:10,
+                            //viewrecords : true,
+                            rowNum:-1,
                             rownumbers:true,
-                            rowList:[10,20,30],
+                            //rowList:[10,20,30],
                             pager : pager_selector,
+                            pgbuttons:false,
+                            pginput:false,
                             deepempty: true,
                             multiselect: true,
                             sortable: true,
@@ -385,7 +390,10 @@
                                     }, 0);
                             },
                             
-                            
+                            onCellSelect: function(rowid,iCol,cellContent,e)
+                            {
+                                if (iCol!==1){location="structure/step4_1";}
+                            },
                             
                             //editurl: "/",//nothing is saved
                             caption: "Таблица полномочий АРМ ИОГВ"
@@ -538,6 +546,39 @@
 
                     });
 
+					//footer (pager) search
+                    $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
+                    $("#my_pag_search").on('change',function(event,ui)
+                    {
+                        var rows=$("tr[role='row']"); //get all rows.
+                        for (var i=1; i<=rows.length; i++) //start from second row - the first row whith meaning data
+                        {
+                            if (rows[i].textContent.toLowerCase().match(this.value.toLowerCase())===null) //if row does not contain input content
+                            {
+                                rows[i].style.display="none"; //hide this row
+                            }
+                            else {rows[i].style.display="table-row";} // else show  this row.
+                        }
+                    });
+                    
+                    //search in changes
+                    $("#timeline_search_input").on('change',function (event,ui)
+                    {
+                        var timeline_items = $(".timeline-item");
+                        for (var i=0; i<timeline_items.length; i++)
+                        {
+                            if (timeline_items[i].textContent.toLowerCase().match(this.value.toLowerCase())===null)
+                            {
+                                timeline_items[i].style.display="none";
+                                timeline_items[i].parentNode.previousElementSibling.style.display="none";
+                            }
+                            else
+                            {
+                                timeline_items[i].style.display="block";
+                                timeline_items[i].parentNode.previousElementSibling.style.display="block";
+                            }
+                        }
+                    });
 
                     function style_edit_form(form) {
                             var buttons = form.next().find('.EditButton .fm-button');
@@ -622,7 +663,7 @@
 
 
                     //Hide colums from main interface
-                    function add_hide_btn() //should do what we need, but...
+                    function add_hide_btn()
                     {
                         var row_length=document.getElementsByTagName('th').length;
                         if (!document.getElementsByClassName('ui-search-inpit')) {row_length/=2;} //check, if there is toolbar-searh
@@ -635,7 +676,7 @@
                     add_hide_btn();
 
             });
-            function hide_column(i) //just simple hide selected column
+            function hide_column(i)hide selected column
             {
                 //i=parseInt(i);
                 $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+i+")").hide();
@@ -652,10 +693,11 @@
                     {
                         if (ui.target[0].className=='cell_div_func'){$('#info_func').modal();}
                         else if (ui.target[0].className=='cell_div_usl'){$('#info_usl').modal();}
+                        else if (ui.target[0].className=='cell_div_nadz'){$('#info_nadz').modal();}
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                {title:"Редактировать",action:function(event,ui){}},
+                //{title:"Редактировать",action:function(event,ui){JQuery("#grid-table").editGridRow('1');}},
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });

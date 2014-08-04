@@ -73,10 +73,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-10 col-md-offset-1">
                             <a href="structure/history_polnomoch"><button class="btn btn-info btn-sm pull-right">История изменений</button></a>
                         </div>
                     </div>
+                    <div class="space-6"></div>
                 </div>
             </div>
         </div>
@@ -86,7 +87,7 @@
                 <div class="modal-content">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <h4 class="center">Услуга 4564571</h4>
+                            <h3 class="center">Услуга 4564571</h3>
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
@@ -130,10 +131,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-10 col-md-offset-1">
                             <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История изменений</button></a>
                         </div>
                     </div>
+                    <div class="space-6"></div>
                 </div>
             </div>
         </div>
@@ -143,7 +145,7 @@
                 <div class="modal-content">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <h4 class="center">Функция 4564570</h4>
+                            <h3 class="center">Функция 4564570</h3>
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
@@ -175,10 +177,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-10 col-md-offset-1">
                             <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История изменений</button></a>
                         </div>
                     </div>
+                    <div class="space-6"></div>
                 </div>
             </div>
         </div>
@@ -344,28 +347,35 @@
                             altRows : true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: "auto",
                             colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб'],
                             colModel:[
                                     {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100'},
                                     {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
-                                    {name:'status_poln',index:'status_poln', editable: false, fixed:true, width:'250'},
+                                    {name:'status_poln',index:'status_poln', stype:'select',edittype:"select",editoptions: {value:"Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"},
+                                        searchoptions:{
+                                            //dataInit: dataInitMultiselect,
+                                            //attr: {multiple: 'multiple', size: 3},
+                                            sopt:['cn'],
+                                            value:":показать все;Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"
+                                        }, 
+                                        editable: false, fixed:true, width:'250'},
                                     {name:'name_usl',index:'name_usl', editable: false, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
                                     {name:'id_usl',index:'id_usl', sorttype:"int", editable: false, fixed:true, width:'100'},
-                                    {name:'status_usl',index:'status_usl', sortable:true,editable:false, edittype:"select",editoptions: {value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"}, width:'200', fixed:true},
-                                    {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:false, fixed:true, width:'120'},
-                                    {name:'type',index:'type', editable: false, edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"}, fixed:true, width:'100'},
-                                    {name:'status_isp',index:'status_isp', editable: false, edittype:"select",editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'120'},
-                                    {name:'name_iogvspb',index:'name_iogvspb', editable: true, edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true}
+                                    {name:'status_usl',index:'status_usl', sortable:true,editable:false,stype:'select', edittype:"select",editoptions:{value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"},searchoptions:{sopt:['cn'],value:":показать все;ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается регламент:разрабатывается регламент"}, width:'200', fixed:true},
+                                    {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:false, fixed:true, width:'120',searchoptions:{dataInit:function(elem){$(elem).datepicker;},sopt:['cn']}},
+                                    {name:'type',index:'type', editable: false, stype:'select', edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"},searchoptions:{sopt:['cn'],value:":показать все;услуга:услуга;функция:функция"}, fixed:true, width:'100'},
+                                    {name:'status_isp',index:'status_isp', editable: false, edittype:"select",stype:'select',editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"},searchoptions:{sopt:['cn'],value:":показать все;общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'120'},
+                                    {name:'name_iogvspb',index:'name_iogvspb', editable: true,stype:'select', edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"},searchoptions:{sopt:['cn'],value:":показать все;архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true}
                                     //{name:'nomer_punkta_iogv',index:'nomer_punkta_iogv', editable: true, fixed:true},
                                     //{name:'vnes_izm_npa',index:'vnes_izm_npa', editable: true, fixed:true},
                                     //{name:'isp_is',index:'isp_is', editable: true, fixed:true}
                             ], 
 
-                            viewrecords : true,
-                            rowNum:10,
+                            //viewrecords : true,
+                            rowNum:-1,
                             rownumbers:true,
-                            rowList:[10,20,30],
+                            //rowList:[10,20,30],
                             pager : pager_selector,
                             sortable: true,
                             multiselect: true,
@@ -397,7 +407,7 @@
 //                                    //else {$('#info_polnomoch').modal({rowid:rowid,iCol:iCol});}
 //                                    else {$('td[role="gridcell"]').click(function(){$('#info_polnomoch').modal();});}
 //                                }
-                                
+                                if (iCol!==1){location="structure/step4_1";}
                             },
 
                             //editurl: "/",//nothing is saved
@@ -569,6 +579,39 @@
 
                     });
 
+					//footer (pager) search
+                    $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
+                    $("#my_pag_search").on('change',function(event,ui)
+                    {
+                        var rows=$("tr[role='row']"); //get all rows.
+                        for (var i=1; i<=rows.length; i++) //start from second row - the first row whith meaning data
+                        {
+                            if (rows[i].textContent.toLowerCase().match(this.value.toLowerCase())===null) //if row does not contain input content
+                            {
+                                rows[i].style.display="none"; //hide this row
+                            }
+                            else {rows[i].style.display="table-row";} // else show  this row.
+                        }
+                    });
+                    
+                    //search in changes
+                    $("#timeline_search_input").on('change',function (event,ui)
+                    {
+                        var timeline_items = $(".timeline-item");
+                        for (var i=0; i<timeline_items.length; i++)
+                        {
+                            if (timeline_items[i].textContent.toLowerCase().match(this.value.toLowerCase())===null)
+                            {
+                                timeline_items[i].style.display="none";
+                                timeline_items[i].parentNode.previousElementSibling.style.display="none";
+                            }
+                            else
+                            {
+                                timeline_items[i].style.display="block";
+                                timeline_items[i].parentNode.previousElementSibling.style.display="block";
+                            }
+                        }
+                    });
 
                     function style_edit_form(form) {
                             var buttons = form.next().find('.EditButton .fm-button');
@@ -710,12 +753,42 @@
                     {
                         if (ui.target[0].className=='cell_div_func'){$('#info_func').modal();}
                         else if (ui.target[0].className=='cell_div_usl'){$('#info_usl').modal();}
+                        else if (ui.target[0].className=='cell_div_nadz'){$('#info_nadz').modal();}
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                {title:"Редактировать",action:function(event,ui){}},
+                {title:"Редактировать",action:function(event,ui){jQuery("#grid-table").jqGrid('editGridRow',getClickedRowId(event,ui));}},
+
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });
+            
+            
+            function getClickedRowId(event,ui) //get id of the clicked row
+            {
+                var rowid;
+                if (ui.target[0].parentNode.nodeName=='TR')
+                {
+                    rowid=ui.target[0].parentNode.id;
+                }
+                else if (ui.target[0].parentNode.parentNode.nodeName=='TR')
+                {
+                    rowid=ui.target[0].parentNode.parentNode.id;
+                }
+                else {return false;}
+                return rowid;
+            }
+            
+            function getClickedColNum(event,ui) //get clicked td index in tr
+            {
+                var cellid;
+                var currentRow;
+                currentRow=$('#'+getClickedRowId(event,ui)+' td');
+                for (var i=0; i<=currentRow.length; i++)
+                {
+                    if (ui.target[0]==currentRow[i] | ui.target[0].parentNode==currentRow[i]){cellid=i;}
+                }
+                return cellid;
+            }
             
         </script>

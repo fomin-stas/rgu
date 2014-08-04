@@ -36,7 +36,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['От кого','Кому','Входящий комментарий', 'Исходящий комментарий', 'Операции'],
                             colModel:[
                                     {name:'from',index:'from', sortable:true, editable: false, fixed:true},
@@ -46,15 +46,16 @@
                                     {name:'operate',index:'operate', sortable:true, editable: false, fixed:true}
                             ], 
 
-                            viewrecords : true,
-                            rowNum:10,
+                            //viewrecords : true,
+                            rowNum:-1,
                             rownumbers:true,
-                            rowList:[10,20,30],
+                            //rowList:[10,20,30],
                             pager : pager_selector,
-
+                            pgbuttons:false,
+                            pginput:false,
                             multiselect: true,
 
-                    multiboxonly: true,
+                            multiboxonly: true,
 
                             loadComplete : function() {
                                     var table = this;

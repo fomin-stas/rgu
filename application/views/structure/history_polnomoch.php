@@ -67,7 +67,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['Дата изменения статуса полномочия','Статус разграничения полномочия','Комментарии', 'Перечень услуг/функций'],
                             colModel:[
                                     {name:'date_izm',index:'date_izm', sorttype:"date", editable: false, fixed:true},
@@ -76,12 +76,13 @@
                                     {name:'list',index:'n_str_table', editable: false, fixed:true,width:'250'}
                             ], 
 
-                            viewrecords : true,
-                            rowNum:10,
+                            //viewrecords : true,
+                            rowNum:-1,
                             rownumbers:true,
-                            rowList:[10,20,30],
+                            //rowList:[10,20,30],
                             pager : pager_selector,
-
+                            pgbuttons:false,
+                            pginput:false,
                             multiselect: true,
 
                     multiboxonly: true,

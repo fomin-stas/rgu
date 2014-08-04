@@ -42,7 +42,7 @@
                             altRows:true,
                             data: grid_data,
                             datatype: "local",
-                            height: 350,
+                            height: 700,
                             colNames:['ID услуги/функции','Наименование полномочия','Наименование услуги/функции', 'Дата составления'],
                             colModel:[
                                     {name:'id_usl_func',index:'id_usl_func', sorttype:"int", editable: false, fixed:true, width:'100'},
@@ -51,15 +51,16 @@
                                     {name:'date_sogl',index:'date_sogl', sorttype:"date", editable: false, fixed:true, width:'100'}
                             ], 
 
-                            viewrecords : true,
-                            rowNum:10,
+                            //viewrecords : true,
+                            rowNum:-1,
                             rownumbers:true,
-                            rowList:[10,20,30],
+                            //rowList:[10,20,30],
                             pager : pager_selector,
-
+                            pgbuttons:false,
+                            pginput:false,
                             multiselect: true,
 
-                    multiboxonly: true,
+                            multiboxonly: true,
 
                             loadComplete : function() {
                                     var table = this;
