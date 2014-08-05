@@ -191,7 +191,11 @@
                 <div class="modal-content">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <h4 class="center">История изменений</h4>
+                            <h4 class="center">
+                                История изменений
+                                <input type="text" id="timeline_search_input" class="pull-right input-sm">
+                                <i class="ace-icon fa fa-search nav-search-icon pull-right"></i>
+                            </h4>
                             
                             <div class="timeline-container">
 
@@ -382,7 +386,8 @@
                             multiboxonly: true,
                             deepempty: true,
                             ignoreCase: true,
-
+							cellEdit: true,
+							cellsubmit: "clientArray",
                             loadComplete : function() {
                                     var table = this;
                                     setTimeout(function(){
@@ -394,8 +399,8 @@
                                     }, 0);
                             },
                             
-                            onCellSelect: function(rowid,iCol,cellContent,e)
-                            {
+//                            onCellSelect: function(rowid,iCol,cellContent,e)
+//                            {
 //                                if (rowid==1) //only for first row
 //                                {
 //                                    if (cellContent.match('cell_div'))
@@ -407,8 +412,8 @@
 //                                    //else {$('#info_polnomoch').modal({rowid:rowid,iCol:iCol});}
 //                                    else {$('td[role="gridcell"]').click(function(){$('#info_polnomoch').modal();});}
 //                                }
-                                if (iCol!==1){location="structure/step4_1";}
-                            },
+//                                if (iCol!==1){location="structure/step4_1";}
+//                            },
 
                             //editurl: "/",//nothing is saved
                             caption: "Таблица полномочий АРМ КИС"
