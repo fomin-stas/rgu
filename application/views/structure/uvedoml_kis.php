@@ -52,7 +52,7 @@ jQuery(function($) {
 		altRows:true,
 		data: grid_data,
 		datatype: "local",
-		height: 700,
+		height: "auto",
 		colNames:['ID','Наименование полномочия в соответствии с положением ИОГВ','Наименование государственной функции (услуги)', 'Уведомление','Дата уведомления'],
 		colModel:[
 			{name:'id_poln',index:'id_poln', sorttype:"int", editable: true, fixed:true, width:'100'},
@@ -83,7 +83,7 @@ jQuery(function($) {
 			}, 0);
 		},
 
-		editurl: "/",//nothing is saved
+		//editurl: "/",//nothing is saved
 		caption: "Таблица уведомлений"
 
 

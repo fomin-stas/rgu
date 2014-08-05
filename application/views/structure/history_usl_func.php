@@ -72,7 +72,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 700,
+                            height: "auto",
                             colNames:['Дата изменения статуса','Статус','Автор изменения', 'Комментарии', 'Статус услуги/функци'],
                             colModel:[
                                     {name:'date_izm',index:'date_izm', sorttype:"date", editable: false, fixed:true},
@@ -104,7 +104,7 @@
                                     }, 0);
                             },
 
-                            editurl: "/",//nothing is saved
+                            //editurl: "/",//nothing is saved
                             caption: "Таблица истории согласования услуг/функций"
 
 

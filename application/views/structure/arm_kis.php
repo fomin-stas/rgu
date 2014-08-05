@@ -330,6 +330,7 @@
             jQuery(function($) {
                     var grid_selector = "#grid-table";
                     var pager_selector = "#grid-pager";
+					var myDefaultSearch = "cn";
 
                     //resize to fit page size
                     $(window).on('resize.jqGrid', function () {
@@ -381,6 +382,8 @@
                             rownumbers:true,
                             //rowList:[10,20,30],
                             pager : pager_selector,
+							pgbuttons:false,
+                            pginput:false,
                             sortable: true,
                             multiselect: true,
                             multiboxonly: true,
