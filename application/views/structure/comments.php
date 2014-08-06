@@ -36,7 +36,7 @@
                             altRows: true,
                             data: grid_data,
                             datatype: "local",
-                            height: 700,
+                            height: "auto",
                             colNames:['От кого','Кому','Входящий комментарий', 'Исходящий комментарий', 'Операции'],
                             colModel:[
                                     {name:'from',index:'from', sortable:true, editable: false, fixed:true},
@@ -68,7 +68,7 @@
                                     }, 0);
                             },
 
-                            editurl: "/",//nothing is saved
+                            //editurl: "/",//nothing is saved
                             caption: "Таблица комментариев"
 
 

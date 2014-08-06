@@ -53,7 +53,7 @@ jQuery(function($) {
 		altRows:true,
 		data: grid_data,
 		datatype: "local",
-		height: 350,
+		height: "auto",
 		colNames:['ID','Наименование полномочия в соответствии с положением ИОГВ','Наименование государственной функции (услуги)', 'Уведомление','Дата уведомления'],
 		colModel:[
 			{name:'id_poln',index:'id_poln', sorttype:"int", editable: true, fixed:true, width:'100'},
@@ -63,12 +63,13 @@ jQuery(function($) {
 			{name:'date_uvedoml',index:'date_uvedoml', editable: false, fixed:true},
 		], 
 
-		viewrecords : true,
-		rowNum:10,
+		viewrecords : false,
+		rowNum:-1,
                 rownumbers:true,
-		rowList:[10,20,30],
+		//rowList:[10,20,30],
 		pager : pager_selector,
-		
+		pgbuttons:false,
+                pginput:false
 		multiselect: true,
         multiboxonly: true,
 
@@ -83,7 +84,7 @@ jQuery(function($) {
 			}, 0);
 		},
 
-		editurl: "/",//nothing is saved
+		//editurl: "/",//nothing is saved
 		caption: "Таблица уведомлений"
 
 

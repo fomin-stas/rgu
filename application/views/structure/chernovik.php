@@ -1,15 +1,11 @@
 
         <div class="main-container">
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="ui-jqgrid ui-corner-all">
-                        <table id="grid-table"></table>
-                    </div>
-                    <div id="grid-pager"></div>
+            <div class="col-md-12">
+                <div class="ui-jqgrid ui-corner-all">
+                    <table id="grid-table"></table>
                 </div>
+                <div id="grid-pager"></div>
             </div>
-            
         </div>
         
         <script type="text/javascript">
@@ -42,7 +38,7 @@
                             altRows:true,
                             data: grid_data,
                             datatype: "local",
-                            height: 700,
+                            height: "auto",
                             colNames:['ID услуги/функции','Наименование полномочия','Наименование услуги/функции', 'Дата составления'],
                             colModel:[
                                     {name:'id_usl_func',index:'id_usl_func', sorttype:"int", editable: false, fixed:true, width:'100'},
