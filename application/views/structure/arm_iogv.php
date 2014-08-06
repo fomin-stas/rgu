@@ -294,22 +294,6 @@
             </div>
         </div>
         
-        <!--[if !IE]> -->
-        <script src="static/js/jquery.min.js" type="text/javascript"></script>
-        <!-- <![endif]-->
-        <!--[if lte IE 9>
-        <script src="static/js/jqueryix.min.js" type="text/javascript"></script>
-        <![endif]-->
-        <script src="static/js/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="static/js/jquery-ui.custom.min.js" type="text/javascript"></script>
-        <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="static/js/ui.multiselect.js"></script>
-        <script src="static/js/jquery.ui-contextmenu.min.js" type="text/javascript"></script>
-        <script src="static/js/jquery.jqGrid.min.js"></script>
-        <script src="static/js/grid.locale-ru.js"></script>
-        <script src="static/js/grid.setcolumns.js"></script>
-        <script src="static/js/ace-elements.min.js" type="text/javascript"></script>
-        <script src="static/js/ace.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             var grid_data = 
             [ 
