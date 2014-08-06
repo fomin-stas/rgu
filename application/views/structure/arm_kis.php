@@ -295,7 +295,7 @@
         
         
         <script type="text/javascript">
-            var grid_data = 
+            /*var grid_data = 
             [ 
                     {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Разграничение согласовано</p>",name_usl:"<div class='cell_div_func'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func'><p style='color:#6699ff'>Ожидает согласования КИС</p></div><hr><div class='cell_div_usl'><p style='color:#6699ff'>Разрабатывается регламент</p></div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
                     {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
@@ -320,7 +320,8 @@
                     {id_poln:"17",name_iogv:"наименование полномочия17",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"17", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
                     {id_poln:"18",name_iogv:"наименование полномочия18",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"18", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
                     {id_poln:"19",name_iogv:"наименование полномочия19",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"19", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"}
-            ];
+            ];*/
+            var grid_data = <?=$data?>
 
 
             jQuery(function($) {
