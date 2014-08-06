@@ -417,6 +417,11 @@
 //                                }
 //                                if (iCol!==1){location="structure/step4_1";}
 //                            },
+							beforeSelectRow:function(rowid){return false},
+                            ondblClickRow:function(rowid, iRow, iCol)
+                            {
+                                jQuery(grid_selector).editCell(iRow,iCol,true);
+                            },
 
                             //editurl: "/",//nothing is saved
                             caption: "Таблица полномочий АРМ КИС"
