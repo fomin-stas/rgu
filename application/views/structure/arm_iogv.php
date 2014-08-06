@@ -326,6 +326,7 @@
             jQuery(function($) {
                     var grid_selector = "#grid-table";
                     var pager_selector = "#grid-pager";
+                    var text_link; //link cellcontent, must changes dynamicaly
 
                     //resize to fit page size
                     $(window).on('resize.jqGrid', function () {
@@ -351,9 +352,13 @@
                             height: "auto",
                             colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
                             colModel:[
-                                    {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100'},
-                                    {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
-                                    {name:'status_poln',index:'status_poln', editable: false, fixed:true},
+                                    {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100',formatter:linkToStep,unformat:unLinkToStep},
+                                    {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250',formatter:linkToStep,unformat:unLinkToStep},
+                                    {name:'status_poln',index:'status_poln', editable: false, fixed:true, stype:'select', searchoptions:{
+                                            sopt:['cn'],
+                                            value:":показать все;Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"
+                                        },
+                                    },
                                     {name:'name_usl',index:'name_usl', editable: false, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
                                     {name:'id_usl',index:'id_usl', sorttype:"int", editable: false, fixed:true, width:'100'},
                                     {name:'status_usl',index:'status_usl', sortable:true,editable:false, edittype:"select",editoptions: {value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"}, fixed:true},
@@ -377,8 +382,7 @@
                             multiselect: true,
                             sortable: true,
                             multiboxonly: true,
-//                            cellEdit: true,
-//                            cellsubmit: "clientArray",
+
                             loadComplete : function() {
                                     var table = this;
                                     setTimeout(function(){
@@ -390,10 +394,6 @@
                                     }, 0);
                             },
                             
-//                            onCellSelect: function(rowid,iCol,cellContent,e)
-//                            {
-//                                if (iCol!==1){location="structure/step4_1";}
-//                            },
                             
                             //editurl: "/",//nothing is saved
                             caption: "Таблица полномочий АРМ ИОГВ"
@@ -514,18 +514,6 @@
                         title:"Настройки отображения таблицы",
                         onClickButton:function() 
                         {
-//                            jQuery("#grid-table").setColumns(
-//                                {
-//                                    recreateForm: true,
-//                                    modal:true,
-//                                    width:500,
-//                                    jqModal:true,
-//                                    colnameview:false,
-//                                    updateAfterCheck:true,
-//                                    top:107,
-//                                    left:29
-//                                });
-//                            return false;
                             jQuery(grid_selector).columnChooser
                             ({
                                 title:"options",
@@ -675,6 +663,25 @@
                     }
 
                     add_hide_btn();
+                    
+                    //custom formater, that wrap cellcontent into <a>
+                    function linkToStep(cellvalue, options, rowObject)
+                    {
+                        if(options.rowId==1) //this is not good
+                        {
+                            text_link="structure/step4";
+                        }
+                        else {text_link="structure/step3";}
+                        cellvalue=cellvalue.link(text_link);
+                        return cellvalue;
+                    }
+                    
+                    function unLinkToStep(cellvalue, options, rowObject)
+                    {
+                        var a_tag = "<a href='"+text_link+"'>";
+                        cellvalue = cellvalue.substring(a_tag.length,cellvalue.length-4); //-4 is the length of </a> in the end of this string
+                        return cellvalue;
+                    }
 
             });
             function hide_column(i) //hide selected column
@@ -698,7 +705,6 @@
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                //{title:"Редактировать",action:function(event,ui){JQuery("#grid-table").editGridRow('1');}},
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });
