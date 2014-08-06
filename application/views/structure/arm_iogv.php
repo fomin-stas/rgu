@@ -1,5 +1,5 @@
 
-        <div class="main-container">
+      <div class="main-container">
             <div class="tabbable col-md-12">
                 <ul class="nav nav-tabs tab-color-blue background-blue padding-12">
                     <li>
@@ -294,11 +294,26 @@
             </div>
         </div>
         
-        
+        <!--[if !IE]> -->
+        <script src="static/js/jquery.min.js" type="text/javascript"></script>
+        <!-- <![endif]-->
+        <!--[if lte IE 9>
+        <script src="static/js/jqueryix.min.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="static/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery-ui.custom.min.js" type="text/javascript"></script>
+        <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="static/js/ui.multiselect.js"></script>
+        <script src="static/js/jquery.ui-contextmenu.min.js" type="text/javascript"></script>
+        <script src="static/js/jquery.jqGrid.min.js"></script>
+        <script src="static/js/grid.locale-ru.js"></script>
+        <script src="static/js/grid.setcolumns.js"></script>
+        <script src="static/js/ace-elements.min.js" type="text/javascript"></script>
+        <script src="static/js/ace.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             var grid_data = 
             [ 
-                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Разграничение согласовано</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func'><p style='color:#6699ff'>Ожидает согласования КИС</p></div><hr><div class='cell_div_usl'><p style='color:#6699ff'>Разрабатывается регламент</p></div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
+                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Полномочию присвоен статус</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func' style='color:#6699ff'>Ожидает согласования КИС</div><hr><div class='cell_div_usl' style='color:#6699ff'>Разрабатывается регламент</div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
                     {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564565",name_iogv:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",id_usl:"4564562", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
                     {id_poln:"4564564",name_iogv:"Взаимодействует в установленном порядке по вопросам своей компетенции с органами государственной власти, органами местного самоуправления, иными государственными и негосударственными организациями, а также должностными лицами.",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Осуществлять взаимодействие  по вопросам, находящимся в  компетенции исполнительного  органа государственной власти Санкт-Петербурга, с органами государственной власти и органами местного самоуправления, организациями, общественными",id_usl:"4564561", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
@@ -378,7 +393,8 @@
                             multiselect: true,
                             sortable: true,
                             multiboxonly: true,
-
+//                            cellEdit: true,
+//                            cellsubmit: "clientArray",
                             loadComplete : function() {
                                     var table = this;
                                     setTimeout(function(){
@@ -390,10 +406,10 @@
                                     }, 0);
                             },
                             
-                            onCellSelect: function(rowid,iCol,cellContent,e)
-                            {
-                                if (iCol!==1){location="structure/step4_1";}
-                            },
+//                            onCellSelect: function(rowid,iCol,cellContent,e)
+//                            {
+//                                if (iCol!==1){location="structure/step4_1";}
+//                            },
                             
                             //editurl: "/",//nothing is saved
                             caption: "Таблица полномочий АРМ ИОГВ"
@@ -506,7 +522,7 @@
                     );
                 
                     //set columns
-                    jQuery("#grid-table").jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
+                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
                     {
                         id:"#select_cols",
                         buttonicon:"ace-icon fa fa-cog",
@@ -526,7 +542,7 @@
 //                                    left:29
 //                                });
 //                            return false;
-                            jQuery("#grid-table").columnChooser
+                            jQuery(grid_selector).columnChooser
                             ({
                                 title:"options",
                                 width:1000,
@@ -537,7 +553,7 @@
                     });
 
                     //to Excel
-                    jQuery("#grid-table").jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
+                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
                     {
                         id:"#to_excel_btn",
                         buttonicon:"ace-icon fa fa-external-link red",
@@ -545,8 +561,8 @@
                         title:"Выгрузить в Excel"
 
                     });
-
-					//footer (pager) search
+                    
+                    //footer (pager) search
                     $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
                     $("#my_pag_search").on('change',function(event,ui)
                     {
@@ -561,7 +577,7 @@
                         }
                     });
                     
-                    //search in changes
+                    
                     $("#timeline_search_input").on('change',function (event,ui)
                     {
                         var timeline_items = $(".timeline-item");
@@ -575,11 +591,12 @@
                             else
                             {
                                 timeline_items[i].style.display="block";
-                                timeline_items[i].parentNode.previousElementSibling.style.display="block";
+                                 timeline_items[i].parentNode.previousElementSibling.style.display="block";
                             }
                         }
                     });
-
+                    
+                    //ace styling
                     function style_edit_form(form) {
                             var buttons = form.next().find('.EditButton .fm-button');
                             buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
@@ -663,10 +680,10 @@
 
 
                     //Hide colums from main interface
-                    function add_hide_btn()
+                    function add_hide_btn() //should do what we need, but...
                     {
                         var row_length=document.getElementsByTagName('th').length;
-                        if (!document.getElementsByClassName('ui-search-inpit')) {row_length/=2;} //check, if there is toolbar-searh
+                        if (!document.getElementsByClassName('ui-search-input')) {row_length/=2;} //check, if there is toolbar-searh
                         for (var i=1; i<=row_length; i++)
                         {
                             $("table[role='grid'] thead tr:first-child th[role='columnheader']:nth-child("+i+")").prepend("<i class='fa fa-times red2 hide_col_btn' id='close_btn_"+i+"' onclick='javascript:hide_column("+i+")'></i>");
@@ -676,7 +693,7 @@
                     add_hide_btn();
 
             });
-            function hide_column(i)hide selected column
+            function hide_column(i) //hide selected column
             {
                 //i=parseInt(i);
                 $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+i+")").hide();
