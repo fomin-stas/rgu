@@ -727,7 +727,7 @@
                     function unLinkToStep(cellvalue, options, rowObject)
                     {
                         var a_tag = "<a href='"+text_link+"'>";
-                        cellvalue = cellvalue.substring(a_tag.length,cellvalue.length-4); //-4 is the length of </a> in the end of this string
+                        //cellvalue = cellvalue.replace(a_tag,"");
                         return cellvalue;
                     }
                     
@@ -763,7 +763,7 @@
                         else {$('#info_polnomoch').modal();}
                     }
                 },
-                {title:"Редактировать",action:function(event,ui){jQuery("#grid-table").jqGrid('editGridRow',getClickedRowId(event,ui));}},
+                {title:"Редактировать",action:function(event,ui){jQuery("#grid-table").jqGrid('editGridRow',getClickedRowId(event,ui),{width:450});}},
 
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
