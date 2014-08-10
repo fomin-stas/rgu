@@ -76,10 +76,34 @@ class Structure extends APP_Controller {
     }
 
     public function step1() {
-        $this->layout->view('polnomoch');
+        $this->load->model('organization_model');
+        $db=$this->organization_model->dropdown('organization_name');
+        $db_iogv=$this->organization_model->dropdown('organization_name','organization_name');
+        $data['db']=$db;
+        $data['db_iogv']=$db_iogv;
+        $this->layout->view('polnomoch',$data);
+    }
+    
+    public function step1_submit() {
+        $authority['authority_name']=$this->input->post('name_authority');
+        $property['punkt_iogv']=$this->input->post('punkt_iogv');
+        $property['name_iogv']=$this->input->post('name_iogv');
+        $property['rekvisit_npa']=$this->input->post('rekvisit_npa');
+        $property['project_post']=$this->input->post('project_post');
+        $property['srok_otveta']=$this->input->post('srok_otveta');
+        $authority['id_organization']=$this->input->post('select_org');
+        $authority['id_authority_status']=1;
+         //обработка добавления комментария - позже
+        $comments['comment_st1']=$this->input->get('comment_st1');
+        $this->load->model('authority');
+        $id_authority=$this->authority->insert($authority);
+        $this->load->model('authority_property');
+        $this->authority_property->_id_authority=$id_authority;
+        $this->authority_property->insert_where_code_many($property);
+        redirect('structure/arm_kis');
     }
 
-    public function step2() {
+    public function step2($id_authority) {
         $this->layout->view('razgran_p');
     }
 
