@@ -80,9 +80,9 @@
                         
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <button class="btn btn-info btn-sm pull-left" id="add_usl_btn">Добавить услугу</button>
-                                <button class="btn btn-info btn-sm pull-left" id="add_func_btn">Добавить функцию</button>
-                                <button class="btn btn-info btn-sm pull-left" id="add_fcn_btn">Добавить функцию контроля и надзора</button>
+                                <button class="btn btn-info btn-sm pull-left add_usl_btn">Добавить услугу</button>
+                                <button class="btn btn-info btn-sm pull-left add_func_btn">Добавить функцию</button>
+                                <button class="btn btn-info btn-sm pull-left add_fcn_btn">Добавить функцию контроля и надзора</button>
                             </div>
                         </div>
                         <div class="row">
@@ -91,164 +91,13 @@
                                     <div class="widget-header">
                                         <div class="widget-toolbar">
                                             <ul id="razgran_u_f_tabs" class="nav nav-tabs">
-                                                <li><a href="#usl_1" data-toggle="tab">Услуга 1</a></li>
-                                                <li><a href="#func_1" data-toggle="tab">Функция 1</a></li>
-                                                <li><a href="#func_cn_1" data-toggle="tab">Функция контроля и надзора 1</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="widget-body">
                                         <div class="widget-main padding-16">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="usl_1">
-                                                    <form class="form-horizontal">
-                                                        <fieldset>
-                                                            <div class="form-group">
-                                                                <label for="full_name_usl" class="control-label col-md-3">Полное наименование</label>
-                                                                <textarea id="full_name_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="short_name_usl" class="control-label col-md-3">Краткое наименование</label>
-                                                                <textarea id="short_name_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="sfera" class="control-label col-md-3">Сфера</label>
-                                                                <select id="sfera" class="col-md-5">
-                                                                    <option>Природопользование и экология</option>
-                                                                    <option>образование и наука</option>
-                                                                    <option>Здравоохранение</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="usl_okaz" class="control-label col-md-3">Услугу оказывает</label>
-                                                                <select id="usl_okaz" class="col-md-5">
-                                                                    <option>Администрации районов Санкт-Петербурга</option>
-                                                                    <option>Комитет по энергетике и инжеерному обеспечению</option>
-                                                                    <option>Подведомственное учреждение</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="result_usl" class="control-label col-md-3">Результат предоставления</label>
-                                                                <textarea id="result_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="srok_predost_usl" class="control-label col-md-3">Срок предоставления</label>
-                                                                <textarea id="srok_predost_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="kateg_z_usl" class="control-label col-md-3">Категория заявителей</label>
-                                                                <textarea id="kateg_z_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="sp_predost_usl" class="control-label col-md-3">Способ предоставления</label>
-                                                                <textarea id="sp_predost_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="opisanie_usl" class="control-label col-md-3">Краткое описание</label>
-                                                                <textarea id="opisanie_usl" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
-                                                            <button class="btn btn-grey btn-sm pull-left">Удалить</button>
+                                            <div class="tab-content" id="tab_content">
 
-                                                        </fieldset>
-                                                    </form>
-                                                </div>
-
-                                                <div class="tab-pane" id="func_1">
-                                                    <form class="form-horizontal">
-                                                        <fieldset>
-                                                            <div class="form-group">
-                                                                <label for="full_name_func" class="control-label col-md-3">Наименование</label>
-                                                                <textarea id="full_name_func" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="vyp_deistv_func" class="control-label col-md-3">Выполняемые действия</label>
-                                                                <textarea id="vyp_deistv_func" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="organ_vyp_func" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
-                                                                <select id="organ_vyp_func" class="col-md-5">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="org_isp_func" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
-                                                                <select id="org_isp_func" class="col-md-5">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="vyp_deistv" class="control-label col-md-3">Выполняемые действия</label>
-                                                                <textarea id="vyp_deistv" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="result_isp_func" class="control-label col-md-3">Результат исполнения функции</label>
-                                                                <textarea id="result_isp_func" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="neobh_otchetn" class="control-label col-md-3">необходимость формирования отчетности</label>
-                                                                <select id="neobh_otchetn" class="col-md-5">
-                                                                    <option>Нет</option>
-                                                                    <option>Да</option>
-                                                                </select>
-                                                            </div>                                                    
-                                                            <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
-                                                            <button class="btn btn-grey btn-sm pull-left">Удалить</button>
-                                                        </fieldset>
-                                                    </form>
-                                                </div>
-                                                
-                                                <div class="tab-pane" id="func_cn_1">
-                                                    <form class="form-horizontal">
-                                                        <fieldset>
-                                                            <div class="form-group">
-                                                                <label for="full_name_func_cn" class="control-label col-md-3">Наименование</label>
-                                                                <textarea id="full_name_func_cn" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="deistv_func_cn" class="control-label col-md-3">Выполняемые действия</label>
-                                                                <textarea id="deistv_func_cn" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="organ_func_cn" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
-                                                                <select id="organ_func_cn" class="col-md-5">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="org_isp_func_cn" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
-                                                                <select id="org_isp_func_cn" class="col-md-5">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="vyp_deistv_cn" class="control-label col-md-3">Выполняемые действия</label>
-                                                                <textarea id="vyp_deistv_cn" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="result_func_cn" class="control-label col-md-3">Результат исполнения функции</label>
-                                                                <textarea id="result_func_cn" class="col-md-5"></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="neobh_otchet_cn" class="control-label col-md-3">необходимость формирования отчетности</label>
-                                                                <select id="neobh_otchet_cn" class="col-md-5">
-                                                                    <option>Нет</option>
-                                                                    <option>Да</option>
-                                                                </select>
-                                                            </div>                                                    
-                                                            <button class="btn btn-info btn-sm pull-left" id="save_as_chern_func_cn">Сохранить как черновик</button>
-                                                            <button class="btn btn-grey btn-sm pull-left">Удалить</button>
-                                                        </fieldset>
-                                                    </form>
-                                                </div>
                                                 
                                             </div>
                                             
@@ -272,9 +121,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <button class="btn btn-info btn-sm pull-left" id="add_usl_btn">Добавить услугу</button>
-                                <button class="btn btn-info btn-sm pull-left" id="add_func_btn">Добавить функцию</button>
-                                <button class="btn btn-info btn-sm pull-left" id="add_fcn_btn">Добавить функцию контроля и надзора</button>
+                                <button class="btn btn-info btn-sm pull-left add_usl_btn">Добавить услугу</button>
+                                <button class="btn btn-info btn-sm pull-left add_func_btn">Добавить функцию</button>
+                                <button class="btn btn-info btn-sm pull-left add_fcn_btn">Добавить функцию контроля и надзора</button>
                             
                                 <button id="send_btn" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#comments_modal">Отправить на согласование</button>
                             </div>
@@ -320,6 +169,156 @@
             </div>
         </div>
         
+        <div class="tab-pane active" id="usl" hidden>
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="full_name_usl" class="control-label col-md-3">Полное наименование</label>
+                        <textarea id="full_name_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="short_name_usl" class="control-label col-md-3">Краткое наименование</label>
+                        <textarea id="short_name_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="sfera" class="control-label col-md-3">Сфера</label>
+                        <select id="sfera" class="col-md-5">
+                            <option>Природопользование и экология</option>
+                            <option>образование и наука</option>
+                            <option>Здравоохранение</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="usl_okaz" class="control-label col-md-3">Услугу оказывает</label>
+                        <select id="usl_okaz" class="col-md-5">
+                            <option>Администрации районов Санкт-Петербурга</option>
+                            <option>Комитет по энергетике и инжеерному обеспечению</option>
+                            <option>Подведомственное учреждение</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="result_usl" class="control-label col-md-3">Результат предоставления</label>
+                        <textarea id="result_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="srok_predost_usl" class="control-label col-md-3">Срок предоставления</label>
+                        <textarea id="srok_predost_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="kateg_z_usl" class="control-label col-md-3">Категория заявителей</label>
+                        <textarea id="kateg_z_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="sp_predost_usl" class="control-label col-md-3">Способ предоставления</label>
+                        <textarea id="sp_predost_usl" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="opisanie_usl" class="control-label col-md-3">Краткое описание</label>
+                        <textarea id="opisanie_usl" class="col-md-5"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
+                    <button type="button" class="btn btn-grey btn-sm pull-left delete_this_pane">Удалить</button>
+
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="func" hidden>
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="full_name_func" class="control-label col-md-3">Наименование</label>
+                        <textarea id="full_name_func" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="vyp_deistv_func" class="control-label col-md-3">Выполняемые действия</label>
+                        <textarea id="vyp_deistv_func" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="organ_vyp_func" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
+                        <select id="organ_vyp_func" class="col-md-5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="org_isp_func" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
+                        <select id="org_isp_func" class="col-md-5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vyp_deistv" class="control-label col-md-3">Выполняемые действия</label>
+                        <textarea id="vyp_deistv" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="result_isp_func" class="control-label col-md-3">Результат исполнения функции</label>
+                        <textarea id="result_isp_func" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="neobh_otchetn" class="control-label col-md-3">необходимость формирования отчетности</label>
+                        <select id="neobh_otchetn" class="col-md-5">
+                            <option>Нет</option>
+                            <option>Да</option>
+                        </select>
+                    </div>                                                    
+                    <button type="button" class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
+                    <button type="button" class="btn btn-grey btn-sm pull-left delete_this_pane">Удалить</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="func_cn" hidden>
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="full_name_func_cn" class="control-label col-md-3">Наименование</label>
+                        <textarea id="full_name_func_cn" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="deistv_func_cn" class="control-label col-md-3">Выполняемые действия</label>
+                        <textarea id="deistv_func_cn" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="organ_func_cn" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
+                        <select id="organ_func_cn" class="col-md-5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="org_isp_func_cn" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
+                        <select id="org_isp_func_cn" class="col-md-5">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vyp_deistv_cn" class="control-label col-md-3">Выполняемые действия</label>
+                        <textarea id="vyp_deistv_cn" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="result_func_cn" class="control-label col-md-3">Результат исполнения функции</label>
+                        <textarea id="result_func_cn" class="col-md-5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="neobh_otchet_cn" class="control-label col-md-3">необходимость формирования отчетности</label>
+                        <select id="neobh_otchet_cn" class="col-md-5">
+                            <option>Нет</option>
+                            <option>Да</option>
+                        </select>
+                    </div>                                                    
+                    <button type="button" class="btn btn-info btn-sm pull-left" id="save_as_chern_func_cn">Сохранить как черновик</button>
+                    <button type="button" class="btn btn-grey btn-sm pull-left delete_this_pane">Удалить</button>
+                </fieldset>
+            </form>
+        </div>
+        
         
         <script type="text/javascript">
             $('#my-wizard')
@@ -334,5 +333,29 @@
                 btn_change:"Изменить",
                 enable_reset: true
             });
+            
+           
+            var num =1;
+            function add_new_tab(type)
+            {   
+                var tab_pane= $('#'+type).clone().attr('id',num);
+                function tab_name()
+                {
+                    if (type=='usl'){return 'Услуга';}
+                    else if (type=='func'){return 'Функция';}
+                    else {return 'Функция контроля/надзора';}
+                }
+                var tab= "<li id='navtab_"+num+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_name()+" "+num+"</a></li>";
+                num++;
+                $('#razgran_u_f_tabs').append(tab);
+                $('#tab_content').append(tab_pane[0]);
+                $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(){
+                    $('#navtab_'+num).remove();
+                    $(num).remove();
+                });
+            }
+            $(".add_usl_btn").on('click',function(){add_new_tab("usl");});
+            $(".add_func_btn").on('click',function(){add_new_tab("func");});
+            $(".add_fcn_btn").on('click',function(){add_new_tab("func_cn");});
         </script>
    
