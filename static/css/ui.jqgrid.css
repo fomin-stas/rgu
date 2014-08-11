@@ -182,8 +182,8 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 {
     height: 500px;
 }
-td[role='gridcell'] a{color: black !important}
-td[role='gridcell'] a:hover{color:blue !important}
+td[role='gridcell'] a{color: #393939 !important}
+td[role='gridcell'] a:hover{color:black !important}
 .ui-priority-secondary{background-color: #f1fff1;}
 .hide_col_btn{cursor: pointer;}
 .hide_col_btn:hover{background-color: palegoldenrod;}
@@ -194,12 +194,12 @@ div[class='ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix'
 span[class="ui-corner-all ui-icon ui-icon-minus"]{height: 9px;width:9px;border:1px solid #777; }
 input[class="search empty ui-widget-content ui-corner-all"]{height: auto !important; font-size: inherit !important;} 
 .nav-tabs.tab-color-blue>li.active>a{color:whitesmoke !important;}
-//modals
+/*modals*/
 #info_polnomoch .modal-dialog,
 #info_usl .modal-dialog,
 #info_func .modal-dialog
 {width:850px;height:90%;}
 .modal-content{}
-//pager
+/*pager*/
 #grid-pager{position: fixed;z-index: 999;bottom: 0px;left: 0px;right: 0px;}
 #timeline_search_input{height:18px;padding:3px;font-size:12px;}

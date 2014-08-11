@@ -1,5 +1,5 @@
 
-       <div class="main-container">
+        <div class="main-container">
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
@@ -9,7 +9,7 @@
                         </li>
                         <li data-target="#step2">
                             <span class="step">2</span>
-                            <span class="title">Разграничение полномочия</span>
+                            <span class="title">Присвоение статуса полномочию</span>
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>
@@ -272,6 +272,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
+                                <button class="btn btn-info btn-sm pull-left" id="add_usl_btn">Добавить услугу</button>
+                                <button class="btn btn-info btn-sm pull-left" id="add_func_btn">Добавить функцию</button>
+                                <button class="btn btn-info btn-sm pull-left" id="add_fcn_btn">Добавить функцию контроля и надзора</button>
+                            
                                 <button id="send_btn" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#comments_modal">Отправить на согласование</button>
                             </div>
                         </div>
