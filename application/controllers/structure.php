@@ -16,30 +16,82 @@ class Structure extends APP_Controller {
     }
 
     public function arm_kis() {
+        $grid_data = array();
+        $column_names = array();
+        $column_models = array();
+
         $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
                             ->as_array()
                             ->get_all();
         
+        $properties = $this->property->with('format')->get_many_by('code IS NOT NULL');
+        
+        foreach ((array)$properties as $property) {
+            $column_names[] = $property['property_name'];
+            $model['name'] = $property['code'];
+            $model['index'] = $property['code'];
+            switch ($property['format']['property_format_name']) {
+                case 'system':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 100;
+                    break;
+                case 'number':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 100;
+                    break;
+                case 'date':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 120;
+                    $model['sorttype'] = 'date';
+                    break;
+                case 'textarea':
+                    $model['editable'] = true;
+                    $model['fixed'] = true;
+                    $model['edittype'] = 'textarea';
+                    $model['editoptions']['rows'] = 3;
+                    $model['width'] = 250;
+                    break;
+                case 'select':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['stype'] = 'select';
+                    $model['edittype'] = 'select';
+                    $model['editoptions'] = [];
+                    $model['width'] = 250;
+                    break;
+                case 'multiselect':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['stype'] = 'select';
+                    $model['edittype'] = 'select';
+                    $model['editoptions'] = [];
+                    $model['width'] = 250;
+                    break;
+            }
+            $column_models[] = $model;
+        }
         // prepare json grid
-        $data = array();
         foreach ((array)$authorities as $authority) {
-            //{id_poln:"1",name_iogv:"наименование полномочия1",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"1", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"}
-            $data[] = array(
-                'id_poln' => $authority['id_authority'],
-                'name_iogv' => $authority['authority_name'],
-                'status_poln' => $authority['status']->name,
-                'name_usl' => '',
-                'id_usl' => '',
-                'status_usl' => '',
+            $grid_data[] = array(
+                'id_authority' => $authority['id_authority'],
+                'authority_name' => $authority['authority_name'],
                 'srok_otveta' => '30.08.2014',
-                'status_isp' => '',
-                'name_iogvspb' => $authority['organization']->organization_name
+                'name_iogv' => $authority['organization']->organization_name,
+                'punkt_iogv' => ''
                 );
         }
-
-        $this->layout->view('arm_kis', array('data' => json_encode($data)));
+        
+        $this->layout->view('arm_kis', array(
+            'grid_data' => json_encode($grid_data),
+            'column_models' => json_encode($column_models),
+            'column_names' => json_encode($column_names),
+            )
+        );
     }
 
     public function uvedoml() {
