@@ -295,7 +295,10 @@
         </div>
         
         <script type="text/javascript">
-            var grid_data = 
+        var grid_data = <?=$grid_data?>,
+                column_models = <?=$column_models?>,
+                column_names = <?=$column_names?>;
+            /*var grid_data = 
             [ 
                     {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Полномочию присвоен статус</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func' style='color:#6699ff'>Ожидает согласования КИС</div><hr><div class='cell_div_usl' style='color:#6699ff'>Разрабатывается регламент</div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
                     {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
@@ -320,7 +323,7 @@
                     {id_poln:"17",name_iogv:"наименование полномочия17",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"17", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
                     {id_poln:"18",name_iogv:"наименование полномочия18",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"18", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
                     {id_poln:"19",name_iogv:"наименование полномочия19",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"19", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"}
-            ];
+            ];*/
 
 
             jQuery(function($) {
@@ -350,7 +353,7 @@
                             data: grid_data,
                             datatype: "local",
                             height: "auto",
-                            colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
+                            /*colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
                             colModel:[
                                     {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100',formatter:linkToStep,unformat:unLinkToStep},
                                     {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250',formatter:linkToStep,unformat:unLinkToStep},
@@ -369,7 +372,9 @@
                                     {name:'nomer_punkta_iogv',index:'nomer_punkta_iogv', editable: true, fixed:true},
                                     {name:'vnes_izm_npa',index:'vnes_izm_npa', editable: true, fixed:true},
                                     {name:'isp_is',index:'isp_is', editable: true, fixed:true}
-                            ], 
+                            ], */
+                            colNames:column_names,
+                            colModel:column_models,
 
                             //viewrecords : true,
                             rowNum:-1,
