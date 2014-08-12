@@ -465,7 +465,6 @@
                 var tab_pane= $('#'+type).clone().attr('id',type+num[type]);
                 tab_pane[0].firstElementChild.id=type+num[type];
                 tab_pane[0].firstElementChild.name+=num[type];
-                console.log(tab_pane[0].firstElementChild.name);
                 function tab_name()
                 {
                     if (type=='sr'){return 'Услуга';}
@@ -475,13 +474,7 @@
                 var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_name()+" "+num[type]+"</a></li>";
                 $('#razgran_u_f_tabs').append(tab);
                 $('#tab_content').append(tab_pane[0]);
-                $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(event,ui){
-                    //var target_tab = ui.target.parentNode.parentNode.
-                    $('#navtab_'+type+num[type]).remove();
-                    console.log($('#navtab_'+type+num[type]));
-                    $('#'+type+num[type]).remove();
-                    console.log( $('#'+type+num[type]));
-                });
+                $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(event,ui){});
                 num[type]++;
             }
             $(".add_sr_btn").on('click',function(){add_new_tab("sr");});
