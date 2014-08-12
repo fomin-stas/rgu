@@ -101,7 +101,7 @@ class Structure extends APP_Controller {
             $this->load->model('service');
             $this->load->model('service_property');
             $service = $this->service->get_by('id_authority', $authority['id_authority']);
-            if(isset($service)) {
+            if(isset($service) AND !empty($service)) {
                 $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
                 if(count($service_properties)) {
                     foreach ((array)$service_properties as $p) {
@@ -300,7 +300,7 @@ class Structure extends APP_Controller {
             $this->load->model('service');
             $this->load->model('service_property');
             $service = $this->service->get_by('id_authority', $authority['id_authority']);
-            if(isset($service)) {
+            if(isset($service) AND !empty($service)) {
                 $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
                 if(count($service_properties)) {
                     foreach ((array)$service_properties as $p) {

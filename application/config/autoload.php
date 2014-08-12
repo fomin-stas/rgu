@@ -113,7 +113,7 @@ $autoload['model'] = array(
 	'user', 
 	'organization_model', 
 	'authority', 
-        'authority_property',
+        'authority_property_model',
 	'authority_status_model',
 	'property',
         'spher',
