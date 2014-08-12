@@ -1,8 +1,10 @@
 <?php
 
-class Authority_property extends APP_Model {
+class Authority_property_model extends APP_Model {
 
     public $_table = 'authority_property';
+    public $primary_key = 'id_authority_property';
+    protected $return_type = 'array';
     public $_id_authority = 0;
     public function insert_where_code($data, $skip_validation = FALSE) {
         if ($skip_validation === FALSE) {

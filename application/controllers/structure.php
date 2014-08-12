@@ -23,10 +23,12 @@ class Structure extends APP_Controller {
         $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
-                            ->as_array()
+                            ->with('properties')
                             ->get_all();
         
         $properties = $this->property->with('format')->get_many_by('code IS NOT NULL');
+
+        //$properties = array_slice($properties, 0, 1);
         
         foreach ((array)$properties as $property) {
             $column_names[] = $property['property_name'];
@@ -73,19 +75,46 @@ class Structure extends APP_Controller {
                     $model['width'] = 250;
                     break;
             }
+
+            // linked to colmn model
             $column_models[] = $model;
+
+            // add property to properties buffer
+            $properties_buff[$property['id_property']] = $property;
         }
         // prepare json grid
         foreach ((array)$authorities as $authority) {
-            $grid_data[] = array(
-                'id_authority' => $authority['id_authority'],
-                'authority_name' => $authority['authority_name'],
-                'srok_otveta' => '30.08.2014',
-                'name_iogv' => $authority['organization']->organization_name,
-                'punkt_iogv' => ''
-                );
+            $values = array();
+
+            // create row values
+            foreach ($column_models as $model) {
+                $values[$model['name']] = '';
+            }
+            
+            // add athority properties to grid
+            foreach ((array)$authority['properties'] as $p) {
+                if(array_key_exists($p['id_property'], $properties_buff)) {
+                    $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
+                }
+            }
+            //add service properties to grid
+            $this->load->model('service');
+            $this->load->model('service_property');
+            $service = $this->service->get_by('id_authority', $authority['id_authority']);
+            if(isset($service)) {
+                $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+                if(count($service_properties)) {
+                    foreach ((array)$service_properties as $p) {
+                        if(array_key_exists($p['id_property'], $properties_buff)) {
+                            $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
+                        }
+                    }
+                }
+            }
+
+            $grid_data[] = $values;
         }
-        
+        $grid_data[] = $values;
         $this->layout->view('arm_kis', array(
             'grid_data' => json_encode($grid_data),
             'column_models' => json_encode($column_models),
@@ -186,7 +215,111 @@ class Structure extends APP_Controller {
     }
 
     public function arm_iogv() {
-        $this->layout->view('arm_iogv');
+        $grid_data = array();
+        $column_names = array();
+        $column_models = array();
+
+        $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->get_all();
+        
+        $properties = $this->property->with('format')->get_many_by('code IS NOT NULL');
+
+        //$properties = array_slice($properties, 0, 1);
+        
+        foreach ((array)$properties as $property) {
+            $column_names[] = $property['property_name'];
+            $model['name'] = $property['code'];
+            $model['index'] = $property['code'];
+            switch ($property['format']['property_format_name']) {
+                case 'system':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 100;
+                    break;
+                case 'number':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 100;
+                    break;
+                case 'date':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['width'] = 120;
+                    $model['sorttype'] = 'date';
+                    break;
+                case 'textarea':
+                    $model['editable'] = true;
+                    $model['fixed'] = true;
+                    $model['edittype'] = 'textarea';
+                    $model['editoptions']['rows'] = 3;
+                    $model['width'] = 250;
+                    break;
+                case 'select':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['stype'] = 'select';
+                    $model['edittype'] = 'select';
+                    $model['editoptions'] = array();
+                    $model['width'] = 250;
+                    break;
+                case 'multiselect':
+                    $model['editable'] = false;
+                    $model['fixed'] = true;
+                    $model['stype'] = 'select';
+                    $model['edittype'] = 'select';
+                    $model['editoptions'] = [];
+                    $model['width'] = 250;
+                    break;
+            }
+
+            // linked to colmn model
+            $column_models[] = $model;
+
+            // add property to properties buffer
+            $properties_buff[$property['id_property']] = $property;
+        }
+        // prepare json grid
+        foreach ((array)$authorities as $authority) {
+            $values = array();
+
+            // create row values
+            foreach ($column_models as $model) {
+                $values[$model['name']] = '';
+            }
+            
+            // add athority properties to grid
+            foreach ((array)$authority['properties'] as $p) {
+                if(array_key_exists($p['id_property'], $properties_buff)) {
+                    $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
+                }
+            }
+            //add service properties to grid
+            $this->load->model('service');
+            $this->load->model('service_property');
+            $service = $this->service->get_by('id_authority', $authority['id_authority']);
+            if(isset($service)) {
+                $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+                if(count($service_properties)) {
+                    foreach ((array)$service_properties as $p) {
+                        if(array_key_exists($p['id_property'], $properties_buff)) {
+                            $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
+                        }
+                    }
+                }
+            }
+
+            $grid_data[] = $values;
+        }
+        $grid_data[] = $values;
+        $this->layout->view('arm_iogv', array(
+            'grid_data' => json_encode($grid_data),
+            'column_models' => json_encode($column_models),
+            'column_names' => json_encode($column_names),
+            )
+        );
     }
 
 }
