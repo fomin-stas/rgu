@@ -871,6 +871,23 @@ var App = {
 		console.log('login');	
 	},
 
+	linkToStep:function(cellvalue, options, rowObject){
+		if(options.rowId==1) //this is not good
+        {
+            text_link="structure/step3";
+        }
+        else {text_link="structure/step4_1";}
+        cellvalue=cellvalue.link(text_link);
+        return cellvalue;
+	},
+
+	unLinkToStep:function (cellvalue, options, rowObject)
+                    {
+                        var a_tag = "<a href='"+text_link+"'>";
+                        //cellvalue = cellvalue.replace(a_tag,"");
+                        return cellvalue;
+                    }
+
 }
 jQuery(document).ready(function($) {
 	App.init(_options);	

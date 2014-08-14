@@ -16,6 +16,14 @@ class Structure extends APP_Controller {
     }
 
     public function arm_kis() {
+        // load libs
+        $this->load->library('zend');
+        $this->zend->load('Zend/Json');
+        $this->zend->load('Zend/Json/Encoder');
+        $this->zend->load('Zend/Json/Decoder');
+        $this->zend->load('Zend/Json/Exception');
+        $this->zend->load('Zend/Json/Expr');
+
         $grid_data = array();
         $column_names = array();
         $column_models = array();
@@ -76,6 +84,13 @@ class Structure extends APP_Controller {
                     break;
             }
 
+            switch ($property['code']) {
+                case 'name_iogv':
+                    $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
+                    $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
+                    break;
+            }
+
             // linked to colmn model
             $column_models[] = $model;
 
@@ -117,7 +132,8 @@ class Structure extends APP_Controller {
         $grid_data[] = $values;
         $this->layout->view('arm_kis', array(
             'grid_data' => json_encode($grid_data),
-            'column_models' => json_encode($column_models),
+            //'column_models' => json_encode($column_models),
+            'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
             )
         );
@@ -215,6 +231,7 @@ class Structure extends APP_Controller {
     }
 
     public function arm_iogv() {
+
         $grid_data = array();
         $column_names = array();
         $column_models = array();
