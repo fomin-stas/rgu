@@ -3,11 +3,11 @@
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
-                        <li data-target="#step1">
+                        <li data-target="#step1" class="complete">
                             <span class="step">1</span>
                             <span class="title">Новое полномочие</span>
                         </li>
-                        <li data-target="#step2">
+                        <li data-target="#step2" class="complete">
                             <span class="step">2</span>
                             <span class="title">Присвоение статуса полномочию</span>
                         </li>
