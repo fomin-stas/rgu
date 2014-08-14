@@ -158,6 +158,8 @@ $config['groups']['site'] = array(
 		array('grid.setcolumns.js'),
 		array('ace-elements.min.js'),
 		array('ace.min.js'),
+		array('jquery-ui.min.js'),
+		array('jquery.ui-contextmenu.min.js'),
 		array('models/structure.js'),
 		array('models/app.js')
 	),
