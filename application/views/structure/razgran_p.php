@@ -13,11 +13,11 @@
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>
-                            <span class="title">Согласование разграничения</span>
+                            <span class="title">Согласование присвоения статуса</span>
                         </li>
                         <li data-target="#step4">
                             <span class="step">4</span>
-                            <span class="title">Согласовано</span>
+                            <span class="title">Полномочию присвоен статус</span>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +61,7 @@
                                     </tr>
                                     <tr>
                                         <td>Статус:</td>
-                                        <td><p style="color:red">Ожидает присвоения статусу полномочия</p></td>
+                                        <td><p style="color:red">Ожидает присвоения статуса полномочия</p></td>
                                     </tr>
                                     <tr>
                                         <td>Комментарий:</td>

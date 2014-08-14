@@ -9,15 +9,15 @@
                         </li>
                         <li data-target="#step2">
                             <span class="step">2</span>
-                            <span class="title">Разграничение полномочия</span>
+                            <span class="title">Присвоение статуса полномочию</span>
                         </li>
                         <li data-target="#step3">
                             <span class="step">3</span>
-                            <span class="title">Согласование разграничения</span>
+                            <span class="title">Согласование присвоения статуса</span>
                         </li>
                         <li data-target="#step4">
                             <span class="step">4</span>
-                            <span class="title">Согласовано</span>
+                            <span class="title">Полномочию присвоен статус</span>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="step-pane" id="step3">
                     <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <h3 class="center">Разграничение полномочий</h3>
+                                <h3 class="center">Присвоение статуса полномочию</h3>
                                 <table class="table table-striped table-bordered">
                                     <tr>
                                         <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <td>Статус:</td>
-                                        <td><p style="color:red">Ожидает разграничения</p></td>
+                                        <td><p style="color:red">Ожидает присвоения статуса полномочию</p></td>
                                     </tr>
                                     <tr>
                                         <td>Комментарий:</td>

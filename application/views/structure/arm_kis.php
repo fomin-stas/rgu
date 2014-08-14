@@ -713,6 +713,7 @@
                         }
                     }
 
+                    fit_window_size();
                     add_hide_btn();
                     
                     //custom formater, that wrap cellcontent into <a>
@@ -798,5 +799,16 @@
                     if (ui.target[0]==currentRow[i] | ui.target[0].parentNode==currentRow[i]){cellid=i;}
                 }
                 return cellid;
+            }
+
+			function fit_window_size()
+            {
+                var height=$(".ui-jqgrid-bdiv").height();
+                if (document.body.scrollHeight>window.innerHeight)
+                {
+                    $(".ui-jqgrid-bdiv").css("height",height-50);
+                    fit_window_size();
+                }
+                else {return height;}
             }
         </script>
