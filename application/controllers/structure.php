@@ -111,6 +111,8 @@ class Structure extends APP_Controller {
                 if(array_key_exists($p['id_property'], $properties_buff)) {
                     $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
                 }
+                $values['id_authority'] = $authority['id_authority'];
+                $values['id_authority_status'] = $authority['id_authority_status'];
             }
             //add service properties to grid
             $this->load->model('service');
