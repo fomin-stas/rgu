@@ -102,7 +102,7 @@
                                             <div class="tab-content" id="tab_content">
 
                                                 <div class="tab-pane" id="sr" hidden>
-                                                    <form class="form-horizontal" name="sr_form" action="structure/step2_submit">
+                                                    <form class="form-horizontal" method="post" name="sr_form" action="structure/step2_submit">
                                                         <fieldset>
                                                             <div class="form-group">
                                                                 <label for="full_name_sr" class="control-label col-md-5">Наименование услуги</label>

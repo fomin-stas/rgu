@@ -3,19 +3,19 @@
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
-                        <li data-target="#step1" class="active">
+                        <li data-target="#step1" class="complete">
                             <span class="step">1</span>
                             <span class="title">Новое полномочие</span>
                         </li>
-                        <li data-target="#step2">
+                        <li data-target="#step2" class="complete">
                             <span class="step">2</span>
                             <span class="title">Присвоение статуса полномочию</span>
                         </li>
-                        <li data-target="#step3">
+                        <li data-target="#step3" class="complete">
                             <span class="step">3</span>
                             <span class="title">Согласование присвоения статуса</span>
                         </li>
-                        <li data-target="#step4">
+                        <li data-target="#step4" class="active">
                             <span class="step">4</span>
                             <span class="title">Полносмочию присвоен статус</span>
                         </li>
