@@ -303,12 +303,6 @@
                 
         
         <script type="text/javascript">
-            $('#my-wizard')
-            .ace_wizard({
-                step: 4 
-            }).on('stepclick', function(e) {
-                e.preventDefault();
-            });
             $('#step4_file').ace_file_input({
                 no_file: "Присоединить файл",
                 btn_choose:"Выбрать",
