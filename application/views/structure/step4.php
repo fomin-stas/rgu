@@ -3,7 +3,7 @@
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
-                        <li data-target="#step1" class="complete">
+                        <li data-target="#step1">
                             <span class="step">1</span>
                             <span class="title">Новое полномочие</span>
                         </li>
