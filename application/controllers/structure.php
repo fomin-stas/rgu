@@ -177,22 +177,22 @@ class Structure extends APP_Controller {
         $comments['comment_st1']=$this->input->get('comment_st1');
         $this->load->model('authority');
         $id_authority=$this->authority->insert($authority);
-        $this->authority_property->_id_authority=$id_authority;
-        $this->authority_property->insert_where_code_many($property);
+        $this->authority_property_model->_id_authority=$id_authority;
+        $this->authority_property_model->insert_where_code_many($property);
         redirect('structure/arm_kis');
     }
 
     public function step2($id_authority) {
         $authority=$this->authority->get($id_authority);
-        $data['authority_name']=$authority->authority_name;
-        $authority_property=$this->authority_property->get_many_by('id_authority',$id_authority);
-        $organization=$this->organization_model->get($authority->id_organization);
+        $data=$authority;
+        $authority_property=$this->authority_property_model->get_many_by('id_authority',$id_authority);
+        $organization=$this->organization_model->get($authority['id_organization']);
         $data['organization']=$organization->organization_name;
         $data['spher']=$this->spher->dropdown('name','name');
         $data['organization_provide_service']=$this->organization_model->dropdown('organization_name','organization_name');
         foreach($authority_property as $value){
-            $property=$this->property->get($value->id_property);
-            $data[$property['code']]=$value->value;
+            $property=$this->property->get($value['id_property']);
+            $data[$property['code']]=$value['value'];
         }
         $this->layout->view('razgran_p', $data);
     }
@@ -270,7 +270,7 @@ class Structure extends APP_Controller {
                     $model['fixed'] = true;
                     $model['stype'] = 'select';
                     $model['edittype'] = 'select';
-                    $model['editoptions'] = [];
+                    $model['editoptions'] = array();
                     $model['width'] = 250;
                     break;
             }

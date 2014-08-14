@@ -45,7 +45,7 @@
                                     </tr>
                                     <tr>
                                         <td>Срок ответа:</td>
-                                        <td><?=$srok_otveta?></td>
+                                        <td><? if (isset($srok_otveta)) echo $srok_otveta;?></td>
                                     </tr>
 
                                 </table>
@@ -61,7 +61,7 @@
                                     </tr>
                                     <tr>
                                         <td>Статус:</td>
-                                        <td><p style="color:red">Ожидает присвоения статусу полномочия</p></td>
+                                        <td><p style="color:red">Ожидает присвоения статуса полномочия</p></td>
                                     </tr>
                                     <tr>
                                         <td>Комментарий:</td>
@@ -80,9 +80,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
-                                <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
-                                <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
+                                <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
+                                <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
+                                <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
                             </div>
                         </div>
                         <div class="row">
