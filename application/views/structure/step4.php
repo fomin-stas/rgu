@@ -35,7 +35,7 @@
                     <!-- step 3 -->
                     </div>
 
-                    <div class="step-pane" id="step4">
+                    <div class="step-pane active" id="step4">
                     <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <h3 class="center">
