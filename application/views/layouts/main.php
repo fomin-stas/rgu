@@ -23,7 +23,7 @@
                 'baseURL':'<?=base_url()?>'
             };
         </script>
-    <?$this->carabiner->display('site', 'js')?>
+        <?$this->carabiner->display('site', 'js')?>
         <div class="navbar navbar-default navbar-fixed-top h-navbar">
             <div class="navbar-container">
                 <div class="navbar-header pull-left">

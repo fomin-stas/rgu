@@ -755,7 +755,7 @@
             
             $(document).contextmenu(
             {
-                delegate:"#1 td[role='gridcell']",
+                delegate:"td[role='gridcell']",
                 menu:
                     [
                 {title:"Подробная информация",action:function(event,ui)
