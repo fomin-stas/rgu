@@ -290,12 +290,6 @@
         </div>
         
         <script type="text/javascript">
-            $('#my-wizard')
-            .ace_wizard({
-                step: 3 
-            }).on('stepclick', function(e) {
-                e.preventDefault();
-            });
             $('#step3_file').ace_file_input({
                 no_file: "Присоединить файл",
                 btn_choose:"Выбрать",
