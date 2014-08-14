@@ -3,7 +3,7 @@
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
-                        <li data-target="#step1" class="active">
+                        <li data-target="#step1">
                             <span class="step">1</span>
                             <span class="title">Новое полномочие</span>
                         </li>
@@ -11,7 +11,7 @@
                             <span class="step">2</span>
                             <span class="title">Разграничение полномочия</span>
                         </li>
-                        <li data-target="#step3">
+                        <li data-target="#step3" class="active">
                             <span class="step">3</span>
                             <span class="title">Согласование разграничения</span>
                         </li>
@@ -31,7 +31,7 @@
                         <!-- step 2-->
                     </div>
 
-                    <div class="step-pane" id="step3">
+                    <div class="step-pane active" id="step3">
                     <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <h3 class="center">Разграничение полномочий</h3>
