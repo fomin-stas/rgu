@@ -203,6 +203,3 @@ input[class="search empty ui-widget-content ui-corner-all"]{height: auto !import
 /*pager*/
 #grid-pager{position: fixed;z-index: 999;bottom: 0px;left: 0px;right: 0px;}
 #timeline_search_input{height:18px;padding:3px;font-size:12px;}
-/*scrollbar to bottom of page*/
-.main-container .tabbable{width:auto !important}
-body{background-color: white !important}

@@ -27,7 +27,7 @@
                         <!-- step 1-->
                     </div>
 
-                    <div class="step-pane" id="step2">
+                    <div class="step-pane active" id="step2">
                         <!-- step 2 -->
                     </div>
 

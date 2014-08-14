@@ -122,6 +122,8 @@
 
 
 <script type="text/javascript">
+    $('#my-wizard')
+            .ace_wizard();
     $('#step1_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",

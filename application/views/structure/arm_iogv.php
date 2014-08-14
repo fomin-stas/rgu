@@ -667,6 +667,7 @@
                         }
                     }
 
+                    fit_window_size();
                     add_hide_btn();
                     
                     //custom formater, that wrap cellcontent into <a>
@@ -699,7 +700,7 @@
            
             $(document).contextmenu(
             {
-                delegate:"td[role='gridcell']",
+                delegate:"#1 td[role='gridcell']",
                 menu:
                     [
                 {title:"Подробная информация",action:function(event,ui)
@@ -713,4 +714,15 @@
                 {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
                     ]
             });
+
+			function fit_window_size()
+            {
+                var height=$(".ui-jqgrid-bdiv").height();
+                if (document.body.scrollHeight>window.innerHeight)
+                {
+                    $(".ui-jqgrid-bdiv").css("height",height-50);
+                    fit_window_size();
+                }
+                else {return height;}
+            }
         </script>

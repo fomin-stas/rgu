@@ -80,9 +80,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
-                                <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
-                                <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
+                                <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
+                                <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
+                                <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
                             </div>
                         </div>
                         <div class="row">
@@ -90,7 +90,10 @@
                                 <div class="widget-box">
                                     <div class="widget-header">
                                         <div class="widget-toolbar">
-
+                                            <ul id="razgran_u_f_tabs" class="nav nav-tabs">
+                                                <li id='navtab_sr1'><a href='#sr' data-toggle='tab'>Услуга 1</a></li>
+                                                <li id='navtab_sn1'><a href='#sn' data-toggle='tab'>Функция 1</a></li>
+                                                <li id='navtab_skn1'><a href='#skn' data-toggle='tab'>Функция контроля/надзора 1</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -449,6 +452,12 @@
         
         
         <script type="text/javascript">
+            $('#my-wizard')
+            .ace_wizard({
+                step: 2 
+            }).on('stepclick', function(e) {
+                e.preventDefault();
+            });
             $('#step2_file').ace_file_input({
                 no_file: "Присоединить файл",
                 btn_choose:"Выбрать",
@@ -463,6 +472,7 @@
                 var tab_pane= $('#'+type).clone().attr('id',type+num[type]);
                 tab_pane[0].firstElementChild.id=type+num[type];
                 tab_pane[0].firstElementChild.name+=num[type];
+                console.log(tab_pane[0].firstElementChild.name);
                 function tab_name()
                 {
                     if (type=='sr'){return 'Услуга';}
@@ -472,10 +482,12 @@
                 var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_name()+" "+num[type]+"</a></li>";
                 $('#razgran_u_f_tabs').append(tab);
                 $('#tab_content').append(tab_pane[0]);
-                $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(){
-                    var tab_main=this.parentNode.parentNode;
-                    $('#navtab_'+tab_main.id).remove();
-                    tab_main.remove();
+                $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(event,ui){
+                    ui.target[0].parentNode.parentNode.remove();
+//                    $('#navtab_'+type+num[type]).remove();
+//                    console.log($('#navtab_'+type+num[type]));
+//                    $('#'+type+num[type]).remove();
+//                    console.log( $('#'+type+num[type]));
                 });
                 num[type]++;
             }
