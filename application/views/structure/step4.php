@@ -3,7 +3,7 @@
             <div class="container">
                 <div id="my-wizard" data-target="#step-container" class="wizard">
                     <ul class="wizard-steps">
-                        <li data-target="#step1">
+                        <li data-target="#step1" class="complete">
                             <span class="step">1</span>
                             <span class="title">Новое полномочие</span>
                         </li>
@@ -27,7 +27,7 @@
                         <!-- step 1-->
                     </div>
 
-                    <div class="step-pane active" id="step2">
+                    <div class="step-pane" id="step2">
                         <!-- step 2 -->
                     </div>
 
@@ -303,12 +303,6 @@
                 
         
         <script type="text/javascript">
-            $('#my-wizard')
-            .ace_wizard({
-                step: 4 
-            }).on('stepclick', function(e) {
-                e.preventDefault();
-            });
             $('#step4_file').ace_file_input({
                 no_file: "Присоединить файл",
                 btn_choose:"Выбрать",
