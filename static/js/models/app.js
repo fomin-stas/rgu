@@ -24,11 +24,18 @@ var App = {
 	},
 
 	linkToStep:function(cellvalue, options, rowObject){
-		if(options.rowId==1) //this is not good
-        {
-            text_link="structure/step3";
-        }
-        else {text_link="structure/step4_1";}
+		switch(rowObject.id_authority_status) {
+			case '1':
+				text_link = 'structure/step2/'+rowObject.id_authority;
+				break;
+			case '2':
+				text_link = 'structure/step3/'+rowObject.id_authority;	
+				break;
+			case '3':
+				text_link = 'structure/step4/'+rowObject.id_authority;
+				break;		
+		}
+
         cellvalue=cellvalue.link(text_link);
         return cellvalue;
 	},
