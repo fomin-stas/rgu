@@ -205,4 +205,5 @@ input[class="search empty ui-widget-content ui-corner-all"]{height: auto !import
 #timeline_search_input{height:18px;padding:3px;font-size:12px;}
 /*scrollbar to bottom of page*/
 .main-container .tabbable{width:auto !important}
+.main-container, .main-container::before{max-width:none !important;width:auto !important}
 body{background-color: white !important}
