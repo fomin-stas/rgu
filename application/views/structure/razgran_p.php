@@ -456,22 +456,35 @@
                 enable_reset: true
             });
             
-           
+            //add new functions and services
             var num ={sr:1,sn:1,skn:1};
             function add_new_tab(type)
             {   
-                var tab_pane= $('#'+type).clone().attr('id',type+num[type]);
-                tab_pane[0].firstElementChild.id=type+num[type];
+                var tab_pane= $('#'+type).clone().attr('id','pane_'+type+num[type]); //clone existing tab-pane template and change id
+                tab_pane[0].firstElementChild.id='form_'+type+num[type]; //give it new id and name
                 tab_pane[0].firstElementChild.name+=num[type];
-                function tab_name()
+                
+                function tab_text()
                 {
                     if (type=='sr'){return 'Услуга';}
                     else if (type=='sn'){return 'Функция';}
                     else {return 'Функция контроля/надзора';}
                 }
-                var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_name()+" "+num[type]+"</a></li>";
+                
+                //insert navigation-tab and content
+                var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_text()+" "+num[type]+"</a></li>";
                 $('#razgran_u_f_tabs').append(tab);
                 $('#tab_content').append(tab_pane[0]);
+                
+                //rename inputs and labels into type[num]_[i] form
+                for (var i=0; i<$('#form_'+type+num[type]+' label').length; i++)
+                {
+                    $('#form_'+type+num[type]+' label')[i].setAttribute('for',type+num[type]+'_'+i);
+                    $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('id',type+num[type]+'_'+i);
+                    $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('name',type+num[type]+'_'+i);
+                }
+                
+                //delete-buttons logic
                 $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(){
                     var tab_main=this.parentNode.parentNode;
                     $('#navtab_'+tab_main.id).remove();
