@@ -1,29 +1,44 @@
 
       <div class="main-container">
-            <div class="tabbable col-md-12">
+            <div class="tabbable col-md-12" id="gridTabs">
                 <ul class="nav nav-tabs tab-color-blue background-blue padding-12">
                     <li>
-                        <a href="#nov_sogl" data-toggle="tab">Новые согласования (4)</a>
+                        <a href="#new_authorities" data-toggle="tab">Новые согласования (<?=count($grid_data['new_authorities'])-1?>)</a>
                     </li>
                     <li>
-                        <a href="#v_rabote" data-toggle="tab">Полномочия в работе (14)</a>
+                        <a href="#in_working" data-toggle="tab">Полномочия в работе (<?=count($grid_data['in_working'])-1?>)</a>
                     </li>
                     <li>
-                        <a href="#ispoln" data-toggle="tab">Исполняемые (411)</a>
+                        <a href="#in_process" data-toggle="tab">Исполняемые (<?=count($grid_data['in_process'])-1?>)</a>
                     </li>
                     <li  class="active">
-                        <a href="#all" data-toggle="tab">Полный перечень (425)</a>
+                        <a href="#all" data-toggle="tab">Полный перечень (<?=count($grid_data['all'])?>)-1</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane" id="nov_sogl"></div>
-                    <div class="tab-pane" id="v_rabote"></div>
-                    <div class="tab-pane" id="ispoln"></div>
+                    <div class="tab-pane" id="new_authorities">
+                        <div class="ui-jqgrid ui-corner-all">
+                            <table id="grid-table-new_authorities" class="grid-table"></table>
+                        </div>
+                        <div id="grid-pager-new_authorities" class="grid-pager"></div>
+                    </div>
+                    <div class="tab-pane" id="in_working">
+                        <div class="ui-jqgrid ui-corner-all">
+                            <table id="grid-table-in_working" class="grid-table"></table>
+                        </div>
+                        <div id="grid-pager-in_working" class="grid-pager"></div>
+                    </div>
+                    <div class="tab-pane" id="in_process">
+                        <div class="ui-jqgrid ui-corner-all">
+                            <table id="grid-table-in_process" class="grid-table"></table>
+                        </div>
+                        <div id="grid-pager-in_process" class="grid-pager"></div>
+                    </div>
                     <div class="tab-pane in active" id="all">
                         <div class="ui-jqgrid ui-corner-all">
-                            <table id="grid-table"></table>
+                            <table id="grid-table-all" class="grid-table"></table>
                         </div>
-                        <div id="grid-pager"></div>
+                        <div id="grid-pager-all" class="grid-pager"></div>
                     </div>
                 </div>
             </div>
@@ -295,122 +310,48 @@
         </div>
         
         <script type="text/javascript">
-        var grid_data = <?=$grid_data?>,
+            var data = <?=json_encode($grid_data)?>,
                 column_models = <?=$column_models?>,
                 column_names = <?=$column_names?>;
-            /*var grid_data = 
-            [ 
-                    {id_poln:"4564567",name_iogv:"Обеспечивать в пределах компетенции Комитета выполнение федеральных программ, в реализации которых участвует Санкт-Петербург, а также программ развития Санкт-Петербурга.",status_poln:"<p style='color:green'>Полномочию присвоен статус</p>",name_usl:"<div class='cell_div_func' id='usl1_div'>Выполнение федеральных программ, в реализации которых участвует Санкт-Петербург</div><hr><div class='cell_div_usl' id='func1_div'>Выполнение федеральных программ развития Санкт-Петербурга</div>",id_usl:"<div class='cell_div_func'>4564570</div><hr><div class='cell_div_usl'>4564571</div>", status_usl:"<div class='cell_div_func' style='color:#6699ff'>Ожидает согласования КИС</div><hr><div class='cell_div_usl' style='color:#6699ff'>Разрабатывается регламент</div>",srok_otveta:"<div class='cell_div_func'>29.04.2014</div><hr><div class='cell_div_usl'>-</div>",type:"<div class='cell_div_func'>функция</div><hr><div class='cell_div_usl'>услуга</div>",status_isp:"<div class='cell_div_func'>Общая</div><hr><div class='cell_div_usl'>Общая</td></div>",name_iogvspb:"<div class='cell_div_func'>Архивный комитет</div><hr><div class='cell_div_usl'>Архивный комитет</div>"},
-                    {id_poln:"4564566",name_iogv:"Разрабатывать и утверждать схему и программу развития электроэнергетики Санкт-Петербурга",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Разработка и утверждение схемы и программы развития электроэнергетики Санкт-Петербурга",id_usl:"4564556", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
-                    {id_poln:"4564565",name_iogv:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Обеспечивает реализацию программы развития конкуренции в Российской Федерации в соответствии с компетенцией Комитета и разрабатывает региональную программу развития конкуренции в Санкт-Петербурге",id_usl:"4564562", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
-                    {id_poln:"4564564",name_iogv:"Взаимодействует в установленном порядке по вопросам своей компетенции с органами государственной власти, органами местного самоуправления, иными государственными и негосударственными организациями, а также должностными лицами.",status_poln:"<p style='color:#6699ff'>На согласовании</p>",name_usl:"Осуществлять взаимодействие  по вопросам, находящимся в  компетенции исполнительного  органа государственной власти Санкт-Петербурга, с органами государственной власти и органами местного самоуправления, организациями, общественными",id_usl:"4564561", status_usl:"<p style='color:#6699ff'>Ожидает согласования КИС</p>",srok_otveta:"30.04.2014",type:"функция",status_isp:"Общая",name_iogvspb:"Архивный комитет"},
-                    {id_poln:"1",name_iogv:"наименование полномочия1",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"1", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"2",name_iogv:"наименование полномочия2",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"2", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"3",name_iogv:"наименование полномочия3",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"3", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"4",name_iogv:"наименование полномочия4",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"4", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"5",name_iogv:"наименование полномочия5",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"5", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"6",name_iogv:"наименование полномочия6",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"6", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"7",name_iogv:"наименование полномочия7",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"7", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"8",name_iogv:"наименование полномочия8",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"8", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"9",name_iogv:"наименование полномочия9",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"9", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"10",name_iogv:"наименование полномочия10",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"10", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"11",name_iogv:"наименование полномочия11",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"11", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"12",name_iogv:"наименование полномочия12",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"12", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"13",name_iogv:"наименование полномочия13",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"13", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"14",name_iogv:"наименование полномочия14",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"14", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"15",name_iogv:"наименование полномочия15",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"15", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"16",name_iogv:"наименование полномочия16",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"16", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"17",name_iogv:"наименование полномочия17",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"17", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"18",name_iogv:"наименование полномочия18",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"18", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"},
-                    {id_poln:"19",name_iogv:"наименование полномочия19",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"19", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"}
-            ];*/
-
-
             jQuery(function($) {
-                    var grid_selector = "#grid-table";
-                    var pager_selector = "#grid-pager";
-                    var text_link; //link cellcontent, must changes dynamicaly
+                var grid_data = data.all;
+                var grid_selector = "#grid-table-all";
+                var pager_selector = "#grid-pager-all";
+                var text_link; //link cellcontent, must changes dynamicaly 
+                var myDefaultSearch = "cn";
+                    console.log(data);
+                // Tabs init
+                $('#gridTabs .nav-tabs a:last').tab('show');
+                $('#gridTabs .nav-tabs a').click(function (e) {
+                  e.preventDefault();
+                  $(this).tab('show');
+                    var tab_hash = e.target.hash.replace('#', '');
+                    var grid_selector = "#grid-table-"+tab_hash;
+                    var pager_selector = "#grid-pager-"+tab_hash;
+                    var grid_data = eval('data.'+tab_hash);
+
+                    Structure.renderGrid(grid_selector, pager_selector, grid_data);
+                });
 
                     //resize to fit page size
                     $(window).on('resize.jqGrid', function () {
                             $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                })
+                });
                     //resize on sidebar collapse/expand
                     var parent_column = $(grid_selector).closest('[class*="col-"]');
                     $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
                             if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
                                     $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
                             }
-                })
+                });
 
-
-
-                    jQuery(grid_selector).jqGrid({
-
-                            //subgrid options
-                            subGrid : false,
-                            altRows: true,
-                            data: grid_data,
-                            datatype: "local",
-                            height: "auto",
-                            /*colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб','№ пункта в положении об ИОГВ','Внесены изменения в Положение об ИОГВ','Полномочие осуществляется с использованием ИС'],
-                            colModel:[
-                                    {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100',formatter:linkToStep,unformat:unLinkToStep},
-                                    {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250',formatter:linkToStep,unformat:unLinkToStep},
-                                    {name:'status_poln',index:'status_poln', editable: false, fixed:true, stype:'select', searchoptions:{
-                                            sopt:['cn'],
-                                            value:":показать все;Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"
-                                        },
-                                    },
-                                    {name:'name_usl',index:'name_usl', editable: false, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
-                                    {name:'id_usl',index:'id_usl', sorttype:"int", editable: false, fixed:true, width:'100'},
-                                    {name:'status_usl',index:'status_usl', sortable:true,editable:false, edittype:"select",editoptions: {value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"}, fixed:true},
-                                    {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:true, fixed:true, width:'100'},
-                                    {name:'type',index:'type', editable: false, edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"}, fixed:true, width:'100'},
-                                    {name:'status_isp',index:'status_isp', editable: false, edittype:"select",editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'100'},
-                                    {name:'name_iogvspb',index:'name_iogvspb', editable: true, edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true},
-                                    {name:'nomer_punkta_iogv',index:'nomer_punkta_iogv', editable: true, fixed:true},
-                                    {name:'vnes_izm_npa',index:'vnes_izm_npa', editable: true, fixed:true},
-                                    {name:'isp_is',index:'isp_is', editable: true, fixed:true}
-                            ], */
-                            colNames:column_names,
-                            colModel:column_models,
-
-                            //viewrecords : true,
-                            rowNum:-1,
-                            rownumbers:true,
-                            //rowList:[10,20,30],
-                            pager : pager_selector,
-                            pgbuttons:false,
-                            pginput:false,
-                            deepempty: true,
-                            multiselect: true,
-                            sortable: true,
-                            multiboxonly: true,
-
-                            loadComplete : function() {
-                                    var table = this;
-                                    setTimeout(function(){
-                                            styleCheckbox(table);
-
-                                            updateActionIcons(table);
-                                            updatePagerIcons(table);
-                                            enableTooltips(table);
-                                    }, 0);
-                            },
-                            
-                            
-                            //editurl: "/",//nothing is saved
-                            caption: "Таблица полномочий АРМ ИОГВ"
-
-
-                    });
+                    Structure.renderGrid(grid_selector, pager_selector, grid_data);
                     $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
 
 
 
                     //enable search/filter toolbar
-                    jQuery(grid_selector).jqGrid('filterToolbar',{searchOnEnter: false, enableClear: false,stringResult:true});
+                    jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,searchOnEnter: false, enableClear: true,stringResult:true});
 
 
 
@@ -431,270 +372,9 @@
                     }
 
 
-                    //navButtons
-                    jQuery(grid_selector).jqGrid('navGrid',pager_selector,
-                            { 	//navbar options
-                                    edit: false,
-                                    editicon : 'ace-icon fa fa-pencil blue',
-                                    add: false,
-                                    addicon : 'ace-icon fa fa-plus-circle purple',
-                                    del: false,
-                                    delicon : 'ace-icon fa fa-trash-o red',
-                                    search: true,
-                                    searchicon : 'ace-icon fa fa-search orange',
-                                    refresh: true,
-                                    refreshicon : 'ace-icon fa fa-refresh green',
-                                    view: true,
-                                    viewicon : 'ace-icon fa fa-search-plus grey',
-                            },
-                            {
-                                    width: 450,
-                                    recreateForm: true,
-                                    beforeShowForm : function(e) {
-                                            var form = $(e[0]);
-                                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                                            style_edit_form(form);
-                                    }
-                            },
-                            {
-                                    //new record form
-                                    width: 450,
-                                    recreateForm: true,
-                                    viewPagerButtons: false,
-                                    beforeShowForm : function(e) {
-                                            var form = $(e[0]);
-                                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
-                                            .wrapInner('<div class="widget-header" />')
-                                            style_edit_form(form);
-                                    }
-                            },
-                            {
-                                    //delete record form
-                                    recreateForm: true,
-                                    beforeShowForm : function(e) {
-                                            var form = $(e[0]);
-                                            if(form.data('styled')) return false;
-
-                                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                                            style_delete_form(form);
-
-                                            form.data('styled', true);
-                                    },
-                                    onClick : function(e) {
-                                            alert(1);
-                                    }
-                            },
-                            {
-                                    //search form
-                                    width:850,
-                                    recreateForm: true,
-                                    afterShowSearch: function(e){
-                                            var form = $(e[0]);
-                                            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                                            style_search_form(form);
-                                    },
-                                    afterRedraw: function(){
-                                            style_search_filters($(this));
-                                    }
-                                    ,
-                                    multipleSearch: true,
-                            },
-                            {
-                                    //view record form
-                                    width:700,
-                                    recreateForm: true,
-                                    beforeShowForm: function(e){
-                                            var form = $(e[0]);
-                                            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
-                                    }
-                            }
-                    );
-                
-                    //set columns
-                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
-                    {
-                        id:"#select_cols",
-                        buttonicon:"ace-icon fa fa-cog",
-                        caption:"",
-                        title:"Настройки отображения таблицы",
-                        onClickButton:function() 
-                        {
-                            jQuery(grid_selector).columnChooser
-                            ({
-                                title:"options",
-                                width:1000,
-                                
-                            });
-                            
-                        }
-                    });
-
-                    //to Excel
-                    jQuery(grid_selector).jqGrid('navGrid',"#grid-pager").jqGrid('navButtonAdd',"#grid-pager",
-                    {
-                        id:"#to_excel_btn",
-                        buttonicon:"ace-icon fa fa-external-link red",
-                        caption:"",
-                        title:"Выгрузить в Excel"
-
-                    });
-                    
-                    //footer (pager) search
-                    $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
-                    $("#my_pag_search").on('change',function(event,ui)
-                    {
-                        var rows=$("tr[role='row']"); //get all rows.
-                        for (var i=1; i<=rows.length; i++) //start from second row - the first row whith meaning data
-                        {
-                            if (rows[i].textContent.toLowerCase().match(this.value.toLowerCase())===null) //if row does not contain input content
-                            {
-                                rows[i].style.display="none"; //hide this row
-                            }
-                            else {rows[i].style.display="table-row";} // else show  this row.
-                        }
-                    });
                     
                     
-                    $("#timeline_search_input").on('change',function (event,ui)
-                    {
-                        var timeline_items = $(".timeline-item");
-                        for (var i=0; i<timeline_items.length; i++)
-                        {
-                            if (timeline_items[i].textContent.toLowerCase().match(this.value.toLowerCase())===null)
-                            {
-                                timeline_items[i].style.display="none";
-                                timeline_items[i].parentNode.previousElementSibling.style.display="none";
-                            }
-                            else
-                            {
-                                timeline_items[i].style.display="block";
-                                 timeline_items[i].parentNode.previousElementSibling.style.display="block";
-                            }
-                        }
-                    });
-                    
-                    //ace styling
-                    function style_edit_form(form) {
-                            var buttons = form.next().find('.EditButton .fm-button');
-                            buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
-                            buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
-                            buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>');
-
-                            buttons = form.next().find('.navButton a');
-                            buttons.find('.ui-icon').hide();
-                            buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
-                            buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');		
-                    }
-
-                    function style_delete_form(form) {
-                            var buttons = form.next().find('.EditButton .fm-button');
-                            buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
-                            buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
-                            buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
-                    }
-
-                    function style_search_filters(form) {
-                            form.find('.delete-rule').val('X');
-                            form.find('.add-rule').addClass('btn btn-xs btn-primary');
-                            form.find('.add-group').addClass('btn btn-xs btn-success');
-                            form.find('.delete-group').addClass('btn btn-xs btn-danger');
-                    }
-                    function style_search_form(form) {
-                            var dialog = form.closest('.ui-jqdialog');
-                            var buttons = dialog.find('.EditTable')
-                            buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
-                            buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
-                            buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
-                    }
-
-                    function beforeDeleteCallback(e) {
-                            var form = $(e[0]);
-                            if(form.data('styled')) return false;
-
-                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                            style_delete_form(form);
-
-                            form.data('styled', true);
-                    }
-
-                    function beforeEditCallback(e) {
-                            var form = $(e[0]);
-                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                            style_edit_form(form);
-                    }
-
-                    function styleCheckbox(table) {
-
-                    }
-
-
-
-                    function updateActionIcons(table) {
-
-                    }
-
-                    //replace icons with FontAwesome icons
-                    function updatePagerIcons(table) {
-                            var replacement = 
-                            {
-                                    'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
-                                    'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
-                                    'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
-                                    'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
-                            };
-                            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-                                    var icon = $(this);
-                                    var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-
-                                    if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-                            })
-                    }
-
-                    function enableTooltips(table) {
-                            $('.navtable .ui-pg-button').tooltip({container:'body'});
-                            $(table).find('.ui-pg-div').tooltip({container:'body'});
-                    }
-
-
-                    //Hide colums from main interface
-                    function add_hide_btn() //should do what we need, but...
-                    {
-                        var row_length=document.getElementsByTagName('th').length;
-                        if (!document.getElementsByClassName('ui-search-input')) {row_length/=2;} //check, if there is toolbar-searh
-                        for (var i=1; i<=row_length; i++)
-                        {
-                            $("table[role='grid'] thead tr:first-child th[role='columnheader']:nth-child("+i+")").prepend("<i class='fa fa-times red2 hide_col_btn' id='close_btn_"+i+"' onclick='javascript:hide_column("+i+")'></i>");
-                        }
-                    }
-
-                    add_hide_btn();
-                    
-                    //custom formater, that wrap cellcontent into <a>
-                    function linkToStep(cellvalue, options, rowObject)
-                    {
-                        if(options.rowId==1) //this is not good
-                        {
-                            text_link="structure/step4";
-                        }
-                        else {text_link="structure/step3";}
-                        cellvalue=cellvalue.link(text_link);
-                        return cellvalue;
-                    }
-                    
-                    function unLinkToStep(cellvalue, options, rowObject)
-                    {
-                        var a_tag = "<a href='"+text_link+"'>";
-                        cellvalue = cellvalue.substring(a_tag.length,cellvalue.length-4); //-4 is the length of </a> in the end of this string
-                        return cellvalue;
-                    }
-
             });
-            function hide_column(i) //hide selected column
-            {
-                //i=parseInt(i);
-                $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+i+")").hide();
-                $("table[role='grid'] tbody tr td[role='gridcell']:nth-child("+i+")").hide();
-            }
             
            
             $(document).contextmenu(

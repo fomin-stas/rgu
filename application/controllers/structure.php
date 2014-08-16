@@ -113,6 +113,25 @@ class Structure extends APP_Controller {
                 }
                 $values['id_authority'] = $authority['id_authority'];
                 $values['id_authority_status'] = $authority['id_authority_status'];
+
+                // HACK: Executable status 
+                if($p['id_property'] == 8) {
+                    switch (mb_convert_case($p['value'], MB_CASE_LOWER, "UTF-8")) {
+                        case 'исполняемая':
+                            $executable_status = 'in_process';
+                            break;
+                        case 'исполняемое':
+                            $executable_status = 'in_process';
+                            break;    
+                        case 'общее':
+                            $executable_status = 'in_working';
+                            break;
+                        default:
+                            $executable_status = 'new_authorities';
+                            break;
+                    }
+                    
+                }
             }
             //add service properties to grid
             $this->load->model('service');
@@ -129,11 +148,15 @@ class Structure extends APP_Controller {
                 }
             }
 
-            $grid_data[] = $values;
+            $grid_data[$executable_status][] = $values;
+            $grid_data['all'][] = $values;
         }
-        $grid_data[] = $values;
+        $grid_data['all'][] = [];
+        $grid_data['in_process'][] = [];
+        $grid_data['in_working'][] = [];
+        $grid_data['new_authorities'][] = [];
         $this->layout->view('arm_kis', array(
-            'grid_data' => json_encode($grid_data),
+            'grid_data' => $grid_data,
             //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
@@ -234,6 +257,14 @@ class Structure extends APP_Controller {
 
     public function arm_iogv() {
 
+        // load libs
+        $this->load->library('zend');
+        $this->zend->load('Zend/Json');
+        $this->zend->load('Zend/Json/Encoder');
+        $this->zend->load('Zend/Json/Decoder');
+        $this->zend->load('Zend/Json/Exception');
+        $this->zend->load('Zend/Json/Expr');
+
         $grid_data = array();
         $column_names = array();
         $column_models = array();
@@ -281,7 +312,7 @@ class Structure extends APP_Controller {
                     $model['fixed'] = true;
                     $model['stype'] = 'select';
                     $model['edittype'] = 'select';
-                    $model['editoptions'] = array();
+                    //$model['editoptions'] = [];
                     $model['width'] = 250;
                     break;
                 case 'multiselect':
@@ -289,8 +320,15 @@ class Structure extends APP_Controller {
                     $model['fixed'] = true;
                     $model['stype'] = 'select';
                     $model['edittype'] = 'select';
-                    $model['editoptions'] = array();
+                    //$model['editoptions'] = [];
                     $model['width'] = 250;
+                    break;
+            }
+
+            switch ($property['code']) {
+                case 'name_iogv':
+                    $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
+                    $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
                     break;
             }
 
@@ -314,6 +352,27 @@ class Structure extends APP_Controller {
                 if(array_key_exists($p['id_property'], $properties_buff)) {
                     $values[$properties_buff[$p['id_property']]['code']] = $p['value']; 
                 }
+                $values['id_authority'] = $authority['id_authority'];
+                $values['id_authority_status'] = $authority['id_authority_status'];
+
+                // HACK: Executable status 
+                if($p['id_property'] == 8) {
+                    switch (mb_convert_case($p['value'], MB_CASE_LOWER, "UTF-8")) {
+                        case 'исполняемая':
+                            $executable_status = 'in_process';
+                            break;
+                        case 'исполняемое':
+                            $executable_status = 'in_process';
+                            break;    
+                        case 'общее':
+                            $executable_status = 'in_working';
+                            break;
+                        default:
+                            $executable_status = 'new_authorities';
+                            break;
+                    }
+                    
+                }
             }
             //add service properties to grid
             $this->load->model('service');
@@ -330,12 +389,17 @@ class Structure extends APP_Controller {
                 }
             }
 
-            $grid_data[] = $values;
+            $grid_data[$executable_status][] = $values;
+            $grid_data['all'][] = $values;
         }
-        $grid_data[] = $values;
+        $grid_data['all'][] = [];
+        $grid_data['in_process'][] = [];
+        $grid_data['in_working'][] = [];
+        $grid_data['new_authorities'][] = [];
         $this->layout->view('arm_iogv', array(
-            'grid_data' => json_encode($grid_data),
-            'column_models' => json_encode($column_models),
+            'grid_data' => $grid_data,
+            //'column_models' => json_encode($column_models),
+            'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
             )
         );
