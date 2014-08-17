@@ -90,8 +90,7 @@
                                 <div class="widget-box">
                                     <div class="widget-header">
                                         <div class="widget-toolbar">
-
-                                            </ul>
+                                            <ul id='razgran_u_f_tabs' class='nav nav-tabs'></ul>
                                         </div>
                                     </div>
                                     <div class="widget-body">
