@@ -90,7 +90,7 @@
                                 <div class="widget-box">
                                     <div class="widget-header">
                                         <div class="widget-toolbar">
-                                            <ul id='razgran_u_f_tabs' class='nav nav-tabs'></ul>
+											<ul id='razgran_u_f_tabs' class='nav nav-tabs'></ul>
                                         </div>
                                     </div>
                                     <div class="widget-body">
@@ -217,34 +217,7 @@
                                                             </div>
                                                             <button type="button" class="btn btn-info btn-sm pull-left" id="save_as_chern_sr">Сохранить как черновик</button>
                                                             <button type="button" class="btn btn-grey btn-sm pull-left delete_this_pane">Удалить</button>
-                                                            <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <form name="step2_com" method="post">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                                            <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <textarea class="input-xxlarge center" name="comment_st2" required></textarea>
-                                                                            <div class="space-6"></div>
-                                                                            <table class="table">
-                                                                                <tr>
-                                                                                    <td>Предыдущие комментарии:</td>
-                                                                                    <td>Комментариев нет</td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="clear" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                                                                            <button type="submit" class="btn btn-primary">Отправить</button>
-                                                                        </div>
-                                                                   
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         </fieldset>
-
                                                     </form>
                                                 </div>
 
@@ -400,7 +373,7 @@
                                                         </fieldset>
                                                     </form>
                                                 </div>
-                                                
+  
                                             </div>
                                             
                                             <div class="row">
@@ -418,9 +391,36 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
+                        
+                        <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<form name="step2_com" method="post">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+											<h4 class="modal-title" id="myModalLabel">Комментарий</h4>
+										</div>
+										<div class="modal-body">
+											<textarea class="input-xxlarge center" name="comment_st2" required></textarea>
+											<div class="space-6"></div>
+											<table class="table">
+												<tr>
+													<td>Предыдущие комментарии:</td>
+													<td>Комментариев нет</td>
+												</tr>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="clear" class="btn btn-default" data-dismiss="modal">Отмена</button>
+											<button type="submit" class="btn btn-primary">Отправить</button>
+										</div>
+									</form>   
+								</div>
+							</div>
+						</div>
+                        
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
@@ -459,8 +459,8 @@
             var num ={sr:1,sn:1,skn:1};
             function add_new_tab(type)
             {   
-		  $('#razgran_u_f_tabs li').removeClass('active');
-		  $('.tab-pane').removeClass('active');
+				$('#razgran_u_f_tabs li').removeClass('active');
+				$('.tab-pane').removeClass('active');
                 var tab_pane= $('#'+type).clone().attr('id','pane_'+type+num[type]); //clone existing tab-pane template and change id
                 tab_pane[0].firstElementChild.id='form_'+type+num[type]; //give it new id and name
                 tab_pane[0].firstElementChild.name+=num[type];
