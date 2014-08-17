@@ -459,10 +459,13 @@
             var num ={sr:1,sn:1,skn:1};
             function add_new_tab(type)
             {   
+		  $('#razgran_u_f_tabs li').removeClass('active');
+		  $('.tab-pane').removeClass('active');
                 var tab_pane= $('#'+type).clone().attr('id','pane_'+type+num[type]); //clone existing tab-pane template and change id
                 tab_pane[0].firstElementChild.id='form_'+type+num[type]; //give it new id and name
                 tab_pane[0].firstElementChild.name+=num[type];
-                
+                tab_pane.removeAttr('hidden');
+                tab_pane.addClass('active');
                 function tab_text()
                 {
                     if (type=='sr'){return 'Услуга';}
@@ -471,7 +474,7 @@
                 }
                 
                 //insert navigation-tab and content
-                var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_text()+" "+num[type]+"</a></li>";
+                var tab= "<li id='navtab_"+type+num[type]+" class='active'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_text()+" "+num[type]+"</a></li>";
                 $('#razgran_u_f_tabs').append(tab);
                 $('#tab_content').append(tab_pane[0]);
                 
