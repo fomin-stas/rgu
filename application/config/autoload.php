@@ -112,6 +112,8 @@ $autoload['language'] = array();
 $autoload['model'] = array(
 	'user', 
 	'organization_model', 
+        'service',
+        'service_property',
 	'authority', 
         'authority_property_model',
 	'authority_status_model',
