@@ -322,7 +322,7 @@ class Structure extends APP_Controller {
     public function agree($id_authority,$agree) {
         if($agree){
             $authority_data['id_authority_status'] = 3;
-            $url='structure/step4_1/'.$id_authority;
+            $url='structure/step4/'.$id_authority;
         }  else {
             $authority_data['id_authority_status'] = 1;
             $url='structure/arm_kis';
@@ -342,7 +342,18 @@ class Structure extends APP_Controller {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
-        $this->layout->view('step4',$data);
+
+        $services = $this->service->get_many_by('id_authority' , $id_authority);
+        foreach ($services as $service) {
+            $properties = $this->service_property->get_many_by('id_service' , $service['id_service']);
+            $service_type=$this->service_type->get($service['id_service_type']);
+            $data['services'][$service['id_service']]['type']=$service_type->service_type_name;
+            foreach ($properties as $value) {
+                $property = $this->property->get($value['id_property']);
+                $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
+            }
+        }
+        $this->layout->view('step4_1',$data);
     }
 
     public function step4_1($id_authority) {
@@ -367,7 +378,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
-        $this->layout->view('step4_1',$data);
+        $this->layout->view('step4',$data);
     }
 
     public function arm_iogv() {

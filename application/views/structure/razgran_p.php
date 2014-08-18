@@ -82,9 +82,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
-                        <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
-                        <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
+                        <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
+                        <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
+                        <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
                     </div>
                 </div>
                 <form name="step2_com" method="post" action="structure/step2_submit">
@@ -111,7 +111,7 @@
                                             <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
                                             <select id="sogl_inst" class="">
                                                 <option>Комитет по информации и связи</option>
-                                                <option>Другое</option>
+                                                <option>КРИОГВ</option>
                                             </select>
                                         </div>
                                     </div>
@@ -386,7 +386,7 @@
     </div>
 </div>
 
-<div class="tab-pane" id="skn" hidden>
+<div class="tab-pane" id="sk" hidden>
     <div class="form-horizontal" name="skn_form">
         <div>
             <div class="form-group">
@@ -464,7 +464,7 @@
     });
 
     //add new functions and services
-    var num = {sr: 1, sn: 1, skn: 1};
+    var num = {sr: 1, sn: 1, sk: 1};
     function add_new_tab(type)
     {
         $('#razgran_u_f_tabs li').removeClass('active');

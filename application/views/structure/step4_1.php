@@ -119,7 +119,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <a href="structure/step4/<?=$id_authority?>"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
+                            <a href="structure/step4_1/<?=$id_authority?>"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
                         </div>
                     </div>
                 </div>
