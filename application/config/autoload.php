@@ -114,6 +114,7 @@ $autoload['model'] = array(
 	'organization_model', 
         'service',
         'service_property',
+        'service_type',
 	'authority', 
         'authority_property_model',
 	'authority_status_model',

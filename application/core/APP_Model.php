@@ -148,6 +148,10 @@ class APP_Model extends CI_Model
         return $row;
     }
 
+    public function get_where($data){
+        $this->db->get_where($this->_table, $data);
+    }
+    
     /**
      * Fetch an array of records based on an array of primary values.
      */
