@@ -306,11 +306,11 @@ class Structure extends APP_Controller {
             $data[$property['code']] = $value['value'];
         }
 
-        $services = $this->service->get_many_by('id_authority' , $id_authority);
+        $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
-            $properties = $this->service_property->get_many_by('id_service' , $service['id_service']);
-            $service_type=$this->service_type->get($service['id_service_type']);
-            $data['services'][$service['id_service']]['type']=$service_type->service_type_name;
+            $properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+            $service_type = $this->service_type->get($service['id_service_type']);
+            $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
@@ -318,14 +318,14 @@ class Structure extends APP_Controller {
         }
         $this->layout->view('step3', $data);
     }
-    
-    public function agree($id_authority,$agree) {
-        if($agree){
+
+    public function agree($id_authority, $agree) {
+        if ($agree) {
             $authority_data['id_authority_status'] = 3;
-            $url='structure/step4/'.$id_authority;
-        }  else {
+            $url = 'structure/step4/' . $id_authority;
+        } else {
             $authority_data['id_authority_status'] = 1;
-            $url='structure/arm_kis';
+            $url = 'structure/arm_kis';
         }
         $this->authority->update($id_authority, $authority_data);
         redirect($url);
@@ -337,23 +337,21 @@ class Structure extends APP_Controller {
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
         $data['organization'] = $organization->organization_name;
-
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
-
-        $services = $this->service->get_many_by('id_authority' , $id_authority);
+        $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
-            $properties = $this->service_property->get_many_by('id_service' , $service['id_service']);
-            $service_type=$this->service_type->get($service['id_service_type']);
-            $data['services'][$service['id_service']]['type']=$service_type->service_type_name;
+            $properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+            $service_type = $this->service_type->get($service['id_service_type']);
+            $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
-        $this->layout->view('step4_1',$data);
+        $this->layout->view('step4_1', $data);
     }
 
     public function step4_1($id_authority) {
@@ -368,17 +366,17 @@ class Structure extends APP_Controller {
             $data[$property['code']] = $value['value'];
         }
 
-        $services = $this->service->get_many_by('id_authority' , $id_authority);
+        $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
-            $properties = $this->service_property->get_many_by('id_service' , $service['id_service']);
-            $service_type=$this->service_type->get($service['id_service_type']);
-            $data['services'][$service['id_service']]['type']=$service_type->service_type_name;
+            $properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+            $service_type = $this->service_type->get($service['id_service_type']);
+            $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
-        $this->layout->view('step4',$data);
+        $this->layout->view('step4', $data);
     }
 
     public function arm_iogv() {
