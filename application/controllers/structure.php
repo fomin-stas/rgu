@@ -205,6 +205,7 @@ class Structure extends APP_Controller {
     }
 
     public function step1_submit() {
+        $this->load->helper('date');
         $authority['authority_name'] = $this->input->post('name_authority');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
         $property['name_iogv'] = $this->input->post('name_iogv');
@@ -213,14 +214,17 @@ class Structure extends APP_Controller {
         $property['srok_otveta'] = $this->input->post('srok_otveta');
         $authority['id_organization'] = $this->input->post('select_org');
         $authority['id_authority_status'] = 1;
+        
         //обработка добавления комментария - позже
-        $comments['comment_st1'] = $this->input->post('comment_st1');
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
+        $this->comment->set_comment($id_authority);
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
         redirect('structure/arm_kis');
     }
+    
+    
 
     public function step2($id_authority) {
         $authority = $this->authority->get($id_authority);
@@ -291,6 +295,7 @@ class Structure extends APP_Controller {
         }
         $authority_data['id_status'] = 2;
         $this->authority->update($id_authority, $authority_data);
+        $this->comment->set_comment($id_authority);
         redirect('structure/arm_iogv');
     }
 
@@ -328,6 +333,7 @@ class Structure extends APP_Controller {
             $url = 'structure/arm_kis';
         }
         $this->authority->update($id_authority, $authority_data);
+        $this->comment->set_comment($id_authority);
         redirect($url);
     }
 

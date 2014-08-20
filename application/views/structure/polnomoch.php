@@ -88,7 +88,7 @@
                                         <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <textarea class="input-xxlarge center" name="comment_st1"></textarea>
+                                        <textarea class="input-xxlarge center" name="comment"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
