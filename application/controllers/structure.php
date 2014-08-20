@@ -214,13 +214,15 @@ class Structure extends APP_Controller {
         $authority['id_organization'] = $this->input->post('select_org');
         $authority['id_authority_status'] = 1;
         //обработка добавления комментария - позже
-        $comments['comment_st1'] = $this->input->post('comment_st1');
+        $comments['comment_st1'] = $this->input->post('comment');
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
         redirect('structure/arm_kis');
     }
+    
+    
 
     public function step2($id_authority) {
         $authority = $this->authority->get($id_authority);
