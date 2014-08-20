@@ -120,6 +120,7 @@ $autoload['model'] = array(
 	'authority_status_model',
 	'property',
         'spher',
+        'comment',
 	'property_format_model');
 
 
