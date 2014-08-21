@@ -289,7 +289,7 @@ class Structure extends APP_Controller {
             $this->service_property->_id_service = $id_service;
             $this->service_property->insert_where_code_many($property);
         }
-        $authority_data['id_status'] = 2;
+        $authority_data['id_authority_status'] = 2;
         $this->authority->update($id_authority, $authority_data);
         redirect('structure/arm_iogv');
     }
