@@ -11,7 +11,10 @@ var App = {
 				App.initLogin();
 				break;
 			case 'structure/arm_kis':
-				Structure.init();
+				Structure.initKIS();
+				break;
+			case 'structure/arm_iogv':
+				Structure.initIOGV();
 				break;	
 			default:
 				return null;

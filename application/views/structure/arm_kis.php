@@ -345,45 +345,7 @@
                 column_models = <?=$column_models?>,
                 column_names = <?=$column_names?>;
             jQuery(function($) {
-                var grid_data = data.all;
-                var grid_selector = "#grid-table-all";
-                var pager_selector = "#grid-pager-all";
-                var text_link; //link cellcontent, must changes dynamicaly 
-                var myDefaultSearch = "cn";
-                    console.log(data);
-                // Tabs init
-                $('#gridTabs .nav-tabs a:last').tab('show');
-                $('#gridTabs .nav-tabs a').click(function (e) {
-                  e.preventDefault();
-                  $(this).tab('show');
-                    var tab_hash = e.target.hash.replace('#', '');
-                    var grid_selector = "#grid-table-"+tab_hash;
-                    var pager_selector = "#grid-pager-"+tab_hash;
-                    var grid_data = eval('data.'+tab_hash);
-
-                    Structure.renderGrid(grid_selector, pager_selector, grid_data);
-                });
-
-                    //resize to fit page size
-                    $(window).on('resize.jqGrid', function () {
-                            $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                });
-                    //resize on sidebar collapse/expand
-                    var parent_column = $(grid_selector).closest('[class*="col-"]');
-                    $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
-                            if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
-                                    $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
-                            }
-                });
-
-                    Structure.renderGrid(grid_selector, pager_selector, grid_data);
-                    $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-
-
-
-                    //enable search/filter toolbar
-                    jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,searchOnEnter: false, enableClear: true,stringResult:true});
-
+                
 
 
                     //switch element when editing inline
