@@ -402,4 +402,11 @@ var Structure = {
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+requested_col_num+")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child("+requested_col_num+")").hide(); //hide all td of this column
     }
+	resize_to_fit_page: function() //resize grid
+	{
+		if(document.body.scrollHeight>window.innerHeight)
+		{
+			$(".ui-jqgrid-bdiv").css("height",window.innerHeight-310); //empiric value
+		}
+	}
 }
