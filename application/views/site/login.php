@@ -21,7 +21,6 @@
                                                     <?=validation_errors(); ?>
                                                     <?=$this->session->flashdata('message'); ?>
                                                     <?=form_open('site/login'); ?>
-                                                    <form action="<?=site_url(array('site', 'login'));?>" method="post">
                                                             <fieldset>
                                                                 <label class="block clearfix">
                                                                     <span class="block input-icon input-icon-right">

@@ -16,6 +16,9 @@ var App = {
 			case 'structure/arm_iogv':
 				Structure.initIOGV();
 				break;	
+			case 'settings/index':
+				Settings.initIndex();
+				break;	
 			default:
 				return null;
 				break;	

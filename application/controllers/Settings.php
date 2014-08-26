@@ -11,6 +11,81 @@ class Settings extends APP_Controller {
     }
 
     public function index() {
-        $this->layout->view('index');
+        $this->config->load('pagination', TRUE);
+    	$page = (int)$this->uri->segment(3, 1);
+        $limit = $this->config->config['pagination']['per_page']; 
+        $properties = $this->property->limit($limit, $limit*$page-$limit)->order_by('id_property')->with('format')->get_all();
+        if($this->input->is_post()) {
+            switch ($this->input->post('method')) {
+                case 'add':
+                    $this->_add_property();
+                    break;
+                case 'edit':
+                    $this->_edit_property();
+                    break;    
+            }
+        }
+        $config = array(); 
+        $config['base_url'] = base_url().'settings/index/'; 
+        $config['total_rows'] = $this->property->count_all();
+
+        $this->pagination->initialize($config);
+
+        $this->layout->view('index', array(
+        							'properties' => $properties,
+                                    'pages'=> $this->pagination->create_links()
+        							));
+    }
+
+    private function _add_property() {
+        // new property request 
+        $data = array();
+        if($this->form_validation->run()) {
+            $data['property_name'] = $this->input->post('property_name');   
+            $data['id_property_type'] = (int)$this->input->post('property_type');   
+            $data['options']['property_align'] = $this->input->post('property_align');   
+            $data['options']['property_width'] = $this->input->post('property_width');   
+            $data['options']['property_required'] = $this->input->post('property_required');   
+            $data['options']['property_color'] = $this->input->post('property_color');   
+            $data['options'] = json_encode($data['options']);
+            $data['id_service_type'] = NULL;
+            $data['code'] = NULL;
+            // insert new property
+            $result = $this->property->insert($data);
+            if($result){
+                $this->session->set_flashdata('message', 'Новое свойство успешно создано');
+                redirect('/settings/index#');
+            }
+
+        }
+    }
+
+    private function _edit_property() {
+        $data = array();
+        $id_property = $this->input->post('id_property');
+        if($id_property) {
+            $property = $this->property->get($id_property);
+            // update property request 
+            if($this->form_validation->run()) {
+                $data['id_property'] = $id_property;   
+                $data['property_name'] = $this->input->post('property_name');   
+                $data['id_property_type'] = (int)$this->input->post('property_type');   
+                $data['options']['property_align'] = $this->input->post('property_align');   
+                $data['options']['property_width'] = $this->input->post('property_width');   
+                $data['options']['property_required'] = $this->input->post('property_required');   
+                $data['options']['property_color'] = $this->input->post('property_color');   
+                $data['options'] = json_encode($data['options']);
+                $data['id_service_type'] = NULL;
+                $data['code'] = NULL;
+                // update property
+                $result = $this->property->update($id_property, $data);
+                if($result){
+                    $this->session->set_flashdata('message', 'Cвойство успешно отредактировано');
+                    redirect('/settings/index#');
+                }
+
+            } 
+        }
+    
     }
 }
