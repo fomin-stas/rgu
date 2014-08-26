@@ -128,7 +128,7 @@
                         <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
                         <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
 
-                        <button id="send_btn" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#comments_modal">Отправить на согласование</button>
+                        <button id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
                     </div>
                 </div>
                 <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -451,71 +451,86 @@
     </div>
 </div>
 
-
+<div class="modal fade" id="alert_fieldrequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Некоторые поля остались незаполненными.</h4>
+            </div>
+            <div class="modal-body">
+                Внесите необходимые данные и попробуйте еще раз.
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 
 
 <script type="text/javascript">
     $('#step2_file').ace_file_input({
         no_file: "Присоединить файл",
-        btn_choose: "Выбрать",
-        btn_change: "Изменить",
+        btn_choose:"Выбрать",
+        btn_change:"Изменить",
         enable_reset: true
+    });
+    $('#send_btn').on('click',function(){
+		var text_fields=$('#tab_content textarea');
+        for (var textarea=0; textarea<text_fields.length; textarea++){
+            console.log(text_fields[textarea].value);
+            if (!text_fields[textarea].value){
+                console.log(text_fields[textarea]);
+//                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
+//                text_fields[textarea].css('border','1px solid red');
+                $('#alert_fieldrequest').modal('show');
+                return 'empty textarea';
+                }
+        }
+        $('#comments_modal').modal('show');
     });
 
     //add new functions and services
-    var num = {sr: 1, sn: 1, sk: 1};
+    var num ={sr:1,sn:1,skn:1};
     function add_new_tab(type)
-    {
-        $('#razgran_u_f_tabs li').removeClass('active');
-        $('.tab-pane').removeClass('active');
-        var tab_pane = $('#' + type).clone().attr('id', type + num[type]); //clone existing tab-pane template and change id
-        tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
-        tab_pane[0].firstElementChild.name += num[type];
-        tab_pane.removeAttr('hidden');
-        tab_pane.addClass('active');
+    {   
+        var tab_pane= $('#'+type).clone().attr('id','pane_'+type+num[type]); //clone existing tab-pane template and change id
+        tab_pane[0].firstElementChild.id='form_'+type+num[type]; //give it new id and name
+        tab_pane[0].firstElementChild.name+=num[type];
+
         function tab_text()
         {
-            if (type == 'sr') {
-                return 'Услуга';
-            }
-            else if (type == 'sn') {
-                return 'Функция';
-            }
-            else {
-                return 'Функция контроля и надзора';
-            }
+            if (type=='sr'){return 'Услуга';}
+            else if (type=='sn'){return 'Функция';}
+            else {return 'Функция контроля/надзора';}
         }
 
         //insert navigation-tab and content
-        var tab = "<li id='navtab_" + type + num[type] + "' class='active'><a href='#" + tab_pane[0].id + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
+        var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_text()+" "+num[type]+"</a></li>";
         $('#razgran_u_f_tabs').append(tab);
         $('#tab_content').append(tab_pane[0]);
 
         //rename inputs and labels into type[num]_[i] form
-        for (var i = 0; i < $('#form_' + type + num[type] + ' label').length; i++)
+        for (var i=0; i<$('#form_'+type+num[type]+' label').length; i++)
         {
-            $('#form_' + type + num[type] + ' label')[i].setAttribute('for', type + num[type] + '_' + i);
-            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('id', type + num[type] + '_' + i);
-            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
+            $('#form_'+type+num[type]+' label')[i].setAttribute('for',type+num[type]+'_'+i);
+            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('id',type+num[type]+'_'+i);
+            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('name',type+num[type]+'_'+i);
+            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('required','required');
         }
 
         //delete-buttons logic
-        $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function() {
-            var tab_main = this.parentNode.parentNode;
-            $('#navtab_' + tab_main.parentNode.id).remove();
+        $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(){
+            var tab_main=this.parentNode.parentNode;
+            $('#navtab_'+tab_main.id).remove();
             tab_main.remove();
         });
         num[type]++;
     }
-    $(".add_sr_btn").on('click', function() {
-        add_new_tab("sr");
-    });
-    $(".add_sn_btn").on('click', function() {
-        add_new_tab("sn");
-    });
-    $(".add_skn_btn").on('click', function() {
-        add_new_tab("sk");
-    });
+    $(".add_sr_btn").on('click',function(){add_new_tab("sr");});
+    $(".add_sn_btn").on('click',function(){add_new_tab("sn");});
+    $(".add_skn_btn").on('click',function(){add_new_tab("skn");});
 </script>
 
