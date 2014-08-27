@@ -7,6 +7,7 @@ class Settings extends APP_Controller {
 
     function  __construct()  {
         parent::__construct();
+        $this->is_loggedIn();
         $this->layout->setLayout('main');
     }
 
@@ -52,6 +53,7 @@ class Settings extends APP_Controller {
         $data = array();
         if($this->form_validation->run()) {
             $data['property_name'] = $this->input->post('property_name');   
+            $data['property_short_name'] = $this->input->post('property_short_name');   
             $data['id_property_type'] = (int)$this->input->post('property_type');   
             $data['id_service_type'] = (int)$this->input->post('service_type');   
             $data['options']['property_align'] = $this->input->post('property_align');   
@@ -79,6 +81,7 @@ class Settings extends APP_Controller {
             if($this->form_validation->run()) {
                 $data['id_property'] = $id_property;   
                 $data['property_name'] = $this->input->post('property_name');   
+                $data['property_short_name'] = $this->input->post('property_short_name');   
                 $data['id_property_type'] = (int)$this->input->post('property_type');
                 $data['id_service_type'] = (int)$this->input->post('service_type');      
                 $data['options']['property_align'] = $this->input->post('property_align');   

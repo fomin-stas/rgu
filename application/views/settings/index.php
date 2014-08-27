@@ -24,6 +24,7 @@
                                 <tr>
                                     <td>id</td>
                                     <td>Название</td>
+                                    <td>Краткое название</td>
                                     <td>Тип</td>
                                     <td>Тип к которому относится</td>
                                     <td>Форматирование</td>
@@ -37,6 +38,7 @@
                                 <tr id="property_<?=$property['id_property']?>">
                                     <td><?=$property['id_property']?></td>
                                     <td><?=$property['property_name']?></td>
+                                    <td><?=$property['property_short_name']?></td>
                                     <td><?=$property['format']['property_format_name']?></td>
                                     <td><?=$service_types[$property['id_service_type']]['service_type_name']?></td>
                                     <td><?=$options['property_align']?></td>
@@ -96,6 +98,10 @@
                                     <div class="form-group">
                                         <label for="add_property_name">Название свойства</label>
                                         <input type="text" class="form-control" id="add_property_name" name="property_name" placeholder="Название свойства" value="<?=set_value('property_name')?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="add_property_short_name">Краткое название свойства</label>
+                                        <input type="text" class="form-control" id="add_property_short_name" name="property_short_name" placeholder="Краткое название свойства" value="<?=set_value('property_short_name')?>">
                                     </div>
                                     <div class="row">
                                       <div class="col-md-6">
@@ -182,6 +188,10 @@
                                     <div class="form-group">
                                         <label for="edit_property_name">Название свойства</label>
                                         <input type="text" class="form-control" id="edit_property_name" name="property_name" placeholder="Название свойства" value="<?=set_value('property_name')?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_property_short_name">Краткое название свойства</label>
+                                        <input type="text" class="form-control" id="edit_property_short_name" name="property_short_name" placeholder="Краткое название свойства" value="<?=set_value('property_short_name')?>">
                                     </div>
                                     <div class="row">
                                       <div class="col-md-6">

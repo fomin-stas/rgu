@@ -116,6 +116,7 @@ create table property (
    id_property_type     INT4                 null,
    id_service_type      INT4                 null,
    property_name        VARCHAR(1024)        null,
+   property_short_name  VARCHAR(1024)        null,
    code                 VARCHAR(1024)        null,
    options              VARCHAR(2048)        null,
    constraint PK_PROPERTY primary key (id_property)

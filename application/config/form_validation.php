@@ -20,6 +20,11 @@ $config = array(
                         'rules' => 'required'
                      ),
                 array(
+                        'field' => 'property_short_name',
+                        'label' => 'Краткое название свойства',
+                        'rules' => 'required'
+                     ),
+                array(
                         'field' => 'property_type',
                         'label' => 'Тип свойства',
                         'rules' => 'required'

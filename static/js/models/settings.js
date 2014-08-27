@@ -57,6 +57,7 @@ var Settings = {
                             console.log(p);
                             // load data to modal
                             $('#edit_property_name').val(p.property_name)
+                            $('#edit_property_short_name').val(p.property_short_name)
                             $('#edit_property_type').val(p.id_property_type);
                             $('#edit_property_align').val(p.options.property_align);
                             $('#edit_property_width').val(p.options.property_width);
