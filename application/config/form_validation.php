@@ -39,5 +39,10 @@ $config = array(
                         'label' => 'Цвет свойства',
                         'rules' => 'required'
                      ),
+                array(
+                        'field' => 'service_type',
+                        'label' => 'Тип',
+                        'rules' => 'required'
+                     ),
                 ),
            );

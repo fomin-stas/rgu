@@ -67,6 +67,7 @@ var Settings = {
                                 $('#edit_property_required').prop('checked', false);
                             }
                             $('#edit_property_color').val(p.options.property_color).iris('color', p.options.property_color);
+                            $('#edit_service_type').val(p.id_service_type);
                             $('#edit_id_property').val(p.id_property);
                             $('#edit_property').modal();
                         }

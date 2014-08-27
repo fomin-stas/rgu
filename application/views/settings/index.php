@@ -25,6 +25,7 @@
                                     <td>id</td>
                                     <td>Название</td>
                                     <td>Тип</td>
+                                    <td>Тип к которому относится</td>
                                     <td>Форматирование</td>
                                     <td>Ширина</td>
                                     <td>Обзателеный</td>
@@ -37,6 +38,7 @@
                                     <td><?=$property['id_property']?></td>
                                     <td><?=$property['property_name']?></td>
                                     <td><?=$property['format']['property_format_name']?></td>
+                                    <td><?=$service_types[$property['id_service_type']]['service_type_name']?></td>
                                     <td><?=$options['property_align']?></td>
                                     <td><?=$options['property_width']?></td>
                                     <td>
@@ -135,6 +137,21 @@
                                             </div>  
                                           </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="add_service_type">Тип</label>
+                                                <select  type="text" class="form-control" id="add_service_type" name="service_type">
+                                                    <?foreach ((array)$service_types as $type):?>
+                                                    <option value="<?=$type['id_service_type']?>" <?php echo set_select('service_type', $type['id_service_type']); ?> ><?=$type['service_type_name']?></option>
+                                                    <?endforeach;?>
+                                                </select>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                            
+                                          </div>
+                                    </div>
                                   <div class="checkbox">
                                     <label>
                                     <input type="checkbox" name="property_required" id="add_property_required" <?php echo set_checkbox('property_required', '1'); ?>> Свойство обязательно для заполнения?
@@ -204,6 +221,21 @@
                                                 <input type="text" class="form-control" id="edit_property_color" name="property_color" placeholder="Цвет" value="<?=set_value('property_color', '#FFFFFF')?>">
                                                 <span class="help-block">По умолчанию белый</span>
                                             </div>  
+                                          </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="edit_service_type">Тип</label>
+                                                <select  type="text" class="form-control" id="edit_service_type" name="service_type">
+                                                    <?foreach ((array)$service_types as $type):?>
+                                                    <option value="<?=$type['id_service_type']?>" <?php echo set_select('service_type', $type['id_service_type']); ?> ><?=$type['service_type_name']?></option>
+                                                    <?endforeach;?>
+                                                </select>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                            
                                           </div>
                                     </div>
                                   <div class="checkbox">

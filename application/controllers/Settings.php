@@ -14,7 +14,16 @@ class Settings extends APP_Controller {
         $this->config->load('pagination', TRUE);
     	$page = (int)$this->uri->segment(3, 1);
         $limit = $this->config->config['pagination']['per_page']; 
+
         $properties = $this->property->limit($limit, $limit*$page-$limit)->order_by('id_property')->with('format')->get_all();
+        $service_types = $this->service_type->as_array()->get_all();
+        $buff = array();
+        // prepare service types
+        foreach ((array)$service_types as $item) {
+            $buff[$item['id_service_type']] = $item;
+        }
+        $service_types = $buff;
+
         if($this->input->is_post()) {
             switch ($this->input->post('method')) {
                 case 'add':
@@ -32,7 +41,8 @@ class Settings extends APP_Controller {
         $this->pagination->initialize($config);
 
         $this->layout->view('index', array(
-        							'properties' => $properties,
+                                    'properties' => $properties,
+        							'service_types' => $service_types,
                                     'pages'=> $this->pagination->create_links()
         							));
     }
@@ -43,12 +53,12 @@ class Settings extends APP_Controller {
         if($this->form_validation->run()) {
             $data['property_name'] = $this->input->post('property_name');   
             $data['id_property_type'] = (int)$this->input->post('property_type');   
+            $data['id_service_type'] = (int)$this->input->post('service_type');   
             $data['options']['property_align'] = $this->input->post('property_align');   
             $data['options']['property_width'] = $this->input->post('property_width');   
             $data['options']['property_required'] = $this->input->post('property_required');   
             $data['options']['property_color'] = $this->input->post('property_color');   
             $data['options'] = json_encode($data['options']);
-            $data['id_service_type'] = NULL;
             $data['code'] = NULL;
             // insert new property
             $result = $this->property->insert($data);
@@ -69,13 +79,13 @@ class Settings extends APP_Controller {
             if($this->form_validation->run()) {
                 $data['id_property'] = $id_property;   
                 $data['property_name'] = $this->input->post('property_name');   
-                $data['id_property_type'] = (int)$this->input->post('property_type');   
+                $data['id_property_type'] = (int)$this->input->post('property_type');
+                $data['id_service_type'] = (int)$this->input->post('service_type');      
                 $data['options']['property_align'] = $this->input->post('property_align');   
                 $data['options']['property_width'] = $this->input->post('property_width');   
                 $data['options']['property_required'] = $this->input->post('property_required');   
                 $data['options']['property_color'] = $this->input->post('property_color');   
                 $data['options'] = json_encode($data['options']);
-                $data['id_service_type'] = NULL;
                 $data['code'] = NULL;
                 // update property
                 $result = $this->property->update($id_property, $data);
