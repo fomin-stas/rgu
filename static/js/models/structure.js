@@ -48,12 +48,77 @@ var Structure = {
 
 
         //enable search/filter toolbar
-        jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,searchOnEnter: false, enableClear: true,stringResult:true});
-    },
+		 jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,
+         searchOnEnter: false,
+         enableClear: true,
+         stringResult:true,
+         clearSearch:false,
+         beforeSearch:function()
+         {
+             //Must change search-algoitm to multiselect. From stackoverflow
+             var postData=$(grid_selector).jqGrid('getGridParam','postData');
+             postData.filters=$.parseJSON(postData.filters);
+             console.log(postData.filters);
+             console.log(postData);
+//             return true;
+             var filters=postData.filters;
+             var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
+             separator=",";
+             cm=$(grid_selector).jqGrid('getGridParam','colModel');
 
-    initIOGV: function(){
+             if (filters && filters.rules !== undefined && filters.rules.length > 0) {
+                 rules = filters.rules;
+                 for (i = 0; i < rules.length; i++) {
+                     rule = rules[i];
+                     iCol = getColumnIndexByName.call(this, rule.field);
+                     cmi = cm[iCol];
+                     if (iCol >= 0 &&
+                            ((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
+                                && (rule.op === myDefaultSearch)) ||
+                                    (typeof (cmi.searchoptions) === "object" &&
+                                        $.isArray(cmi.searchoptions.sopt) &&
+                                            cmi.searchoptions.sopt[0] === rule.op)) {
+                                        //  make modifications only for the 'contains' operation
+                                            parts = rule.data.split(separator);
+                                            if (parts.length > 1) {
+                                                if (filters.groups === undefined) {
+                                                    filters.groups = [];
+                                                }
+                                                group = {
+                                                    groupOp: 'OR',
+                                                    groups: [],
+                                                    rules: []
+                                                };
+                                                filters.groups.push(group);
+                                                console.log(filters.groups);
+                                                for (j = 0, l = parts.length; j < l; j++) {
+                                                    str = parts[j];
+                                                    if (str) {
+                                                    // skip empty '', which exist in case of two separaters of once
+                                                        group.rules.push({
+                                                            data: parts[j],
+                                                            op: rule.op,
+                                                            field: rule.field
+                                                        });
+                                                    }
+                                                }
+                                                rules.splice(i, 1);
+                                                i--; // to skip i++
+                                            }
+                                        }
+                                    }
+                                    this.p.postData.filters = JSON.stringify(filters);
+                                    console.log(this.p.postData.filters);
+                                }
+                            }
+                        
+                        });        
 
-    },
+        },
+
+        initIOGV: function(){
+
+        },
 
 	renderGrid: function(grid_selector, pager_selector, grid_data) {
 		jQuery(grid_selector).jqGrid({
@@ -98,8 +163,11 @@ var Structure = {
                 multiboxonly: true,
                 deepempty: true,
                 ignoreCase: true,
+				mtype: "POST",
                 cellEdit: true,
-                cellsubmit: "clientArray",
+                cellsubmit: "remote",
+//				cellurl:	'string' - the url where the cell is to be saved.
+//				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 
                 loadComplete : function() {
                         var table = this;
@@ -115,6 +183,52 @@ var Structure = {
                 ondblClickRow:function(rowid, iRow, iCol)
                 {
                     jQuery(grid_selector).editCell(iRow,iCol,true);
+                },
+
+				beforeEditCell:function(rowid,cellname,value,iRow,iCol)
+                {
+                    var cm=$(grid_selector).jqGrid('getGridParam','colModel')[iCol];
+                    if (cm.stype==='select')
+                    {
+                        if(cm.searchoptions.attr.multiple)
+                        {
+                            var soptions=cm.searchoptions.value.split(';');
+                            for(i=0;i<soptions.length;i++)
+                            {
+                                soptions[i]=soptions[i].split(':');
+                                $('#mselect_select').append('<option value="'+soptions[i][0]+'">'+soptions[i][1]+'</option>');
+                            }
+                            console.log(soptions);
+                        }
+                    }
+                                
+                                
+                    $('#mselect_select').multiselect({
+                        buttonClass:'btn btn-white btn-sm',
+                        buttonContainer:"<span class='dropdown'>",
+                        checkboxName:"mselect_edit_chb[]",
+                        nonSelectedText:"Не выбрано",
+                        includeSelectAllOption:true,
+                        selectAllText:"Все",
+                        enableCaseInsensitiveFiltering:true,
+                        filterBehavior:'both',
+                        filterPlaceholder:"Поиск",
+                        onChange:function(){}
+                    });
+                                
+                    if (cm.stype==='select'){
+                        if (cm.searchoptions.attr.multiple)
+                        {
+                            $('#multiselect_edit').modal('show');
+                            $('#mselect_change').unbind('click').on('click',function(){
+                                $('#'+iRow+'_'+cellname)[0].value=$('#mselect_textarea')[0].value;
+                                jQuery(grid_selector).saveCell(iRow,iCol);
+                                $('#multiselect_edit').modal('hide');
+                                $('#mselect_textarea')[0].value='';
+                                $('#mselect_select')[0].options='';
+                            });
+                        }
+                    }
                 },
                 
                 //editurl: "/",//nothing is saved
@@ -275,6 +389,60 @@ var Structure = {
                     timeline_items[i].style.display="block";
                      timeline_items[i].parentNode.previousElementSibling.style.display="block";
                 }
+            }
+        });
+
+		//multiselect
+        $('th select').multiselect({
+            buttonClass:'btn btn-white btn-sm',
+            buttonContainer:"<span class='dropdown'>",
+            buttonWidth:"100%",
+            checkboxName:"multiselect[]",
+            nonSelectedText:"Не выбрано",
+            includeSelectAllOption:true,
+            selectAllText:"Все",
+            onChange:function(){console.log('search');},
+            templates:{
+//              ul:"<ul class='dropdown-menu'></ul>"
+            }
+        });
+		
+		//multiselect cell editing
+        $('#mselect_add').on('click',function(){
+            if (!$('#mselect_textarea')[0].value)
+            {
+                $('#mselect_textarea')[0].value+=$('#mselect_select')[0].value;
+            }
+            else 
+            {
+                $('#mselect_textarea')[0].value+=(', '+$('#mselect_select')[0].value);
+            }
+        });
+
+		$('#mselect_reset').on('click',function(){
+            $('#mselect_textarea')[0].value='';
+        });
+
+		//make filters scroll-sensetive
+		for (i=0; i<$('th span.dropdown').length;i++)
+        {
+        	var container=$('th span.dropdown')[i];
+            var dropdown_ul=$('th span.dropdown ul.multiselect-container')[i];
+            dropdown_ul.style.left=container.offsetLeft;
+            dropdown_ul.style.top=container.offsetTop+40;
+        }
+
+		var delta;
+		$('div.ui-jqgrid-bdiv')[0].addEventListener('scroll',function()
+        {
+        	var dropdown_ul;
+            if(!delta){delta=0;}
+            var true_delta=$('div.ui-jqgrid-bdiv')[0].scrollLeft-delta;
+            delta=$('div.ui-jqgrid-bdiv')[0].scrollLeft;
+            for (i=0; i<$('th span.dropdown').length;i++)
+            {
+            	dropdown_ul=$('th span.dropdown ul.multiselect-container')[i];
+                dropdown_ul.style.left=parseInt(dropdown_ul.style.left)-true_delta;
             }
         });
 
