@@ -34,11 +34,11 @@ class Structure extends APP_Controller {
                 ->with('properties')
                 ->get_all();
 
-        $properties = $this->property->with('format')->get_many_by('code IS NOT NULL');
+        $properties = $this->property->with('format')->get_all();
 
         //$properties = array_slice($properties, 0, 1);
-
         foreach ((array) $properties as $property) {
+            $property['code'] = $property['id_property'].'_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
@@ -83,13 +83,23 @@ class Structure extends APP_Controller {
                     $model['width'] = 250;
                     break;
             }
-
-            switch ($property['code']) {
+            $options = json_decode($property['options'], true);
+            if(count($options) > 0) {
+                switch ($options) {
+                    case 'property_align':
+                        $model['align'] = $options['property_align'];
+                        break;
+                    case 'property_width':
+                        $model['width'] = $options['property_width'];
+                        break;
+                }
+            }
+            /*switch ($property['code']) {
                 case 'name_iogv':
                     $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
                     $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
                     break;
-            }
+            }*/
 
             // linked to colmn model
             $column_models[] = $model;
@@ -232,7 +242,7 @@ class Structure extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['code']] = $value['value'];
+            $data[$property['id_property'].'_code'] = $value['value'];
         }
         $this->layout->view('razgran_p', $data);
     }
@@ -303,7 +313,7 @@ class Structure extends APP_Controller {
 
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['code']] = $value['value'];
+            $data[$property['id_property'].'_code'] = $value['value'];
         }
 
         $services = $this->service->get_many_by('id_authority', $id_authority);
@@ -339,7 +349,7 @@ class Structure extends APP_Controller {
         $data['organization'] = $organization->organization_name;
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['code']] = $value['value'];
+            $data[$property['id_property'].'_code'] = $value['value'];
         }
         $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
@@ -363,7 +373,7 @@ class Structure extends APP_Controller {
 
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['code']] = $value['value'];
+            $data[$property['id_property'].'_code'] = $value['value'];
         }
 
         $services = $this->service->get_many_by('id_authority', $id_authority);
@@ -399,11 +409,12 @@ class Structure extends APP_Controller {
                 ->with('properties')
                 ->get_all();
 
-        $properties = $this->property->with('format')->get_many_by('code IS NOT NULL');
+        $properties = $this->property->with('format')->get_all();
 
         //$properties = array_slice($properties, 0, 1);
 
         foreach ((array) $properties as $property) {
+            $property['code'] = $property['id_property'].'_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
