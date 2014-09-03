@@ -161,7 +161,9 @@ $config['groups']['site'] = array(
 		array('ace.min.js'),
 		array('jquery-ui.min.js'),
 		array('jquery.ui-contextmenu.min.js'),
+		array('iris.min.js'),
 		array('models/structure.js'),
+		array('models/settings.js'),
 		array('models/app.js')
 	),
 	'css' => array(
@@ -174,6 +176,7 @@ $config['groups']['site'] = array(
 		array('searchFilter.css'),
 		array('ui.multiselect.css'),
 		array('ace.min.css'),
+		array('main.css'),
 			)
 	);
 

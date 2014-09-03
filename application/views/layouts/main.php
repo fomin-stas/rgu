@@ -66,7 +66,7 @@
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
                             <ul class="user-menu dropdown-menu dropdown-menu-right dropdown-blue dropdown-caret dropdown-close">
-                                <li><a href="#"><i class="ace-icon fa fa-cogs"></i>Настройки</a></li>
+                                <li><a href="settings/index"><i class="ace-icon fa fa-cogs"></i>Настройки</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<?=site_url('/logout')?>"><i class="ace-icon fa fa-power-off"></i>Выход</a></li>
                             </ul>

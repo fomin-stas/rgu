@@ -12,5 +12,42 @@ $config = array(
                         'label' => 'Пароль',
                         'rules' => 'required'
                      )
-                )
+                ),
+            'settings/index' => array(
+                array(
+                        'field' => 'property_name',
+                        'label' => 'Название свойства',
+                        'rules' => 'required'
+                     ),
+                array(
+                        'field' => 'property_short_name',
+                        'label' => 'Краткое название свойства',
+                        'rules' => 'required'
+                     ),
+                array(
+                        'field' => 'property_type',
+                        'label' => 'Тип свойства',
+                        'rules' => 'required'
+                     ),
+                array(
+                        'field' => 'property_align',
+                        'label' => 'Выравнивание свойства',
+                        'rules' => 'required'
+                     ),
+                array(
+                        'field' => 'property_width',
+                        'label' => 'Ширина поля',
+                        'rules' => 'required|numeric'
+                     ),
+                array(
+                        'field' => 'property_color',
+                        'label' => 'Цвет свойства',
+                        'rules' => 'required'
+                     ),
+                array(
+                        'field' => 'service_type',
+                        'label' => 'Тип',
+                        'rules' => 'required'
+                     ),
+                ),
            );

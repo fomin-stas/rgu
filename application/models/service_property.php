@@ -12,7 +12,7 @@ class Service_property extends APP_Model {
             $data = $this->validate($data);
         }
         if ($data !== FALSE) {
-            $sql = "INSERT INTO " . $this->_table . "(id_service, id_property, value) SELECT ?,id_property,? FROM property WHERE code=?";
+            $sql = 'INSERT INTO ' . $this->_table . '(id_service, id_property, value) SELECT ?,id_property,? FROM property WHERE code=?';
             $query = $this->db->query($sql, array($this->_id_service, $data['value'], $data['code']));
             $insert_id = $this->_database->insert_id();
             return $insert_id;
