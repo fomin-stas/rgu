@@ -163,9 +163,9 @@ var Structure = {
                 multiboxonly: true,
                 deepempty: true,
                 ignoreCase: true,
-				mtype: "POST",
+//				mtype: "POST",
                 cellEdit: true,
-                cellsubmit: "remote",
+                cellsubmit: "clientArray",
 //				cellurl:	'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 
