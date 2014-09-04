@@ -26,6 +26,16 @@ var Structure = {
             var pager_selector = "#grid-pager-"+tab_hash;
             var grid_data = eval('data.'+tab_hash);
 
+            function getColumnIndexByName(columnName) {
+				var cm = $(this).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+				for (i = 0; i < l; i += 1) {
+					if (cm[i].name === columnName) {
+						return i; // return the index
+					}
+				}
+				return -1;
+			};
+
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
         });
 
@@ -33,6 +43,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
                 $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -55,7 +66,7 @@ var Structure = {
          clearSearch:false,
          beforeSearch:function()
          {
-             //Must change search-algoitm to multiselect. From stackoverflow
+             //Change search-algoitm to multiselect. From stackoverflow
              var postData=$(grid_selector).jqGrid('getGridParam','postData');
              postData.filters=$.parseJSON(postData.filters);
              console.log(postData.filters);
@@ -387,7 +398,7 @@ var Structure = {
                 else
                 {
                     timeline_items[i].style.display="block";
-                     timeline_items[i].parentNode.previousElementSibling.style.display="block";
+                    timeline_items[i].parentNode.previousElementSibling.style.display="block";
                 }
             }
         });
@@ -569,13 +580,5 @@ var Structure = {
         }
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child("+requested_col_num+")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child("+requested_col_num+")").hide(); //hide all td of this column
-    },
-    
-	resize_to_fit_page: function() //resize grid
-	{
-		if(document.body.scrollHeight>window.innerHeight)
-		{
-			$(".ui-jqgrid-bdiv").css("height",window.innerHeight-310); //empiric value
-		}
-	}
+    }
 }

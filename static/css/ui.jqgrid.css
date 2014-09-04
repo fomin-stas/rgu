@@ -186,7 +186,7 @@ td[role='gridcell'] a:hover{color:black !important}
 .hide_col_btn:hover{background-color: palegoldenrod;}
 table[role='grid'] thead{vertical-align: top;}
 .ui-jqgrid .ui-jqgrid-labels th div{text-align: center}
-#grid-table,#uvedoml-grid,.grid-table{font-size: 12px;}
+#uvedoml-grid,.grid-table{font-size: 12px;}
 div[class='ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix']:first-child{}
 span[class="ui-corner-all ui-icon ui-icon-minus"]{height: 9px;width:9px;border:1px solid #777; }
 input[class="search empty ui-widget-content ui-corner-all"]{height: auto !important; font-size: inherit !important;}
@@ -198,7 +198,7 @@ input[class="search empty ui-widget-content ui-corner-all"]{height: auto !import
 {width:850px;height:90%;}
 .modal-content{}
 /*pager*/
-#grid-pager{position: fixed;z-index: 999;bottom: 0px;left: 0px;right: 0px;}
+.grid-pager{position: fixed;z-index: 999;bottom: 0px;left: 0px;right: 0px;}
 #timeline_search_input{height:18px;padding:3px;font-size:12px;}
 /*scrollbar to bottom of page*/
 /*.main-container .tabbable{width:auto !important}*/
