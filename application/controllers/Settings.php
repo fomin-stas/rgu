@@ -62,6 +62,7 @@ class Settings extends APP_Controller {
             $data['options']['property_color'] = $this->input->post('property_color');   
             $data['options'] = json_encode($data['options']);
             $data['code'] = NULL;
+
             // insert new property
             $result = $this->property->insert($data);
             if($result){
@@ -79,7 +80,7 @@ class Settings extends APP_Controller {
             $property = $this->property->get($id_property);
             // update property request 
             if($this->form_validation->run()) {
-                $data['id_property'] = $id_property;   
+                $data['id_property'] = (int)$id_property;   
                 $data['property_name'] = $this->input->post('property_name');   
                 $data['property_short_name'] = $this->input->post('property_short_name');   
                 $data['id_property_type'] = (int)$this->input->post('property_type');

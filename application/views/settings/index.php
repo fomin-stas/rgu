@@ -40,7 +40,7 @@
                                     <td><?=$property['property_name']?></td>
                                     <td><?=$property['property_short_name']?></td>
                                     <td><?=$property['format']['property_format_name']?></td>
-                                    <td><?=$service_types[$property['id_service_type']]['service_type_name']?></td>
+                                    <td><?=(isset($property['id_service_type']))?$service_types[$property['id_service_type']]['service_type_name']:''?></td>
                                     <td><?=$options['property_align']?></td>
                                     <td><?=$options['property_width']?></td>
                                     <td>

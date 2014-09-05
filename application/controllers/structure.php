@@ -125,6 +125,7 @@ class Structure extends APP_Controller {
                 $values['id_authority_status'] = $authority['id_authority_status'];
 
                 // HACK: Executable status 
+                $executable_status = 'new_authorities';
                 if ($p['id_property'] == 8) {
                     switch (mb_convert_case($p['value'], MB_CASE_LOWER, "UTF-8")) {
                         case 'исполняемая':

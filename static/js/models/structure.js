@@ -52,20 +52,6 @@ var Structure = {
                         $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
                 }
         });
-        function render_colModel()
-        {
-			var cm=$(grid_selector).jqGrid('getGridParam','colModel');
-			for (var i=0; i<cm.length; i++)
-			{
-				if (cm[i].stype=='multiselect')
-				{
-					cm[i].stype='select';
-					cm[i].searchoptions.attr={multiple:'multiple'};
-					cm[i].edittype='textarea';
-					cm[i].editoptions={};
-				}
-			}
-		}
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
@@ -141,10 +127,24 @@ var Structure = {
 
         },
 
-        initIOGV: function(){
+    initIOGV: function(){
 
-        },
-
+    },
+    
+    render_colModel: function(grid_selector) {
+        var cm=$(grid_selector).jqGrid('getGridParam','colModel');
+        for (var i=0; i<cm.length; i++)
+        {
+            if (cm[i].stype=='multiselect')
+            {
+                cm[i].stype='select';
+                cm[i].searchoptions.attr={multiple:'multiple'};
+                cm[i].edittype='textarea';
+                cm[i].editoptions={};
+            }
+        }
+    },
+            
 	renderGrid: function(grid_selector, pager_selector, grid_data) {
 		jQuery(grid_selector).jqGrid({
 
@@ -195,10 +195,10 @@ var Structure = {
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{
-					render_colModel();
+					Structure.render_colModel(grid_selector);
 				},
                 loadComplete : function() {
-					render_colModel();
+					Structure.render_colModel(grid_selector);
 					var table = this;
 					setTimeout(function(){
 							Structure.styleCheckbox(table);

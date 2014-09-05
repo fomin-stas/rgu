@@ -54,20 +54,21 @@ var Settings = {
                     success: function (data) {
                         if(data.success) {
                             var p = data.property;
-                            console.log(p);
                             // load data to modal
                             $('#edit_property_name').val(p.property_name)
                             $('#edit_property_short_name').val(p.property_short_name)
                             $('#edit_property_type').val(p.id_property_type);
-                            $('#edit_property_align').val(p.options.property_align);
-                            $('#edit_property_width').val(p.options.property_width);
-                            if(p.options.property_required == "on") {
-                                $('#edit_property_required').prop('checked', true);
-                            } 
-                            else{
-                                $('#edit_property_required').prop('checked', false);
+                            if(p.options != null) {
+                                $('#edit_property_align').val(p.options.property_align);
+                                $('#edit_property_width').val(p.options.property_width);
+                                if(p.options.property_required == "on") {
+                                    $('#edit_property_required').prop('checked', true);
+                                } 
+                                else{
+                                    $('#edit_property_required').prop('checked', false);
+                                }
+                                $('#edit_property_color').val(p.options.property_color).iris('color', p.options.property_color);
                             }
-                            $('#edit_property_color').val(p.options.property_color).iris('color', p.options.property_color);
                             $('#edit_service_type').val(p.id_service_type);
                             $('#edit_id_property').val(p.id_property);
                             $('#edit_property').modal();
