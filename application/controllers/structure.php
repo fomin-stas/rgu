@@ -218,6 +218,7 @@ class Structure extends APP_Controller {
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('name_authority');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
+        $property['authority_name']= $authority['authority_name'];
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
