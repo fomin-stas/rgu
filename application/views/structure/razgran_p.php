@@ -28,7 +28,7 @@
             </div>
 
             <div class="step-pane active" id="step2">
-               
+
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-bordered">
@@ -54,114 +54,111 @@
                 </div>
                 <form name="step2_com" method="post" action="structure/step2_submit">
 
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <table class="table table-striped table-condensed">
-                            <tr>
-                                <td>Ответственный орган:</td>
-                                <td><?= $name_iogv ?></td>
-                            </tr>
-                            <tr>
-                                <td>Статус:</td>
-                                <td><p style="color:red">Ожидает присвоения статуса полномочия</p></td>
-                            </tr>
-                            <tr>
-                                <td>Комментарий:</td>
-                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
-                            </tr>
-                            <tr>
-                                <td>Приложенные файлы</td>
-                                <td>
-                                    <?php if (isset($files)): ?>
-                                    <?php foreach ($files as $file): ?>
-                                        <a href="file_storage/authority/<?=$file['file_name']?>"><?=$file['name']?></a>
-                                    <?php endforeach; ?>
-                                    <?php else: ?> 
-                                        Нет прикрепленных файлов
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <table class="table table-striped table-condensed">
+                                <tr>
+                                    <td>Ответственный орган:</td>
+                                    <td><?= $name_iogv ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Статус:</td>
+                                    <td><p style="color:red">Ожидает присвоения статуса полномочия</p></td>
+                                </tr>
+                                <tr>
+                                    <td>Комментарий:</td>
+                                    <td><a href="comments/view/<?= $id_authority ?>">Читать комментарии</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Приложенные файлы</td>
+                                    <td>
+                                        <?php if (isset($files)): ?>
+                                            <?php foreach ($files as $file): ?>
+                                                <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                            <?php endforeach; ?>
+                                        <?php else: ?> 
+                                            Нет прикрепленных файлов
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
-                        <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
-                        <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
+                            <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
+                            <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
+                        </div>
                     </div>
-                </div>
-                <form name="step2_com" method="post" action="structure/step2_submit">
-                <input value="<?= $id_authority?>" name="id_authority" hidden>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="widget-box">
-                            <div class="widget-header">
-                                <div class="widget-toolbar">
-                                    <ul id='razgran_u_f_tabs' class='nav nav-tabs'></ul>
-                                </div>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main padding-16">
-                                    <div class="tab-content" id="tab_content">
-
+                    <form name="step2_com" method="post" action="structure/step2_submit">
+                        <input value="<?= $id_authority ?>" name="id_authority" hidden>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="widget-box">
+                                    <div class="widget-header">
+                                        <div class="widget-toolbar">
+                                            <ul id='razgran_u_f_tabs' class='nav nav-tabs'></ul>
+                                        </div>
                                     </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-16">
+                                            <div class="tab-content" id="tab_content">
 
-                                    <div class="row">
-                                        <span class="col-md-6">
-                                            <input type="file" multiple id="step2_file" name="step2_file[]">
-                                        </span>
-                                        <div class="form-group pull-right">
-                                            <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
-                                            <select id="sogl_inst" class="">
-                                                <option>Комитет по информации и связи</option>
-                                                <option>КРИОГВ</option>
-                                            </select>
+                                            </div>
+
+                                            <div class="row">
+                                                <span class="col-md-6">
+                                                    <input type="file" multiple id="step2_file" name="step2_file[]">
+                                                </span>
+                                                <div class="form-group pull-right">
+                                                    <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
+                                                    <select id="sogl_inst" class="">
+                                                        <option>Комитет по информации и связи</option>
+                                                        <option>КРИОГВ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
 
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
-                        <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
-                        <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
+                                <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
+                                <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
 
-                        <button id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
-                    </div>
-                </div>
-                <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <textarea class="input-xxlarge center" name="comment_st2" required></textarea>
-                                    <div class="space-6"></div>
-                                    <table class="table">
-                                        <tr>
-                                            <td>Предыдущие комментарии:</td>
-                                            <td>Комментариев нет</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="clear" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                                    <button type="submit" class="btn btn-primary">Отправить</button>
-                                </div>
-                              
+                                <button id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                </form> 
+                        <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="clear" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                                        <button type="submit" class="btn btn-primary">Отправить</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
+                                        <textarea class="input-xxlarge left" name="comment_st2" required></textarea>
+                                        <div class="space-6"></div>
+                                        <table class="table">
+                                            <tr>
+                                                <td>Предыдущие комментарии:</td>
+                                            </tr>
+                                            <tr>
+                                                <td> <?= $comments ?></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form> 
             </div>
 
             <div class="step-pane" id="step3">
@@ -477,64 +474,76 @@
 <script type="text/javascript">
     $('#step2_file').ace_file_input({
         no_file: "Присоединить файл",
-        btn_choose:"Выбрать",
-        btn_change:"Изменить",
+        btn_choose: "Выбрать",
+        btn_change: "Изменить",
         enable_reset: true
     });
-    $('#send_btn').on('click',function(){
-		var text_fields=$('#tab_content textarea');
-        for (var textarea=0; textarea<text_fields.length; textarea++){
+    $('#send_btn').on('click', function() {
+        var text_fields = $('#tab_content textarea');
+        for (var textarea = 0; textarea < text_fields.length; textarea++) {
             console.log(text_fields[textarea].value);
-            if (!text_fields[textarea].value){
+            if (!text_fields[textarea].value) {
                 console.log(text_fields[textarea]);
 //                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
 //                text_fields[textarea].css('border','1px solid red');
                 $('#alert_fieldrequest').modal('show');
                 return 'empty textarea';
-                }
+            }
         }
         $('#comments_modal').modal('show');
     });
 
     //add new functions and services
-    var num ={sr:1,sn:1,skn:1};
+    var num = {sr: 1, sn: 1, skn: 1};
     function add_new_tab(type)
-    {   
-        var tab_pane= $('#'+type).clone().attr('id','pane_'+type+num[type]); //clone existing tab-pane template and change id
-        tab_pane[0].firstElementChild.id='form_'+type+num[type]; //give it new id and name
-        tab_pane[0].firstElementChild.name+=num[type];
+    {
+        var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
+        tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
+        tab_pane[0].firstElementChild.name += num[type];
 
         function tab_text()
         {
-            if (type=='sr'){return 'Услуга';}
-            else if (type=='sn'){return 'Функция';}
-            else {return 'Функция контроля/надзора';}
+            if (type == 'sr') {
+                return 'Услуга';
+            }
+            else if (type == 'sn') {
+                return 'Функция';
+            }
+            else {
+                return 'Функция контроля/надзора';
+            }
         }
 
         //insert navigation-tab and content
-        var tab= "<li id='navtab_"+type+num[type]+"'><a href='#"+tab_pane[0].id+"' data-toggle='tab'>"+tab_text()+" "+num[type]+"</a></li>";
+        var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + tab_pane[0].id + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
         $('#razgran_u_f_tabs').append(tab);
         $('#tab_content').append(tab_pane[0]);
 
         //rename inputs and labels into type[num]_[i] form
-        for (var i=0; i<$('#form_'+type+num[type]+' label').length; i++)
+        for (var i = 0; i < $('#form_' + type + num[type] + ' label').length; i++)
         {
-            $('#form_'+type+num[type]+' label')[i].setAttribute('for',type+num[type]+'_'+i);
-            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('id',type+num[type]+'_'+i);
-            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('name',type+num[type]+'_'+i);
-            $('#form_'+type+num[type]+' label')[i].nextElementSibling.setAttribute('required','required');
+            $('#form_' + type + num[type] + ' label')[i].setAttribute('for', type + num[type] + '_' + i);
+            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('id', type + num[type] + '_' + i);
+            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
+            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('required', 'required');
         }
 
         //delete-buttons logic
-        $('#'+tab_pane[0].id+' .delete_this_pane')[0].addEventListener('click',function(){
-            var tab_main=this.parentNode.parentNode;
-            $('#navtab_'+tab_main.id).remove();
+        $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function() {
+            var tab_main = this.parentNode.parentNode;
+            $('#navtab_' + tab_main.id).remove();
             tab_main.remove();
         });
         num[type]++;
     }
-    $(".add_sr_btn").on('click',function(){add_new_tab("sr");});
-    $(".add_sn_btn").on('click',function(){add_new_tab("sn");});
-    $(".add_skn_btn").on('click',function(){add_new_tab("skn");});
+    $(".add_sr_btn").on('click', function() {
+        add_new_tab("sr");
+    });
+    $(".add_sn_btn").on('click', function() {
+        add_new_tab("sn");
+    });
+    $(".add_skn_btn").on('click', function() {
+        add_new_tab("skn");
+    });
 </script>
 

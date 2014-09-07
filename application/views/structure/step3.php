@@ -69,15 +69,15 @@
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
-                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
+                                <td><a href="comments/view/<?= $id_authority ?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
                                 <td>Приложенные файлы</td>
                                 <td>
                                     <?php if (isset($files)): ?>
-                                    <?php foreach ($files as $file): ?>
-                                        <a href="file_storage/authority/<?=$file['file_name']?>"><?=$file['name']?></a>
-                                    <?php endforeach; ?>
+                                        <?php foreach ($files as $file): ?>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                        <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
                                     <?php endif; ?>
@@ -93,10 +93,10 @@
                             <div class="widget-header">
                                 <div class="widget-toolbar">
                                     <ul id="razgran_u_f_tabs" class="nav nav-tabs">
-                                        <?php $service_num=0;?>
+                                        <?php $service_num = 0; ?>
                                         <?php foreach ($services as $service): ?>
-                                        <?php $service_num++;?>
-                                            <li><a href="#usl_<?=$service_num;?>_3" data-toggle="tab"><?= $service['type']; ?></a></li>
+                                            <?php $service_num++; ?>
+                                            <li><a href="#usl_<?= $service_num; ?>_3" data-toggle="tab"><?= $service['type']; ?></a></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
@@ -104,24 +104,24 @@
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="tab-content">
-                                       <?php $service_num=0;?>
-                                       <?php foreach ($services as $service): ?>
-                                        <?php $service_num++;?>
-                                        <div class="tab-pane active" id="usl_<?=$service_num;?>_3">
-                                            <table class="table table-bordered">
-                                                <?php foreach ($service['properties'] as $name => $value): ?>
-                                                    <tr>
-                                                        <td><?= $name; ?></td>
-                                                        <td><?= $value; ?></td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </table>
-                                        </div>
+                                        <?php $service_num = 0; ?>
+                                        <?php foreach ($services as $service): ?>
+                                            <?php $service_num++; ?>
+                                            <div class="tab-pane active" id="usl_<?= $service_num; ?>_3">
+                                                <table class="table table-bordered">
+                                                    <?php foreach ($service['properties'] as $name => $value): ?>
+                                                        <tr>
+                                                            <td><?= $name; ?></td>
+                                                            <td><?= $value; ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </table>
+                                            </div>
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="row">
                                         <span class="col-md-6">
-                                            <input type="file" multiple id="step3_file" name="step3_file[]">
+                                            <input type="file" multiple id="step_file" name="step_file">
                                         </span>
                                         <div class="form-group pull-right">
                                             <label for="srok_otveta_3" class="control-label">Срок ответа</label>
@@ -152,24 +152,23 @@
 <div class="modal fade" id="comments_modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form name="step3_agree_com" method="post" action="structure/agree/<?=$id_authority;?>/true">
+            <form name="step3_agree_com" method="post" action="structure/agree/<?= $id_authority; ?>/true">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
                 </div>
                 <div class="modal-body">
+                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                     <textarea class="input-xxlarge center" name="comment_st3_agree"></textarea>
                     <div class="space-6"></div>
                     <table class="table">
                         <tr>
                             <td>Предыдущие комментарии:</td>
-                            <td>Комментариев нет</td>
+                        </tr>
+                        <tr>
+                            <td> <?= $comments ?></td>
                         </tr>
                     </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="structure/step4"><button type="submit" class="btn btn-primary">Отправить</button></a>
                 </div>
             </form>
         </div>
@@ -179,24 +178,23 @@
 <div class="modal fade" id="comments_modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form name="step3_disagree_com" method="post" action="structure/agree/<?=$id_authority;?>/false">
+            <form name="step3_disagree_com" method="post" action="structure/agree/<?= $id_authority; ?>/false">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
                 </div>
                 <div class="modal-body">
+                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                     <textarea class="input-xxlarge center" name="comment_st3_disagree" required></textarea>
                     <div class="space-6"></div>
                     <table class="table">
                         <tr>
                             <td>Предыдущие комментарии:</td>
-                            <td>Комментариев нет</td>
+                        <tr>
+                            <td> <?= $comments ?></td>
+                        </tr>
                         </tr>
                     </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-primary">Отправить</button>
                 </div>
             </form>
         </div>
@@ -204,7 +202,7 @@
 </div>
 
 <script type="text/javascript">
-    $('#step3_file').ace_file_input({
+    $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
         btn_change: "Изменить",

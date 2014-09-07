@@ -16,6 +16,7 @@ class Authority extends APP_Model {
 	public $has_many = array( 
 		'properties' => array(
 			'model' => 'authority_property_model',
-			'primary_key' => 'id_authority'), 
+			'primary_key' => 'id_authority',
+                        'order_by' => 'code'), 
 		);
 }

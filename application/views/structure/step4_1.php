@@ -75,13 +75,16 @@
                                 <td><a href="comments/view/<?= $id_authority ?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
-                                <?php if (isset($files)): ?>
-                                    <?php foreach ($files as $file): ?>
-                                        <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
-                                    <?php endforeach; ?>
-                                <?php else: ?> 
-                                    Нет прикрепленных файлов
-                                <?php endif; ?>
+                                <td>Приложенные файлы</td>
+                                <td>
+                                    <?php if (isset($files)): ?>
+                                        <?php foreach ($files as $file): ?>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                        <?php endforeach; ?>
+                                    <?php else: ?> 
+                                        Нет прикрепленных файлов
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         </table>
                     </div>

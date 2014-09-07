@@ -261,7 +261,7 @@
                                     </div>
                                     <div class="row">
                                         <span class="col-md-6">
-                                            <input type="file" multiple id="step4_file" name="step4_file[]">
+                                            <input type="file" multiple id="step_file" name="step_file">
                                         </span>
                                         <div class="form-group pull-right">
                                             <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
@@ -295,16 +295,19 @@
         <div class="modal-content">
             <form name="step4_com" method="post">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <a href="structure/step4_1"><button type="submit" class="btn btn-primary">Отправить</button></a>
                 </div>
                 <div class="modal-body">
+                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                     <textarea class="input-xxlarge center" name="comment_st4" required></textarea>
                     <div class="space-6"></div>
                     <table class="table">
                         <tr>
                             <td>Предыдущие комментарии:</td>
-                            <td>Комментариев нет</td>
+                        </tr>
+                        <tr>
+                            <td> <?= $comments ?></td>
                         </tr>
                     </table>
                 </div>
@@ -319,7 +322,7 @@
 
 
 <script type="text/javascript">
-    $('#step4_file').ace_file_input({
+    $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
         btn_change: "Изменить",

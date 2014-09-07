@@ -130,7 +130,13 @@ class Structure extends APP_Controller {
                         case 'исполняемая':
                             $executable_status = 'in_process';
                             break;
+                        case 'исполняемое':
+                            $executable_status = 'in_process';
+                            break;
                         case 'общее':
+                            $executable_status = 'in_working';
+                            break;
+                        case 'в разработке':
                             $executable_status = 'in_working';
                             break;
                         default:
@@ -252,6 +258,7 @@ class Structure extends APP_Controller {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
+        $data['comments']=$this->view_only_timeline($id_authority);
         $this->layout->view('razgran_p', $data);
     }
 
@@ -338,6 +345,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
+        $data['comments']=$this->view_only_timeline($id_authority);
         $this->layout->view('step3', $data);
     }
 
@@ -345,11 +353,14 @@ class Structure extends APP_Controller {
         if ($agree) {
             $authority_data['id_authority_status'] = 3;
             $url = 'structure/step4/' . $id_authority;
+            $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
         } else {
             $authority_data['id_authority_status'] = 1;
             $url = 'structure/arm_kis';
+            $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
         }
         $this->authority->update($id_authority, $authority_data);
+        $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
         redirect($url);
     }
 
@@ -378,6 +389,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
+        $data['comments']=$this->view_only_timeline($id_authority);
         $this->layout->view('step4_1', $data);
     }
 
@@ -406,6 +418,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
+        $data['comments']=$this->view_only_timeline($id_authority);
         $this->layout->view('step4', $data);
     }
     
@@ -441,6 +454,25 @@ class Structure extends APP_Controller {
             $upload_file['file_name']=$data['upload_data']['file_name'];
             $upload_file['id_authority']=$id_authority;
             $this->file->insert($upload_file);
+        }
+    }
+    
+    public function view_only_timeline($id_authority) {
+        $this->comment->order_by('time', 'DESC');
+        $comments = $this->comment->get_many_by('id_authority', $id_authority);
+        foreach ($comments as $value) {
+            $user = $this->user->get($value['id_user']);
+            $date_time = date_parse_from_format("Y.m.d H:i:s", $value['time']);
+            $comments_data[$date_time['day'] . '-' . $date_time['month'] . '-' . $date_time['year']] [] = array('time' => $date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'],
+                'message' => $value['message'],
+                'user_name' => $user->user_name);
+        }
+        if (isset($comments_data)) {
+            $data['comments_data'] = $comments_data;
+            return $this->load->view('comments/timeline_only', $data,true);
+        }
+        else{
+            return 'Комментариев нет';
         }
     }
 
@@ -554,6 +586,9 @@ class Structure extends APP_Controller {
                             $executable_status = 'in_process';
                             break;
                         case 'общее':
+                            $executable_status = 'in_working';
+                            break;
+                        case 'в разработке':
                             $executable_status = 'in_working';
                             break;
                         default:
