@@ -131,9 +131,6 @@ class Structure extends APP_Controller {
                         case 'исполняемая':
                             $executable_status = 'in_process';
                             break;
-                        case 'исполняемое':
-                            $executable_status = 'in_process';
-                            break;
                         case 'общее':
                             $executable_status = 'in_working';
                             break;
@@ -170,7 +167,7 @@ class Structure extends APP_Controller {
             //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
-                )
+            )
         );
     }
 
@@ -216,25 +213,30 @@ class Structure extends APP_Controller {
     }
 
     public function step1_submit() {
-        $authority['authority_name'] = $this->input->post('name_authority');
+        $authority['authority_name'] = $this->input->post('authority_name');
+        
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        $property['authority_name']= $authority['authority_name'];
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
         $property['srok_otveta'] = $this->input->post('srok_otveta');
+        $property['executable_status'] = 'исполняемое';
         $authority['id_organization'] = $this->input->post('select_org');
         $authority['id_authority_status'] = 1;
-        //обработка добавления комментария - позже
-        $comments['comment_st1'] = $this->input->post('comment_st1');
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
+        $property['authority_name'] = '<a href=structure/check_status_authority/'.$id_authority.'>'.$authority['authority_name'].'</a>';
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
+        
+        $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
+        $this->file_insert($id_authority);
+        
         redirect('structure/arm_kis');
     }
 
     public function step2($id_authority) {
+        $this->check_status_authority($id_authority,2);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -242,6 +244,11 @@ class Structure extends APP_Controller {
         $data['organization'] = $organization->organization_name;
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
+        $files = $this->file->get_many_by('id_authority', $id_authority);
+        foreach ($files as $value) {
+            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+        }
+            
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
@@ -280,7 +287,6 @@ class Structure extends APP_Controller {
                     break;
             }
         }
-        $comments['comment_st2'] = $this->input->post('comment_st2');
         foreach ($services as $name => $property) {
             $service['id_authority'] = $id_authority;
             switch (substr($name, 0, 2)) {
@@ -303,19 +309,24 @@ class Structure extends APP_Controller {
         }
         $authority_data['id_authority_status'] = 2;
         $this->authority->update($id_authority, $authority_data);
+        $this->comment->insert_comment($id_authority, $this->input->post('comment_st2'));
         redirect('structure/arm_iogv');
     }
 
     public function step3($id_authority) {
+        $this->check_status_authority($id_authority,3);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
         $data['organization'] = $organization->organization_name;
-
+        $files = $this->file->get_many_by('id_authority', $id_authority);
+        foreach ($files as $value) {
+            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+        }
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['id_property'].'_code'] = $value['value'];
+            $data[$property['code']] = $value['value'];
         }
 
         $services = $this->service->get_many_by('id_authority', $id_authority);
@@ -344,6 +355,7 @@ class Structure extends APP_Controller {
     }
 
     public function step4($id_authority) {
+        $this->check_status_authority($id_authority,4);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -351,7 +363,7 @@ class Structure extends APP_Controller {
         $data['organization'] = $organization->organization_name;
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['id_property'].'_code'] = $value['value'];
+            $data[$property['code']] = $value['value'];
         }
         $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
@@ -375,7 +387,7 @@ class Structure extends APP_Controller {
 
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['id_property'].'_code'] = $value['value'];
+            $data[$property['code']] = $value['value'];
         }
 
         $services = $this->service->get_many_by('id_authority', $id_authority);
@@ -390,9 +402,43 @@ class Structure extends APP_Controller {
         }
         $this->layout->view('step4', $data);
     }
+    
+    public function check_status_authority($id_authority,$step_num=0){
+        $authority=$this->authority->get($id_authority);
+        switch ($authority['id_authority_status']) {
+            case 1:
+                if ($step_num!=2) redirect('structure/step2/'.$id_authority);
+                break;
+            case 2:
+                if ($step_num!=3) redirect('structure/step3/'.$id_authority);
 
-    public function arm_iogv() {
+                break;
+            case 3:
+                if ($step_num!=4) redirect('structure/step4/'.$id_authority);
 
+                break;
+        }
+    }
+    
+    private function file_insert($id_authority){
+        $config['upload_path'] = 'file_storage/authority';
+        $config['allowed_types'] = 'gif|jpg|png|doc|docx|zip|rar|xls|xlsx|ppt|pptx';
+        $config['max_size'] = '0';
+        $config['max_width'] = '0';
+        $config['max_height'] = '0';
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('step_file')) {
+            $error = array('error' => $this->upload->display_errors());
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+            $upload_file['name']=$data['upload_data']['client_name'];
+            $upload_file['file_name']=$data['upload_data']['file_name'];
+            $upload_file['id_authority']=$id_authority;
+            $this->file->insert($upload_file);
+        }
+    }
+
+    public function arm_iogv(){
         // load libs
         $this->load->library('zend');
         $this->zend->load('Zend/Json');

@@ -69,7 +69,7 @@
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
-                                <td><a href="structure/timeline">Читать комментарии(1)</a></td>
+                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
                                 <td>Приложенные файлы</td>

@@ -24,14 +24,14 @@
         <hr>
         <div class="step-content" id="step-container">
             <div class="step-pane active" id="step1">
-                <form class="form-horizontal" method="post" role="form" action="structure/step1_submit">
+                <form class="form-horizontal" method="post" role="form" action="structure/step1_submit" enctype="multipart/form-data">
                     <fieldset>
                         <div class="col-md-offset-1">
                             <h4 class="col-md-10 center">Добавление нового полномочия</h4>
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="name_authority" class="control-label col-md-5">Наименование полномочия в соответствии с Положением об ИОГВ</label>
-                                    <textarea id="name_authority" name="name_authority" class="col-md-5"></textarea>
+                                    <label for="authority_name" class="control-label col-md-5">Наименование полномочия в соответствии с Положением об ИОГВ</label>
+                                    <textarea id="authority_name" name="authority_name" class="col-md-5"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="punkt_iogv" class="control-label col-md-5">№ пункта в положении об ИОГВ</label>
@@ -70,10 +70,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-10">
                                     <span class="col-md-6">
-                                        <input type="file" multiple id="step1_file" name="step1_file[]">
+                                        <input type="file" required multiple id="step_file" name="step_file">
                                     </span>
                                     <input type="button" id="send_btn" class="btn btn-info pull-right"  data-toggle="modal" data-target="#comments_modal" value="Отправить в работу">
                                 </div>
@@ -122,7 +123,7 @@
 
 
 <script type="text/javascript">
-    $('#step1_file').ace_file_input({
+    $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
         btn_change: "Изменить",

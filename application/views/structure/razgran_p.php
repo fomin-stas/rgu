@@ -67,14 +67,18 @@
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
-                                <td><a href="structure/timeline">Читать комментарии(1)</a></td>
+                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
                                 <td>Приложенные файлы</td>
                                 <td>
-                                    <a href="structure/step2">Постановление.jpg</a>
-                                    ,
-                                    <a href="structure/step2">Дополнительные материалы.zip</a>
+                                    <?php if (isset($files)): ?>
+                                    <?php foreach ($files as $file): ?>
+                                        <a href="file_storage/authority/<?=$file['file_name']?>"><?=$file['name']?></a>
+                                    <?php endforeach; ?>
+                                    <?php else: ?> 
+                                        Нет прикрепленных файлов
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </table>

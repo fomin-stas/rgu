@@ -71,6 +71,10 @@
                                 <td>Статус</td>
                                 <td><p style="color:green">КИС согласовал присвоение статуса полномочию</p></td>
                             </tr>
+                            <tr>
+                                <td>Комментарий:</td>
+                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
+                            </tr>
                         </table>
                     </div>
                 </div>

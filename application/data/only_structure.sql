@@ -1,4 +1,42 @@
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 8                                 */
+/* Created on:     07.09.2014 19:46:47                          */
+/*==============================================================*/
 
+
+drop table activity_feed;
+
+drop table authority;
+
+drop table authority_property;
+
+drop table authority_status;
+
+drop table comment;
+
+drop table event_type;
+
+drop table files;
+
+drop table history_log;
+
+drop table organization;
+
+drop table organization_rank;
+
+drop table property;
+
+drop table property_format;
+
+drop table service;
+
+drop table service_property;
+
+drop table service_type;
+
+drop table spher;
+
+drop table users;
 
 /*==============================================================*/
 /* Table: activity_feed                                         */
@@ -71,6 +109,7 @@ create table event_type (
 create table files (
    id_file              SERIAL not null,
    id_comment           INT4                 null,
+   id_authority         INT4                 null,
    name                 VARCHAR(1024)        null,
    file_name            VARCHAR(1024)        null,
    constraint PK_FILES primary key (id_file)
@@ -116,7 +155,6 @@ create table property (
    id_property_type     INT4                 null,
    id_service_type      INT4                 null,
    property_name        VARCHAR(1024)        null,
-   property_short_name  VARCHAR(1024)        null,
    code                 VARCHAR(1024)        null,
    options              VARCHAR(2048)        null,
    constraint PK_PROPERTY primary key (id_property)
@@ -231,6 +269,11 @@ alter table comment
 alter table files
    add constraint FK_FILES_REFERENCE_COMMENT foreign key (id_comment)
       references comment (id_comment)
+      on delete restrict on update restrict;
+
+alter table files
+   add constraint FK_FILES_REFERENCE_AUTHORIT foreign key (id_authority)
+      references authority (id_authority)
       on delete restrict on update restrict;
 
 alter table history_log

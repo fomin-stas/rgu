@@ -112,16 +112,17 @@ $autoload['language'] = array();
 $autoload['model'] = array(
 	'user', 
 	'organization_model', 
-    'service',
-    'service_property',
-    'service_type',
+        'service',
+        'service_property',
+        'service_type',
 	'authority',  
-    'authority_property_model',
+        'authority_property_model',
 	'authority_status_model',
 	'property',
-    'property_format_model',
-    'spher'
-	);
+        'property_format_model',
+        'spher',
+        'comment',
+        'file');
 
 
 /* End of file autoload.php */

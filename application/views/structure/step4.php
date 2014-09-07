@@ -72,8 +72,8 @@
                                 <td><p style="color:green">КИС согласовал присвоение статуса полномочию</p></td>
                             </tr>
                             <tr>
-                                <td>Комментарий</td>
-                                <td><a href="structure/timeline">Читать комментарий (1)</a></td>
+                                <td>Комментарий:</td>
+                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
                                 <td>Приложенные файлы</td>
