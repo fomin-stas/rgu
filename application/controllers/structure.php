@@ -244,7 +244,7 @@ class Structure extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
-            $data[$property['id_property'].'_code'] = $value['value'];
+            $data[$property['code']] = $value['value'];
         }
         $this->layout->view('razgran_p', $data);
     }
