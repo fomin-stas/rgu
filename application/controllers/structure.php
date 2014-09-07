@@ -27,11 +27,10 @@ class Structure extends APP_Controller {
         $grid_data = array();
         $column_names = array();
         $column_models = array();
-
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
-                ->with('properties')
+                ->with('properties') 
                 ->get_all();
 
         $properties = $this->property->with('format')->get_all();
@@ -46,17 +45,17 @@ class Structure extends APP_Controller {
                 case 'system':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 100;
+                    $model['width'] = 220;
                     break;
                 case 'number':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 100;
+                    $model['width'] = 220;
                     break;
                 case 'date':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 120;
+                    $model['width'] = 250;
                     $model['sorttype'] = 'date';
                     break;
                 case 'textarea':
@@ -64,7 +63,7 @@ class Structure extends APP_Controller {
                     $model['fixed'] = true;
                     $model['edittype'] = 'textarea';
                     $model['editoptions']['rows'] = 3;
-                    $model['width'] = 250;
+                    $model['width'] = 270;
                     break;
                 case 'select':
                     $model['editable'] = false;
@@ -72,7 +71,7 @@ class Structure extends APP_Controller {
                     $model['stype'] = 'select';
                     $model['edittype'] = 'select';
                     //$model['editoptions'] = [];
-                    $model['width'] = 250;
+                    $model['width'] = 270;
                     break;
                 case 'multiselect':
                     $model['editable'] = false;
@@ -80,7 +79,7 @@ class Structure extends APP_Controller {
                     $model['stype'] = 'select';
                     $model['edittype'] = 'select';
                     //$model['editoptions'] = [];
-                    $model['width'] = 250;
+                    $model['width'] = 270;
                     break;
             }
             $options = json_decode($property['options'], true);
@@ -361,6 +360,10 @@ class Structure extends APP_Controller {
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
         $data['organization'] = $organization->organization_name;
+        $files = $this->file->get_many_by('id_authority', $id_authority);
+        foreach ($files as $value) {
+            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+        }
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
@@ -389,7 +392,10 @@ class Structure extends APP_Controller {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
-
+        $files = $this->file->get_many_by('id_authority', $id_authority);
+        foreach ($files as $value) {
+            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+        }
         $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
             $properties = $this->service_property->get_many_by('id_service', $service['id_service']);
@@ -470,17 +476,17 @@ class Structure extends APP_Controller {
                 case 'system':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 100;
+                    $model['width'] = 200;
                     break;
                 case 'number':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 100;
+                    $model['width'] = 200;
                     break;
                 case 'date':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['width'] = 120;
+                    $model['width'] = 220;
                     $model['sorttype'] = 'date';
                     break;
                 case 'textarea':

@@ -74,9 +74,13 @@
                             <tr>
                                 <td>Приложенные файлы</td>
                                 <td>
-                                    <a href="structure/step3">file_1.jpg</a>
-                                    ,
-                                    <a href="structure/step3">file_2.zip</a>
+                                    <?php if (isset($files)): ?>
+                                    <?php foreach ($files as $file): ?>
+                                        <a href="file_storage/authority/<?=$file['file_name']?>"><?=$file['name']?></a>
+                                    <?php endforeach; ?>
+                                    <?php else: ?> 
+                                        Нет прикрепленных файлов
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </table>

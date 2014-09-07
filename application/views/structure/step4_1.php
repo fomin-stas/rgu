@@ -1,4 +1,3 @@
-
 <div class="main-container">
     <div class="container">
         <div id="my-wizard" data-target="#step-container" class="wizard">
@@ -73,7 +72,16 @@
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
-                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
+                                <td><a href="comments/view/<?= $id_authority ?>">Читать комментарии</a></td>
+                            </tr>
+                            <tr>
+                                <?php if (isset($files)): ?>
+                                    <?php foreach ($files as $file): ?>
+                                        <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                    <?php endforeach; ?>
+                                <?php else: ?> 
+                                    Нет прикрепленных файлов
+                                <?php endif; ?>
                             </tr>
                         </table>
                     </div>
@@ -115,7 +123,7 @@
                                                 <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
                                             </div>
                                         <?php endforeach; ?>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +131,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <a href="structure/step4_1/<?=$id_authority?>"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
+                            <a href="structure/step4_1/<?= $id_authority ?>"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
                         </div>
                     </div>
                 </div>
