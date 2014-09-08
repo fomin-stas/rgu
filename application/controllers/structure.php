@@ -221,11 +221,12 @@ class Structure extends APP_Controller {
         $authority['authority_name'] = $this->input->post('authority_name');
         
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
+        $property['id_authority'] = $this->input->post('select_org').' '.$this->input->post('punkt_iogv').'-'.rand(1, 99);
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
         $property['srok_otveta'] = $this->input->post('srok_otveta');
-        $property['executable_status'] = 'исполняемое';
+        $property['executable_status'] = 'в разработке';
         $authority['id_organization'] = $this->input->post('select_org');
         $authority['id_authority_status'] = 1;
         $this->load->model('authority');
@@ -354,6 +355,9 @@ class Structure extends APP_Controller {
             $authority_data['id_authority_status'] = 3;
             $url = 'structure/step4/' . $id_authority;
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
+            $property['executable_status'] = 'в разработке';
+            $this->authority_property_model->_id_authority = $id_authority;
+            $this->authority_property_model->insert_where_code_many($property);
         } else {
             $authority_data['id_authority_status'] = 1;
             $url = 'structure/arm_kis';
@@ -399,7 +403,8 @@ class Structure extends APP_Controller {
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
         $data['organization'] = $organization->organization_name;
-
+        $data['spher'] = $this->spher->dropdown('name', 'name');
+        $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
@@ -415,7 +420,7 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
+                $data['services'][$service['id_service']]['properties'][$property['code']] = $value['value'];
             }
         }
         $data['comments']=$this->view_only_timeline($id_authority);

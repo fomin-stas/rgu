@@ -126,7 +126,6 @@
                                                 <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
                                             </div>
                                         <?php endforeach; ?>
-
                                     </div>
                                 </div>
                             </div>
