@@ -339,6 +339,50 @@
             </div>
         </div>
         
+        <div class="modal fade" id="textarea_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Редактирование</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <textarea id="textarea_textarea" class="col-md-12"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="textarea_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
+                        <button type="button" id="textarea_change" class="btn btn-info btn-sm pull-right">Изменить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="select_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Редактирование</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <select class="select_select" id="select_select"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
+                        <button type="button" id="mselect_change" class="btn btn-info btn-sm pull-right">Изменить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <script type="text/javascript">
             /*var grid_data = 
             [ 
@@ -412,7 +456,20 @@
                 },
                 {title:"Редактировать",action:function(event,ui){jQuery(grid_selector).jqGrid('editGridRow',getClickedRowId(event,ui),{width:450});}},
 
-                {title:"История изменений",action:function(event,ui){$("#changes").modal();}}
+                {title:"История изменений",action:function(event,ui)
+					{
+						$.ajax({
+							url:'ajax/get_history_cell',
+							type:'POST',
+							data:'rowid='+getClickedRowId(event,ui)+'&colindex='+getClickedColNum(event,ui)+'&cellname='+ui.target[0].getAttribute('aria-describedby'),
+							success: function(data)
+							{
+								$('#changes').html(data);
+							}
+						});
+						$("#changes").modal();
+					}
+				}
                     ]
             });
             

@@ -348,7 +348,7 @@
                     Structure.renderGrid(grid_selector, pager_selector, grid_data);
                     $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
 
-
+					$('.ui-pg-div .ui-icon.ace-icon.fa.fa-plus-circle.purple').remove();
 
                     //enable search/filter toolbar
                     jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,searchOnEnter: false, enableClear: true,stringResult:true});
