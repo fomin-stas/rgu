@@ -196,7 +196,7 @@ var Structure = {
                 ignoreCase: true,
 				mtype: "POST",
                 cellEdit: true,
-                cellsubmit: "clientArray",
+                cellsubmit: "remote",
 				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
