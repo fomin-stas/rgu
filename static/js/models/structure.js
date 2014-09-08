@@ -207,10 +207,10 @@ var Structure = {
                 multiboxonly: true,
                 deepempty: true,
                 ignoreCase: true,
-//				mtype: "POST",
+				mtype: "POST",
                 cellEdit: true,
-                cellsubmit: "clientArray",
-//				cellurl:	'string' - the url where the cell is to be saved.
+                cellsubmit: "remote",
+				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{
@@ -288,7 +288,7 @@ var Structure = {
 		//navButtons
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,
                 { 	//navbar options
-                        edit: true,
+                        edit: false,
                         editicon : 'ace-icon fa fa-pencil blue',
                         add: false,
                         addicon : 'ace-icon fa fa-plus-circle purple',
@@ -298,7 +298,7 @@ var Structure = {
                         searchicon : 'ace-icon fa fa-search orange',
                         refresh: true,
                         refreshicon : 'ace-icon fa fa-refresh green',
-                        view: true,
+                        view: false,
                         viewicon : 'ace-icon fa fa-search-plus grey'
                 },
                 {
@@ -453,9 +453,9 @@ var Structure = {
             includeSelectAllOption:true,
             selectAllText:"Все",
             onChange:function(){console.log('search');},
-            templates:{
+//            templates:{
 //              ul:"<ul class='dropdown-menu'></ul>"
-            }
+//          }
         });
 		
 		//multiselect cell editing

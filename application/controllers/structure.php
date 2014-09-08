@@ -270,7 +270,7 @@ class Structure extends APP_Controller {
     //всю эту хренотень с шагами - в отдельный класс
     public function step2_submit() {
         $data = $_POST;
-        $id_authority = $this->input->post('id_authority');
+        $id_authority = $data['id_authority'];
         foreach ($data as $name => $value) {
             if ($name{3} == '_') {
                 $service_num = $name{2};
@@ -454,7 +454,7 @@ class Structure extends APP_Controller {
         $config['max_size'] = '0';
         $config['max_width'] = '0';
         $config['max_height'] = '0';
-        $config['encrypt_name'] = true;
+        //$config['encrypt_name'] = true;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('step_file')) {
             $error = array('error' => $this->upload->display_errors());

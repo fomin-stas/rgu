@@ -36,6 +36,10 @@
                     <div class="col-md-10 col-md-offset-1">
                         <h3 class="center">Присвоение статуса полномочию</h3>
                         <table class="table table-striped table-bordered">
+                             <tr>
+                                <td>ID полномочия:</td>
+                                <td><?= $authority_id ?></td>
+                            </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
                                 <td><?= $authority_name ?></td>
@@ -96,7 +100,7 @@
                                         <?php $service_num = 0; ?>
                                         <?php foreach ($services as $service): ?>
                                             <?php $service_num++; ?>
-                                            <li><a href="#usl_<?= $service_num; ?>_3" data-toggle="tab"><?= $service['type']; ?></a></li>
+                                            <li <?php if($service_num==1) echo 'class="active"';?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'].' '.$service_num; ?></a></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
@@ -104,10 +108,10 @@
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="tab-content">
-                                        <?php $service_num = 0; ?>
+                                        <?php $tab_num = 0; ?>
                                         <?php foreach ($services as $service): ?>
-                                            <?php $service_num++; ?>
-                                            <div class="tab-pane active" id="usl_<?= $service_num; ?>_3">
+                                            <?php $tab_num++; ?>
+                                            <div class="tab-pane <?php if($tab_num==1) echo 'active';?>" id="usl_<?= $tab_num; ?>" hidden>
                                                 <table class="table table-bordered">
                                                     <?php foreach ($service['properties'] as $name => $value): ?>
                                                         <tr>
