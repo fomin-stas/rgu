@@ -1,4 +1,3 @@
-
 <div class="main-container">
     <div class="container">
         <div id="my-wizard" data-target="#step-container" class="wizard">
@@ -32,6 +31,10 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-bordered">
+                            <tr>
+                                <td>ID полномочия:</td>
+                                <td><?= $authority_id ?></td>
+                            </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
                                 <td><?= $authority_name ?></td>
@@ -103,10 +106,7 @@
                                     </div>
                                     <div class="widget-body">
                                         <div class="widget-main padding-16">
-                                            <div class="tab-content" id="tab_content">
-
-                                            </div>
-
+                                            <div class="tab-content" id="tab_content"></div>
                                             <div class="row">
                                                 <span class="col-md-6">
                                                     <input type="file" multiple id="step2_file" name="step2_file[]">
@@ -125,13 +125,11 @@
                             </div>
                         </div>
 
-
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
                                 <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
                                 <button class="btn btn-info btn-sm pull-left add_skn_btn">Добавить функцию контроля и надзора</button>
-
                                 <button id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
                             </div>
                         </div>
@@ -160,20 +158,15 @@
                         </div>
                     </form> 
             </div>
-
             <div class="step-pane" id="step3">
                 <!-- step 3 -->
             </div>
-
             <div class="step-pane" id="step4">
                 <!-- step 4 -->
             </div>
         </div>
-
     </div>
 </div>
-
-
 
 <div class="tab-pane" id="sr" hidden>
     <div class="form-horizontal" method="post" name="sr_form">
@@ -469,8 +462,6 @@
     </div>
 </div>
 
-
-
 <script type="text/javascript">
     $('#step2_file').ace_file_input({
         no_file: "Присоединить файл",
@@ -500,7 +491,6 @@
         var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
         tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
         tab_pane[0].firstElementChild.name += num[type];
-
         function tab_text()
         {
             if (type == 'sr') {

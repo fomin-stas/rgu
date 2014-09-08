@@ -104,7 +104,7 @@
                                         <?php $service_num = 0; ?>
                                         <?php foreach ($services as $service): ?>
                                             <?php $service_num++; ?>
-                                            <li><a href="#usl_<?= $service_num ?>" data-toggle="tab"><?= $service['type']; ?></a></li>
+                                            <li <?php if ($service_num == 1) echo 'class="active"'; ?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'] . ' ' . $service_num; ?></a></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
@@ -112,10 +112,11 @@
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="tab-content">
-                                        <?php $service_num = 0; ?>
+                                        <?php $tab_num = 0; ?>
                                         <?php foreach ($services as $service): ?>
-                                            <?php $service_num++; ?>
-                                            <div class="tab-pane active" id="usl_<?= $service_num; ?>_3">
+                                            <?php $tab_num++; ?>
+                                            <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
+
                                                 <form class="form-horizontal">
                                                     <fieldset>
                                                         <div class="form-group">
@@ -222,14 +223,10 @@
                                                             <textarea id="sr24_<?= $service_num ?>" name='sr14_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_24'])) echo $service['properties']['sr_24']; ?></textarea>
                                                         </div>
                                                         <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
-
                                                     </fieldset>
                                                 </form>
                                             </div>
                                         <?php endforeach; ?>
-
-
-
                                     </div>
                                     <div class="row">
                                         <span class="col-md-6">
@@ -239,7 +236,7 @@
                                             <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
                                             <select id="sogl_inst" class="">
                                                 <option>Комитет по информации и связи</option>
-                                                <option>Другое</option>
+                                                <option>КРИОГВ</option>
                                             </select>
                                         </div>
                                     </div>
