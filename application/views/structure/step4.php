@@ -73,15 +73,15 @@
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
-                                <td><a href="comments/view/<?=$id_authority?>">Читать комментарии</a></td>
+                                <td><a href="comments/view/<?= $id_authority ?>">Читать комментарии</a></td>
                             </tr>
                             <tr>
                                 <td>Приложенные файлы</td>
                                 <td>
                                     <?php if (isset($files)): ?>
-                                    <?php foreach ($files as $file): ?>
-                                        <a href="file_storage/authority/<?=$file['file_name']?>"><?=$file['name']?></a>
-                                    <?php endforeach; ?>
+                                        <?php foreach ($files as $file): ?>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                        <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
                                     <?php endif; ?>
@@ -101,163 +101,135 @@
                             <div class="widget-header">
                                 <div class="widget-toolbar">
                                     <ul id="razgran_u_f_tabs" class="nav nav-tabs">
-                                        <li><a href="#usl_1" data-toggle="tab">Услуга 1</a></li>
-                                        <li><a href="#func_1" data-toggle="tab">Функция 1</a></li>
-                                        <li><a href="#func_cn_1" data-toggle="tab">Функция контроля и надзора</a></li>
+                                        <?php $service_num = 0; ?>
+                                        <?php foreach ($services as $service): ?>
+                                            <?php $service_num++; ?>
+                                            <li><a href="#usl_<?= $service_num ?>" data-toggle="tab"><?= $service['type']; ?></a></li>
+                                        <?php endforeach; ?>
                                     </ul>
                                 </div>
                             </div>
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="usl_1">
-                                            <form class="form-horizontal">
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <label for="full_name_usl" class="control-label col-md-3">Полное наименование</label>
-                                                        <textarea id="full_name_usl" class="col-md-5">Согласовывать результаты технических обследований централизованных систем горячего водоснабжения</textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="short_name_usl" class="control-label col-md-3">Краткое наименование</label>
-                                                        <textarea id="short_name_usl" class="col-md-5">Согласовывать результаты технических обследований централизованных систем горячего водоснабжения</textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sfera" class="control-label col-md-3">Сфера</label>
-                                                        <select id="sfera" class="col-md-5">
-                                                            <option>Природопользование и экология</option>
-                                                            <option>образование и наука</option>
-                                                            <option>Здравоохранение</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="usl_okaz" class="control-label col-md-3">Услугу оказывает</label>
-                                                        <select id="usl_okaz" class="col-md-5">
-                                                            <option>Администрации районов Санкт-Петербурга</option>
-                                                            <option>Комитет по энергетике и инжеерному обеспечению</option>
-                                                            <option>Подведомственное учреждение</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="result_usl" class="control-label col-md-3">Результат предоставления</label>
-                                                        <textarea id="result_usl" class="col-md-5">Согласование (отказ в согласовании) результатов обследований централизованных систем водоснабжения</textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="srok_predost_usl" class="control-label col-md-3">Срок предоставления</label>
-                                                        <textarea id="srok_predost_usl" class="col-md-5">Не более 3 дней с момента подачи заявления</textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="kateg_z_usl" class="control-label col-md-3">Категория заявителей</label>
-                                                        <textarea id="kateg_z_usl" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="sp_predost_usl" class="control-label col-md-3">Способ предоставления</label>
-                                                        <textarea id="sp_predost_usl" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="opisanie_usl" class="control-label col-md-3">Краткое описание</label>
-                                                        <textarea id="opisanie_usl" class="col-md-5">Услуга заключается в.....</textarea>
-                                                    </div>
-                                                    <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
+                                        <?php $service_num = 0; ?>
+                                        <?php foreach ($services as $service): ?>
+                                            <?php $service_num++; ?>
+                                            <div class="tab-pane active" id="usl_<?= $service_num; ?>_3">
+                                                <form class="form-horizontal">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                            <label for="sr0_<?= $service_num ?>" class="control-label col-md-3">Полное наименование</label>
+                                                            <textarea id="sr0_<?= $service_num ?>" name="sr0_<?= $service_num ?>" class="col-md-5"><?php if (isset($service['properties']['sr_0'])) echo $service['properties']['sr_0']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr1_<?= $service_num ?>" class="control-label col-md-6">Краткое наименование услуги</label>
+                                                            <textarea id="sr1_<?= $service_num ?>" name="sr1_<?= $service_num ?>" class="col-md-5"><?php if (isset($service['properties']['sr_1'])) echo $service['properties']['sr_1']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="spher" class="control-label col-md-6">Сфера предоставления</label>
+                                                            <?= form_dropdown('spher', $spher, $service['properties']['sr_2'], 'id="spher" class="col-md-5"'); ?>
 
-                                                </fieldset>
-                                            </form>
-                                        </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="organization_provide_service" class="control-label col-md-6">Наименование органов, участвующих в предоставлении услуги</label>
+                                                            <?= form_multiselect('organization_provide_service', $organization_provide_service, '', 'id="organization_provide_service" class="col-md-5"'); ?>
 
-                                        <div class="tab-pane" id="func_1">
-                                            <form class="form-horizontal">
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <label for="full_name_func" class="control-label col-md-3">Наименование</label>
-                                                        <textarea id="full_name_func" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="vyp_deistv_func" class="control-label col-md-3">Выполняемые действия</label>
-                                                        <textarea id="vyp_deistv_func" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="organ_vyp_func" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
-                                                        <select id="organ_vyp_func" class="col-md-5">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="org_isp_func" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
-                                                        <select id="org_isp_func" class="col-md-5">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="vyp_deistv" class="control-label col-md-3">Выполняемые действия</label>
-                                                        <textarea id="vyp_deistv" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="result_isp_func" class="control-label col-md-3">Результат исполнения функции</label>
-                                                        <textarea id="result_isp_func" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="neobh_otchetn" class="control-label col-md-3">необходимость формирования отчетности</label>
-                                                        <select id="neobh_otchetn" class="col-md-5">
-                                                            <option>Нет</option>
-                                                            <option>Да</option>
-                                                        </select>
-                                                    </div>                                                    
-                                                    <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
-                                                    <button class="btn btn-grey btn-sm pull-left">Удалить</button>
-                                                </fieldset>
-                                            </form>
-                                        </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr4_<?= $service_num ?>" class="control-label col-md-6">Перечень НПА РФ, регулирующих предоставление услуги</label>
+                                                            <textarea id="sr4_<?= $service_num ?>" name='sr4_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_4'])) echo $service['properties']['sr_4']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr5_<?= $service_num ?>" class="control-label col-md-6">Перечень НПА СПб</label>
+                                                            <textarea id="sr5_<?= $service_num ?>" name='sr5_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_5'])) echo $service['properties']['sr_5']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr6_<?= $service_num ?>" class="control-label col-md-6">Способы предоставления услуги</label>
+                                                            <?= form_dropdown('sr6_' . $service_num, array("в традиционном порядке" => "в традиционном порядке", "через МФЦ" => "через МФЦ", "в электронном виде" => "в электронном виде"), $service['properties']['sr_6'], 'id="sr6_' . $service_num . '" name="sr6_' . $service_num . '" class="col-md-5"'); ?>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr7_<?= $service_num ?>" class="control-label col-md-6">Результат предоставления</label>
+                                                            <textarea id="sr7_<?= $service_num ?>" name='sr7_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_7'])) echo $service['properties']['sr_7']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr8_<?= $service_num ?>" class="control-label col-md-6">Срок предоставления</label>
+                                                            <textarea id="sr8_<?= $service_num ?>" name='sr8_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_8'])) echo $service['properties']['sr_8']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr9_<?= $service_num ?>" class="control-label col-md-6">Тип заявителя</label>
+                                                            <?= form_dropdown('sr6_' . $service_num, array("Юр." => "Юр.", "Физ." => "Физ.", "Юр./Физ." => "Юр./Физ."), $service['properties']['sr_9'], 'id="sr9_' . $service_num . '" name="sr9_' . $service_num . '" class="col-md-5"'); ?>
 
-                                        <div class="tab-pane" id="func_cn_1">
-                                            <form class="form-horizontal">
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <label for="full_name_func_cn" class="control-label col-md-3">Наименование</label>
-                                                        <textarea id="full_name_func_cn" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="deistv_func_cn" class="control-label col-md-3">Выполняемые действия</label>
-                                                        <textarea id="deistv_func_cn" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="organ_func_cn" class="control-label col-md-3">Органы, в отношении которых выполняются действия</label>
-                                                        <select id="organ_func_cn" class="col-md-5">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="org_isp_func_cn" class="control-label col-md-3">Организации, принимающие участие в исполнении функции</label>
-                                                        <select id="org_isp_func_cn" class="col-md-5">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="vyp_deistv_cn" class="control-label col-md-3">Выполняемые действия</label>
-                                                        <textarea id="vyp_deistv_cn" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="result_func_cn" class="control-label col-md-3">Результат исполнения функции</label>
-                                                        <textarea id="result_func_cn" class="col-md-5"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="neobh_otchet_cn" class="control-label col-md-3">необходимость формирования отчетности</label>
-                                                        <select id="neobh_otchet_cn" class="col-md-5">
-                                                            <option>Нет</option>
-                                                            <option>Да</option>
-                                                        </select>
-                                                    </div>                                                    
-                                                    <button class="btn btn-info btn-sm pull-left" id="save_as_chern_func_cn">Сохранить как черновик</button>
-                                                    <button class="btn btn-grey btn-sm pull-left">Удалить</button>
-                                                </fieldset>
-                                            </form>
-                                        </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr10_<?= $service_num ?>" class="control-label col-md-6">Категория заявителей</label>
+                                                            <textarea id="sr10_<?= $service_num ?>" name='sr8_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_10'])) echo $service['properties']['sr_10']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr11_<?= $service_num ?>" class="control-label col-md-6">Сведения о местах, в которых можно получить информацию</label>
+                                                            <textarea id="sr11_<?= $service_num ?>" name='sr11_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_11'])) echo $service['properties']['sr_11']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr12_<?= $service_num ?>" class="control-label col-md-6">Срок, в течение которого заявление должно быть зарегистрировано</label>
+                                                            <textarea id="sr12_<?= $service_num ?>" name='sr12_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_12'])) echo $service['properties']['sr_12']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr13_<?= $service_num ?>" class="control-label col-md-6">Максимальный срок ожидания в очереди</label>
+                                                            <textarea id="sr13_<?= $service_num ?>" name='sr13_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_13'])) echo $service['properties']['sr_13']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr14_<?= $service_num ?>" class="control-label col-md-6">Основания для приостановления предоставления либо откаsr14_<?= $service_num ?>за в предоставлении услуги (если возможность приостановления либо отказа в предоставлении услуги предусмотрена законодательством Российской Федерации).</label>
+                                                            <textarea id="sr14_<?= $service_num ?>" name='sr14_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_14'])) echo $service['properties']['sr_14']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr15_<?= $service_num ?>" class="control-label col-md-6">Перечень необходимых документов</label>
+                                                            <textarea id="sr15_<?= $service_num ?>" name='sr15_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_15'])) echo $service['properties']['sr_15']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr16_<?= $service_num ?>" class="control-label col-md-6">Способы получения этих документов (услуги, в результате которых можно получить документы)</label>
+                                                            <textarea id="sr16_<?= $service_num ?>" name='sr16_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_16'])) echo $service['properties']['sr_16']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr17_<?= $service_num ?>" class="control-label col-md-6">Сведения о возмездности услуги</label>
+                                                            <?= form_dropdown('sr17_' . $service_num, array("безвозмездно" => "безвозмездно", "возмездно" => "возмездно", "по-разному" => "по-разному", "не установлено" => "не установлено"), $service['properties']['sr_17'], 'id="sr17_' . $service_num . '" name="sr17_' . $service_num . '" class="col-md-5"'); ?>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr18_<?= $service_num ?>" class="control-label col-md-6">Стоимость услуги</label>
+                                                            <textarea id="sr18_<?= $service_num ?>" name='sr18_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_18'])) echo $service['properties']['sr_18']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr19_<?= $service_num ?>" class="control-label col-md-6">Показатели доступности и качества услуги</label>
+                                                            <textarea id="sr19_<?= $service_num ?>" name='sr19_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_19'])) echo $service['properties']['sr_19']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr20_<?= $service_num ?>" class="control-label col-md-6">Информация о внутриведомственных и межведомственных процедурах</label>
+                                                            <textarea id="sr20_<?= $service_num ?>" name='sr14_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_20'])) echo $service['properties']['sr_20']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr21_<?= $service_num ?>" class="control-label col-md-6">Сведения о допустимости </label>
+                                                            <textarea id="sr21_<?= $service_num ?>" name='sr21_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_21'])) echo $service['properties']['sr_21']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr22_<?= $service_num ?>" class="control-label col-md-6">Наличие межведомственного взаимодействия</label>
+                                                            <textarea id="sr22_<?= $service_num ?>" name='sr14_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_22'])) echo $service['properties']['sr_22']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr23_<?= $service_num ?>" class="control-label col-md-6">Технологическая карта межведомственного взаимодействия</label>
+                                                            <textarea id="sr23_<?= $service_num ?>" name='sr23_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_23'])) echo $service['properties']['sr_23']; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="sr24s_<?= $service_num ?>" class="control-label col-md-6">Краткое описание</label>
+                                                            <textarea id="sr24_<?= $service_num ?>" name='sr14_<?= $service_num ?>' class="col-md-5"><?php if (isset($service['properties']['sr_24'])) echo $service['properties']['sr_24']; ?></textarea>
+                                                        </div>
+                                                        <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
+
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        <?php endforeach; ?>
+
+
+
                                     </div>
                                     <div class="row">
                                         <span class="col-md-6">
@@ -296,7 +268,7 @@
             <form name="step4_com" method="post">
                 <div class="modal-header">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="structure/step4_1"><button type="submit" class="btn btn-primary">Отправить</button></a>
+                    <a href="structure/step3"><button type="submit" class="btn btn-primary">Отправить</button></a>
                 </div>
                 <div class="modal-body">
                     <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
@@ -310,10 +282,6 @@
                             <td> <?= $comments ?></td>
                         </tr>
                     </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="structure/step4_1"><button type="submit" class="btn btn-primary">Отправить</button></a>
                 </div>
             </form>
         </div>
