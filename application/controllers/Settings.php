@@ -84,11 +84,11 @@ class Settings extends APP_Controller {
                 $data['property_name'] = $this->input->post('property_name');   
                 $data['property_short_name'] = $this->input->post('property_short_name');   
                 $data['id_property_type'] = (int)$this->input->post('property_type');
-                $data['id_service_type'] = (int)$this->input->post('service_type');      
                 $data['options']['property_align'] = $this->input->post('property_align');   
                 $data['options']['property_width'] = $this->input->post('property_width');   
                 $data['options']['property_required'] = $this->input->post('property_required');   
                 $data['options']['property_color'] = $this->input->post('property_color');   
+                $data['options']['property_show_other_users'] = $this->input->post('property_show_other_users');   
                 $data['options'] = json_encode($data['options']);
                 $data['code'] = NULL;
                 // update property

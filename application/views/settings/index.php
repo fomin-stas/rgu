@@ -233,24 +233,14 @@
                                             </div>  
                                           </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="edit_service_type">Тип</label>
-                                                <select  type="text" class="form-control" id="edit_service_type" name="service_type">
-                                                    <?foreach ((array)$service_types as $type):?>
-                                                    <option value="<?=$type['id_service_type']?>" <?php echo set_select('service_type', $type['id_service_type']); ?> ><?=$type['service_type_name']?></option>
-                                                    <?endforeach;?>
-                                                </select>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                            
-                                          </div>
-                                    </div>
                                   <div class="checkbox">
                                     <label>
                                     <input type="checkbox" name="property_required" id="edit_property_required" <?php echo set_checkbox('property_required', '1'); ?>> Свойство обязательно для заполнения?
+                                    </label>
+                                  </div>
+                                  <div class="checkbox">
+                                    <label>
+                                    <input type="checkbox" name="property_show_other_users" id="edit_property_show_other_users" <?php echo set_checkbox('property_show_other_users', '1'); ?>> доступен ли столбец для просмотра другимпользователям в таблице полномочий?
                                     </label>
                                   </div>
                                   <input type="hidden" name="id_property" id="edit_id_property">
