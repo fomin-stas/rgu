@@ -122,7 +122,8 @@ $autoload['model'] = array(
         'property_format_model',
         'spher',
         'comment',
-        'file');
+        'file',
+        'history_log');
 
 
 /* End of file autoload.php */
