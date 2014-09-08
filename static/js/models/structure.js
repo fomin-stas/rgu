@@ -209,7 +209,7 @@ var Structure = {
 				mtype: "POST",
                 cellEdit: true,
                 cellsubmit: "remote",
-				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
+				cellurl: 'ajax/edite_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{
@@ -277,16 +277,19 @@ var Structure = {
                                 $('#select_edit').modal('hide');
                                 
 
+							});
 						}
-                    }
-                    else if (cm.stype==='textarea')
-                    {
+ 
+					}
+					else if (cm.stype==='textarea')
+					{
 						$('#textarea_edit').modal('show');
 						console.log('show');
 						$('#textarea_change').unbind('click').on('click',function(){
 							$('#'+iRow+'_'+cellname)[0].value=$('#textarea_textarea')[0].value;
 							jQuery(grid_selector).saveCell(iRow,iCol);
 							$('#textarea_edit').modal('hide');
+						});
 					}            
                                 
                     $('#mselect_select,#select_select').multiselect({
@@ -301,10 +304,7 @@ var Structure = {
                         filterPlaceholder:"Поиск",
                         onChange:function(){}
                     });
-                                
-                    
-                },
-                
+				},    
                 //editurl: "/",//nothing is saved
                 caption: "Таблица полномочий АРМ КИС"
 
