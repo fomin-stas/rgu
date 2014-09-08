@@ -247,26 +247,7 @@ var Structure = {
                                 $('#mselect_select').append('<option value="'+soptions[i][0]+'">'+soptions[i][1]+'</option>');
                             }
                             console.log(soptions);
-                        }
-                    }
-                                
-                                
-                    $('#mselect_select').multiselect({
-                        buttonClass:'btn btn-white btn-sm',
-                        buttonContainer:"<span class='dropdown'>",
-                        checkboxName:"mselect_edit_chb[]",
-                        nonSelectedText:"Не выбрано",
-                        includeSelectAllOption:true,
-                        selectAllText:"Все",
-                        enableCaseInsensitiveFiltering:true,
-                        filterBehavior:'both',
-                        filterPlaceholder:"Поиск",
-                        onChange:function(){}
-                    });
-                                
-                    if (cm.stype==='select'){
-                        if (cm.searchoptions.attr.multiple)
-                        {
+                            
                             $('#multiselect_edit').modal('show');
                             console.log('show');
                             $('#mselect_change').unbind('click').on('click',function(){
@@ -276,8 +257,52 @@ var Structure = {
                                 $('#mselect_textarea')[0].value='';
                                 $('#mselect_select')[0].options='';
                             });
+                            
                         }
+                        else 
+                        {
+							var soptions=cm.searchoptions.value.split(';');
+                            for(i=0;i<soptions.length;i++)
+                            {
+                                soptions[i]=soptions[i].split(':');
+                                $('#select_select').append('<option value="'+soptions[i][0]+'">'+soptions[i][1]+'</option>');
+                            }
+                            console.log(soptions);
+                            
+                            $('#select_edit').modal('show');
+                            console.log('show');
+                            $('#select_change').unbind('click').on('click',function(){
+                                $('#'+iRow+'_'+cellname)[0].value=$('#select_select')[0].value;
+                                jQuery(grid_selector).saveCell(iRow,iCol);
+                                $('#select_edit').modal('hide');
+                                
+
+						}
                     }
+                    else if (cm.stype==='textarea')
+                    {
+						$('#textarea_edit').modal('show');
+						console.log('show');
+						$('#textarea_change').unbind('click').on('click',function(){
+							$('#'+iRow+'_'+cellname)[0].value=$('#textarea_textarea')[0].value;
+							jQuery(grid_selector).saveCell(iRow,iCol);
+							$('#textarea_edit').modal('hide');
+					}            
+                                
+                    $('#mselect_select,#select_select').multiselect({
+                        buttonClass:'btn btn-white btn-sm',
+                        buttonContainer:"<span class='dropdown'>",
+                        checkboxName:"edit_chb[]",
+                        nonSelectedText:"Не выбрано",
+                        includeSelectAllOption:true,
+                        selectAllText:"Все",
+                        enableCaseInsensitiveFiltering:true,
+                        filterBehavior:'both',
+                        filterPlaceholder:"Поиск",
+                        onChange:function(){}
+                    });
+                                
+                    
                 },
                 
                 //editurl: "/",//nothing is saved
