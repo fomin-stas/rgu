@@ -234,10 +234,8 @@ class Structure extends APP_Controller {
         $property['authority_name'] = '<a href=structure/check_status_authority/'.$id_authority.'>'.$authority['authority_name'].'</a>';
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
-        
         $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
         $this->file_insert($id_authority);
-        
         redirect('structure/arm_kis');
     }
 
@@ -450,6 +448,7 @@ class Structure extends APP_Controller {
         $config['max_size'] = '0';
         $config['max_width'] = '0';
         $config['max_height'] = '0';
+        $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('step_file')) {
             $error = array('error' => $this->upload->display_errors());
