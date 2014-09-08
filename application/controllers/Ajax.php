@@ -41,9 +41,30 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
     
-    public function edite_property(){
+    public function edit_property(){
         $data=$_POST;
+        foreach ($data as $key => $value) {
+            if ($key=='id'){
+                $insert_data['authority_num']=$value;
+            }elseif ($key=='oper') {
+                $insert_data['operation']=$value;
+            } else {
+                list($insert_data['id_property'], $other)=explode('_',$key);
+                $insert_data['new_data']=$value;
+            }
+        }
+        $authoritis=$this->authority->get_all();
+        $authority=$authoritis[$insert_data['authority_num']-1];
+        $property=$this->property->get($insert_data['id_property']);
+        if($property['id_service_type']==6){
+            $this->authority_property_model->update_by(array('id_authority'=>$authority['id_authority'],'id_property'=>$insert_data['id_property']),array('value'=>$insert_data['new_data']));
+        }
     }
+    
+    public function get_history_cell(){
+        echo 'Test history';
+    }
+    
     
     
 }

@@ -1,3 +1,10 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.8
+-- Dumped by pg_dump version 9.2.8
+-- Started on 2014-09-09 00:25:35
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -429,7 +436,8 @@ CREATE TABLE property (
     property_name character varying(1024),
     property_short_name character varying(1024),
     code character varying(1024),
-    options character varying(2048)
+    options character varying(2048),
+    "order" real
 );
 
 
@@ -847,6 +855,9 @@ SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 1, true);
 -- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (22, 3, 3, 'Наименование полномочия в соответствии с Положением об ИОГВ');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (23, 3, 1, 'Наименование полномочия в соответствии с Положением об ИОГВ наименование полномочия в соответствии с Положением об ИОГВ');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (24, 45, 3, 'Новое полномочие');
 
 
 --
@@ -855,7 +866,7 @@ SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 1, true);
 -- Name: authority_id_authority_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('authority_id_authority_seq', 21, true);
+SELECT pg_catalog.setval('authority_id_authority_seq', 25, true);
 
 
 --
@@ -864,6 +875,26 @@ SELECT pg_catalog.setval('authority_id_authority_seq', 21, true);
 -- Data for Name: authority_property; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (119, 7, 22, '№ пункта в положении об ИОГВ');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (120, 10, 22, 'Юридический комитет');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (121, 5, 22, 'Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (122, 72, 22, '09/18/2014');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (124, 1, 22, '<a href=structure/check_status_authority/22>Наименование полномочия в соответствии с Положением об ИОГВ</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (123, 8, 22, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (125, 7, 23, 'Наименование полномочия в соответствии с Положением об ИОГВ');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (126, 10, 23, 'Юридический комитет');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (127, 5, 23, 'Наименование полномочия в соответствии с Положением об ИОГВ');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (128, 72, 23, '09/18/2014');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (129, 8, 23, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (130, 1, 23, '<a href=structure/check_status_authority/23>Наименование полномочия в соответствии с Положением об ИОГВ наименование полномочия в соответствии с Положением об ИОГВ</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (131, 7, 24, '32.417');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (132, 11, 24, '45 32.417-44');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (133, 10, 24, 'Комитет по транспорту');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (135, 72, 24, '09/18/2014');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (136, 8, 24, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (137, 1, 24, '<a href=structure/check_status_authority/24>Новое полномочие</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (139, 8, 24, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (134, 5, 24, '4Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня');
 
 
 --
@@ -872,7 +903,7 @@ SELECT pg_catalog.setval('authority_id_authority_seq', 21, true);
 -- Name: authority_property_id_authority_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 118, true);
+SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 139, true);
 
 
 --
@@ -892,7 +923,7 @@ INSERT INTO authority_status (id_authority_status, name) VALUES (3, 'Полно�
 -- Name: authority_status_id_authority_status_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 1, false);
+SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 4, true);
 
 
 --
@@ -901,6 +932,14 @@ SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 1, false);
 -- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (21, 22, 2, NULL, 'Проект постановления Правительства (наименование и дата согласования Юридическим комитетом). Проект постановления Правительства (наименование и дата согласования Юридическим комитетом)', '2014-09-08 00:11:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (22, 22, 2, NULL, 'Краткое описание - краткое описание.', '2014-09-08 01:59:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (23, 23, 2, NULL, 'Первый', '2014-09-08 09:41:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (24, 24, 2, NULL, 'Проверка id полномочия', '2014-09-08 10:49:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (26, NULL, 2, NULL, 'ывфаывафывафыва', '2014-09-08 16:20:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (27, 24, 2, NULL, 'коммент', '2014-09-08 18:23:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (28, 24, 2, NULL, 'Проверка 4 этапа', '2014-09-08 19:38:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (29, 24, 2, NULL, 'Проверка 4 этапа', '2014-09-08 19:38:00');
 
 
 --
@@ -909,7 +948,7 @@ SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 1, false);
 -- Name: comment_id_comment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('comment_id_comment_seq', 20, true);
+SELECT pg_catalog.setval('comment_id_comment_seq', 29, true);
 
 
 --
@@ -927,7 +966,7 @@ INSERT INTO event_type (id_event_type, event_type_name) VALUES (5, 'Измнен
 -- Name: event_type_id_event_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('event_type_id_event_type_seq', 1, false);
+SELECT pg_catalog.setval('event_type_id_event_type_seq', 6, true);
 
 
 --
@@ -936,6 +975,10 @@ SELECT pg_catalog.setval('event_type_id_event_type_seq', 1, false);
 -- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (4, NULL, '17_3575.jpg', '17_3575.jpg', 22);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (5, NULL, 'Пример заполнения.jpg', '17_3575.jpg', 22);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (6, NULL, 'Разбитый экран.jpg', 'Разбитый_экран.jpg', 23);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (7, NULL, 'Разбитый экран.jpg', 'Разбитый_экран1.jpg', 24);
 
 
 --
@@ -944,7 +987,7 @@ SELECT pg_catalog.setval('event_type_id_event_type_seq', 1, false);
 -- Name: files_id_file_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('files_id_file_seq', 3, true);
+SELECT pg_catalog.setval('files_id_file_seq', 8, true);
 
 
 --
@@ -1035,7 +1078,7 @@ INSERT INTO organization (id_organization, id_organization_rank, organization_na
 -- Name: organization_id_organization_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('organization_id_organization_seq', 1, false);
+SELECT pg_catalog.setval('organization_id_organization_seq', 58, true);
 
 
 --
@@ -1053,7 +1096,7 @@ INSERT INTO organization_rank (id_organization_rank, organization_rank) VALUES (
 -- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 1, false);
+SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 2, true);
 
 
 --
@@ -1062,45 +1105,45 @@ SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 1, false)
 -- Data for Name: property; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (75, 2, 7, 'Наименование органов, участвующих в предоставлении услуги', 'Наименование органов, участвующих в предоставлении услуги', 'sr_3', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (74, 2, 7, 'Краткое наименование услуги', 'Краткое наименование услуги', 'sr_1', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (11, 1, 6, 'id полномочия', 'id полномочия', 'id_authority', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (5, 2, 6, 'Реквизиты НПА', 'Реквизиты НПА', 'rekvisit_npa', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (174, 2, 7, 'Перечень НПА РФ, регулирующих предоставление услуги', 'Перечень НПА РФ', 'sr_4', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (10, 2, 6, 'Наименование ИОГВ СПб', 'Наименование ИОГВ СПб', 'name_iogv', '{"property_align":"left","property_width":"800","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (8, 3, 6, 'Статус исполняемости', 'Статус исполняемости', 'executable_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (7, 2, 6, '№ пункта в положении об ИОГВ', '№ пункта в положении об ИОГВ', 'punkt_iogv', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (72, 4, 6, 'Cрок ответа', 'Cрок ответа', 'srok_otveta', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (18, 3, 6, 'субъект предоставления услуг (физ/юр)', 'субъект предоставления услуг (физ/юр)', 'service_subject', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (15, 1, 6, 'Статус разработки услуги/функции', 'Статус разработки услуги/функции', 'service_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (12, 1, 6, 'Статус согласования статуса полномочия', 'Статус согласования статуса полномочия', 'authority_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (17, 3, 6, 'Тип', 'Тип', 'service_type', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (16, 2, 6, 'Наименование государственной функций (услуги) в соответствии с административным регламентом', 'Наименование государственной функций', 'service_name', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (14, 1, 6, 'id государственной услуги/функции', 'id государственной услуги/функции', 'id_service', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (3, 2, 6, 'Внесены изменения в Положение об ИОГВ', 'Внесены изменения в Положение об ИОГВ', 'igov_changes', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (1, 3, 6, 'РЕЕСТР', 'РЕЕСТР', 'register', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (73, 2, 7, 'Наименование услуги', 'Наименование услуги', 'sr_0', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (13, 2, 6, 'Наименование полномочия в соответствии с Положением об ИОГВ', 'Наименование полномочия в соответствии с Положением об ИОГВ', 'authority_name', '{"property_align":"left","property_width":"450","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (173, 3, 7, 'Сфера предоставления', 'Сфера предоставления', 'sr_2', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (191, 2, 7, 'Сведения о порядке досудебного обжалования решений органа предоставляющего услугу', '', 'sr_21', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (186, 2, 7, 'Способы получения этих документов', '', 'sr_16', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (184, 2, 7, 'Основания для приостановления предоставления либо отказа в предоставлении услуги', '', 'sr_14', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (175, 2, 7, 'Перечень НПА СПб', '', 'sr_5', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (179, 2, 7, 'Категория заявителей', 'Категория заявителей', 'sr_10', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (178, 2, 7, 'Тип заявителя', 'Тип заявителя', 'sr_9', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (177, 2, 7, 'Результат предоставления услуги', 'Результат предоставления услуги', 'sr_7', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (176, 2, 7, 'Способы предоставления услуги', 'Способы предоставления услуги', 'sr_6', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (193, 2, 7, 'Технологическая карта межведомственного взаимодействия ', '', 'sr_23', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (192, 2, 7, 'Наличие межведомственного взаимодействия', '', 'sr_22', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (190, 2, 7, 'Информация о внутриведомственных и межведомственных процедурах', '', 'sr_20', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (189, 2, 7, 'Показатели доступности и качества услуги', '', 'sr_19', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (188, 2, 7, 'Стоимость услуги', '', 'sr_18', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (187, 2, 7, 'Сведения о возмездности услуги', '', 'sr_17', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (185, 2, 7, 'Перечень необходимых документов', '', 'sr_15', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (183, 2, 7, 'Максимальный срок ожидания в очереди', '', 'sr_13', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (182, 2, 7, 'Срок, в течение которого заявление должно быть зарегистрировано', '', 'sr_12', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (181, 2, 7, 'Срок предоставления', '', 'sr_8', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
-INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options) VALUES (180, 2, 7, 'Сведения о местах, в которых можно получить информацию', '', 'sr_11', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}');
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (5, 2, 6, 'Реквизиты НПА', 'Реквизиты НПА', NULL, '{"property_align":"left","property_width":"200","property_required":"on","property_color":"#23eae7","property_show_other_users":"on"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (75, 2, 7, 'Наименование органов, участвующих в предоставлении услуги', 'Наименование органов, участвующих в предоставлении услуги', 'sr_3', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (74, 2, 7, 'Краткое наименование услуги', 'Краткое наименование услуги', 'sr_1', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (174, 2, 7, 'Перечень НПА РФ, регулирующих предоставление услуги', 'Перечень НПА РФ', 'sr_4', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (10, 2, 6, 'Наименование ИОГВ СПб', 'Наименование ИОГВ СПб', 'name_iogv', '{"property_align":"left","property_width":"800","property_required":false,"property_color":"#cc9858"}', 3);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (7, 2, 6, '№ пункта в положении об ИОГВ', '№ пункта в положении об ИОГВ', 'punkt_iogv', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (72, 4, 6, 'Cрок ответа', 'Cрок ответа', 'srok_otveta', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (18, 3, 6, 'субъект предоставления услуг (физ/юр)', 'субъект предоставления услуг (физ/юр)', 'service_subject', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (15, 1, 6, 'Статус разработки услуги/функции', 'Статус разработки услуги/функции', 'service_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (12, 1, 6, 'Статус согласования статуса полномочия', 'Статус согласования статуса полномочия', 'authority_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (17, 3, 6, 'Тип', 'Тип', 'service_type', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (16, 2, 6, 'Наименование государственной функций (услуги) в соответствии с административным регламентом', 'Наименование государственной функций', 'service_name', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (14, 1, 6, 'id государственной услуги/функции', 'id государственной услуги/функции', 'id_service', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (3, 2, 6, 'Внесены изменения в Положение об ИОГВ', 'Внесены изменения в Положение об ИОГВ', 'igov_changes', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (73, 2, 7, 'Наименование услуги', 'Наименование услуги', 'sr_0', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (173, 3, 7, 'Сфера предоставления', 'Сфера предоставления', 'sr_2', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (200, 3, 6, 'РЕЕСТР', 'РЕЕСТР', 'register', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (11, 1, 6, 'ID полномочия', 'ID полномочия', 'authority_id', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', 2);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (8, 3, 6, 'Статус исполняемости', 'Статус исполняемости', 'executable_status', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', 4);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (1, 2, 6, 'Наименование полномочия в соответствии с Положением об ИОГВ', 'Наименование полномочия', NULL, '{"property_align":"left","property_width":"450","property_required":"on","property_color":"#ddee33","property_show_other_users":"on"}', 1);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (191, 2, 7, 'Сведения о порядке досудебного обжалования решений органа предоставляющего услугу', '', 'sr_21', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (186, 2, 7, 'Способы получения этих документов', '', 'sr_16', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (184, 2, 7, 'Основания для приостановления предоставления либо отказа в предоставлении услуги', '', 'sr_14', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (175, 2, 7, 'Перечень НПА СПб', '', 'sr_5', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (179, 2, 7, 'Категория заявителей', 'Категория заявителей', 'sr_10', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (178, 2, 7, 'Тип заявителя', 'Тип заявителя', 'sr_9', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (177, 2, 7, 'Результат предоставления услуги', 'Результат предоставления услуги', 'sr_7', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (176, 2, 7, 'Способы предоставления услуги', 'Способы предоставления услуги', 'sr_6', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (193, 2, 7, 'Технологическая карта межведомственного взаимодействия ', '', 'sr_23', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (192, 2, 7, 'Наличие межведомственного взаимодействия', '', 'sr_22', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (190, 2, 7, 'Информация о внутриведомственных и межведомственных процедурах', '', 'sr_20', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (189, 2, 7, 'Показатели доступности и качества услуги', '', 'sr_19', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (188, 2, 7, 'Стоимость услуги', '', 'sr_18', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (187, 2, 7, 'Сведения о возмездности услуги', '', 'sr_17', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (185, 2, 7, 'Перечень необходимых документов', '', 'sr_15', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (183, 2, 7, 'Максимальный срок ожидания в очереди', '', 'sr_13', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (182, 2, 7, 'Срок, в течение которого заявление должно быть зарегистрировано', '', 'sr_12', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (181, 2, 7, 'Срок предоставления', '', 'sr_8', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
+INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (180, 2, 7, 'Сведения о местах, в которых можно получить информацию', '', 'sr_11', '{"property_align":"left","property_width":"200","property_required":false,"property_color":"#6e5858"}', NULL);
 
 
 --
@@ -1123,7 +1166,7 @@ INSERT INTO property_format (id_property_format, property_format_name) VALUES (6
 -- Name: property_format_id_property_format_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('property_format_id_property_format_seq', 1, false);
+SELECT pg_catalog.setval('property_format_id_property_format_seq', 7, true);
 
 
 --
@@ -1132,7 +1175,7 @@ SELECT pg_catalog.setval('property_format_id_property_format_seq', 1, false);
 -- Name: property_id_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('property_id_property_seq', 2, true);
+SELECT pg_catalog.setval('property_id_property_seq', 205, true);
 
 
 --
@@ -1141,6 +1184,11 @@ SELECT pg_catalog.setval('property_id_property_seq', 2, true);
 -- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (4, 7, NULL, 22, 'Наименование услуги');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (8, 7, NULL, NULL, 'фвафыва');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (9, 7, NULL, NULL, 'фывафываыва');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (11, 7, NULL, 24, 'Наименование услуги 1');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (12, 7, NULL, 24, 'Наименование услуги 2');
 
 
 --
@@ -1149,7 +1197,7 @@ SELECT pg_catalog.setval('property_id_property_seq', 2, true);
 -- Name: service_id_service_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('service_id_service_seq', 3, true);
+SELECT pg_catalog.setval('service_id_service_seq', 12, true);
 
 
 --
@@ -1158,6 +1206,146 @@ SELECT pg_catalog.setval('service_id_service_seq', 3, true);
 -- Data for Name: service_property; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (73, 73, 4, 'Наименование услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (74, 74, 4, 'Краткое наименование услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (75, 173, 4, 'Налоги и сборы
+
+
+
+');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (76, 75, 4, 'Юридический комитет');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (77, 174, 4, 'Перечень НПА РФ, регулирующих предоставление услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (78, 175, 4, 'Перечень НПА СПб');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (79, 176, 4, 'через МФЦ');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (80, 177, 4, 'Перечень НПА СПб');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (81, 181, 4, 'апрель');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (82, 178, 4, 'Физ.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (83, 179, 4, 'Срок предоставления');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (84, 180, 4, 'Сведения о местах, в которых можно получить информацию');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (85, 182, 4, 'Срок, в течение которого заявление должно быть зарегистрировано');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (86, 183, 4, 'Максимальный срок ожидания в очереди');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (87, 184, 4, 'Максимальный срок ожидания в очереди');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (88, 185, 4, 'Перечень необходимых документов, Перечень необходимых документов');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (89, 186, 4, 'Способы получения этих документов (услуги, в результате которых можно получить документы)');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (90, 187, 4, 'по-разному');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (91, 188, 4, '150 р.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (92, 189, 4, 'Показатели доступности и качества услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (93, 190, 4, 'Информация о внутриведомственных и межведомственных процедурах');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (94, 191, 4, 'Сведения о допустимости');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (95, 192, 4, 'Наличие межведомственного взаимодействия');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (96, 193, 4, 'Технологическая карта межведомственного взаимодействия');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (98, 73, 8, 'фвафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (99, 74, 8, 'фывафываф');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (100, 173, 8, 'Прочие услуги
+
+
+
+');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (101, 75, 8, 'Комитет по информатизации и связи');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (102, 174, 8, 'фывафыа');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (103, 175, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (104, 176, 8, 'в традиционном порядке');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (105, 177, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (106, 181, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (107, 178, 8, 'Физ.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (108, 179, 8, 'ывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (109, 180, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (110, 182, 8, 'фыафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (111, 183, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (112, 184, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (113, 185, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (114, 186, 8, 'фываыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (115, 187, 8, 'возмездно');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (116, 188, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (117, 189, 8, 'фывафыав');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (118, 190, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (119, 191, 8, 'фыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (120, 192, 8, 'фыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (121, 193, 8, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (122, 73, 9, 'фывафываыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (123, 74, 9, 'фффффффффффф');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (124, 173, 9, 'Культура и искусство
+
+
+
+');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (125, 75, 9, 'Юридический комитет');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (126, 174, 9, 'фывафывафав');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (127, 175, 9, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (128, 176, 9, 'в электронном виде');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (129, 177, 9, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (130, 181, 9, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (131, 178, 9, 'Физ.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (132, 179, 9, 'фывафыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (133, 180, 9, 'фываываыва');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (134, 182, 9, 'фывафываыв');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (135, 183, 9, 'ываывафывыаф');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (136, 184, 9, 'фываф');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (137, 185, 9, 'фываф');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (138, 186, 9, 'фывачясчсмя');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (139, 187, 9, 'по-разному');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (140, 188, 9, 'ячсмячсм');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (141, 189, 9, 'ячсмсчмячм');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (142, 190, 9, 'выямвчсм');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (143, 191, 9, 'вымясч');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (144, 192, 9, 'мывямм');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (145, 193, 9, 'ымывмя');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (146, 73, 11, 'Наименование услуги 1');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (147, 74, 11, 'Краткое наименование услуги 2');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (148, 173, 11, 'Прочие услуги
+
+
+
+');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (149, 75, 11, 'Юридический комитет');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (150, 174, 11, 'Перечень НПА РФ, регулирующих предоставление услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (151, 175, 11, 'Перечень НПА СПб');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (152, 176, 11, 'через МФЦ');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (153, 177, 11, 'Результат предоставления');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (154, 181, 11, 'Срок предоставления');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (155, 178, 11, 'Физ.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (156, 179, 11, 'Категория заявителей');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (157, 180, 11, 'Сведения о местах, в которых можно получить информацию');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (158, 182, 11, 'Срок, в течение которого заявление должно быть зарегистрировано');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (159, 183, 11, 'Максимальный срок ожидания в очереди');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (160, 184, 11, 'Основания для приостановления предоставления либо отказа в предоставлении услуги (если возможность приостановления либо отказа в предоставлении услуги предусмотрена законодательством Российской Федерации).');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (161, 185, 11, 'Перечень необходимых документов Перечень необходимых документов Перечень необходимых документов');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (162, 186, 11, 'Способы получения этих документов (услуги, в результате которых можно получить документы)');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (163, 187, 11, 'возмездно');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (164, 188, 11, 'Стоимость услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (165, 189, 11, 'Показатели доступности и качества услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (166, 190, 11, 'Информация о внутриведомственных и межведомственных процедурах');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (167, 191, 11, 'Сведения о допустимости');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (168, 192, 11, 'Наличие межведомственного взаимодействия');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (169, 193, 11, 'Технологическая карта межведомственного взаимодействия');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (170, 73, 12, 'Наименование услуги 2');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (171, 74, 12, 'Краткое наименование услуги 2');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (172, 173, 12, 'Земельно-имущественные отношения
+
+
+
+');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (173, 75, 12, 'Юридический комитет');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (174, 174, 12, 'Перечень НПА РФ, регулирующих предоставление услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (175, 175, 12, 'Перечень НПА СПб');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (176, 176, 12, 'через МФЦ');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (177, 177, 12, 'Результат предоставления');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (178, 181, 12, 'Срок предоставления');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (179, 178, 12, 'Физ.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (180, 179, 12, 'Категория заявителей');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (181, 180, 12, 'Сведения о местах, в которых можно получить информацию');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (182, 182, 12, 'Срок, в течение которого заявление должно быть зарегистрировано');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (183, 183, 12, 'Максимальный срок ожидания в очереди');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (184, 184, 12, 'Основания для приостановления предоставления либо отказа в предоставлении услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (185, 185, 12, 'Перечень необходимых документов');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (186, 186, 12, 'Способы получения этих документов (услуги, в результате которых можно получить документы)');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (187, 187, 12, 'по-разному');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (188, 188, 12, '400 р.');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (189, 189, 12, 'Показатели доступности и качества услуги');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (190, 190, 12, 'Информация о внутриведомственных и межведомственных процедурах');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (191, 191, 12, 'Сведения о допустимости');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (192, 192, 12, 'Наличие межведомственного взаимодействия');
+INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (193, 193, 12, 'Технологическая карта межведомственного взаимодействия');
 
 
 --
@@ -1166,7 +1354,7 @@ SELECT pg_catalog.setval('service_id_service_seq', 3, true);
 -- Name: service_property_id_service_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('service_property_id_service_property_seq', 72, true);
+SELECT pg_catalog.setval('service_property_id_service_property_seq', 193, true);
 
 
 --
@@ -1187,7 +1375,7 @@ INSERT INTO service_type (id_service_type, service_type_name) VALUES (9, 'Фун
 -- Name: service_type_id_service_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('service_type_id_service_type_seq', 1, false);
+SELECT pg_catalog.setval('service_type_id_service_type_seq', 10, true);
 
 
 --
@@ -1269,7 +1457,7 @@ INSERT INTO spher (id_spher, name) VALUES (23, 'Юридические услу�
 -- Name: spher_id_spher_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('spher_id_spher_seq', 1, false);
+SELECT pg_catalog.setval('spher_id_spher_seq', 24, true);
 
 
 --
@@ -1288,7 +1476,7 @@ INSERT INTO users (id_user, id_organization, user_name, password) VALUES (3, 2, 
 -- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_id_user_seq', 1, false);
+SELECT pg_catalog.setval('users_id_user_seq', 4, true);
 
 
 --
@@ -1645,7 +1833,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-09-07 22:52:50
+-- Completed on 2014-09-09 00:25:36
 
 --
 -- PostgreSQL database dump complete
