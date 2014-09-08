@@ -153,7 +153,6 @@ var Structure = {
             
 	renderGrid: function(grid_selector, pager_selector, grid_data) {
 		jQuery(grid_selector).jqGrid({
-
                 subGrid : false,
                 altRows : true,
                 data: grid_data,
@@ -197,7 +196,7 @@ var Structure = {
 				mtype: "POST",
                 cellEdit: true,
                 cellsubmit: "remote",
-				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
+				cellurl: 'ajax/edite_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{

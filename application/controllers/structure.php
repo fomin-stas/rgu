@@ -219,9 +219,8 @@ class Structure extends APP_Controller {
 
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('authority_name');
-        
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        $property['id_authority'] = $this->input->post('select_org').' '.$this->input->post('punkt_iogv').'-'.rand(1, 99);
+        $property['id_authority'] = '<a href=structure/check_status_authority/'.$id_authority.'>'.$this->input->post('select_org').' '.$this->input->post('punkt_iogv').'-'.rand(1, 99).'</a>';
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
@@ -251,8 +250,7 @@ class Structure extends APP_Controller {
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
             $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
-        }
-            
+        }   
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
@@ -333,7 +331,6 @@ class Structure extends APP_Controller {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
-
         $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
             $properties = $this->service_property->get_many_by('id_service', $service['id_service']);
