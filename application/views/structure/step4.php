@@ -116,7 +116,6 @@
                                         <?php foreach ($services as $service): ?>
                                             <?php $tab_num++; ?>
                                             <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
-
                                                 <form class="form-horizontal">
                                                     <fieldset>
                                                         <div class="form-group">

@@ -38,7 +38,12 @@ class Ajax extends APP_Controller {
                 $result['property'] = $property;
             }
         }
-
         echo json_encode($result);
     }
+    
+    public function edite_property(){
+        $data=$_POST;
+    }
+    
+    
 }
