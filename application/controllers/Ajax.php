@@ -62,7 +62,7 @@ class Ajax extends APP_Controller {
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $insert_data['id_property']), array('value' => $insert_data['new_data']));
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
-            $history_log['id_authority_property']=$authority_property['id_authority_property'];
+            $history_log['id_property']=$authority_property['id_property'];
             $this->history_log->insert_log($history_log);
         }
     }

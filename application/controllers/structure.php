@@ -30,14 +30,14 @@ class Structure extends APP_Controller {
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
-                ->with('properties') 
+                ->with('properties')
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('id_property')->get_all();
 
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
-            $property['code'] = $property['id_property'].'_code';
+            $property['code'] = $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
@@ -83,7 +83,7 @@ class Structure extends APP_Controller {
                     break;
             }
             $options = json_decode($property['options'], true);
-            if(count($options) > 0) {
+            if (count($options) > 0) {
                 foreach ($options as $key => $option) {
                     switch ($key) {
                         case 'property_align':
@@ -94,17 +94,17 @@ class Structure extends APP_Controller {
                             break;
                         case 'property_color':
                             $model['color'] = $option;
-                            break;    
+                            break;
                     }
                 }
             }
             $model['formatter'] = new Zend_Json_Expr('Structure.cellFormat');
-            /*switch ($property['code']) {
-                case 'name_iogv':
-                    $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
-                    $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
-                    break;
-            }*/
+            /* switch ($property['code']) {
+              case 'name_iogv':
+              $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
+              $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
+              break;
+              } */
 
             // linked to colmn model
             $column_models[] = $model;
@@ -178,7 +178,7 @@ class Structure extends APP_Controller {
             //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
-            )
+                )
         );
     }
 
@@ -192,7 +192,21 @@ class Structure extends APP_Controller {
     }
 
     public function journal() {
-        $this->layout->view('journal');
+        $history_logs = $this->history_log->get_all();
+        $logs_num = 0;
+        foreach ($history_logs as $history_log) {
+            $data['history_logs'][$logs_num]['new']=$history_log['new'];
+            $data['history_logs'][$logs_num]['old']=$history_log['old'];
+            $date_time = date_parse_from_format("Y.m.d H:i:s", $history_log['time']);
+            $data['history_logs'][$logs_num]['time']=$date_time['day'] . '/' . $date_time['month'] . '/' . $date_time['year'].' '.$date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'];
+            $property=$this->property->get($history_log['id_property']);
+            $data['history_logs'][$logs_num]['property_name']=$property['property_name'];
+            $data['history_logs'][$logs_num]['id_property']=$history_log['id_property'];
+            $user=$this->user->get($history_log['id_user']);
+            $data['history_logs'][$logs_num]['user_name']= $user->user_name;
+            $logs_num++;
+        }
+        $this->layout->view('journal',$data);
     }
 
     public function chernovik() {
@@ -226,7 +240,7 @@ class Structure extends APP_Controller {
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('authority_name');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        $property['id_authority'] = '<a href=structure/check_status_authority/'.$id_authority.'>'.$this->input->post('select_org').' '.$this->input->post('punkt_iogv').'-'.rand(1, 99).'</a>';
+        $property['id_authority'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $this->input->post('select_org') . ' ' . $this->input->post('punkt_iogv') . '-' . rand(1, 99) . '</a>';
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
@@ -236,7 +250,7 @@ class Structure extends APP_Controller {
         $authority['id_authority_status'] = 1;
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
-        $property['authority_name'] = '<a href=structure/check_status_authority/'.$id_authority.'>'.$authority['authority_name'].'</a>';
+        $property['authority_name'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $authority['authority_name'] . '</a>';
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
         $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
@@ -245,7 +259,7 @@ class Structure extends APP_Controller {
     }
 
     public function step2($id_authority) {
-        $this->check_status_authority($id_authority,2);
+        $this->check_status_authority($id_authority, 2);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -255,13 +269,13 @@ class Structure extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
-            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
-        }   
+            $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
+        }
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
             $data[$property['code']] = $value['value'];
         }
-        $data['comments']=$this->view_only_timeline($id_authority);
+        $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('razgran_p', $data);
     }
 
@@ -323,7 +337,7 @@ class Structure extends APP_Controller {
     }
 
     public function step3($id_authority) {
-        $this->check_status_authority($id_authority,3);
+        $this->check_status_authority($id_authority, 3);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -331,7 +345,7 @@ class Structure extends APP_Controller {
         $data['organization'] = $organization->organization_name;
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
-            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+            $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
         }
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
@@ -347,7 +361,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
-        $data['comments']=$this->view_only_timeline($id_authority);
+        $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step3', $data);
     }
 
@@ -370,7 +384,7 @@ class Structure extends APP_Controller {
     }
 
     public function step4($id_authority) {
-        $this->check_status_authority($id_authority,4);
+        $this->check_status_authority($id_authority, 4);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -378,7 +392,7 @@ class Structure extends APP_Controller {
         $data['organization'] = $organization->organization_name;
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
-            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+            $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
         }
         foreach ($authority_property as $value) {
             $property = $this->property->get($value['id_property']);
@@ -394,7 +408,7 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
             }
         }
-        $data['comments']=$this->view_only_timeline($id_authority);
+        $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step4_1', $data);
     }
 
@@ -412,7 +426,7 @@ class Structure extends APP_Controller {
         }
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
-            $data['files'][]=array('file_name'=>$value['file_name'],'name'=>$value['name']);
+            $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
         }
         $services = $this->service->get_many_by('id_authority', $id_authority);
         foreach ($services as $service) {
@@ -424,28 +438,31 @@ class Structure extends APP_Controller {
                 $data['services'][$service['id_service']]['properties'][$property['code']] = $value['value'];
             }
         }
-        $data['comments']=$this->view_only_timeline($id_authority);
+        $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step4', $data);
     }
-    
-    public function check_status_authority($id_authority,$step_num=0){
-        $authority=$this->authority->get($id_authority);
+
+    public function check_status_authority($id_authority, $step_num = 0) {
+        $authority = $this->authority->get($id_authority);
         switch ($authority['id_authority_status']) {
             case 1:
-                if ($step_num!=2) redirect('structure/step2/'.$id_authority);
+                if ($step_num != 2)
+                    redirect('structure/step2/' . $id_authority);
                 break;
             case 2:
-                if ($step_num!=3) redirect('structure/step3/'.$id_authority);
+                if ($step_num != 3)
+                    redirect('structure/step3/' . $id_authority);
 
                 break;
             case 3:
-                if ($step_num!=4) redirect('structure/step4/'.$id_authority);
+                if ($step_num != 4)
+                    redirect('structure/step4/' . $id_authority);
 
                 break;
         }
     }
-    
-    private function file_insert($id_authority){
+
+    private function file_insert($id_authority) {
         $config['upload_path'] = 'file_storage/authority';
         $config['allowed_types'] = 'gif|jpg|png|doc|docx|zip|rar|xls|xlsx|ppt|pptx';
         $config['max_size'] = '0';
@@ -457,13 +474,13 @@ class Structure extends APP_Controller {
             $error = array('error' => $this->upload->display_errors());
         } else {
             $data = array('upload_data' => $this->upload->data());
-            $upload_file['name']=$data['upload_data']['client_name'];
-            $upload_file['file_name']=$data['upload_data']['file_name'];
-            $upload_file['id_authority']=$id_authority;
+            $upload_file['name'] = $data['upload_data']['client_name'];
+            $upload_file['file_name'] = $data['upload_data']['file_name'];
+            $upload_file['id_authority'] = $id_authority;
             $this->file->insert($upload_file);
         }
     }
-    
+
     public function view_only_timeline($id_authority) {
         $this->comment->order_by('time', 'DESC');
         $comments = $this->comment->get_many_by('id_authority', $id_authority);
@@ -476,14 +493,13 @@ class Structure extends APP_Controller {
         }
         if (isset($comments_data)) {
             $data['comments_data'] = $comments_data;
-            return $this->load->view('comments/timeline_only', $data,true);
-        }
-        else{
+            return $this->load->view('comments/timeline_only', $data, true);
+        } else {
             return 'Комментариев нет';
         }
     }
 
-    public function arm_iogv(){
+    public function arm_iogv() {
         // load libs
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
@@ -507,7 +523,7 @@ class Structure extends APP_Controller {
         //$properties = array_slice($properties, 0, 1);
 
         foreach ((array) $properties as $property) {
-            $property['code'] = $property['id_property'].'_code';
+            $property['code'] = $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];

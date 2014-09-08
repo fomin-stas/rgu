@@ -11,8 +11,10 @@
         <script type="text/javascript">
             var grid_data = 
             [ 
-                    {date_izm:"21.04.2014",kem_izm:"Комитет по информатизации и связи",izm_sved:'Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня',n_str_table:"78",prev_znach:"-",new_znach:"ФЗ от 10.12.2010 №356-ФЗ"},
-                    {date_izm:"20.04.2014",kem_izm:"Комитет по информатизации и связи",izm_sved:'133-ФЗ',n_str_table:"47",prev_znach:"-",new_znach:"Ст. 1 133-ФЗ (требуется разработка административного регламента)"}
+                    <?php foreach ($history_logs as $value): ?>
+                            {date_izm:"<?=$value['time']?>",kem_izm:"<?=$value['user_name']?>",izm_sved:'<?=$value['property_name']?>',n_str_table:"<?=$value['id_property']?>",prev_znach:"<?=$value['old']?>",new_znach:"<?=$value['new']?>"},
+                    <?php endforeach; ?>                
+                    {date_izm:"21.04.2014",kem_izm:"Комитет по информатизации и связи",izm_sved:'Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня',n_str_table:"78",prev_znach:"-",new_znach:"ФЗ от 10.12.2010 №356-ФЗ"}
             ];
 
             jQuery(function($) {
@@ -48,7 +50,7 @@
                                     {name:'new_znach',index:'new_znach', sortable:true,editable:false, fixed:true}
                             ], 
 
-                            //viewrecords : true,
+                            viewrecords : true,
                             rowNum:-1,
                             rownumbers:true,
                             //rowList:[10,20,30],
