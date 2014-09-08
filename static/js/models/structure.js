@@ -145,7 +145,7 @@ var Structure = {
             }
             else if (cm[i].stype=='select')
             {
-				cm[i].searchoptions={value:":показать все"}
+				cm[i].searchoptions={value:":показать все;jjjj:jjjhh;yyyy:bbbbbb"}
 				cm[i].searchoptions.attr={multiple:'multiple'};
 			}
         }
@@ -395,6 +395,7 @@ var Structure = {
         });
 
         //footer (pager) search
+        $(pager_selector+"_right").empty();
         $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
         $("#my_pag_search").on('change',function(event,ui)
         {
@@ -429,11 +430,11 @@ var Structure = {
         });
 
 		//multiselect
-        $('th select').multiselect({
+        $('.ui-search-input select').multiselect({
             buttonClass:'btn btn-white btn-sm',
             buttonContainer:"<span class='dropdown'>",
             buttonWidth:"100%",
-            checkboxName:"multiselect[]",
+//            checkboxName:"multiselect[]",
             nonSelectedText:"Не выбрано",
             includeSelectAllOption:true,
             selectAllText:"Все",
