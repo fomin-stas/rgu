@@ -55,7 +55,7 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-
+		
 
 
         //enable search/filter toolbar
@@ -141,7 +141,13 @@ var Structure = {
                 cm[i].searchoptions.attr={multiple:'multiple'};
                 cm[i].edittype='textarea';
                 cm[i].editoptions={};
+                console.log('render multiselect cm');
             }
+            else if (cm[i].stype=='select')
+            {
+				cm[i].searchoptions={value:":показать все"}
+				cm[i].searchoptions.attr={multiple:'multiple'};
+			}
         }
     },
             
@@ -249,6 +255,7 @@ var Structure = {
                         if (cm.searchoptions.attr.multiple)
                         {
                             $('#multiselect_edit').modal('show');
+                            console.log('show');
                             $('#mselect_change').unbind('click').on('click',function(){
                                 $('#'+iRow+'_'+cellname)[0].value=$('#mselect_textarea')[0].value;
                                 jQuery(grid_selector).saveCell(iRow,iCol);
@@ -320,7 +327,7 @@ var Structure = {
                 },
                 {
                         //search form
-                        width:850,
+                        width:1200,
                         recreateForm: true,
                         afterShowSearch: function(e){
                                 var form = $(e[0]);
