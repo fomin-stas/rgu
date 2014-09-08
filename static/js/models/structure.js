@@ -13,7 +13,6 @@ var Structure = {
             grid_selector = "#grid-table-all",
             pager_selector = "#grid-pager-all",
             text_link, //link cellcontent, must changes dynamicaly 
-            myDefaultSearch = "cn";
             console.log(data);
 
         // Tabs init
@@ -55,75 +54,6 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-		
-
-
-        //enable search/filter toolbar
-		 jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,
-         searchOnEnter: false,
-         enableClear: true,
-         stringResult:true,
-         clearSearch:false,
-         beforeSearch:function()
-         {
-             //Change search-algoitm to multiselect. From stackoverflow
-             var postData=$(grid_selector).jqGrid('getGridParam','postData');
-             postData.filters=$.parseJSON(postData.filters);
-             console.log(postData.filters);
-             console.log(postData);
-//             return true;
-             var filters=postData.filters;
-             var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
-             separator=",";
-             cm=$(grid_selector).jqGrid('getGridParam','colModel');
-
-             if (filters && filters.rules !== undefined && filters.rules.length > 0) {
-                 rules = filters.rules;
-                 for (i = 0; i < rules.length; i++) {
-                     rule = rules[i];
-                     iCol = getColumnIndexByName.call(this, rule.field);
-                     cmi = cm[iCol];
-                     if (iCol >= 0 &&
-                            ((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
-                                && (rule.op === myDefaultSearch)) ||
-                                    (typeof (cmi.searchoptions) === "object" &&
-                                        $.isArray(cmi.searchoptions.sopt) &&
-                                            cmi.searchoptions.sopt[0] === rule.op)) {
-                                        //  make modifications only for the 'contains' operation
-                                            parts = rule.data.split(separator);
-                                            if (parts.length > 1) {
-                                                if (filters.groups === undefined) {
-                                                    filters.groups = [];
-                                                }
-                                                group = {
-                                                    groupOp: 'OR',
-                                                    groups: [],
-                                                    rules: []
-                                                };
-                                                filters.groups.push(group);
-                                                console.log(filters.groups);
-                                                for (j = 0, l = parts.length; j < l; j++) {
-                                                    str = parts[j];
-                                                    if (str) {
-                                                    // skip empty '', which exist in case of two separaters of once
-                                                        group.rules.push({
-                                                            data: parts[j],
-                                                            op: rule.op,
-                                                            field: rule.field
-                                                        });
-                                                    }
-                                                }
-                                                rules.splice(i, 1);
-                                                i--; // to skip i++
-                                            }
-                                        }
-                                    }
-                                    this.p.postData.filters = JSON.stringify(filters);
-                                    console.log(this.p.postData.filters);
-                                }
-                            }
-                        
-                        });        
 
         },
 
@@ -152,8 +82,9 @@ var Structure = {
             }
             else if (cm[i].stype=='select')
             {
-				cm[i].searchoptions={value:":показать все;jjjj:jjjhh;yyyy:bbbbbb"}
-				cm[i].searchoptions.attr={multiple:'multiple'};
+				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"}
+//				cm[i].searchoptions.attr={multiple:'multiple'};
+				cm[i].searchoptions.attr={};
 			}
 
             //colorized column
@@ -281,7 +212,7 @@ var Structure = {
 						}
  
 					}
-					else if (cm.stype==='textarea')
+					else 
 					{
 						$('#textarea_edit').modal('show');
 						console.log('show');
@@ -467,20 +398,89 @@ var Structure = {
             }
         });
 
+		
+		//enable search/filter toolbar
+		var myDefaultSearch = "cn";
+		 jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch: myDefaultSearch,
+         searchOnEnter: false,
+         enableClear: true,
+         stringResult:true,
+         clearSearch:false,
+         beforeSearch:function()
+         {
+             //Change search-algoitm to multiselect. From stackoverflow
+             var postData=$(grid_selector).jqGrid('getGridParam','postData');
+             postData.filters=$.parseJSON(postData.filters);
+             console.log(postData.filters);
+             console.log(postData);
+//             return true;
+             var filters=postData.filters;
+             var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
+             separator=",";
+             cm=$(grid_selector).jqGrid('getGridParam','colModel');
+
+             if (filters && filters.rules !== undefined && filters.rules.length > 0) {
+                 rules = filters.rules;
+                 for (i = 0; i < rules.length; i++) {
+                     rule = rules[i];
+                     iCol = getColumnIndexByName.call(this, rule.field);
+                     cmi = cm[iCol];
+                     if (iCol >= 0 &&
+                            ((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
+                                && (rule.op === myDefaultSearch)) ||
+                                    (typeof (cmi.searchoptions) === "object" &&
+                                        $.isArray(cmi.searchoptions.sopt) &&
+                                            cmi.searchoptions.sopt[0] === rule.op)) {
+                                        //  make modifications only for the 'contains' operation
+                                            parts = rule.data.split(separator);
+                                            if (parts.length > 1) {
+                                                if (filters.groups === undefined) {
+                                                    filters.groups = [];
+                                                }
+                                                group = {
+                                                    groupOp: 'OR',
+                                                    groups: [],
+                                                    rules: []
+                                                };
+                                                filters.groups.push(group);
+                                                console.log(filters.groups);
+                                                for (j = 0, l = parts.length; j < l; j++) {
+                                                    str = parts[j];
+                                                    if (str) {
+                                                    // skip empty '', which exist in case of two separaters of once
+                                                        group.rules.push({
+                                                            data: parts[j],
+                                                            op: rule.op,
+                                                            field: rule.field
+                                                        });
+                                                    }
+                                                }
+                                                rules.splice(i, 1);
+                                                i--; // to skip i++
+                                            }
+                                        }
+                                    }
+                                    this.p.postData.filters = JSON.stringify(filters);
+                                    console.log(this.p.postData.filters);
+                                }
+                            }
+                        
+                        });
+		
 		//multiselect
-        $('.ui-search-input select').multiselect({
-            buttonClass:'btn btn-white btn-sm',
-            buttonContainer:"<span class='dropdown'>",
-            buttonWidth:"100%",
+		$('.ui-search-input select').multiselect({
+			buttonClass:'btn btn-white btn-sm',
+			buttonContainer:"<span class='dropdown'>",
+			buttonWidth:"100%",
 //            checkboxName:"multiselect[]",
-            nonSelectedText:"Не выбрано",
-            includeSelectAllOption:true,
-            selectAllText:"Все",
-            onChange:function(){console.log('search');},
+			nonSelectedText:"Не выбрано",
+			includeSelectAllOption:true,
+			selectAllText:"Все",
+			onChange:function(){console.log('search');},
 //            templates:{
 //              ul:"<ul class='dropdown-menu'></ul>"
 //          }
-        });
+		});
 		
 		//multiselect cell editing
         $('#mselect_add').on('click',function(){
