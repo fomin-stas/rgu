@@ -131,10 +131,17 @@ var Structure = {
 
     },
     
+    cellFormat: function (cellvalue, options, cell)
+    {
+        return cellvalue;
+    },
+
     render_colModel: function(grid_selector) {
-        var cm=$(grid_selector).jqGrid('getGridParam','colModel');
+        $(grid_selector).jqGrid('setCell', 1, "5_code", "",{'background-color':'yellow'});
+        var cm=$(grid_selector).jqGrid('getGridParam','colModel'),
+            rowsCount = $(grid_selector).getGridParam("records");
         for (var i=0; i<cm.length; i++)
-        {
+        {   
             if (cm[i].stype=='multiselect')
             {
                 cm[i].stype='select';
@@ -148,6 +155,12 @@ var Structure = {
 				cm[i].searchoptions={value:":показать все;jjjj:jjjhh;yyyy:bbbbbb"}
 				cm[i].searchoptions.attr={multiple:'multiple'};
 			}
+
+            //colorized column
+            for (r=0; r<rowsCount; r++) {
+                $(grid_selector).jqGrid('setCell', r, cm[i].name, '',{'background-color':cm[i].color});
+            }
+            console.log();
         }
     },
             
@@ -212,6 +225,7 @@ var Structure = {
 							Structure.enableTooltips(table);
 					}, 0);
                 },
+
                 
                 beforeSelectRow:function(rowid){return false;},
                 ondblClickRow:function(rowid, iRow, iCol)

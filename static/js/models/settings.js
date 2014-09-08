@@ -61,15 +61,24 @@ var Settings = {
                             if(p.options != null) {
                                 $('#edit_property_align').val(p.options.property_align);
                                 $('#edit_property_width').val(p.options.property_width);
+
+                                // Property required?
                                 if(p.options.property_required == "on") {
                                     $('#edit_property_required').prop('checked', true);
                                 } 
                                 else{
                                     $('#edit_property_required').prop('checked', false);
                                 }
+
+                                // Show property from other users
+                                if(p.options.property_show_other_users == "on") {
+                                    $('#edit_property_show_other_users').prop('checked', true);
+                                } 
+                                else{
+                                    $('#edit_property_show_other_users').prop('checked', false);
+                                }
                                 $('#edit_property_color').val(p.options.property_color).iris('color', p.options.property_color);
                             }
-                            $('#edit_service_type').val(p.id_service_type);
                             $('#edit_id_property').val(p.id_property);
                             $('#edit_property').modal();
                         }
