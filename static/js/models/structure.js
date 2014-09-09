@@ -12,8 +12,7 @@ var Structure = {
         var grid_data = data.all,
             grid_selector = "#grid-table-all",
             pager_selector = "#grid-pager-all",
-            text_link, //link cellcontent, must changes dynamicaly 
-            console.log(data);
+            text_link; //link cellcontent, must changes dynamicaly 
 
         // Tabs init
         $('#gridTabs .nav-tabs a:last').tab('show');
@@ -42,7 +41,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
                 $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-360); // 360-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -536,7 +535,7 @@ var Structure = {
         	var container=$('th span.dropdown')[i];
             var dropdown_ul=$('th span.dropdown ul.multiselect-container')[i];
             dropdown_ul.style.left=container.offsetLeft;
-            dropdown_ul.style.top=container.offsetTop+40;
+            dropdown_ul.style.top=container.offsetTop+15;
         }
 
 		var delta;
