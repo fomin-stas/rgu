@@ -70,6 +70,37 @@ var Structure = {
         $(grid_selector).jqGrid('setCell', 1, "5_code", "",{'background-color':'yellow'});
         var cm=$(grid_selector).jqGrid('getGridParam','colModel'),
             rowsCount = $(grid_selector).getGridParam("records");
+        
+        function table_data_to_options(col)
+        {
+			var cells=$('tr[tabindex=-1] td[role="gridcell"]');
+			var column=[];
+			var obj={};
+			var result=':показать все'
+			for (k=0; k<cells.length; k++)
+			{
+				if (cells[k].cellIndex===col)
+				{
+					if (cells[k].innerHTML)
+					{
+						column.push(cells[k].innerHTML);
+					}
+				}
+			}
+			var values=column.join().split(',');
+			for (var i=0; i<values.length; i++)
+			{
+				var str=values[i];
+				obj[str]=true;
+			}
+			var sorted=Object.keys(obj);
+			for (var z=0; z<sorted.length; z++)
+			{
+				result+=(';'+sorted[z]+':'+sorted[z]);
+			}
+			return result;
+		}                   
+        
         for (var i=0; i<cm.length; i++)
         {   
             if (cm[i].stype=='multiselect')
@@ -82,8 +113,9 @@ var Structure = {
             }
             else if (cm[i].stype=='select')
             {
-				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"}
+//				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"};
 //				cm[i].searchoptions.attr={multiple:'multiple'};
+				cm[i].searchoptions={value:table_data_to_options(i)};
 				cm[i].searchoptions.attr={};
 			}
 
@@ -140,7 +172,7 @@ var Structure = {
 				mtype: "POST",
                 cellEdit: true,
                 cellsubmit: "remote",
-				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
+				cellurl: 'ajax/edite_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{
