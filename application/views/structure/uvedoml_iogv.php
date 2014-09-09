@@ -12,9 +12,9 @@
                 <div class="tab-content">
                     <div class="tab-pane in active" id="nov_uved">
                         <div class="ui-jqgrid ui-corner-all">
-                            <table id="grid-table"></table>
+                            <table id="grid-table" class="grid-table"></table>
                         </div>
-                        <div id="grid-pager"></div>
+                        <div id="grid-pager" class="grid-pager"></div>
                     </div>
                     <div class="tab-pane" id="arch"></div>
                 </div>
@@ -54,6 +54,7 @@ jQuery(function($) {
 		data: grid_data,
 		datatype: "local",
 		height: "auto",
+		shrinkToFit:true,
 		colNames:['ID','Наименование полномочия в соответствии с положением ИОГВ','Наименование государственной функции (услуги)', 'Уведомление','Дата уведомления'],
 		colModel:[
 			{name:'id_poln',index:'id_poln', sorttype:"int", editable: true, fixed:true, width:'100'},
@@ -75,6 +76,8 @@ jQuery(function($) {
 
 		loadComplete : function() {
 			var table = this;
+			$(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
+			$(grid_selector).jqGrid('setGridHeight',window.innerHeight-360);
 			setTimeout(function(){
 				styleCheckbox(table);
 				

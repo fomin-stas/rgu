@@ -130,6 +130,7 @@
         enable_reset: true
     });
     $('#srok_otveta').datepicker({
+		format:'dd-mm-yyy',
         autoclose: true,
         todayHiglight: true
     });

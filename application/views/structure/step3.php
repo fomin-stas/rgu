@@ -217,6 +217,7 @@
         location = "step2";
     });
     $('#srok_otveta_3').datepicker({
+		format:'dd-mm-yyyy',
         autoclose: true,
         todayHiglight: true
     });

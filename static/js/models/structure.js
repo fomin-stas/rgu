@@ -84,7 +84,7 @@ var Structure = {
 			{
 				if (cells[k].cellIndex===col)
 				{
-					if (cells[k].innerHTML)
+					if (cells[k].innerHTML!='&nbsp;')
 					{
 						column.push(cells[k].innerHTML);
 					}
@@ -460,60 +460,59 @@ var Structure = {
              var postData=$(grid_selector).jqGrid('getGridParam','postData');
              postData.filters=$.parseJSON(postData.filters);
              console.log(postData.filters);
-             console.log(postData);
-//             return true;
-             var filters=postData.filters;
-             var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
-             separator=",";
-             cm=$(grid_selector).jqGrid('getGridParam','colModel');
-
-             if (filters && filters.rules !== undefined && filters.rules.length > 0) {
-                 rules = filters.rules;
-                 for (i = 0; i < rules.length; i++) {
-                     rule = rules[i];
-                     iCol = getColumnIndexByName.call(this, rule.field);
-                     cmi = cm[iCol];
-                     if (iCol >= 0 &&
-                            ((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
-                                && (rule.op === myDefaultSearch)) ||
-                                    (typeof (cmi.searchoptions) === "object" &&
-                                        $.isArray(cmi.searchoptions.sopt) &&
-                                            cmi.searchoptions.sopt[0] === rule.op)) {
-                                        //  make modifications only for the 'contains' operation
-                                            parts = rule.data.split(separator);
-                                            if (parts.length > 1) {
-                                                if (filters.groups === undefined) {
-                                                    filters.groups = [];
-                                                }
-                                                group = {
-                                                    groupOp: 'OR',
-                                                    groups: [],
-                                                    rules: []
-                                                };
-                                                filters.groups.push(group);
-                                                console.log(filters.groups);
-                                                for (j = 0, l = parts.length; j < l; j++) {
-                                                    str = parts[j];
-                                                    if (str) {
-                                                    // skip empty '', which exist in case of two separaters of once
-                                                        group.rules.push({
-                                                            data: parts[j],
-                                                            op: rule.op,
-                                                            field: rule.field
-                                                        });
-                                                    }
-                                                }
-                                                rules.splice(i, 1);
-                                                i--; // to skip i++
-                                            }
-                                        }
-                                    }
-                                    this.p.postData.filters = JSON.stringify(filters);
-                                    console.log(this.p.postData.filters);
-                                }
-                            }
-                        
-                        });
+             return true;
+             
+		},
+        
+        
+        afterSearch:function()
+        {
+			
+		var filters=$(".ui-search-input>input,.ui-search-input>select");
+			filters.map(function(){
+				var value=this.value;
+				var filter_index=getColumnIndexByName(this.name);
+				var column=$('tr[tabindex=-1] td[role="gridcell"]').map(function(){
+					if(this.cellIndex==filter_index){return this;}
+				}).get();
+				var controll=0;
+				
+				for(var i=0; i<column.length; i++)
+				{
+					if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())===null)
+					{
+						column[i].searchCheck=1;
+						column[i].parentNode.style.display='none';
+					}
+					else 
+					{
+						column[i].searchCheck=0;
+						column[i].parentNode.style.display='table-row';
+						var siblings=$(column[i]).siblings();
+						for (var j=0; j<siblings.length; j++)
+						{
+							if (siblings[j].searchCheck===1)
+							{
+								controll+=siblings[j].searchCheck;
+							}
+						}
+						controll+=column[i].searchCheck;
+						if(controll==0)
+						{
+							column[i].parentNode.style.display='table-row';
+						}
+						else
+						{
+							column[i].parentNode.style.display='none';
+						}
+					}
+				}
+				
+			});	
+		
+		}
+                  
+	});
 		
 		//multiselect
 		$('.ui-search-input select').multiselect({
