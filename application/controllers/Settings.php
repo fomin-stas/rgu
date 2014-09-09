@@ -16,7 +16,7 @@ class Settings extends APP_Controller {
     	$page = (int)$this->uri->segment(3, 1);
         $limit = $this->config->config['pagination']['per_page']; 
 
-        $properties = $this->property->limit($limit, $limit*$page-$limit)->order_by('id_property')->with('format')->get_all();
+        $properties = $this->property->limit($limit, $page)->order_by('id_property')->with('format')->get_all();
         $service_types = $this->service_type->as_array()->get_all();
         $buff = array();
         // prepare service types

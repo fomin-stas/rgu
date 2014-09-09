@@ -33,7 +33,7 @@ class Structure extends APP_Controller {
                 ->with('properties')
                 ->get_all();
 
-        $properties = $this->property->with('format')->order_by('id_property')->get_all();
+        $properties = $this->property->with('format')->order_by('order')->get_all();
 
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
@@ -518,7 +518,7 @@ class Structure extends APP_Controller {
                 ->with('properties')
                 ->get_all();
 
-        $properties = $this->property->with('format')->get_all();
+        $properties = $this->property->with('format')->order_by('order')->get_all();
 
         //$properties = array_slice($properties, 0, 1);
 
@@ -569,12 +569,23 @@ class Structure extends APP_Controller {
                     break;
             }
 
-            switch ($property['code']) {
-                case 'name_iogv':
-                    $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
-                    $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
-                    break;
+             $options = json_decode($property['options'], true);
+            if (count($options) > 0) {
+                foreach ($options as $key => $option) {
+                    switch ($key) {
+                        case 'property_align':
+                            $model['align'] = $option;
+                            break;
+                        case 'property_width':
+                            $model['width'] = $option;
+                            break;
+                        case 'property_color':
+                            $model['color'] = $option;
+                            break;
+                    }
+                }
             }
+            $model['formatter'] = new Zend_Json_Expr('Structure.cellFormat');
 
             // linked to colmn model
             $column_models[] = $model;

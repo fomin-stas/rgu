@@ -22,7 +22,7 @@ $config['per_page'] = 10;
 $config['uri_segment'] = 3;
 $config['num_links'] = 9;
 $config['page_query_string'] = FALSE;
-
+$config['use_page_numbers'] = TRUE;
 $config['query_string_segment'] = 'page';
 
 $config['full_tag_open'] = '<ul class="pagination">';
