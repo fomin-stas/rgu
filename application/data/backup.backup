@@ -1,33 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.2.8
--- Dumped by pg_dump version 9.2.8
--- Started on 2014-09-09 02:11:10
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- TOC entry 202 (class 3079 OID 11727)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- TOC entry 2140 (class 0 OID 0)
--- Dependencies: 202
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET search_path = public, pg_catalog;
 
@@ -37,7 +7,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 169 (class 1259 OID 25274)
--- Name: activity_feed; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: activity_feed; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE activity_feed (
@@ -49,11 +19,11 @@ CREATE TABLE activity_feed (
 );
 
 
-ALTER TABLE public.activity_feed OWNER TO postgres;
+ALTER TABLE public.activity_feed OWNER TO rrguru;
 
 --
 -- TOC entry 168 (class 1259 OID 25272)
--- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE activity_feed_id_activity_feed_seq
@@ -64,12 +34,12 @@ CREATE SEQUENCE activity_feed_id_activity_feed_seq
     CACHE 1;
 
 
-ALTER TABLE public.activity_feed_id_activity_feed_seq OWNER TO postgres;
+ALTER TABLE public.activity_feed_id_activity_feed_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2141 (class 0 OID 0)
 -- Dependencies: 168
--- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE activity_feed_id_activity_feed_seq OWNED BY activity_feed.id_activity_feed;
@@ -77,7 +47,7 @@ ALTER SEQUENCE activity_feed_id_activity_feed_seq OWNED BY activity_feed.id_acti
 
 --
 -- TOC entry 171 (class 1259 OID 25285)
--- Name: authority; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: authority; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE authority (
@@ -88,11 +58,11 @@ CREATE TABLE authority (
 );
 
 
-ALTER TABLE public.authority OWNER TO postgres;
+ALTER TABLE public.authority OWNER TO rrguru;
 
 --
 -- TOC entry 170 (class 1259 OID 25283)
--- Name: authority_id_authority_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: authority_id_authority_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE authority_id_authority_seq
@@ -103,12 +73,12 @@ CREATE SEQUENCE authority_id_authority_seq
     CACHE 1;
 
 
-ALTER TABLE public.authority_id_authority_seq OWNER TO postgres;
+ALTER TABLE public.authority_id_authority_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2142 (class 0 OID 0)
 -- Dependencies: 170
--- Name: authority_id_authority_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: authority_id_authority_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE authority_id_authority_seq OWNED BY authority.id_authority;
@@ -116,7 +86,7 @@ ALTER SEQUENCE authority_id_authority_seq OWNED BY authority.id_authority;
 
 --
 -- TOC entry 173 (class 1259 OID 25296)
--- Name: authority_property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: authority_property; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE authority_property (
@@ -127,11 +97,11 @@ CREATE TABLE authority_property (
 );
 
 
-ALTER TABLE public.authority_property OWNER TO postgres;
+ALTER TABLE public.authority_property OWNER TO rrguru;
 
 --
 -- TOC entry 172 (class 1259 OID 25294)
--- Name: authority_property_id_authority_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: authority_property_id_authority_property_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE authority_property_id_authority_property_seq
@@ -142,12 +112,12 @@ CREATE SEQUENCE authority_property_id_authority_property_seq
     CACHE 1;
 
 
-ALTER TABLE public.authority_property_id_authority_property_seq OWNER TO postgres;
+ALTER TABLE public.authority_property_id_authority_property_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2143 (class 0 OID 0)
 -- Dependencies: 172
--- Name: authority_property_id_authority_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: authority_property_id_authority_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE authority_property_id_authority_property_seq OWNED BY authority_property.id_authority_property;
@@ -155,7 +125,7 @@ ALTER SEQUENCE authority_property_id_authority_property_seq OWNED BY authority_p
 
 --
 -- TOC entry 175 (class 1259 OID 25307)
--- Name: authority_status; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: authority_status; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE authority_status (
@@ -164,11 +134,11 @@ CREATE TABLE authority_status (
 );
 
 
-ALTER TABLE public.authority_status OWNER TO postgres;
+ALTER TABLE public.authority_status OWNER TO rrguru;
 
 --
 -- TOC entry 174 (class 1259 OID 25305)
--- Name: authority_status_id_authority_status_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: authority_status_id_authority_status_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE authority_status_id_authority_status_seq
@@ -179,12 +149,12 @@ CREATE SEQUENCE authority_status_id_authority_status_seq
     CACHE 1;
 
 
-ALTER TABLE public.authority_status_id_authority_status_seq OWNER TO postgres;
+ALTER TABLE public.authority_status_id_authority_status_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2144 (class 0 OID 0)
 -- Dependencies: 174
--- Name: authority_status_id_authority_status_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: authority_status_id_authority_status_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE authority_status_id_authority_status_seq OWNED BY authority_status.id_authority_status;
@@ -192,7 +162,7 @@ ALTER SEQUENCE authority_status_id_authority_status_seq OWNED BY authority_statu
 
 --
 -- TOC entry 177 (class 1259 OID 25318)
--- Name: comment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: comment; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE comment (
@@ -205,11 +175,11 @@ CREATE TABLE comment (
 );
 
 
-ALTER TABLE public.comment OWNER TO postgres;
+ALTER TABLE public.comment OWNER TO rrguru;
 
 --
 -- TOC entry 176 (class 1259 OID 25316)
--- Name: comment_id_comment_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: comment_id_comment_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE comment_id_comment_seq
@@ -220,12 +190,12 @@ CREATE SEQUENCE comment_id_comment_seq
     CACHE 1;
 
 
-ALTER TABLE public.comment_id_comment_seq OWNER TO postgres;
+ALTER TABLE public.comment_id_comment_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2145 (class 0 OID 0)
 -- Dependencies: 176
--- Name: comment_id_comment_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: comment_id_comment_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE comment_id_comment_seq OWNED BY comment.id_comment;
@@ -233,7 +203,7 @@ ALTER SEQUENCE comment_id_comment_seq OWNED BY comment.id_comment;
 
 --
 -- TOC entry 179 (class 1259 OID 25329)
--- Name: event_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: event_type; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE event_type (
@@ -242,11 +212,11 @@ CREATE TABLE event_type (
 );
 
 
-ALTER TABLE public.event_type OWNER TO postgres;
+ALTER TABLE public.event_type OWNER TO rrguru;
 
 --
 -- TOC entry 178 (class 1259 OID 25327)
--- Name: event_type_id_event_type_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: event_type_id_event_type_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE event_type_id_event_type_seq
@@ -257,12 +227,12 @@ CREATE SEQUENCE event_type_id_event_type_seq
     CACHE 1;
 
 
-ALTER TABLE public.event_type_id_event_type_seq OWNER TO postgres;
+ALTER TABLE public.event_type_id_event_type_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2146 (class 0 OID 0)
 -- Dependencies: 178
--- Name: event_type_id_event_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: event_type_id_event_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE event_type_id_event_type_seq OWNED BY event_type.id_event_type;
@@ -270,7 +240,7 @@ ALTER SEQUENCE event_type_id_event_type_seq OWNED BY event_type.id_event_type;
 
 --
 -- TOC entry 181 (class 1259 OID 25340)
--- Name: files; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: files; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE files (
@@ -282,11 +252,11 @@ CREATE TABLE files (
 );
 
 
-ALTER TABLE public.files OWNER TO postgres;
+ALTER TABLE public.files OWNER TO rrguru;
 
 --
 -- TOC entry 180 (class 1259 OID 25338)
--- Name: files_id_file_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: files_id_file_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE files_id_file_seq
@@ -297,12 +267,12 @@ CREATE SEQUENCE files_id_file_seq
     CACHE 1;
 
 
-ALTER TABLE public.files_id_file_seq OWNER TO postgres;
+ALTER TABLE public.files_id_file_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2147 (class 0 OID 0)
 -- Dependencies: 180
--- Name: files_id_file_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: files_id_file_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE files_id_file_seq OWNED BY files.id_file;
@@ -310,7 +280,7 @@ ALTER SEQUENCE files_id_file_seq OWNED BY files.id_file;
 
 --
 -- TOC entry 183 (class 1259 OID 25351)
--- Name: history_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: history_log; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE history_log (
@@ -323,11 +293,11 @@ CREATE TABLE history_log (
 );
 
 
-ALTER TABLE public.history_log OWNER TO postgres;
+ALTER TABLE public.history_log OWNER TO rrguru;
 
 --
 -- TOC entry 182 (class 1259 OID 25349)
--- Name: history_log_id_history_log_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: history_log_id_history_log_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE history_log_id_history_log_seq
@@ -338,12 +308,12 @@ CREATE SEQUENCE history_log_id_history_log_seq
     CACHE 1;
 
 
-ALTER TABLE public.history_log_id_history_log_seq OWNER TO postgres;
+ALTER TABLE public.history_log_id_history_log_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2148 (class 0 OID 0)
 -- Dependencies: 182
--- Name: history_log_id_history_log_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: history_log_id_history_log_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE history_log_id_history_log_seq OWNED BY history_log.id_history_log;
@@ -351,7 +321,7 @@ ALTER SEQUENCE history_log_id_history_log_seq OWNED BY history_log.id_history_lo
 
 --
 -- TOC entry 185 (class 1259 OID 25362)
--- Name: organization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: organization; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE organization (
@@ -361,11 +331,11 @@ CREATE TABLE organization (
 );
 
 
-ALTER TABLE public.organization OWNER TO postgres;
+ALTER TABLE public.organization OWNER TO rrguru;
 
 --
 -- TOC entry 184 (class 1259 OID 25360)
--- Name: organization_id_organization_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: organization_id_organization_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE organization_id_organization_seq
@@ -376,12 +346,12 @@ CREATE SEQUENCE organization_id_organization_seq
     CACHE 1;
 
 
-ALTER TABLE public.organization_id_organization_seq OWNER TO postgres;
+ALTER TABLE public.organization_id_organization_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2149 (class 0 OID 0)
 -- Dependencies: 184
--- Name: organization_id_organization_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: organization_id_organization_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE organization_id_organization_seq OWNED BY organization.id_organization;
@@ -389,7 +359,7 @@ ALTER SEQUENCE organization_id_organization_seq OWNED BY organization.id_organiz
 
 --
 -- TOC entry 187 (class 1259 OID 25373)
--- Name: organization_rank; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: organization_rank; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE organization_rank (
@@ -398,11 +368,11 @@ CREATE TABLE organization_rank (
 );
 
 
-ALTER TABLE public.organization_rank OWNER TO postgres;
+ALTER TABLE public.organization_rank OWNER TO rrguru;
 
 --
 -- TOC entry 186 (class 1259 OID 25371)
--- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE organization_rank_id_organization_rank_seq
@@ -413,12 +383,12 @@ CREATE SEQUENCE organization_rank_id_organization_rank_seq
     CACHE 1;
 
 
-ALTER TABLE public.organization_rank_id_organization_rank_seq OWNER TO postgres;
+ALTER TABLE public.organization_rank_id_organization_rank_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2150 (class 0 OID 0)
 -- Dependencies: 186
--- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE organization_rank_id_organization_rank_seq OWNED BY organization_rank.id_organization_rank;
@@ -426,7 +396,7 @@ ALTER SEQUENCE organization_rank_id_organization_rank_seq OWNED BY organization_
 
 --
 -- TOC entry 189 (class 1259 OID 25384)
--- Name: property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: property; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE property (
@@ -441,11 +411,11 @@ CREATE TABLE property (
 );
 
 
-ALTER TABLE public.property OWNER TO postgres;
+ALTER TABLE public.property OWNER TO rrguru;
 
 --
 -- TOC entry 191 (class 1259 OID 25395)
--- Name: property_format; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: property_format; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE property_format (
@@ -454,11 +424,11 @@ CREATE TABLE property_format (
 );
 
 
-ALTER TABLE public.property_format OWNER TO postgres;
+ALTER TABLE public.property_format OWNER TO rrguru;
 
 --
 -- TOC entry 190 (class 1259 OID 25393)
--- Name: property_format_id_property_format_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: property_format_id_property_format_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE property_format_id_property_format_seq
@@ -469,12 +439,12 @@ CREATE SEQUENCE property_format_id_property_format_seq
     CACHE 1;
 
 
-ALTER TABLE public.property_format_id_property_format_seq OWNER TO postgres;
+ALTER TABLE public.property_format_id_property_format_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2151 (class 0 OID 0)
 -- Dependencies: 190
--- Name: property_format_id_property_format_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: property_format_id_property_format_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE property_format_id_property_format_seq OWNED BY property_format.id_property_format;
@@ -482,7 +452,7 @@ ALTER SEQUENCE property_format_id_property_format_seq OWNED BY property_format.i
 
 --
 -- TOC entry 188 (class 1259 OID 25382)
--- Name: property_id_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: property_id_property_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE property_id_property_seq
@@ -493,12 +463,12 @@ CREATE SEQUENCE property_id_property_seq
     CACHE 1;
 
 
-ALTER TABLE public.property_id_property_seq OWNER TO postgres;
+ALTER TABLE public.property_id_property_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2152 (class 0 OID 0)
 -- Dependencies: 188
--- Name: property_id_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: property_id_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE property_id_property_seq OWNED BY property.id_property;
@@ -506,7 +476,7 @@ ALTER SEQUENCE property_id_property_seq OWNED BY property.id_property;
 
 --
 -- TOC entry 193 (class 1259 OID 25406)
--- Name: service; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: service; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE service (
@@ -518,11 +488,11 @@ CREATE TABLE service (
 );
 
 
-ALTER TABLE public.service OWNER TO postgres;
+ALTER TABLE public.service OWNER TO rrguru;
 
 --
 -- TOC entry 192 (class 1259 OID 25404)
--- Name: service_id_service_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: service_id_service_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE service_id_service_seq
@@ -533,12 +503,12 @@ CREATE SEQUENCE service_id_service_seq
     CACHE 1;
 
 
-ALTER TABLE public.service_id_service_seq OWNER TO postgres;
+ALTER TABLE public.service_id_service_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2153 (class 0 OID 0)
 -- Dependencies: 192
--- Name: service_id_service_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: service_id_service_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE service_id_service_seq OWNED BY service.id_service;
@@ -546,7 +516,7 @@ ALTER SEQUENCE service_id_service_seq OWNED BY service.id_service;
 
 --
 -- TOC entry 195 (class 1259 OID 25417)
--- Name: service_property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: service_property; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE service_property (
@@ -557,11 +527,11 @@ CREATE TABLE service_property (
 );
 
 
-ALTER TABLE public.service_property OWNER TO postgres;
+ALTER TABLE public.service_property OWNER TO rrguru;
 
 --
 -- TOC entry 194 (class 1259 OID 25415)
--- Name: service_property_id_service_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: service_property_id_service_property_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE service_property_id_service_property_seq
@@ -572,12 +542,12 @@ CREATE SEQUENCE service_property_id_service_property_seq
     CACHE 1;
 
 
-ALTER TABLE public.service_property_id_service_property_seq OWNER TO postgres;
+ALTER TABLE public.service_property_id_service_property_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2154 (class 0 OID 0)
 -- Dependencies: 194
--- Name: service_property_id_service_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: service_property_id_service_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE service_property_id_service_property_seq OWNED BY service_property.id_service_property;
@@ -585,7 +555,7 @@ ALTER SEQUENCE service_property_id_service_property_seq OWNED BY service_propert
 
 --
 -- TOC entry 197 (class 1259 OID 25428)
--- Name: service_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: service_type; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE service_type (
@@ -594,11 +564,11 @@ CREATE TABLE service_type (
 );
 
 
-ALTER TABLE public.service_type OWNER TO postgres;
+ALTER TABLE public.service_type OWNER TO rrguru;
 
 --
 -- TOC entry 196 (class 1259 OID 25426)
--- Name: service_type_id_service_type_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: service_type_id_service_type_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE service_type_id_service_type_seq
@@ -609,12 +579,12 @@ CREATE SEQUENCE service_type_id_service_type_seq
     CACHE 1;
 
 
-ALTER TABLE public.service_type_id_service_type_seq OWNER TO postgres;
+ALTER TABLE public.service_type_id_service_type_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2155 (class 0 OID 0)
 -- Dependencies: 196
--- Name: service_type_id_service_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: service_type_id_service_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE service_type_id_service_type_seq OWNED BY service_type.id_service_type;
@@ -622,7 +592,7 @@ ALTER SEQUENCE service_type_id_service_type_seq OWNED BY service_type.id_service
 
 --
 -- TOC entry 199 (class 1259 OID 25439)
--- Name: spher; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: spher; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE spher (
@@ -631,11 +601,11 @@ CREATE TABLE spher (
 );
 
 
-ALTER TABLE public.spher OWNER TO postgres;
+ALTER TABLE public.spher OWNER TO rrguru;
 
 --
 -- TOC entry 198 (class 1259 OID 25437)
--- Name: spher_id_spher_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: spher_id_spher_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE spher_id_spher_seq
@@ -646,12 +616,12 @@ CREATE SEQUENCE spher_id_spher_seq
     CACHE 1;
 
 
-ALTER TABLE public.spher_id_spher_seq OWNER TO postgres;
+ALTER TABLE public.spher_id_spher_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2156 (class 0 OID 0)
 -- Dependencies: 198
--- Name: spher_id_spher_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: spher_id_spher_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE spher_id_spher_seq OWNED BY spher.id_spher;
@@ -659,7 +629,7 @@ ALTER SEQUENCE spher_id_spher_seq OWNED BY spher.id_spher;
 
 --
 -- TOC entry 201 (class 1259 OID 25450)
--- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -670,11 +640,11 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
+ALTER TABLE public.users OWNER TO rrguru;
 
 --
 -- TOC entry 200 (class 1259 OID 25448)
--- Name: users_id_user_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: users_id_user_seq; Type: SEQUENCE; Schema: public; Owner: rrguru
 --
 
 CREATE SEQUENCE users_id_user_seq
@@ -685,12 +655,12 @@ CREATE SEQUENCE users_id_user_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_user_seq OWNER TO postgres;
+ALTER TABLE public.users_id_user_seq OWNER TO rrguru;
 
 --
 -- TOC entry 2157 (class 0 OID 0)
 -- Dependencies: 200
--- Name: users_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: users_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: rrguru
 --
 
 ALTER SEQUENCE users_id_user_seq OWNED BY users.id_user;
@@ -698,7 +668,7 @@ ALTER SEQUENCE users_id_user_seq OWNED BY users.id_user;
 
 --
 -- TOC entry 1923 (class 2604 OID 25277)
--- Name: id_activity_feed; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_activity_feed; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY activity_feed ALTER COLUMN id_activity_feed SET DEFAULT nextval('activity_feed_id_activity_feed_seq'::regclass);
@@ -706,7 +676,7 @@ ALTER TABLE ONLY activity_feed ALTER COLUMN id_activity_feed SET DEFAULT nextval
 
 --
 -- TOC entry 1924 (class 2604 OID 25288)
--- Name: id_authority; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_authority; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority ALTER COLUMN id_authority SET DEFAULT nextval('authority_id_authority_seq'::regclass);
@@ -714,7 +684,7 @@ ALTER TABLE ONLY authority ALTER COLUMN id_authority SET DEFAULT nextval('author
 
 --
 -- TOC entry 1925 (class 2604 OID 25299)
--- Name: id_authority_property; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_authority_property; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority_property ALTER COLUMN id_authority_property SET DEFAULT nextval('authority_property_id_authority_property_seq'::regclass);
@@ -722,7 +692,7 @@ ALTER TABLE ONLY authority_property ALTER COLUMN id_authority_property SET DEFAU
 
 --
 -- TOC entry 1926 (class 2604 OID 25310)
--- Name: id_authority_status; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_authority_status; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority_status ALTER COLUMN id_authority_status SET DEFAULT nextval('authority_status_id_authority_status_seq'::regclass);
@@ -730,7 +700,7 @@ ALTER TABLE ONLY authority_status ALTER COLUMN id_authority_status SET DEFAULT n
 
 --
 -- TOC entry 1927 (class 2604 OID 25321)
--- Name: id_comment; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_comment; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY comment ALTER COLUMN id_comment SET DEFAULT nextval('comment_id_comment_seq'::regclass);
@@ -738,7 +708,7 @@ ALTER TABLE ONLY comment ALTER COLUMN id_comment SET DEFAULT nextval('comment_id
 
 --
 -- TOC entry 1928 (class 2604 OID 25332)
--- Name: id_event_type; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_event_type; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY event_type ALTER COLUMN id_event_type SET DEFAULT nextval('event_type_id_event_type_seq'::regclass);
@@ -746,7 +716,7 @@ ALTER TABLE ONLY event_type ALTER COLUMN id_event_type SET DEFAULT nextval('even
 
 --
 -- TOC entry 1929 (class 2604 OID 25343)
--- Name: id_file; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_file; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY files ALTER COLUMN id_file SET DEFAULT nextval('files_id_file_seq'::regclass);
@@ -754,7 +724,7 @@ ALTER TABLE ONLY files ALTER COLUMN id_file SET DEFAULT nextval('files_id_file_s
 
 --
 -- TOC entry 1930 (class 2604 OID 25354)
--- Name: id_history_log; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_history_log; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY history_log ALTER COLUMN id_history_log SET DEFAULT nextval('history_log_id_history_log_seq'::regclass);
@@ -762,7 +732,7 @@ ALTER TABLE ONLY history_log ALTER COLUMN id_history_log SET DEFAULT nextval('hi
 
 --
 -- TOC entry 1931 (class 2604 OID 25365)
--- Name: id_organization; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_organization; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY organization ALTER COLUMN id_organization SET DEFAULT nextval('organization_id_organization_seq'::regclass);
@@ -770,7 +740,7 @@ ALTER TABLE ONLY organization ALTER COLUMN id_organization SET DEFAULT nextval('
 
 --
 -- TOC entry 1932 (class 2604 OID 25376)
--- Name: id_organization_rank; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_organization_rank; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY organization_rank ALTER COLUMN id_organization_rank SET DEFAULT nextval('organization_rank_id_organization_rank_seq'::regclass);
@@ -778,7 +748,7 @@ ALTER TABLE ONLY organization_rank ALTER COLUMN id_organization_rank SET DEFAULT
 
 --
 -- TOC entry 1933 (class 2604 OID 25387)
--- Name: id_property; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_property; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY property ALTER COLUMN id_property SET DEFAULT nextval('property_id_property_seq'::regclass);
@@ -786,7 +756,7 @@ ALTER TABLE ONLY property ALTER COLUMN id_property SET DEFAULT nextval('property
 
 --
 -- TOC entry 1934 (class 2604 OID 25398)
--- Name: id_property_format; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_property_format; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY property_format ALTER COLUMN id_property_format SET DEFAULT nextval('property_format_id_property_format_seq'::regclass);
@@ -794,7 +764,7 @@ ALTER TABLE ONLY property_format ALTER COLUMN id_property_format SET DEFAULT nex
 
 --
 -- TOC entry 1935 (class 2604 OID 25409)
--- Name: id_service; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_service; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service ALTER COLUMN id_service SET DEFAULT nextval('service_id_service_seq'::regclass);
@@ -802,7 +772,7 @@ ALTER TABLE ONLY service ALTER COLUMN id_service SET DEFAULT nextval('service_id
 
 --
 -- TOC entry 1936 (class 2604 OID 25420)
--- Name: id_service_property; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_service_property; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service_property ALTER COLUMN id_service_property SET DEFAULT nextval('service_property_id_service_property_seq'::regclass);
@@ -810,7 +780,7 @@ ALTER TABLE ONLY service_property ALTER COLUMN id_service_property SET DEFAULT n
 
 --
 -- TOC entry 1937 (class 2604 OID 25431)
--- Name: id_service_type; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_service_type; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service_type ALTER COLUMN id_service_type SET DEFAULT nextval('service_type_id_service_type_seq'::regclass);
@@ -818,7 +788,7 @@ ALTER TABLE ONLY service_type ALTER COLUMN id_service_type SET DEFAULT nextval('
 
 --
 -- TOC entry 1938 (class 2604 OID 25442)
--- Name: id_spher; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_spher; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY spher ALTER COLUMN id_spher SET DEFAULT nextval('spher_id_spher_seq'::regclass);
@@ -826,7 +796,7 @@ ALTER TABLE ONLY spher ALTER COLUMN id_spher SET DEFAULT nextval('spher_id_spher
 
 --
 -- TOC entry 1939 (class 2604 OID 25453)
--- Name: id_user; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_user; Type: DEFAULT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id_user SET DEFAULT nextval('users_id_user_seq'::regclass);
@@ -835,7 +805,7 @@ ALTER TABLE ONLY users ALTER COLUMN id_user SET DEFAULT nextval('users_id_user_s
 --
 -- TOC entry 2100 (class 0 OID 25274)
 -- Dependencies: 169
--- Data for Name: activity_feed; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: activity_feed; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 
@@ -843,7 +813,7 @@ ALTER TABLE ONLY users ALTER COLUMN id_user SET DEFAULT nextval('users_id_user_s
 --
 -- TOC entry 2158 (class 0 OID 0)
 -- Dependencies: 168
--- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 1, true);
@@ -852,7 +822,7 @@ SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 1, true);
 --
 -- TOC entry 2102 (class 0 OID 25285)
 -- Dependencies: 171
--- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (22, 3, 3, 'Наименование полномочия в соответствии с Положением об ИОГВ');
@@ -863,7 +833,7 @@ INSERT INTO authority (id_authority, id_organization, id_authority_status, autho
 --
 -- TOC entry 2159 (class 0 OID 0)
 -- Dependencies: 170
--- Name: authority_id_authority_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: authority_id_authority_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('authority_id_authority_seq', 25, true);
@@ -872,7 +842,7 @@ SELECT pg_catalog.setval('authority_id_authority_seq', 25, true);
 --
 -- TOC entry 2104 (class 0 OID 25296)
 -- Dependencies: 173
--- Data for Name: authority_property; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: authority_property; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (119, 7, 22, '№ пункта в положении об ИОГВ');
@@ -900,7 +870,7 @@ INSERT INTO authority_property (id_authority_property, id_property, id_authority
 --
 -- TOC entry 2160 (class 0 OID 0)
 -- Dependencies: 172
--- Name: authority_property_id_authority_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: authority_property_id_authority_property_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 139, true);
@@ -909,7 +879,7 @@ SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 139, tr
 --
 -- TOC entry 2106 (class 0 OID 25307)
 -- Dependencies: 175
--- Data for Name: authority_status; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: authority_status; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO authority_status (id_authority_status, name) VALUES (1, 'Ожидает присвоения статуса');
@@ -920,7 +890,7 @@ INSERT INTO authority_status (id_authority_status, name) VALUES (3, 'Полно�
 --
 -- TOC entry 2161 (class 0 OID 0)
 -- Dependencies: 174
--- Name: authority_status_id_authority_status_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: authority_status_id_authority_status_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 4, true);
@@ -929,7 +899,7 @@ SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 4, true);
 --
 -- TOC entry 2108 (class 0 OID 25318)
 -- Dependencies: 177
--- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (21, 22, 2, NULL, 'Проект постановления Правительства (наименование и дата согласования Юридическим комитетом). Проект постановления Правительства (наименование и дата согласования Юридическим комитетом)', '2014-09-08 00:11:00');
@@ -945,7 +915,7 @@ INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message,
 --
 -- TOC entry 2162 (class 0 OID 0)
 -- Dependencies: 176
--- Name: comment_id_comment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: comment_id_comment_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('comment_id_comment_seq', 29, true);
@@ -954,7 +924,7 @@ SELECT pg_catalog.setval('comment_id_comment_seq', 29, true);
 --
 -- TOC entry 2110 (class 0 OID 25329)
 -- Dependencies: 179
--- Data for Name: event_type; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: event_type; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO event_type (id_event_type, event_type_name) VALUES (5, 'Измненение статуса полномочия');
@@ -963,7 +933,7 @@ INSERT INTO event_type (id_event_type, event_type_name) VALUES (5, 'Измнен
 --
 -- TOC entry 2163 (class 0 OID 0)
 -- Dependencies: 178
--- Name: event_type_id_event_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: event_type_id_event_type_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('event_type_id_event_type_seq', 6, true);
@@ -972,7 +942,7 @@ SELECT pg_catalog.setval('event_type_id_event_type_seq', 6, true);
 --
 -- TOC entry 2112 (class 0 OID 25340)
 -- Dependencies: 181
--- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (4, NULL, '17_3575.jpg', '17_3575.jpg', 22);
@@ -984,7 +954,7 @@ INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (7
 --
 -- TOC entry 2164 (class 0 OID 0)
 -- Dependencies: 180
--- Name: files_id_file_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: files_id_file_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('files_id_file_seq', 8, true);
@@ -993,7 +963,7 @@ SELECT pg_catalog.setval('files_id_file_seq', 8, true);
 --
 -- TOC entry 2114 (class 0 OID 25351)
 -- Dependencies: 183
--- Data for Name: history_log; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: history_log; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO history_log (id_history_log, old, new, "time", id_user, id_property) VALUES (1, '34Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня', 'Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня', '2014-09-09 01:01:00', 2, 5);
@@ -1006,7 +976,7 @@ INSERT INTO history_log (id_history_log, old, new, "time", id_user, id_property)
 --
 -- TOC entry 2165 (class 0 OID 0)
 -- Dependencies: 182
--- Name: history_log_id_history_log_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: history_log_id_history_log_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('history_log_id_history_log_seq', 5, true);
@@ -1015,7 +985,7 @@ SELECT pg_catalog.setval('history_log_id_history_log_seq', 5, true);
 --
 -- TOC entry 2116 (class 0 OID 25362)
 -- Dependencies: 185
--- Data for Name: organization; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: organization; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO organization (id_organization, id_organization_rank, organization_name) VALUES (1, 1, 'Администратор');
@@ -1080,7 +1050,7 @@ INSERT INTO organization (id_organization, id_organization_rank, organization_na
 --
 -- TOC entry 2166 (class 0 OID 0)
 -- Dependencies: 184
--- Name: organization_id_organization_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: organization_id_organization_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('organization_id_organization_seq', 58, true);
@@ -1089,7 +1059,7 @@ SELECT pg_catalog.setval('organization_id_organization_seq', 58, true);
 --
 -- TOC entry 2118 (class 0 OID 25373)
 -- Dependencies: 187
--- Data for Name: organization_rank; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: organization_rank; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO organization_rank (id_organization_rank, organization_rank) VALUES (1, '1');
@@ -1098,7 +1068,7 @@ INSERT INTO organization_rank (id_organization_rank, organization_rank) VALUES (
 --
 -- TOC entry 2167 (class 0 OID 0)
 -- Dependencies: 186
--- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 2, true);
@@ -1107,7 +1077,7 @@ SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 2, true);
 --
 -- TOC entry 2120 (class 0 OID 25384)
 -- Dependencies: 189
--- Data for Name: property; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: property; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO property (id_property, id_property_type, id_service_type, property_name, property_short_name, code, options, "order") VALUES (5, 2, 6, 'Реквизиты НПА', 'Реквизиты НПА', NULL, '{"property_align":"left","property_width":"200","property_required":"on","property_color":"#23eae7","property_show_other_users":"on"}', NULL);
@@ -1154,7 +1124,7 @@ INSERT INTO property (id_property, id_property_type, id_service_type, property_n
 --
 -- TOC entry 2122 (class 0 OID 25395)
 -- Dependencies: 191
--- Data for Name: property_format; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: property_format; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO property_format (id_property_format, property_format_name) VALUES (1, 'system');
@@ -1168,7 +1138,7 @@ INSERT INTO property_format (id_property_format, property_format_name) VALUES (6
 --
 -- TOC entry 2168 (class 0 OID 0)
 -- Dependencies: 190
--- Name: property_format_id_property_format_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: property_format_id_property_format_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('property_format_id_property_format_seq', 7, true);
@@ -1177,7 +1147,7 @@ SELECT pg_catalog.setval('property_format_id_property_format_seq', 7, true);
 --
 -- TOC entry 2169 (class 0 OID 0)
 -- Dependencies: 188
--- Name: property_id_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: property_id_property_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('property_id_property_seq', 205, true);
@@ -1186,7 +1156,7 @@ SELECT pg_catalog.setval('property_id_property_seq', 205, true);
 --
 -- TOC entry 2124 (class 0 OID 25406)
 -- Dependencies: 193
--- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (4, 7, NULL, 22, 'Наименование услуги');
@@ -1199,7 +1169,7 @@ INSERT INTO service (id_service, id_service_type, id_authority_status, id_author
 --
 -- TOC entry 2170 (class 0 OID 0)
 -- Dependencies: 192
--- Name: service_id_service_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: service_id_service_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('service_id_service_seq', 12, true);
@@ -1208,7 +1178,7 @@ SELECT pg_catalog.setval('service_id_service_seq', 12, true);
 --
 -- TOC entry 2126 (class 0 OID 25417)
 -- Dependencies: 195
--- Data for Name: service_property; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: service_property; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO service_property (id_service_property, id_property, id_service, value) VALUES (73, 73, 4, 'Наименование услуги');
@@ -1356,7 +1326,7 @@ INSERT INTO service_property (id_service_property, id_property, id_service, valu
 --
 -- TOC entry 2171 (class 0 OID 0)
 -- Dependencies: 194
--- Name: service_property_id_service_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: service_property_id_service_property_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('service_property_id_service_property_seq', 193, true);
@@ -1365,7 +1335,7 @@ SELECT pg_catalog.setval('service_property_id_service_property_seq', 193, true);
 --
 -- TOC entry 2128 (class 0 OID 25428)
 -- Dependencies: 197
--- Data for Name: service_type; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: service_type; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO service_type (id_service_type, service_type_name) VALUES (6, 'Полномочие');
@@ -1377,7 +1347,7 @@ INSERT INTO service_type (id_service_type, service_type_name) VALUES (9, 'Фун
 --
 -- TOC entry 2172 (class 0 OID 0)
 -- Dependencies: 196
--- Name: service_type_id_service_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: service_type_id_service_type_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('service_type_id_service_type_seq', 10, true);
@@ -1386,7 +1356,7 @@ SELECT pg_catalog.setval('service_type_id_service_type_seq', 10, true);
 --
 -- TOC entry 2130 (class 0 OID 25439)
 -- Dependencies: 199
--- Data for Name: spher; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: spher; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO spher (id_spher, name) VALUES (1, 'Безопасность и охрана правопорядка');
@@ -1459,7 +1429,7 @@ INSERT INTO spher (id_spher, name) VALUES (23, 'Юридические услу�
 --
 -- TOC entry 2173 (class 0 OID 0)
 -- Dependencies: 198
--- Name: spher_id_spher_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: spher_id_spher_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('spher_id_spher_seq', 24, true);
@@ -1468,7 +1438,7 @@ SELECT pg_catalog.setval('spher_id_spher_seq', 24, true);
 --
 -- TOC entry 2132 (class 0 OID 25450)
 -- Dependencies: 201
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: rrguru
 --
 
 INSERT INTO users (id_user, id_organization, user_name, password) VALUES (2, 1, 'kis', '$2a$08$Ni1aPhwW8yv6yryQtwJE0e/y6APiIqxfLA6wAThrvn3HgTFpbvODS');
@@ -1478,7 +1448,7 @@ INSERT INTO users (id_user, id_organization, user_name, password) VALUES (3, 2, 
 --
 -- TOC entry 2174 (class 0 OID 0)
 -- Dependencies: 200
--- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: rrguru
 --
 
 SELECT pg_catalog.setval('users_id_user_seq', 4, true);
@@ -1486,7 +1456,7 @@ SELECT pg_catalog.setval('users_id_user_seq', 4, true);
 
 --
 -- TOC entry 1941 (class 2606 OID 25282)
--- Name: pk_activity_feed; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_activity_feed; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY activity_feed
@@ -1495,7 +1465,7 @@ ALTER TABLE ONLY activity_feed
 
 --
 -- TOC entry 1943 (class 2606 OID 25293)
--- Name: pk_authority; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_authority; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY authority
@@ -1504,7 +1474,7 @@ ALTER TABLE ONLY authority
 
 --
 -- TOC entry 1945 (class 2606 OID 25304)
--- Name: pk_authority_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_authority_property; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY authority_property
@@ -1513,7 +1483,7 @@ ALTER TABLE ONLY authority_property
 
 --
 -- TOC entry 1947 (class 2606 OID 25315)
--- Name: pk_authority_status; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_authority_status; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY authority_status
@@ -1522,7 +1492,7 @@ ALTER TABLE ONLY authority_status
 
 --
 -- TOC entry 1949 (class 2606 OID 25326)
--- Name: pk_comment; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_comment; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY comment
@@ -1531,7 +1501,7 @@ ALTER TABLE ONLY comment
 
 --
 -- TOC entry 1951 (class 2606 OID 25337)
--- Name: pk_event_type; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_event_type; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY event_type
@@ -1540,7 +1510,7 @@ ALTER TABLE ONLY event_type
 
 --
 -- TOC entry 1953 (class 2606 OID 25348)
--- Name: pk_files; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_files; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY files
@@ -1549,7 +1519,7 @@ ALTER TABLE ONLY files
 
 --
 -- TOC entry 1955 (class 2606 OID 25359)
--- Name: pk_history_log; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_history_log; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY history_log
@@ -1558,7 +1528,7 @@ ALTER TABLE ONLY history_log
 
 --
 -- TOC entry 1957 (class 2606 OID 25370)
--- Name: pk_organization; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_organization; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY organization
@@ -1567,7 +1537,7 @@ ALTER TABLE ONLY organization
 
 --
 -- TOC entry 1959 (class 2606 OID 25381)
--- Name: pk_organization_rank; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_organization_rank; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY organization_rank
@@ -1576,7 +1546,7 @@ ALTER TABLE ONLY organization_rank
 
 --
 -- TOC entry 1961 (class 2606 OID 25392)
--- Name: pk_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_property; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY property
@@ -1585,7 +1555,7 @@ ALTER TABLE ONLY property
 
 --
 -- TOC entry 1963 (class 2606 OID 25403)
--- Name: pk_property_format; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_property_format; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY property_format
@@ -1594,7 +1564,7 @@ ALTER TABLE ONLY property_format
 
 --
 -- TOC entry 1965 (class 2606 OID 25414)
--- Name: pk_service; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_service; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY service
@@ -1603,7 +1573,7 @@ ALTER TABLE ONLY service
 
 --
 -- TOC entry 1967 (class 2606 OID 25425)
--- Name: pk_service_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_service_property; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY service_property
@@ -1612,7 +1582,7 @@ ALTER TABLE ONLY service_property
 
 --
 -- TOC entry 1969 (class 2606 OID 25436)
--- Name: pk_service_type; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_service_type; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY service_type
@@ -1621,7 +1591,7 @@ ALTER TABLE ONLY service_type
 
 --
 -- TOC entry 1971 (class 2606 OID 25447)
--- Name: pk_spher; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_spher; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY spher
@@ -1630,7 +1600,7 @@ ALTER TABLE ONLY spher
 
 --
 -- TOC entry 1973 (class 2606 OID 25458)
--- Name: pk_users; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pk_users; Type: CONSTRAINT; Schema: public; Owner: rrguru; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -1639,7 +1609,7 @@ ALTER TABLE ONLY users
 
 --
 -- TOC entry 1975 (class 2606 OID 25464)
--- Name: fk_activity_reference_event_ty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_activity_reference_event_ty; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY activity_feed
@@ -1648,7 +1618,7 @@ ALTER TABLE ONLY activity_feed
 
 --
 -- TOC entry 1974 (class 2606 OID 25459)
--- Name: fk_activity_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_activity_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY activity_feed
@@ -1657,7 +1627,7 @@ ALTER TABLE ONLY activity_feed
 
 --
 -- TOC entry 1976 (class 2606 OID 25469)
--- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority
@@ -1666,7 +1636,7 @@ ALTER TABLE ONLY authority
 
 --
 -- TOC entry 1979 (class 2606 OID 25484)
--- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority_property
@@ -1675,7 +1645,7 @@ ALTER TABLE ONLY authority_property
 
 --
 -- TOC entry 1977 (class 2606 OID 25474)
--- Name: fk_authorit_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_authorit_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority
@@ -1684,7 +1654,7 @@ ALTER TABLE ONLY authority
 
 --
 -- TOC entry 1978 (class 2606 OID 25479)
--- Name: fk_authorit_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_authorit_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY authority_property
@@ -1693,7 +1663,7 @@ ALTER TABLE ONLY authority_property
 
 --
 -- TOC entry 1980 (class 2606 OID 25489)
--- Name: fk_comment_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_comment_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY comment
@@ -1702,7 +1672,7 @@ ALTER TABLE ONLY comment
 
 --
 -- TOC entry 1982 (class 2606 OID 25499)
--- Name: fk_comment_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_comment_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY comment
@@ -1711,7 +1681,7 @@ ALTER TABLE ONLY comment
 
 --
 -- TOC entry 1981 (class 2606 OID 25494)
--- Name: fk_comment_reference_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_comment_reference_users; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY comment
@@ -1720,7 +1690,7 @@ ALTER TABLE ONLY comment
 
 --
 -- TOC entry 1983 (class 2606 OID 25504)
--- Name: fk_files_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_files_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY files
@@ -1729,7 +1699,7 @@ ALTER TABLE ONLY files
 
 --
 -- TOC entry 1984 (class 2606 OID 25519)
--- Name: fk_organiza_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_organiza_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY organization
@@ -1738,7 +1708,7 @@ ALTER TABLE ONLY organization
 
 --
 -- TOC entry 1986 (class 2606 OID 25529)
--- Name: fk_property_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_property_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY property
@@ -1747,7 +1717,7 @@ ALTER TABLE ONLY property
 
 --
 -- TOC entry 1985 (class 2606 OID 25524)
--- Name: fk_property_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_property_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY property
@@ -1756,7 +1726,7 @@ ALTER TABLE ONLY property
 
 --
 -- TOC entry 1987 (class 2606 OID 25534)
--- Name: fk_service_45_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_service_45_authorit; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service
@@ -1765,7 +1735,7 @@ ALTER TABLE ONLY service
 
 --
 -- TOC entry 1990 (class 2606 OID 25549)
--- Name: fk_service__reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_service__reference_property; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service_property
@@ -1774,7 +1744,7 @@ ALTER TABLE ONLY service_property
 
 --
 -- TOC entry 1991 (class 2606 OID 25554)
--- Name: fk_service__reference_service; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_service__reference_service; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service_property
@@ -1783,7 +1753,7 @@ ALTER TABLE ONLY service_property
 
 --
 -- TOC entry 1989 (class 2606 OID 25544)
--- Name: fk_service_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_service_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service
@@ -1792,7 +1762,7 @@ ALTER TABLE ONLY service
 
 --
 -- TOC entry 1988 (class 2606 OID 25539)
--- Name: fk_service_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_service_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY service
@@ -1801,7 +1771,7 @@ ALTER TABLE ONLY service
 
 --
 -- TOC entry 1992 (class 2606 OID 25559)
--- Name: fk_users_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_users_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: rrguru
 --
 
 ALTER TABLE ONLY users
@@ -1811,18 +1781,18 @@ ALTER TABLE ONLY users
 --
 -- TOC entry 2139 (class 0 OID 0)
 -- Dependencies: 5
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: rrguru
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
+REVOKE ALL ON SCHEMA public FROM rrguru;
+GRANT ALL ON SCHEMA public TO rrguru;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 -- Completed on 2014-09-09 02:11:10
 
 --
--- PostgreSQL database dump complete
+-- rrguruQL database dump complete
 --
 
