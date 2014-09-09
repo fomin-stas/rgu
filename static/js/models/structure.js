@@ -60,13 +60,27 @@ var Structure = {
 
     },
     
-    cellFormat: function (cellvalue, options, cell)
+    cellFormat: function (rowId, val, rawObject, cm)
     {
-        return cellvalue;
+        if(rawObject.attr){
+            var attr = rawObject.attr[cm.name],
+                result;
+            if(attr){
+                if (attr.rowspan) {
+                    result = ' rowspan=' + '"' + attr.rowspan + '"';
+                } else if (attr.display) {
+                    result = ' style="display:' + attr.display + '"';
+                }
+            }
+            else{
+                result = val;
+            }
+            console.log(rawObject.attr[cm.name]);    
+        }
+        return result;
     },
 
     render_colModel: function(grid_selector) {
-        $(grid_selector).jqGrid('setCell', 1, "5_code", "",{'background-color':'yellow'});
         var cm=$(grid_selector).jqGrid('getGridParam','colModel'),
             rowsCount = $(grid_selector).getGridParam("records");
         
@@ -122,7 +136,6 @@ var Structure = {
             for (r=0; r<rowsCount; r++) {
                 $(grid_selector).jqGrid('setCell', r, cm[i].name, '',{'background-color':cm[i].color});
             }
-            console.log();
         }
     },
             

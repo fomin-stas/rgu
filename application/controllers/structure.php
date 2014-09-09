@@ -27,6 +27,8 @@ class Structure extends APP_Controller {
         $grid_data = array();
         $column_names = array();
         $column_models = array();
+        $properties = array();
+        $authority_properties_codes = array();
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
@@ -34,10 +36,9 @@ class Structure extends APP_Controller {
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
-
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
-            $property['code'] = $property['id_property'] . '_code';
+            $property['code'] = (isset($property['code']))?$property['code']:$property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
@@ -98,7 +99,7 @@ class Structure extends APP_Controller {
                     }
                 }
             }
-            $model['formatter'] = new Zend_Json_Expr('Structure.cellFormat');
+            $model['cellattr'] = new Zend_Json_Expr('Structure.cellFormat');
             /* switch ($property['code']) {
               case 'name_iogv':
               $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
@@ -111,6 +112,11 @@ class Structure extends APP_Controller {
 
             // add property to properties buffer
             $properties_buff[$property['id_property']] = $property;
+            // create authority properties buffer
+            if($property['id_service_type'] == 6){
+                $authority_properties_codes[$property['code']] = $property;
+            }
+
         }
         // prepare json grid
         foreach ((array) $authorities as $authority) {
@@ -154,21 +160,51 @@ class Structure extends APP_Controller {
             //add service properties to grid
             $this->load->model('service');
             $this->load->model('service_property');
-            $service = $this->service->get_by('id_authority', $authority['id_authority']);
-            if (isset($service) AND ! empty($service)) {
-                $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
-                if (count($service_properties)) {
-                    foreach ((array) $service_properties as $p) {
-                        if (array_key_exists($p['id_property'], $properties_buff)) {
-                            $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+            $values_buff = array();
+            $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
+            if (isset($services) AND count($services) > 0) {
+                foreach ($services as $service) {
+                    $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+                    if (count($service_properties)) {
+                        foreach ((array) $service_properties as $p) {
+                            if (array_key_exists($p['id_property'], $properties_buff)) {
+                                $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+
+                            }
                         }
                     }
+                    $values_buff[] = $values;
                 }
             }
 
-            $grid_data[$executable_status][] = $values;
-            $grid_data['all'][] = $values;
+            // check many services
+            $size = count($values_buff);
+            if($size > 1) {
+                for ($i=0; $i < $size; $i++) { 
+                    //for first row we are prepare collspan value
+                    
+                    // prepare authorities keys to dispaly collspan grids
+                    foreach ($values_buff[$i] as $key => $value) {
+                        if(array_key_exists($key, $authority_properties_codes)){
+                            if($i == 0) {
+                                $values_buff[$i]['attr'][$key]['rowspan'] = $size;
+                            }
+                            else{
+                                $values_buff[$i]['attr'][$key]['display'] = 'none';
+                            }
+                        }
+                    }
+
+                    $grid_data[$executable_status][] = $values_buff[$i];
+                    $grid_data['all'][] = $values_buff[$i];
+                }
+            }
+            else{
+                $grid_data[$executable_status][] = $values;
+                $grid_data['all'][] = $values;
+            }
         }
+
         $grid_data['all'][] = array();
         $grid_data['in_process'][] = array();
         $grid_data['in_working'][] = array();
@@ -660,6 +696,35 @@ class Structure extends APP_Controller {
             'column_names' => json_encode($column_names),
                 )
         );
+    }
+
+    /**
+     * Search Revisions
+     * @param string $search_value The value to search for, ie a specific 'Taylor'
+     * @param string $key_to_search The associative key to find it in, ie first_name
+     * @param string $other_matching_key The associative key to find in the matches for employed
+     * @param string $other_matching_value The value to find in that matching associative key, ie true
+     * 
+     * @return array keys, ie all the people with the first name 'Taylor' that are employed.
+     */
+    private function _search_revisions($search_value, $key_to_search, $other_matching_value = null, $other_matching_key = null) {
+        // This function will search the revisions for a certain value
+        // related to the associative key you are looking for.
+        $keys = array();
+        foreach ($this->revisions as $key => $cur_value) {
+            if ($cur_value[$key_to_search] === $search_value) {
+                if (isset($other_matching_key) && isset($other_matching_value)) {
+                    if ($cur_value[$other_matching_key] === $other_matching_value) {
+                        $keys[] = $key;
+                    }
+                } else {
+                    // I must keep in mind that some searches may have multiple
+                    // matches and others would not, so leave it open with no continues.
+                    $keys[] = $key;
+                }
+            }
+        }
+        return $keys;
     }
 
 }

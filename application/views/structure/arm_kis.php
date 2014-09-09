@@ -411,7 +411,7 @@
                     {id_poln:"19",name_iogv:"наименование полномочия19",status_poln:"статус полномочия",name_usl:"наименование",id_usl:"19", status_usl:"статус",srok_otveta:"30.04.2014",type:"тип",status_isp:"статус",name_iogvspb:"Наименование ИОГВ СПб"}
             ];*/
 
-            var data = <?=json_encode($grid_data)?>,
+            var data = <?=json_encode($grid_data, true)?>,
                 column_models = <?=$column_models?>,
                 column_names = <?=$column_names?>;
             jQuery(function($) {
