@@ -174,7 +174,7 @@ var Structure = {
 				mtype: "POST",
                 cellEdit: true,
                 cellsubmit: "remote",
-				cellurl: 'ajax/edite_property',	//'string' - the url where the cell is to be saved.
+				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
 				beforeProcessing: function(data)
 				{
@@ -182,6 +182,7 @@ var Structure = {
 				},
                 loadComplete : function() {
 					$(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
+					$(grid_selector).jqGrid('setGridHeight',window.innerHeight-360);
 					Structure.render_colModel(grid_selector);
 					var table = this;
 					setTimeout(function(){
