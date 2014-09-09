@@ -24,16 +24,6 @@ var Structure = {
             var pager_selector = "#grid-pager-"+tab_hash;
             var grid_data = eval('data.'+tab_hash);
 
-            function getColumnIndexByName(columnName) {
-				var cm = $(this).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
-				for (i = 0; i < l; i += 1) {
-					if (cm[i].name === columnName) {
-						return i; // return the index
-					}
-				}
-				return -1;
-			};
-
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
         });
 
@@ -445,6 +435,15 @@ var Structure = {
             }
         });
 
+		function getColumnIndexByName(columnName) {
+			var cm = $(this).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+			for (i = 0; i < l; i += 1) {
+				if (cm[i].name === columnName) {
+					return i; // return the index
+				}
+			}
+			return -1;
+		};
 		
 		//enable search/filter toolbar
 		var myDefaultSearch = "cn";
