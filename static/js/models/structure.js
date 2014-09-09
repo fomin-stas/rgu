@@ -23,7 +23,7 @@ var Structure = {
             var grid_selector = "#grid-table-"+tab_hash;
             var pager_selector = "#grid-pager-"+tab_hash;
             var grid_data = eval('data.'+tab_hash);
-
+			$(window).triggerHandler('resize.jqGrid');
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
         });
 
@@ -181,6 +181,7 @@ var Structure = {
 					Structure.render_colModel(grid_selector);
 				},
                 loadComplete : function() {
+					$(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
 					Structure.render_colModel(grid_selector);
 					var table = this;
 					setTimeout(function(){
