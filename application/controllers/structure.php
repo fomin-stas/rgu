@@ -276,7 +276,7 @@ class Structure extends APP_Controller {
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('authority_name');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        $property['id_authority'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $this->input->post('select_org') . ' ' . $this->input->post('punkt_iogv') . '-' . rand(1, 99) . '</a>';
+        
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
@@ -287,6 +287,7 @@ class Structure extends APP_Controller {
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
         $property['authority_name'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $authority['authority_name'] . '</a>';
+        $property['authority_id'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $this->input->post('select_org') . ' ' . $this->input->post('punkt_iogv') . '-' . rand(1, 99) . '</a>';
         $this->authority_property_model->_id_authority = $id_authority;
         $this->authority_property_model->insert_where_code_many($property);
         $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
@@ -500,7 +501,7 @@ class Structure extends APP_Controller {
 
     private function file_insert($id_authority) {
         $config['upload_path'] = 'file_storage/authority';
-        $config['allowed_types'] = 'gif|jpg|png|doc|docx|zip|rar|xls|xlsx|ppt|pptx';
+        $config['allowed_types'] = 'gif|jpg|png|doc|docx|zip|rar|xls|xlsx|ppt|pptx|pdf';
         $config['max_size'] = '0';
         $config['max_width'] = '0';
         $config['max_height'] = '0';
