@@ -438,7 +438,7 @@ var Structure = {
         });
 
 		function getColumnIndexByName(columnName) {
-			var cm = $(this).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+			var cm = $(grid_selector).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
 			for (i = 0; i < l; i += 1) {
 				if (cm[i].name === columnName) {
 					return i; // return the index
