@@ -52,7 +52,7 @@ $.jgrid.extend({
 				var formdata = "<div class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>\
                                                     <table class='ColTable' cellspacing='1' cellpading='2' border='0'><tbody>\
                                                     <tr><td colsan='3'><p>Выберите столбцы для отображения в таблице</p></td></tr>\
-                                                    <tr><td><div class='input-group'>\
+                                                    <!--<tr><td><div class='input-group'>\
                                                         <input type='text' class='form-control' id='search_col' />\
                                                         <span class='input-group-btn'>\
                                                             <input type='button' class='btn btn-sm btn-info' value='Поиск' />\
@@ -65,7 +65,7 @@ $.jgrid.extend({
                                                         <option>Сведения об услугах и функциях</option>\
                                                         </select>\
                                                         <label for='sostav_sved'>Состав сведений</label>\
-                                                    </td></tr></tbody></table>\
+                                                    </td></tr>--></tbody></table>\
                                                 </div>";
                                 formdata += "<div id='"+dtbl+"' class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>";
                                 formdata += "<table class='ColTable' cellspacing='1' cellpading='2' border='0'><tbody>";
@@ -77,8 +77,8 @@ $.jgrid.extend({
 				}
 				formdata += "</tbody></table></div>";
                                 formdata += "<div class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>";
-                                formdata += "<input type='checkbox' style='margin-right:5px;' id='save_parameters' /><label for='save_parameters'>Сохранить настройки</label>";
-                                formdata += "<input type='button' id='new_sved' style='margin-right:5px;' class='btn btn-info pull-right' value='Добавить сведение'></div>";
+                                //formdata += "<input type='checkbox' style='margin-right:5px;' id='save_parameters' /><label for='save_parameters'>Сохранить настройки</label>";
+                                //formdata += "<input type='button' id='new_sved' style='margin-right:5px;' class='btn btn-info pull-right' value='Добавить сведение'></div>";
 				var bS  = !p.updateAfterCheck ? "<a href='javascript:void(0)' id='dData' class='fm-button ui-state-default ui-corner-all'>"+p.bSubmit+"</a>" : "",
 				bC  ="<a href='javascript:void(0)' id='eData' class='fm-button ui-state-default ui-corner-all'>"+p.bCancel+"</a>";
 				formdata += "<table border='0' class='EditTable' id='"+dtbl+"_2'><tbody><tr style='display:block;height:3px;'><td></td></tr><tr><td class='DataTD ui-widget-content'></td></tr><tr><td class='ColButton EditButton'>"+bS+"&#160;"+bC+"</td></tr></tbody></table>";

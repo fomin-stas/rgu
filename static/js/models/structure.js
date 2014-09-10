@@ -381,12 +381,25 @@ var Structure = {
             title:"Настройки отображения таблицы",
             onClickButton:function() 
             {
-                jQuery(grid_selector).columnChooser
-                ({
-                    title:"options",
-                    width:1000
+				jQuery("#grid-table").setColumns(
+				{
+					recreateForm: true,
+					modal:true,
+					width:500,
+					jqModal:true,
+					colnameview:false,
+					updateAfterCheck:true,
+					top:107,
+					left:29
+				});
+			return false;
+				
+                //jQuery(grid_selector).columnChooser
+                //({
+                    //title:"options",
+                    //width:1000
                     
-                });
+                //});
                 
             }
         });
@@ -463,40 +476,78 @@ var Structure = {
                         
                         for(var i=0; i<column.length; i++)
                         {
-                            if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())===null)
-                            {
-                                column[i].searchCheck=1;
-                                column[i].parentNode.style.display='none';
-                                
-                            }
-                            else 
-                            {
-                                column[i].searchCheck=0;
-                                column[i].parentNode.style.display='table-row';
-                            
-                            
-                                var siblings=$(column[i]).siblings();
-                                console.log(siblings);
-                                for (var j=0; j<siblings.length; j++)
-                                {
-                                    if (siblings[j].searchCheck===1)
-                                    {
-                                        controll+=siblings[j].searchCheck;
-                                    }
-                                }
-                                controll+=column[i].searchCheck;
-                                if(controll==0)
-                                {
-                                    column[i].parentNode.style.display='table-row';
-                                }
-                                else
-                                {
-                                    column[i].parentNode.style.display='none';
-                                }
-                                console.log("controll: "+controll);
+							if (typeof value==='string')
+							{
+								if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())===null)
+								{
+									column[i].searchCheck=1;
+									column[i].parentNode.style.display='none';
+									
+								}
+								else 
+								{
+									column[i].searchCheck=0;
+									column[i].parentNode.style.display='table-row';
+								
+								
+									var siblings=$(column[i]).siblings();
+									console.log(siblings);
+									for (var j=0; j<siblings.length; j++)
+									{
+										if (siblings[j].searchCheck===1)
+										{
+											controll+=siblings[j].searchCheck;
+										}
+									}
+									controll+=column[i].searchCheck;
+									if(controll==0)
+									{
+										column[i].parentNode.style.display='table-row';
+									}
+									else
+									{
+										column[i].parentNode.style.display='none';
+									}
+									console.log("controll: "+controll);
 
-                                console.log("searchCheck: "+column[i].searchCheck);
-                            }
+									console.log("searchCheck: "+column[i].searchCheck);
+								}
+							}
+							else if (typeof value==='array')
+							{
+								column[i].searchCheck=1;
+								column[i].parentNode.style.display='none';
+								for (var n=0; n<value.length; n++)
+								{
+									if(column[i].innerHTML.toLowerCase().match(value[n].toLowerCase())!==null)
+									{
+										column[i].searchCheck=0;
+										column[i].parentNode.style.display='table-row';
+										
+										var siblings=$(column[i]).siblings();
+										console.log(siblings);
+										for (var j=0; j<siblings.length; j++)
+										{
+											if (siblings[j].searchCheck===1)
+											{
+												controll+=siblings[j].searchCheck;
+											}
+										}
+										controll+=column[i].searchCheck;
+										if(controll==0)
+										{
+											column[i].parentNode.style.display='table-row';
+										}
+										else
+										{
+											column[i].parentNode.style.display='none';
+										}
+										console.log("controll: "+controll);
+
+										console.log("searchCheck: "+column[i].searchCheck);
+									}
+								}
+							}
                         }
                     });
                 });
