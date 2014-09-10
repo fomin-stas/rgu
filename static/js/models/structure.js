@@ -438,7 +438,7 @@ var Structure = {
         });
 
 		function getColumnIndexByName(columnName) {
-			var cm = $(this).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+			var cm = $(grid_selector).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
 			for (i = 0; i < l; i += 1) {
 				if (cm[i].name === columnName) {
 					return i; // return the index
@@ -446,6 +446,62 @@ var Structure = {
 			}
 			return -1;
 		};
+
+		function search_blyad()
+            {
+                var filters=$(".ui-search-input>input,.ui-search-input>select");
+                
+                filters.map(function(){
+                    this.addEventListener('change',function(){
+                        var value=this.value;
+                        console.log("value: "+value);
+                        var filter_index=getColumnIndexByName(this.name);
+                        var column=$('tr[tabindex=-1] td[role="gridcell"]').map(function(){
+                            if(this.cellIndex==filter_index){return this;}
+                        }).get();
+                        var controll=0;
+                        
+                        for(var i=0; i<column.length; i++)
+                        {
+                            if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())==null)
+                            {
+                                column[i].searchCheck=1;
+                                column[i].parentNode.style.display='none';
+                                
+                            }
+                            else 
+                            {
+                                column[i].searchCheck=0;
+                                column[i].parentNode.style.display='table-row';
+                            
+                            
+                                var siblings=$(column[i]).siblings();
+                                console.log(siblings);
+                                for (var j=0; j<siblings.length; j++)
+                                {
+                                    if (siblings[j].searchCheck===1)
+                                    {
+                                        controll+=siblings[j].searchCheck;
+                                    }
+                                }
+                                controll+=column[i].searchCheck;
+                                if(controll==0)
+                                {
+                                    column[i].parentNode.style.display='table-row';
+                                }
+                                else
+                                {
+                                    column[i].parentNode.style.display='none';
+                                }
+                                console.log("controll: "+controll);
+
+                                console.log("searchCheck: "+column[i].searchCheck);
+                            }
+                        }
+                    });
+                });
+                
+            }
 		
 		//enable search/filter toolbar
 		var myDefaultSearch = "cn";
@@ -468,48 +524,57 @@ var Structure = {
         afterSearch:function()
         {
 			
-		var filters=$(".ui-search-input>input,.ui-search-input>select");
-			filters.map(function(){
+			search_blyad();
+
+						var filters=$(".ui-search-input>input,.ui-search-input>select");
+						
+                        filters.map(function(){
 				var value=this.value;
 				var filter_index=getColumnIndexByName(this.name);
 				var column=$('tr[tabindex=-1] td[role="gridcell"]').map(function(){
 					if(this.cellIndex==filter_index){return this;}
 				}).get();
 				var controll=0;
-				
-				for(var i=0; i<column.length; i++)
-				{
-					if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())===null)
-					{
-						column[i].searchCheck=1;
-						column[i].parentNode.style.display='none';
-					}
-					else 
-					{
-						column[i].searchCheck=0;
-						column[i].parentNode.style.display='table-row';
-						var siblings=$(column[i]).siblings();
-						for (var j=0; j<siblings.length; j++)
-						{
-							if (siblings[j].searchCheck===1)
-							{
-								controll+=siblings[j].searchCheck;
-							}
-						}
-						controll+=column[i].searchCheck;
-						if(controll==0)
-						{
-							column[i].parentNode.style.display='table-row';
-						}
-						else
-						{
-							column[i].parentNode.style.display='none';
-						}
-					}
-				}
-				
-			});	
-		
+                        
+                        for(var i=0; i<column.length; i++)
+                        {
+                            if(column[i].innerHTML.toLowerCase().match(value.toLowerCase())===null)
+                            {
+                                column[i].searchCheck=1;
+                                column[i].parentNode.style.display='none';
+                                
+                            }
+                            else 
+                            {
+                                column[i].searchCheck=0;
+                                column[i].parentNode.style.display='table-row';
+                            
+                            
+                                var siblings=$(column[i]).siblings();
+                                console.log(siblings);
+                                for (var j=0; j<siblings.length; j++)
+                                {
+                                    if (siblings[j].searchCheck===1)
+                                    {
+                                        controll+=siblings[j].searchCheck;
+                                    }
+                                }
+                                controll+=column[i].searchCheck;
+                                if(controll==0)
+                                {
+                                    column[i].parentNode.style.display='table-row';
+                                }
+                                else
+                                {
+                                    column[i].parentNode.style.display='none';
+                                }
+                                console.log("controll: "+controll);
+
+                                console.log("searchCheck: "+column[i].searchCheck);
+                            }
+                        }
+                    
+		});
 		}
                   
 	});
