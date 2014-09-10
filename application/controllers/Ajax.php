@@ -7,12 +7,12 @@ class Ajax extends APP_Controller {
 
     function __construct() {
         parent::__construct();
-
+/*
         $this->is_loggedIn();
 
         if (!$this->input->is_ajax_request()) {
             exit('It\'s not ajax request');
-        }
+        }*/
     }
 
     public function remove_property() {
@@ -49,17 +49,18 @@ class Ajax extends APP_Controller {
             } elseif ($key == 'oper') {
                 $insert_data['operation'] = $value;
             } else {
-                list($insert_data['id_property'], $other) = explode('_', $key);
+                $insert_data['code'] = $key;
                 $insert_data['new_data'] = $value;
             }
         }
         $authoritis = $this->authority->get_all();
         $authority = $authoritis[$insert_data['authority_num'] - 1];
-        $property = $this->property->get($insert_data['id_property']);
+        $for_get=array('code'=>$insert_data['code']);
+        $property = $this->property->get_by($for_get);
 
         if ($property['id_service_type'] == 6) {
-            $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $insert_data['id_property']));
-            $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $insert_data['id_property']), array('value' => $insert_data['new_data']));
+            $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
+            $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
             $history_log['id_property']=$authority_property['id_property'];
