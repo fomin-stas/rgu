@@ -47,7 +47,41 @@ var Structure = {
         },
 
     initIOGV: function(){
+        console.log('Structure IOGV');
+        var grid_data = data.all,
+            grid_selector = "#grid-table-all",
+            pager_selector = "#grid-pager-all",
+            text_link; //link cellcontent, must changes dynamicaly 
 
+        // Tabs init
+        $('#gridTabs .nav-tabs a:last').tab('show');
+        $('#gridTabs .nav-tabs a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+            var tab_hash = e.target.hash.replace('#', '');
+            var grid_selector = "#grid-table-"+tab_hash;
+            var pager_selector = "#grid-pager-"+tab_hash;
+            var grid_data = eval('data.'+tab_hash);
+            $(window).triggerHandler('resize.jqGrid');
+            Structure.renderGrid(grid_selector, pager_selector, grid_data);
+        });
+
+
+        //resize to fit page size
+        $(window).on('resize.jqGrid', function () {
+                $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
+        });
+        //resize on sidebar collapse/expand
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
+        $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+                if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+                        $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+                }
+        });
+
+        Structure.renderGrid(grid_selector, pager_selector, grid_data);
+        $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
     },
     
     cellFormat: function (rowId, val, rawObject, cm)
