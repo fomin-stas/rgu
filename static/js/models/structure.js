@@ -31,7 +31,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
                 $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-360); // 360-empiric value
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -418,7 +418,7 @@ var Structure = {
         //footer (pager) search
         $(pager_selector+"_right").empty();
         $(pager_selector+"_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
-        $("#my_pag_search").on('change',function(event,ui)
+        $("#my_pag_search").on('change keyup',function(event,ui)
         {
             var rows=$("tr[role='row']"); //get all rows.
             for (var i=1; i<=rows.length; i++) //start from second row - the first row whith meaning data
@@ -432,7 +432,7 @@ var Structure = {
         });
         
         
-        $("#timeline_search_input").on('change',function (event,ui)
+        $("#timeline_search_input").on('change keyup',function (event,ui)
         {
             var timeline_items = $(".timeline-item");
             for (var i=0; i<timeline_items.length; i++)
@@ -465,7 +465,7 @@ var Structure = {
                 var filters=$(".ui-search-input>input,.ui-search-input>select");
                 
                 filters.map(function(){
-                    $(this).on('change',function(){
+                    $(this).on('change keyup',function(){
                         var value=this.value;
                         console.log("value: "+value);
                         var filter_index=getColumnIndexByName(this.name);
