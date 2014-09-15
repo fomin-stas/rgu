@@ -278,7 +278,7 @@ var Structure = {
                                 $('#'+iRow+'_'+cellname)[0].value=$('#select_select')[0].value;
                                 jQuery(grid_selector).saveCell(iRow,iCol);
                                 $('#select_edit').modal('hide');
-                                
+                                $('#select_select')[0].options='';
 
 							});
 						}
@@ -297,7 +297,7 @@ var Structure = {
 					}     
                                 
                     $('#mselect_select,#select_select').multiselect({
-                        buttonClass:'btn btn-white btn-sm',
+                        buttonClass:'btn btn-white btn-sm col-md-10',
                         buttonContainer:"<span class='dropdown'>",
                         checkboxName:"edit_chb[]",
                         nonSelectedText:"Не выбрано",
@@ -415,7 +415,7 @@ var Structure = {
             title:"Настройки отображения таблицы",
             onClickButton:function() 
             {
-				jQuery("#grid-table").setColumns(
+				jQuery(grid_selector).setColumns(
 				{
 					recreateForm: true,
 					modal:true,
