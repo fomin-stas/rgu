@@ -47,17 +47,21 @@ class Structure extends APP_Controller {
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 220;
+                    $model['stype'] = 'text';
                     break;
                 case 'number':
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 220;
+                    $model['stype'] = 'text';
+                    $model['edittype'] = 'text';
                     break;
                 case 'date':
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 250;
                     $model['sorttype'] = 'date';
+                    $model['stype'] = 'text';
                     break;
                 case 'textarea':
                     $model['editable'] = true;
@@ -65,6 +69,7 @@ class Structure extends APP_Controller {
                     $model['edittype'] = 'textarea';
                     $model['editoptions']['rows'] = 3;
                     $model['width'] = 270;
+                    $model['stype'] = 'text';
                     break;
                 case 'select':
                     $model['editable'] = false;
@@ -204,7 +209,6 @@ class Structure extends APP_Controller {
                 $grid_data['all'][] = $values;
             }
         }
-
         $grid_data['all'][] = array();
         $grid_data['in_process'][] = array();
         $grid_data['in_working'][] = array();
@@ -219,12 +223,21 @@ class Structure extends APP_Controller {
     }
 
     public function uvedoml() {
-        $user = $this->session->userdata('username');
+        $data = array();
+        $view = 'uvedoml_kis';
+        $notifications = array();
+
+        $user = $this->session->userdata('user_name');
+        
         if ($user == 'kis') {
-            $this->layout->view('uvedoml_kis');
+            $notifications = $this->activity->get_all();
+            
         } else {
-            $this->layout->view('uvedoml_iogv');
+            $view = 'uvedoml_iogv';
         }
+        
+        $data['notifications'] = $notifications;
+        $this->layout->view($view, $data);
     }
 
     public function journal() {
@@ -286,6 +299,10 @@ class Structure extends APP_Controller {
         $authority['id_authority_status'] = 1;
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
+        // add notification
+        if($id_authority) {
+            $this->activity->add_notification('new_authority', 6, $authority['id_organization'], $id_authority);
+        }
         $property['authority_name'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $authority['authority_name'] . '</a>';
         $property['authority_id'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $this->input->post('select_org') . ' ' . $this->input->post('punkt_iogv') . '-' . rand(1, 99) . '</a>';
         $this->authority_property_model->_id_authority = $id_authority;
@@ -567,17 +584,21 @@ class Structure extends APP_Controller {
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 220;
+                    $model['stype'] = 'text';
                     break;
                 case 'number':
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 220;
+                    $model['stype'] = 'text';
+                    $model['edittype'] = 'text';
                     break;
                 case 'date':
                     $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['width'] = 250;
                     $model['sorttype'] = 'date';
+                    $model['stype'] = 'text';
                     break;
                 case 'textarea':
                     $model['editable'] = true;
@@ -585,6 +606,7 @@ class Structure extends APP_Controller {
                     $model['edittype'] = 'textarea';
                     $model['editoptions']['rows'] = 3;
                     $model['width'] = 270;
+                    $model['stype'] = 'text';
                     break;
                 case 'select':
                     $model['editable'] = false;
