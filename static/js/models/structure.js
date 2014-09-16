@@ -275,7 +275,8 @@ var Structure = {
                             $('#select_select')[0].value=value;
                             console.log('show');
                             $('#select_change').unbind('click').on('click',function(){
-                                $('#'+iRow+'_'+cellname)[0].value=$('#select_select')[0].value;
+                            	//$('#'+iRow+'_'+cellname)[0].value=$('#select_select')[0].value; //if edittype is textares, this should work
+                                $('#'+iRow+' td[aria-describedby='+grid_selector+'_'+cellname+'] select')[0].value=$('#select_select')[0].value; //if edittype is select
                                 jQuery(grid_selector).saveCell(iRow,iCol);
                                 $('#select_edit').modal('hide');
                                 $('#select_select')[0].options='';
