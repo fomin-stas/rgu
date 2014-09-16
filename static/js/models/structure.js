@@ -118,7 +118,7 @@ var Structure = {
 			{
 				if (cells[k].cellIndex===col)
 				{
-					if (cells[k].innerHTML!='&nbsp;')
+					if ((cells[k].innerHTML!='&nbsp;')&&(cells[k].innerHTML!=undefined)&&(cells[k].innerHTML!=''))
 					{
 						column.push(cells[k].innerHTML);
 					}

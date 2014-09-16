@@ -210,3 +210,14 @@ th button.multiselect.dropdown-toggle{max-width: 100%;overflow-x: hidden;width: 
 th td.ui-search-input span.dropdown.open{position:static}
 th.ui-state-default.ui-th-column.ui-th-ltr div{position: static !important}
 .ui-jqgrid-view{overflow-x:hidden}
+/*step3 checkbox*/
+input[type=checkbox].ace.ace-switch.ace-switch-4.step3 + .lbl::before {
+   width: 150px;
+   text-indent:-70px
+}
+input[type=checkbox].ace.ace-switch.ace-switch-4.step3:checked + .lbl::after {
+   left: 128px;
+}
+input[type=checkbox].ace.ace-switch.ace-switch-4.step3:checked + .lbl::before {
+   text-indent: 30px;
+}
