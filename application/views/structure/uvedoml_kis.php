@@ -26,9 +26,9 @@
                                 <?foreach((array)$notifications as $notification):?>
                                 <tr id="notification_<?=$notification['id_activity_feed']?>">
                                     <td><?=$notification['id_activity_feed']?></td>
-                                    <td><?=$notification['id_activity_feed']?></td>
-                                    <td><?=$notification['id_activity_feed']?></td>
-                                    <td><?=$notification['id_activity_feed']?></td>
+                                    <td><?=$notification['authority']['authority_name']?></td>
+                                    <td><?=$notification['service']['service_name']?></td>
+                                    <td style="color:<?=$notification['message']['color']?>"><?=$notification['message']['text']?></td>
                                     <td><?=$notification['time']?></td>
                                 </tr>
                                 <?endforeach;?>

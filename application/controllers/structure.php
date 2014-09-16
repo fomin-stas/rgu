@@ -228,11 +228,14 @@ class Structure extends APP_Controller {
         $notifications = array();
 
         $user = $this->session->userdata('user_name');
-        
-        if ($user == 'kis') {
-            $notifications = $this->activity->get_all();
-            
-        } else {
+        $notifications = $this->activity->order_by('time', 'DESC')->get_all();
+
+        foreach ($notifications as $key => $notification) {
+            $notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
+            $notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
+            $notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
+        }
+        if ($user != 'kis') {
             $view = 'uvedoml_iogv';
         }
         
@@ -385,7 +388,11 @@ class Structure extends APP_Controller {
             $this->service_property->insert_where_code_many($property);
         }
         $authority_data['id_authority_status'] = 2;
-        $this->authority->update($id_authority, $authority_data);
+        $update = $this->authority->update($id_authority, $authority_data);
+        if($update) {
+            $authority = $this->authority->get($id_authority);
+            $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
+        }
         $this->comment->insert_comment($id_authority, $this->input->post('comment_st2'));
         redirect('structure/arm_iogv');
     }

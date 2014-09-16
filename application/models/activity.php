@@ -31,4 +31,25 @@ class Activity extends APP_Model {
             return FALSE;
         }
 	}
+
+    public function get_notification_message_by_event($event_id) {
+        $result = array('text' => '', 'color' => 'green');
+        switch ($event_id) {
+            case 7:
+                $result['text'] = 'Новое полномочие';
+                $result['color'] = 'green';
+                break;
+            case 8:
+                $result['text'] = 'Полномочие изменено';
+                $result['color'] = 'gray';
+                break;
+            case 9:
+                $result['text'] = 'Превышено время ответа';
+                $result['color'] = 'red';
+                break;
+            default:
+                break;
+        }
+        return $result;
+    }
 }
