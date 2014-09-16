@@ -117,6 +117,32 @@
                                                         <tr>
                                                             <td><?= $name; ?></td>
                                                             <td><?= $value; ?></td>
+                                                            
+                                                            <td class="col-md-3">
+                                                                <label>
+                                                                    <input type="checkbox" name="myoption" class="ace ace-switch ace-switch-4 step3 btn-flat" />
+                                                                    <span class="lbl" data-lbl="Согласовано&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Не Согласовано"></span>
+                                                                </label>
+                                                                
+                                                                <div class="modal fade" id="tr1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<form name="" method="post" action="">
+																				<div class="modal-header">
+																					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+																					<h4>Комментарий</h4>
+																				</div>
+																				<div class="modal-body">
+																					<textarea class='col-md-12'></textarea>
+																				</div>
+																				<div class="modal-footer"></div>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+                                                                
+                                                            </td>
+                                                            
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </table>
@@ -194,9 +220,9 @@
                     <table class="table">
                         <tr>
                             <td>Предыдущие комментарии:</td>
+                        </tr>
                         <tr>
                             <td> <?= $comments ?></td>
-                        </tr>
                         </tr>
                     </table>
                 </div>
@@ -221,4 +247,10 @@
         autoclose: true,
         todayHiglight: true
     });
+    
+    $('.ace-switch-4.step3').click(function(){
+		$(this).parent().siblings('#tr1').modal({
+			show:true
+		});
+	});
 </script>
