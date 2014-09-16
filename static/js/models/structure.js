@@ -31,7 +31,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
                 $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-330); // 330-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -70,7 +70,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
                 $(grid_selector).jqGrid( 'setGridWidth', $(".page-container").width() );
-                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-310); // 310-empiric value
+                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-330); // 330-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
