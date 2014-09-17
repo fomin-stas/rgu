@@ -230,7 +230,13 @@ var Structure = {
                 
                 beforeSelectRow:function(rowid){return false;},
                 ondblClickRow:function(rowid, iRow, iCol)
-                {
+                {   
+                    // get row data by dblclick on cell
+                    var rowData = $(this).jqGrid("getGridParam", "data")[rowid - 1];
+                    // get cell model
+                    var cm = $(this).jqGrid("getGridParam", "colModel");
+                    console.log(rowData, cm[iCol].name);
+                    
                     jQuery(grid_selector).editCell(iRow,iCol,true);
                 },
 
