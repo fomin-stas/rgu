@@ -55,7 +55,7 @@
                         </table>
                     </div>
                 </div>
-                <form name="step2_com" method="post" action="structure/step2_submit">
+                
 
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">

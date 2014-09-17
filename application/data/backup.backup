@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.2.8
 -- Dumped by pg_dump version 9.2.8
--- Started on 2014-09-10 00:02:50
+-- Started on 2014-09-17 06:09:24
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -21,7 +21,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2140 (class 0 OID 0)
+-- TOC entry 2141 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -36,7 +36,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 168 (class 1259 OID 41680)
+-- TOC entry 168 (class 1259 OID 49864)
 -- Name: activity_feed; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -45,14 +45,16 @@ CREATE TABLE activity_feed (
     id_organization integer,
     id_event_type integer,
     "time" timestamp without time zone,
-    message text
+    message text,
+    id_service_type integer,
+    id_object integer
 );
 
 
 ALTER TABLE public.activity_feed OWNER TO postgres;
 
 --
--- TOC entry 169 (class 1259 OID 41686)
+-- TOC entry 169 (class 1259 OID 49870)
 -- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -67,7 +69,7 @@ CREATE SEQUENCE activity_feed_id_activity_feed_seq
 ALTER TABLE public.activity_feed_id_activity_feed_seq OWNER TO postgres;
 
 --
--- TOC entry 2141 (class 0 OID 0)
+-- TOC entry 2142 (class 0 OID 0)
 -- Dependencies: 169
 -- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -76,7 +78,7 @@ ALTER SEQUENCE activity_feed_id_activity_feed_seq OWNED BY activity_feed.id_acti
 
 
 --
--- TOC entry 170 (class 1259 OID 41688)
+-- TOC entry 170 (class 1259 OID 49872)
 -- Name: authority; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -91,7 +93,7 @@ CREATE TABLE authority (
 ALTER TABLE public.authority OWNER TO postgres;
 
 --
--- TOC entry 171 (class 1259 OID 41694)
+-- TOC entry 171 (class 1259 OID 49878)
 -- Name: authority_id_authority_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -106,7 +108,7 @@ CREATE SEQUENCE authority_id_authority_seq
 ALTER TABLE public.authority_id_authority_seq OWNER TO postgres;
 
 --
--- TOC entry 2142 (class 0 OID 0)
+-- TOC entry 2143 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: authority_id_authority_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -115,7 +117,7 @@ ALTER SEQUENCE authority_id_authority_seq OWNED BY authority.id_authority;
 
 
 --
--- TOC entry 172 (class 1259 OID 41696)
+-- TOC entry 172 (class 1259 OID 49880)
 -- Name: authority_property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -130,7 +132,7 @@ CREATE TABLE authority_property (
 ALTER TABLE public.authority_property OWNER TO postgres;
 
 --
--- TOC entry 173 (class 1259 OID 41702)
+-- TOC entry 173 (class 1259 OID 49886)
 -- Name: authority_property_id_authority_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -145,7 +147,7 @@ CREATE SEQUENCE authority_property_id_authority_property_seq
 ALTER TABLE public.authority_property_id_authority_property_seq OWNER TO postgres;
 
 --
--- TOC entry 2143 (class 0 OID 0)
+-- TOC entry 2144 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: authority_property_id_authority_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -154,7 +156,7 @@ ALTER SEQUENCE authority_property_id_authority_property_seq OWNED BY authority_p
 
 
 --
--- TOC entry 174 (class 1259 OID 41704)
+-- TOC entry 174 (class 1259 OID 49888)
 -- Name: authority_status; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -167,7 +169,7 @@ CREATE TABLE authority_status (
 ALTER TABLE public.authority_status OWNER TO postgres;
 
 --
--- TOC entry 175 (class 1259 OID 41710)
+-- TOC entry 175 (class 1259 OID 49894)
 -- Name: authority_status_id_authority_status_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -182,7 +184,7 @@ CREATE SEQUENCE authority_status_id_authority_status_seq
 ALTER TABLE public.authority_status_id_authority_status_seq OWNER TO postgres;
 
 --
--- TOC entry 2144 (class 0 OID 0)
+-- TOC entry 2145 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: authority_status_id_authority_status_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -191,7 +193,7 @@ ALTER SEQUENCE authority_status_id_authority_status_seq OWNED BY authority_statu
 
 
 --
--- TOC entry 176 (class 1259 OID 41712)
+-- TOC entry 176 (class 1259 OID 49896)
 -- Name: comment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -208,7 +210,7 @@ CREATE TABLE comment (
 ALTER TABLE public.comment OWNER TO postgres;
 
 --
--- TOC entry 177 (class 1259 OID 41718)
+-- TOC entry 177 (class 1259 OID 49902)
 -- Name: comment_id_comment_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -223,7 +225,7 @@ CREATE SEQUENCE comment_id_comment_seq
 ALTER TABLE public.comment_id_comment_seq OWNER TO postgres;
 
 --
--- TOC entry 2145 (class 0 OID 0)
+-- TOC entry 2146 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: comment_id_comment_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -232,7 +234,7 @@ ALTER SEQUENCE comment_id_comment_seq OWNED BY comment.id_comment;
 
 
 --
--- TOC entry 178 (class 1259 OID 41720)
+-- TOC entry 178 (class 1259 OID 49904)
 -- Name: event_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -245,7 +247,7 @@ CREATE TABLE event_type (
 ALTER TABLE public.event_type OWNER TO postgres;
 
 --
--- TOC entry 179 (class 1259 OID 41726)
+-- TOC entry 179 (class 1259 OID 49910)
 -- Name: event_type_id_event_type_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -260,7 +262,7 @@ CREATE SEQUENCE event_type_id_event_type_seq
 ALTER TABLE public.event_type_id_event_type_seq OWNER TO postgres;
 
 --
--- TOC entry 2146 (class 0 OID 0)
+-- TOC entry 2147 (class 0 OID 0)
 -- Dependencies: 179
 -- Name: event_type_id_event_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -269,7 +271,7 @@ ALTER SEQUENCE event_type_id_event_type_seq OWNED BY event_type.id_event_type;
 
 
 --
--- TOC entry 180 (class 1259 OID 41728)
+-- TOC entry 180 (class 1259 OID 49912)
 -- Name: files; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -285,7 +287,7 @@ CREATE TABLE files (
 ALTER TABLE public.files OWNER TO postgres;
 
 --
--- TOC entry 181 (class 1259 OID 41734)
+-- TOC entry 181 (class 1259 OID 49918)
 -- Name: files_id_file_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -300,7 +302,7 @@ CREATE SEQUENCE files_id_file_seq
 ALTER TABLE public.files_id_file_seq OWNER TO postgres;
 
 --
--- TOC entry 2147 (class 0 OID 0)
+-- TOC entry 2148 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: files_id_file_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -309,7 +311,7 @@ ALTER SEQUENCE files_id_file_seq OWNED BY files.id_file;
 
 
 --
--- TOC entry 182 (class 1259 OID 41736)
+-- TOC entry 182 (class 1259 OID 49920)
 -- Name: history_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -326,7 +328,7 @@ CREATE TABLE history_log (
 ALTER TABLE public.history_log OWNER TO postgres;
 
 --
--- TOC entry 183 (class 1259 OID 41742)
+-- TOC entry 183 (class 1259 OID 49926)
 -- Name: history_log_id_history_log_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -341,7 +343,7 @@ CREATE SEQUENCE history_log_id_history_log_seq
 ALTER TABLE public.history_log_id_history_log_seq OWNER TO postgres;
 
 --
--- TOC entry 2148 (class 0 OID 0)
+-- TOC entry 2149 (class 0 OID 0)
 -- Dependencies: 183
 -- Name: history_log_id_history_log_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -350,7 +352,7 @@ ALTER SEQUENCE history_log_id_history_log_seq OWNED BY history_log.id_history_lo
 
 
 --
--- TOC entry 184 (class 1259 OID 41744)
+-- TOC entry 184 (class 1259 OID 49928)
 -- Name: organization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -364,7 +366,7 @@ CREATE TABLE organization (
 ALTER TABLE public.organization OWNER TO postgres;
 
 --
--- TOC entry 185 (class 1259 OID 41750)
+-- TOC entry 185 (class 1259 OID 49934)
 -- Name: organization_id_organization_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -379,7 +381,7 @@ CREATE SEQUENCE organization_id_organization_seq
 ALTER TABLE public.organization_id_organization_seq OWNER TO postgres;
 
 --
--- TOC entry 2149 (class 0 OID 0)
+-- TOC entry 2150 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: organization_id_organization_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -388,7 +390,7 @@ ALTER SEQUENCE organization_id_organization_seq OWNED BY organization.id_organiz
 
 
 --
--- TOC entry 186 (class 1259 OID 41752)
+-- TOC entry 186 (class 1259 OID 49936)
 -- Name: organization_rank; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -401,7 +403,7 @@ CREATE TABLE organization_rank (
 ALTER TABLE public.organization_rank OWNER TO postgres;
 
 --
--- TOC entry 187 (class 1259 OID 41758)
+-- TOC entry 187 (class 1259 OID 49942)
 -- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -416,7 +418,7 @@ CREATE SEQUENCE organization_rank_id_organization_rank_seq
 ALTER TABLE public.organization_rank_id_organization_rank_seq OWNER TO postgres;
 
 --
--- TOC entry 2150 (class 0 OID 0)
+-- TOC entry 2151 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -425,7 +427,7 @@ ALTER SEQUENCE organization_rank_id_organization_rank_seq OWNED BY organization_
 
 
 --
--- TOC entry 188 (class 1259 OID 41760)
+-- TOC entry 188 (class 1259 OID 49944)
 -- Name: property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -444,7 +446,7 @@ CREATE TABLE property (
 ALTER TABLE public.property OWNER TO postgres;
 
 --
--- TOC entry 189 (class 1259 OID 41766)
+-- TOC entry 189 (class 1259 OID 49950)
 -- Name: property_format; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -457,7 +459,7 @@ CREATE TABLE property_format (
 ALTER TABLE public.property_format OWNER TO postgres;
 
 --
--- TOC entry 190 (class 1259 OID 41772)
+-- TOC entry 190 (class 1259 OID 49956)
 -- Name: property_format_id_property_format_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -472,7 +474,7 @@ CREATE SEQUENCE property_format_id_property_format_seq
 ALTER TABLE public.property_format_id_property_format_seq OWNER TO postgres;
 
 --
--- TOC entry 2151 (class 0 OID 0)
+-- TOC entry 2152 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: property_format_id_property_format_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -481,7 +483,7 @@ ALTER SEQUENCE property_format_id_property_format_seq OWNED BY property_format.i
 
 
 --
--- TOC entry 191 (class 1259 OID 41774)
+-- TOC entry 191 (class 1259 OID 49958)
 -- Name: property_id_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -496,7 +498,7 @@ CREATE SEQUENCE property_id_property_seq
 ALTER TABLE public.property_id_property_seq OWNER TO postgres;
 
 --
--- TOC entry 2152 (class 0 OID 0)
+-- TOC entry 2153 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: property_id_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -505,7 +507,7 @@ ALTER SEQUENCE property_id_property_seq OWNED BY property.id_property;
 
 
 --
--- TOC entry 192 (class 1259 OID 41776)
+-- TOC entry 192 (class 1259 OID 49960)
 -- Name: service; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -521,7 +523,7 @@ CREATE TABLE service (
 ALTER TABLE public.service OWNER TO postgres;
 
 --
--- TOC entry 193 (class 1259 OID 41782)
+-- TOC entry 193 (class 1259 OID 49966)
 -- Name: service_id_service_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -536,7 +538,7 @@ CREATE SEQUENCE service_id_service_seq
 ALTER TABLE public.service_id_service_seq OWNER TO postgres;
 
 --
--- TOC entry 2153 (class 0 OID 0)
+-- TOC entry 2154 (class 0 OID 0)
 -- Dependencies: 193
 -- Name: service_id_service_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -545,7 +547,7 @@ ALTER SEQUENCE service_id_service_seq OWNED BY service.id_service;
 
 
 --
--- TOC entry 194 (class 1259 OID 41784)
+-- TOC entry 194 (class 1259 OID 49968)
 -- Name: service_property; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -553,14 +555,15 @@ CREATE TABLE service_property (
     id_service_property integer NOT NULL,
     id_property integer,
     id_service integer,
-    value text
+    value text,
+    agreed integer DEFAULT 1 NOT NULL
 );
 
 
 ALTER TABLE public.service_property OWNER TO postgres;
 
 --
--- TOC entry 195 (class 1259 OID 41790)
+-- TOC entry 195 (class 1259 OID 49974)
 -- Name: service_property_id_service_property_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -575,7 +578,7 @@ CREATE SEQUENCE service_property_id_service_property_seq
 ALTER TABLE public.service_property_id_service_property_seq OWNER TO postgres;
 
 --
--- TOC entry 2154 (class 0 OID 0)
+-- TOC entry 2155 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: service_property_id_service_property_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -584,7 +587,7 @@ ALTER SEQUENCE service_property_id_service_property_seq OWNED BY service_propert
 
 
 --
--- TOC entry 196 (class 1259 OID 41792)
+-- TOC entry 196 (class 1259 OID 49976)
 -- Name: service_type; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -597,7 +600,7 @@ CREATE TABLE service_type (
 ALTER TABLE public.service_type OWNER TO postgres;
 
 --
--- TOC entry 197 (class 1259 OID 41798)
+-- TOC entry 197 (class 1259 OID 49982)
 -- Name: service_type_id_service_type_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -612,7 +615,7 @@ CREATE SEQUENCE service_type_id_service_type_seq
 ALTER TABLE public.service_type_id_service_type_seq OWNER TO postgres;
 
 --
--- TOC entry 2155 (class 0 OID 0)
+-- TOC entry 2156 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: service_type_id_service_type_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -621,7 +624,7 @@ ALTER SEQUENCE service_type_id_service_type_seq OWNED BY service_type.id_service
 
 
 --
--- TOC entry 198 (class 1259 OID 41800)
+-- TOC entry 198 (class 1259 OID 49984)
 -- Name: spher; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -634,7 +637,7 @@ CREATE TABLE spher (
 ALTER TABLE public.spher OWNER TO postgres;
 
 --
--- TOC entry 199 (class 1259 OID 41806)
+-- TOC entry 199 (class 1259 OID 49990)
 -- Name: spher_id_spher_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -649,7 +652,7 @@ CREATE SEQUENCE spher_id_spher_seq
 ALTER TABLE public.spher_id_spher_seq OWNER TO postgres;
 
 --
--- TOC entry 2156 (class 0 OID 0)
+-- TOC entry 2157 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: spher_id_spher_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -658,7 +661,7 @@ ALTER SEQUENCE spher_id_spher_seq OWNED BY spher.id_spher;
 
 
 --
--- TOC entry 200 (class 1259 OID 41808)
+-- TOC entry 200 (class 1259 OID 49992)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -673,7 +676,7 @@ CREATE TABLE users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 41814)
+-- TOC entry 201 (class 1259 OID 49998)
 -- Name: users_id_user_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -688,7 +691,7 @@ CREATE SEQUENCE users_id_user_seq
 ALTER TABLE public.users_id_user_seq OWNER TO postgres;
 
 --
--- TOC entry 2157 (class 0 OID 0)
+-- TOC entry 2158 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: users_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -697,7 +700,7 @@ ALTER SEQUENCE users_id_user_seq OWNED BY users.id_user;
 
 
 --
--- TOC entry 1923 (class 2604 OID 41816)
+-- TOC entry 1923 (class 2604 OID 50000)
 -- Name: id_activity_feed; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -705,7 +708,7 @@ ALTER TABLE ONLY activity_feed ALTER COLUMN id_activity_feed SET DEFAULT nextval
 
 
 --
--- TOC entry 1924 (class 2604 OID 41817)
+-- TOC entry 1924 (class 2604 OID 50001)
 -- Name: id_authority; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -713,7 +716,7 @@ ALTER TABLE ONLY authority ALTER COLUMN id_authority SET DEFAULT nextval('author
 
 
 --
--- TOC entry 1925 (class 2604 OID 41818)
+-- TOC entry 1925 (class 2604 OID 50002)
 -- Name: id_authority_property; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -721,7 +724,7 @@ ALTER TABLE ONLY authority_property ALTER COLUMN id_authority_property SET DEFAU
 
 
 --
--- TOC entry 1926 (class 2604 OID 41819)
+-- TOC entry 1926 (class 2604 OID 50003)
 -- Name: id_authority_status; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -729,7 +732,7 @@ ALTER TABLE ONLY authority_status ALTER COLUMN id_authority_status SET DEFAULT n
 
 
 --
--- TOC entry 1927 (class 2604 OID 41820)
+-- TOC entry 1927 (class 2604 OID 50004)
 -- Name: id_comment; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -737,7 +740,7 @@ ALTER TABLE ONLY comment ALTER COLUMN id_comment SET DEFAULT nextval('comment_id
 
 
 --
--- TOC entry 1928 (class 2604 OID 41821)
+-- TOC entry 1928 (class 2604 OID 50005)
 -- Name: id_event_type; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -745,7 +748,7 @@ ALTER TABLE ONLY event_type ALTER COLUMN id_event_type SET DEFAULT nextval('even
 
 
 --
--- TOC entry 1929 (class 2604 OID 41822)
+-- TOC entry 1929 (class 2604 OID 50006)
 -- Name: id_file; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -753,7 +756,7 @@ ALTER TABLE ONLY files ALTER COLUMN id_file SET DEFAULT nextval('files_id_file_s
 
 
 --
--- TOC entry 1930 (class 2604 OID 41823)
+-- TOC entry 1930 (class 2604 OID 50007)
 -- Name: id_history_log; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -761,7 +764,7 @@ ALTER TABLE ONLY history_log ALTER COLUMN id_history_log SET DEFAULT nextval('hi
 
 
 --
--- TOC entry 1931 (class 2604 OID 41824)
+-- TOC entry 1931 (class 2604 OID 50008)
 -- Name: id_organization; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -769,7 +772,7 @@ ALTER TABLE ONLY organization ALTER COLUMN id_organization SET DEFAULT nextval('
 
 
 --
--- TOC entry 1932 (class 2604 OID 41825)
+-- TOC entry 1932 (class 2604 OID 50009)
 -- Name: id_organization_rank; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -777,7 +780,7 @@ ALTER TABLE ONLY organization_rank ALTER COLUMN id_organization_rank SET DEFAULT
 
 
 --
--- TOC entry 1933 (class 2604 OID 41826)
+-- TOC entry 1933 (class 2604 OID 50010)
 -- Name: id_property; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -785,7 +788,7 @@ ALTER TABLE ONLY property ALTER COLUMN id_property SET DEFAULT nextval('property
 
 
 --
--- TOC entry 1934 (class 2604 OID 41827)
+-- TOC entry 1934 (class 2604 OID 50011)
 -- Name: id_property_format; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -793,7 +796,7 @@ ALTER TABLE ONLY property_format ALTER COLUMN id_property_format SET DEFAULT nex
 
 
 --
--- TOC entry 1935 (class 2604 OID 41828)
+-- TOC entry 1935 (class 2604 OID 50012)
 -- Name: id_service; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -801,7 +804,7 @@ ALTER TABLE ONLY service ALTER COLUMN id_service SET DEFAULT nextval('service_id
 
 
 --
--- TOC entry 1936 (class 2604 OID 41829)
+-- TOC entry 1936 (class 2604 OID 50013)
 -- Name: id_service_property; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -809,7 +812,7 @@ ALTER TABLE ONLY service_property ALTER COLUMN id_service_property SET DEFAULT n
 
 
 --
--- TOC entry 1937 (class 2604 OID 41830)
+-- TOC entry 1938 (class 2604 OID 50014)
 -- Name: id_service_type; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -817,7 +820,7 @@ ALTER TABLE ONLY service_type ALTER COLUMN id_service_type SET DEFAULT nextval('
 
 
 --
--- TOC entry 1938 (class 2604 OID 41831)
+-- TOC entry 1939 (class 2604 OID 50015)
 -- Name: id_spher; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -825,7 +828,7 @@ ALTER TABLE ONLY spher ALTER COLUMN id_spher SET DEFAULT nextval('spher_id_spher
 
 
 --
--- TOC entry 1939 (class 2604 OID 41832)
+-- TOC entry 1940 (class 2604 OID 50016)
 -- Name: id_user; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -833,58 +836,108 @@ ALTER TABLE ONLY users ALTER COLUMN id_user SET DEFAULT nextval('users_id_user_s
 
 
 --
--- TOC entry 2099 (class 0 OID 41680)
+-- TOC entry 2100 (class 0 OID 49864)
 -- Dependencies: 168
 -- Data for Name: activity_feed; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
-
---
--- TOC entry 2158 (class 0 OID 0)
--- Dependencies: 169
--- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 1, true);
-
-
---
--- TOC entry 2101 (class 0 OID 41688)
--- Dependencies: 170
--- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
+INSERT INTO activity_feed (id_activity_feed, id_organization, id_event_type, "time", message, id_service_type, id_object) VALUES (2, 6, 7, '2014-09-15 21:02:00', NULL, 6, 37);
+INSERT INTO activity_feed (id_activity_feed, id_organization, id_event_type, "time", message, id_service_type, id_object) VALUES (3, 6, 8, '2014-09-16 23:02:00', NULL, 6, 37);
+INSERT INTO activity_feed (id_activity_feed, id_organization, id_event_type, "time", message, id_service_type, id_object) VALUES (4, 6, 8, '2014-09-16 23:02:00', NULL, 6, 37);
+INSERT INTO activity_feed (id_activity_feed, id_organization, id_event_type, "time", message, id_service_type, id_object) VALUES (5, 1, 8, '2014-09-16 23:07:00', NULL, 6, 29);
+INSERT INTO activity_feed (id_activity_feed, id_organization, id_event_type, "time", message, id_service_type, id_object) VALUES (6, 6, 8, '2014-09-17 04:36:00', NULL, 6, 37);
 
 
 --
 -- TOC entry 2159 (class 0 OID 0)
--- Dependencies: 171
--- Name: authority_id_authority_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 169
+-- Name: activity_feed_id_activity_feed_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('authority_id_authority_seq', 28, true);
+SELECT pg_catalog.setval('activity_feed_id_activity_feed_seq', 6, true);
 
 
 --
--- TOC entry 2103 (class 0 OID 41696)
--- Dependencies: 172
--- Data for Name: authority_property; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2102 (class 0 OID 49872)
+-- Dependencies: 170
+-- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (30, 3, 1, 'test');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (31, 5, 1, 'test');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (32, 4, 1, 'test');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (33, 5, 1, 'test');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (34, 6, 1, 'aaaa');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (35, 6, 1, 'aaaa');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (36, 6, 1, 'aaaa');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (29, 1, 3, 'Test');
+INSERT INTO authority (id_authority, id_organization, id_authority_status, authority_name) VALUES (37, 6, 4, 'aaaa');
 
 
 --
 -- TOC entry 2160 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: authority_id_authority_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('authority_id_authority_seq', 37, true);
+
+
+--
+-- TOC entry 2104 (class 0 OID 49880)
+-- Dependencies: 172
+-- Data for Name: authority_property; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (154, 7, 29, '10');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (155, 10, 29, 'Комитет по информатизации и связи');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (156, 8, 29, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (157, 1, 29, '<a href=structure/check_status_authority/29>Test</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (158, 11, 29, '<a href=structure/check_status_authority/29>1 10-67</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (159, 7, 30, '11');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (160, 10, 30, 'Юридический комитет');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (161, 8, 30, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (162, 1, 30, '<a href=structure/check_status_authority/30>test</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (163, 11, 30, '<a href=structure/check_status_authority/30>3 11-5</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (164, 7, 31, '10');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (165, 10, 31, 'Администрация Калининского района Санкт-Петербурга');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (166, 8, 31, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (167, 1, 31, '<a href=structure/check_status_authority/31>test</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (168, 11, 31, '<a href=structure/check_status_authority/31>5 10-6</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (169, 7, 32, 'test');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (170, 10, 32, 'Администрация Выборгского района Санкт-Петербурга');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (171, 8, 32, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (172, 1, 32, '<a href=structure/check_status_authority/32>test</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (173, 11, 32, '<a href=structure/check_status_authority/32>4 test-7</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (174, 7, 33, 'tes');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (175, 10, 33, 'Администрация Кировского района Санкт-Петербурга');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (176, 8, 33, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (177, 1, 33, '<a href=structure/check_status_authority/33>test</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (178, 11, 33, '<a href=structure/check_status_authority/33>5 tes-27</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (179, 7, 37, 'aaa');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (180, 10, 37, 'Администрация Выборгского района Санкт-Петербурга');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (181, 8, 37, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (182, 1, 37, '<a href=structure/check_status_authority/37>aaaa</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (183, 11, 37, '<a href=structure/check_status_authority/37>6 aaa-42</a>');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (184, 8, 29, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (185, 8, 37, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (186, 8, 37, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (187, 8, 37, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (188, 8, 37, 'в разработке');
+INSERT INTO authority_property (id_authority_property, id_property, id_authority, value) VALUES (189, 8, 37, 'в разработке');
+
+
+--
+-- TOC entry 2161 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: authority_property_id_authority_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 153, true);
+SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 189, true);
 
 
 --
--- TOC entry 2105 (class 0 OID 41704)
+-- TOC entry 2106 (class 0 OID 49888)
 -- Dependencies: 174
 -- Data for Name: authority_status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -892,88 +945,126 @@ SELECT pg_catalog.setval('authority_property_id_authority_property_seq', 153, tr
 INSERT INTO authority_status (id_authority_status, name) VALUES (1, 'Ожидает присвоения статуса');
 INSERT INTO authority_status (id_authority_status, name) VALUES (2, 'Ожидает согласования статуса');
 INSERT INTO authority_status (id_authority_status, name) VALUES (3, 'Полномочию присвоен статус');
-
-
---
--- TOC entry 2161 (class 0 OID 0)
--- Dependencies: 175
--- Name: authority_status_id_authority_status_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 4, true);
-
-
---
--- TOC entry 2107 (class 0 OID 41712)
--- Dependencies: 176
--- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
+INSERT INTO authority_status (id_authority_status, name) VALUES (4, 'Полномочие подлежит корректировке');
 
 
 --
 -- TOC entry 2162 (class 0 OID 0)
--- Dependencies: 177
--- Name: comment_id_comment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 175
+-- Name: authority_status_id_authority_status_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('comment_id_comment_seq', 32, true);
+SELECT pg_catalog.setval('authority_status_id_authority_status_seq', 5, true);
 
 
 --
--- TOC entry 2109 (class 0 OID 41720)
--- Dependencies: 178
--- Data for Name: event_type; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2108 (class 0 OID 49896)
+-- Dependencies: 176
+-- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO event_type (id_event_type, event_type_name) VALUES (5, 'Измненение статуса полномочия');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (33, 29, 2, NULL, 'test', '2014-09-12 20:07:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (34, 30, 2, NULL, 'test', '2014-09-12 20:07:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (35, 31, 2, NULL, 'tests', '2014-09-15 20:56:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (36, 32, 2, NULL, 'test', '2014-09-15 21:00:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (37, 33, 2, NULL, 'test', '2014-09-15 21:01:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (38, 37, 2, NULL, 'aaaa', '2014-09-15 21:02:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (39, 37, 2, NULL, 'http://aisup.economy.gov.ru/', '2014-09-16 23:02:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (40, 37, 2, NULL, 'http://aisup.economy.gov.ru/', '2014-09-16 23:02:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (41, 29, 2, NULL, 'Наименование услуги', '2014-09-16 23:07:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (42, 29, 2, NULL, 'ыва', '2014-09-17 00:26:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (43, 29, 2, NULL, 'ыва', '2014-09-17 00:26:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (44, 37, 2, NULL, '0', '2014-09-17 04:23:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (45, 37, 2, NULL, '0', '2014-09-17 04:23:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (46, 37, 2, NULL, '0', '2014-09-17 04:25:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (47, 37, 2, NULL, '0', '2014-09-17 04:25:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (48, 37, 2, NULL, '0', '2014-09-17 04:27:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (49, 37, 2, NULL, '0', '2014-09-17 04:27:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (50, 37, 2, NULL, '0', '2014-09-17 04:28:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (51, 37, 2, NULL, '0', '2014-09-17 04:28:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (52, 37, 2, NULL, '0', '2014-09-17 04:28:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (53, 37, 2, NULL, '0', '2014-09-17 04:28:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (54, 37, 2, NULL, 'sdfgsdfgdfg', '2014-09-17 04:30:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (55, 37, 2, NULL, '0', '2014-09-17 04:30:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (56, 37, 2, NULL, 'Наименование услуги', '2014-09-17 04:36:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (57, 37, 2, NULL, 'jkjkhjkjkbhkbhkk', '2014-09-17 04:45:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (58, 37, 2, NULL, '0', '2014-09-17 04:45:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (59, 37, 2, NULL, 'dsfgsdfg', '2014-09-17 05:01:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (60, 37, 2, NULL, '0', '2014-09-17 05:01:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (61, 37, 2, NULL, 'ывапывап', '2014-09-17 05:50:00');
+INSERT INTO comment (id_comment, id_authority, id_user, com_id_comment, message, "time") VALUES (62, 37, 2, NULL, '0', '2014-09-17 05:50:00');
 
 
 --
 -- TOC entry 2163 (class 0 OID 0)
--- Dependencies: 179
--- Name: event_type_id_event_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 177
+-- Name: comment_id_comment_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('event_type_id_event_type_seq', 6, true);
+SELECT pg_catalog.setval('comment_id_comment_seq', 62, true);
 
 
 --
--- TOC entry 2111 (class 0 OID 41728)
--- Dependencies: 180
--- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2110 (class 0 OID 49904)
+-- Dependencies: 178
+-- Data for Name: event_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO event_type (id_event_type, event_type_name) VALUES (7, 'new_authority');
+INSERT INTO event_type (id_event_type, event_type_name) VALUES (8, 'authority_changed');
+INSERT INTO event_type (id_event_type, event_type_name) VALUES (9, 'overdue_response_time');
 
 
 --
 -- TOC entry 2164 (class 0 OID 0)
--- Dependencies: 181
--- Name: files_id_file_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Dependencies: 179
+-- Name: event_type_id_event_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('files_id_file_seq', 11, true);
+SELECT pg_catalog.setval('event_type_id_event_type_seq', 9, true);
 
 
 --
--- TOC entry 2113 (class 0 OID 41736)
--- Dependencies: 182
--- Data for Name: history_log; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2112 (class 0 OID 49912)
+-- Dependencies: 180
+-- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (12, NULL, 'MV.jpg', 'MV.jpg', 31);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (13, NULL, 'MV.jpg', 'MV1.jpg', 32);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (14, NULL, 'MV.jpg', 'MV2.jpg', 33);
+INSERT INTO files (id_file, id_comment, name, file_name, id_authority) VALUES (15, NULL, 'MV.jpg', 'MV3.jpg', 37);
 
 
 --
 -- TOC entry 2165 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: files_id_file_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('files_id_file_seq', 15, true);
+
+
+--
+-- TOC entry 2114 (class 0 OID 49920)
+-- Dependencies: 182
+-- Data for Name: history_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO history_log (id_history_log, old, new, "time", id_user, id_property) VALUES (6, NULL, '<a href="structure/check_status_authority/29">Test 2</a>', '2014-09-17 00:40:00', 2, NULL);
+
+
+--
+-- TOC entry 2166 (class 0 OID 0)
 -- Dependencies: 183
 -- Name: history_log_id_history_log_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('history_log_id_history_log_seq', 5, true);
+SELECT pg_catalog.setval('history_log_id_history_log_seq', 6, true);
 
 
 --
--- TOC entry 2115 (class 0 OID 41744)
+-- TOC entry 2116 (class 0 OID 49928)
 -- Dependencies: 184
 -- Data for Name: organization; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1038,7 +1129,7 @@ INSERT INTO organization (id_organization, id_organization_rank, organization_na
 
 
 --
--- TOC entry 2166 (class 0 OID 0)
+-- TOC entry 2167 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: organization_id_organization_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1047,7 +1138,7 @@ SELECT pg_catalog.setval('organization_id_organization_seq', 58, true);
 
 
 --
--- TOC entry 2117 (class 0 OID 41752)
+-- TOC entry 2118 (class 0 OID 49936)
 -- Dependencies: 186
 -- Data for Name: organization_rank; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1056,7 +1147,7 @@ INSERT INTO organization_rank (id_organization_rank, organization_rank) VALUES (
 
 
 --
--- TOC entry 2167 (class 0 OID 0)
+-- TOC entry 2168 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: organization_rank_id_organization_rank_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1065,7 +1156,7 @@ SELECT pg_catalog.setval('organization_rank_id_organization_rank_seq', 2, true);
 
 
 --
--- TOC entry 2119 (class 0 OID 41760)
+-- TOC entry 2120 (class 0 OID 49944)
 -- Dependencies: 188
 -- Data for Name: property; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1110,7 +1201,7 @@ INSERT INTO property (id_property, id_property_type, id_service_type, property_n
 
 
 --
--- TOC entry 2120 (class 0 OID 41766)
+-- TOC entry 2121 (class 0 OID 49950)
 -- Dependencies: 189
 -- Data for Name: property_format; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1124,7 +1215,7 @@ INSERT INTO property_format (id_property_format, property_format_name) VALUES (6
 
 
 --
--- TOC entry 2168 (class 0 OID 0)
+-- TOC entry 2169 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: property_format_id_property_format_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1133,7 +1224,7 @@ SELECT pg_catalog.setval('property_format_id_property_format_seq', 7, true);
 
 
 --
--- TOC entry 2169 (class 0 OID 0)
+-- TOC entry 2170 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: property_id_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1142,41 +1233,157 @@ SELECT pg_catalog.setval('property_id_property_seq', 205, true);
 
 
 --
--- TOC entry 2123 (class 0 OID 41776)
+-- TOC entry 2124 (class 0 OID 49960)
 -- Dependencies: 192
 -- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
-
---
--- TOC entry 2170 (class 0 OID 0)
--- Dependencies: 193
--- Name: service_id_service_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('service_id_service_seq', 12, true);
-
-
---
--- TOC entry 2125 (class 0 OID 41784)
--- Dependencies: 194
--- Data for Name: service_property; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (13, 7, NULL, 37, 'http://aisup.economy.gov.ru/');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (14, 7, NULL, 37, 'http://aisup.economy.gov.ru/');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (15, 7, NULL, 29, 'Наименование услуги');
+INSERT INTO service (id_service, id_service_type, id_authority_status, id_authority, service_name) VALUES (16, 7, NULL, 37, 'Наименование услуги');
 
 
 --
 -- TOC entry 2171 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: service_id_service_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('service_id_service_seq', 16, true);
+
+
+--
+-- TOC entry 2126 (class 0 OID 49968)
+-- Dependencies: 194
+-- Data for Name: service_property; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (201, 177, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (203, 178, 13, 'Физ.', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (204, 179, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (205, 180, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (207, 183, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (208, 184, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (209, 185, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (210, 186, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (211, 187, 13, 'возмездно', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (212, 188, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (213, 189, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (214, 190, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (215, 191, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (216, 192, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (217, 193, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (218, 73, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (219, 74, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (220, 173, 14, 'Прочие услуги
+
+
+
+', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (221, 75, 14, 'Комитет по информатизации и связи', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (222, 174, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (223, 175, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (224, 176, 14, 'через МФЦ', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (225, 177, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (226, 181, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (227, 178, 14, 'Физ.', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (228, 179, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (229, 180, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (230, 182, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (231, 183, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (232, 184, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (233, 185, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (234, 186, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (235, 187, 14, 'возмездно', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (236, 188, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (237, 189, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (238, 190, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (239, 191, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (240, 192, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (241, 193, 14, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (242, 73, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (243, 74, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (244, 173, 15, 'Производство, строительство и торговля
+
+
+
+', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (245, 75, 15, 'Комитет по информатизации и связи', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (246, 174, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (247, 175, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (248, 176, 15, 'через МФЦ', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (249, 177, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (250, 181, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (251, 178, 15, 'Физ.', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (252, 179, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (253, 180, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (254, 182, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (255, 183, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (256, 184, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (257, 185, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (258, 186, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (259, 187, 15, 'возмездно', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (260, 188, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (261, 189, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (262, 190, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (263, 191, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (264, 192, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (265, 193, 15, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (266, 73, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (267, 74, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (268, 173, 16, 'Картография, гиодезия и гидрометеорология
+
+
+
+', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (269, 75, 16, 'Администрация Фрунзенского района Санкт-Петербурга', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (270, 174, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (271, 175, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (272, 176, 16, 'через МФЦ', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (273, 177, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (274, 181, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (275, 178, 16, 'Физ.', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (276, 179, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (277, 180, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (278, 182, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (279, 183, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (280, 184, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (281, 185, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (282, 186, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (283, 187, 16, 'по-разному', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (284, 188, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (285, 189, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (286, 190, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (287, 191, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (288, 192, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (289, 193, 16, 'Наименование услуги', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (194, 73, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (195, 74, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (197, 75, 13, 'Комитет по информатизации и связи', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (198, 174, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (199, 175, 13, 'http://aisup.economy.gov.ru/', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (200, 176, 13, 'через МФЦ', 1);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (202, 181, 13, 'http://aisup.economy.gov.ru/', 0);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (206, 182, 13, 'http://aisup.economy.gov.ru/', 0);
+INSERT INTO service_property (id_service_property, id_property, id_service, value, agreed) VALUES (196, 173, 13, 'Прочие услуги
+
+
+
+', 0);
+
+
+--
+-- TOC entry 2172 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: service_property_id_service_property_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('service_property_id_service_property_seq', 193, true);
+SELECT pg_catalog.setval('service_property_id_service_property_seq', 289, true);
 
 
 --
--- TOC entry 2127 (class 0 OID 41792)
+-- TOC entry 2128 (class 0 OID 49976)
 -- Dependencies: 196
 -- Data for Name: service_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1188,7 +1395,7 @@ INSERT INTO service_type (id_service_type, service_type_name) VALUES (9, 'Фун
 
 
 --
--- TOC entry 2172 (class 0 OID 0)
+-- TOC entry 2173 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: service_type_id_service_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1197,7 +1404,7 @@ SELECT pg_catalog.setval('service_type_id_service_type_seq', 10, true);
 
 
 --
--- TOC entry 2129 (class 0 OID 41800)
+-- TOC entry 2130 (class 0 OID 49984)
 -- Dependencies: 198
 -- Data for Name: spher; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1270,7 +1477,7 @@ INSERT INTO spher (id_spher, name) VALUES (23, 'Юридические услу�
 
 
 --
--- TOC entry 2173 (class 0 OID 0)
+-- TOC entry 2174 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: spher_id_spher_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1279,7 +1486,7 @@ SELECT pg_catalog.setval('spher_id_spher_seq', 24, true);
 
 
 --
--- TOC entry 2131 (class 0 OID 41808)
+-- TOC entry 2132 (class 0 OID 49992)
 -- Dependencies: 200
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1289,7 +1496,7 @@ INSERT INTO users (id_user, id_organization, user_name, password) VALUES (3, 2, 
 
 
 --
--- TOC entry 2174 (class 0 OID 0)
+-- TOC entry 2175 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1298,7 +1505,7 @@ SELECT pg_catalog.setval('users_id_user_seq', 4, true);
 
 
 --
--- TOC entry 1941 (class 2606 OID 41834)
+-- TOC entry 1942 (class 2606 OID 50018)
 -- Name: pk_activity_feed; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1307,7 +1514,7 @@ ALTER TABLE ONLY activity_feed
 
 
 --
--- TOC entry 1943 (class 2606 OID 41836)
+-- TOC entry 1944 (class 2606 OID 50020)
 -- Name: pk_authority; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1316,7 +1523,7 @@ ALTER TABLE ONLY authority
 
 
 --
--- TOC entry 1945 (class 2606 OID 41838)
+-- TOC entry 1946 (class 2606 OID 50022)
 -- Name: pk_authority_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1325,7 +1532,7 @@ ALTER TABLE ONLY authority_property
 
 
 --
--- TOC entry 1947 (class 2606 OID 41840)
+-- TOC entry 1948 (class 2606 OID 50024)
 -- Name: pk_authority_status; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1334,7 +1541,7 @@ ALTER TABLE ONLY authority_status
 
 
 --
--- TOC entry 1949 (class 2606 OID 41842)
+-- TOC entry 1950 (class 2606 OID 50026)
 -- Name: pk_comment; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1343,7 +1550,7 @@ ALTER TABLE ONLY comment
 
 
 --
--- TOC entry 1951 (class 2606 OID 41844)
+-- TOC entry 1952 (class 2606 OID 50028)
 -- Name: pk_event_type; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1352,7 +1559,7 @@ ALTER TABLE ONLY event_type
 
 
 --
--- TOC entry 1953 (class 2606 OID 41846)
+-- TOC entry 1954 (class 2606 OID 50030)
 -- Name: pk_files; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1361,7 +1568,7 @@ ALTER TABLE ONLY files
 
 
 --
--- TOC entry 1955 (class 2606 OID 41848)
+-- TOC entry 1956 (class 2606 OID 50032)
 -- Name: pk_history_log; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1370,7 +1577,7 @@ ALTER TABLE ONLY history_log
 
 
 --
--- TOC entry 1957 (class 2606 OID 41850)
+-- TOC entry 1958 (class 2606 OID 50034)
 -- Name: pk_organization; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1379,7 +1586,7 @@ ALTER TABLE ONLY organization
 
 
 --
--- TOC entry 1959 (class 2606 OID 41852)
+-- TOC entry 1960 (class 2606 OID 50036)
 -- Name: pk_organization_rank; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1388,7 +1595,7 @@ ALTER TABLE ONLY organization_rank
 
 
 --
--- TOC entry 1961 (class 2606 OID 41854)
+-- TOC entry 1962 (class 2606 OID 50038)
 -- Name: pk_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1397,7 +1604,7 @@ ALTER TABLE ONLY property
 
 
 --
--- TOC entry 1963 (class 2606 OID 41856)
+-- TOC entry 1964 (class 2606 OID 50040)
 -- Name: pk_property_format; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1406,7 +1613,7 @@ ALTER TABLE ONLY property_format
 
 
 --
--- TOC entry 1965 (class 2606 OID 41858)
+-- TOC entry 1966 (class 2606 OID 50042)
 -- Name: pk_service; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1415,7 +1622,7 @@ ALTER TABLE ONLY service
 
 
 --
--- TOC entry 1967 (class 2606 OID 41860)
+-- TOC entry 1968 (class 2606 OID 50044)
 -- Name: pk_service_property; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1424,7 +1631,7 @@ ALTER TABLE ONLY service_property
 
 
 --
--- TOC entry 1969 (class 2606 OID 41862)
+-- TOC entry 1970 (class 2606 OID 50046)
 -- Name: pk_service_type; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1433,7 +1640,7 @@ ALTER TABLE ONLY service_type
 
 
 --
--- TOC entry 1971 (class 2606 OID 41864)
+-- TOC entry 1972 (class 2606 OID 50048)
 -- Name: pk_spher; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1442,7 +1649,7 @@ ALTER TABLE ONLY spher
 
 
 --
--- TOC entry 1973 (class 2606 OID 41866)
+-- TOC entry 1974 (class 2606 OID 50050)
 -- Name: pk_users; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1451,7 +1658,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 1974 (class 2606 OID 41867)
+-- TOC entry 1975 (class 2606 OID 50051)
 -- Name: fk_activity_reference_event_ty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1460,7 +1667,7 @@ ALTER TABLE ONLY activity_feed
 
 
 --
--- TOC entry 1975 (class 2606 OID 41872)
+-- TOC entry 1976 (class 2606 OID 50056)
 -- Name: fk_activity_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1469,7 +1676,7 @@ ALTER TABLE ONLY activity_feed
 
 
 --
--- TOC entry 1976 (class 2606 OID 41877)
+-- TOC entry 1977 (class 2606 OID 50061)
 -- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1478,7 +1685,7 @@ ALTER TABLE ONLY authority
 
 
 --
--- TOC entry 1978 (class 2606 OID 41882)
+-- TOC entry 1979 (class 2606 OID 50066)
 -- Name: fk_authorit_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1487,7 +1694,7 @@ ALTER TABLE ONLY authority_property
 
 
 --
--- TOC entry 1977 (class 2606 OID 41887)
+-- TOC entry 1978 (class 2606 OID 50071)
 -- Name: fk_authorit_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1496,7 +1703,7 @@ ALTER TABLE ONLY authority
 
 
 --
--- TOC entry 1979 (class 2606 OID 41892)
+-- TOC entry 1980 (class 2606 OID 50076)
 -- Name: fk_authorit_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1505,7 +1712,7 @@ ALTER TABLE ONLY authority_property
 
 
 --
--- TOC entry 1980 (class 2606 OID 41897)
+-- TOC entry 1981 (class 2606 OID 50081)
 -- Name: fk_comment_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1514,7 +1721,7 @@ ALTER TABLE ONLY comment
 
 
 --
--- TOC entry 1981 (class 2606 OID 41902)
+-- TOC entry 1982 (class 2606 OID 50086)
 -- Name: fk_comment_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1523,7 +1730,7 @@ ALTER TABLE ONLY comment
 
 
 --
--- TOC entry 1982 (class 2606 OID 41907)
+-- TOC entry 1983 (class 2606 OID 50091)
 -- Name: fk_comment_reference_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1532,7 +1739,7 @@ ALTER TABLE ONLY comment
 
 
 --
--- TOC entry 1983 (class 2606 OID 41912)
+-- TOC entry 1984 (class 2606 OID 50096)
 -- Name: fk_files_reference_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1541,7 +1748,7 @@ ALTER TABLE ONLY files
 
 
 --
--- TOC entry 1984 (class 2606 OID 41917)
+-- TOC entry 1985 (class 2606 OID 50101)
 -- Name: fk_organiza_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1550,7 +1757,7 @@ ALTER TABLE ONLY organization
 
 
 --
--- TOC entry 1985 (class 2606 OID 41922)
+-- TOC entry 1986 (class 2606 OID 50106)
 -- Name: fk_property_reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1559,7 +1766,7 @@ ALTER TABLE ONLY property
 
 
 --
--- TOC entry 1986 (class 2606 OID 41927)
+-- TOC entry 1987 (class 2606 OID 50111)
 -- Name: fk_property_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1568,7 +1775,7 @@ ALTER TABLE ONLY property
 
 
 --
--- TOC entry 1987 (class 2606 OID 41932)
+-- TOC entry 1988 (class 2606 OID 50116)
 -- Name: fk_service_45_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1577,7 +1784,7 @@ ALTER TABLE ONLY service
 
 
 --
--- TOC entry 1990 (class 2606 OID 41937)
+-- TOC entry 1991 (class 2606 OID 50121)
 -- Name: fk_service__reference_property; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1586,7 +1793,7 @@ ALTER TABLE ONLY service_property
 
 
 --
--- TOC entry 1991 (class 2606 OID 41942)
+-- TOC entry 1992 (class 2606 OID 50126)
 -- Name: fk_service__reference_service; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1595,7 +1802,7 @@ ALTER TABLE ONLY service_property
 
 
 --
--- TOC entry 1988 (class 2606 OID 41947)
+-- TOC entry 1989 (class 2606 OID 50131)
 -- Name: fk_service_reference_authorit; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1604,7 +1811,7 @@ ALTER TABLE ONLY service
 
 
 --
--- TOC entry 1989 (class 2606 OID 41952)
+-- TOC entry 1990 (class 2606 OID 50136)
 -- Name: fk_service_reference_service_; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1613,7 +1820,7 @@ ALTER TABLE ONLY service
 
 
 --
--- TOC entry 1992 (class 2606 OID 41957)
+-- TOC entry 1993 (class 2606 OID 50141)
 -- Name: fk_users_reference_organiza; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1622,7 +1829,7 @@ ALTER TABLE ONLY users
 
 
 --
--- TOC entry 2139 (class 0 OID 0)
+-- TOC entry 2140 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -1633,7 +1840,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-09-10 00:02:51
+-- Completed on 2014-09-17 06:09:25
 
 --
 -- PostgreSQL database dump complete
