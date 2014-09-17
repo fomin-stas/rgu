@@ -54,7 +54,7 @@
                         <li class="light-blue">
                             <a href="structure/uvedoml">
                                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                                <span class="badge badge-important">4</span>
+                                <span class="badge badge-important"><?=$this->notifications_size?></span>
                             </a>
                         </li>
                         <li class="light-blue">

@@ -7,6 +7,7 @@ class  APP_Controller  extends  CI_Controller  {
 
         // set layout dir by current controller
         $this->layout->setViewDir($this->router->fetch_class());
+        $this->notifications_size = $this->activity->count_all();
     }
 
     public function is_loggedIn()

@@ -123,7 +123,8 @@ $autoload['model'] = array(
         'spher',
         'comment',
         'file',
-        'history_log');
+        'history_log',
+        'activity');
 
 
 /* End of file autoload.php */
