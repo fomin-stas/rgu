@@ -41,6 +41,25 @@ var Settings = {
             }
         });
 
+        // if property type == select => show select values box
+        $('#add_property_type').on('change', function(e){
+            if($(this).val() == 3){
+                $('#add_type_values_row').show();
+            }
+            else{
+                $('#add_type_values_row').hide();   
+            }
+        });
+
+        // if property type == select => show select values box
+        $('#edit_property_type').on('change', function(e){
+            if($(this).val() == 3){
+                $('#edit_type_values_row').show();
+            }
+            else{
+                $('#edit_type_values_row').hide();   
+            }
+        });
 
         // edit row on Properties table
         $('#properties-table .a-edit').on('click', function(e){
@@ -58,6 +77,15 @@ var Settings = {
                             $('#edit_property_name').val(p.property_name)
                             $('#edit_property_short_name').val(p.property_short_name)
                             $('#edit_property_type').val(p.id_property_type);
+                            
+                            // check property tupe == select
+                            if(p.id_property_type == 3){
+                                $('#edit_type_values_row').show();
+                            }
+                            else{
+                                $('#edit_type_values_row').hide();
+                            }
+
                             if(p.options != null) {
                                 $('#edit_property_align').val(p.options.property_align);
                                 $('#edit_property_width').val(p.options.property_width);

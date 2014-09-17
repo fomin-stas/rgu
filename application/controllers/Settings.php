@@ -66,6 +66,20 @@ class Settings extends APP_Controller {
             // insert new property
             $result = $this->property->insert($data);
             if($result){
+                if($data['id_property_type'] == 3) {
+                    $values = $this->input->post('type_values');
+                    $property_values = explode(",", $values);
+                    if(count($property_values) > 0) {
+                        foreach ($property_values as $key => $value) {
+                            $p = array(
+                                'property_id' => $result,
+                                'value' => $value
+                                );
+                            $this->property_values_model->insert($p);
+                        }
+                    }
+                }
+
                 $this->session->set_flashdata('message', 'Новое свойство успешно создано');
                 redirect('/settings/index#');
             }

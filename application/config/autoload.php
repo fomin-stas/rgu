@@ -124,7 +124,8 @@ $autoload['model'] = array(
         'comment',
         'file',
         'history_log',
-        'activity');
+        'activity',
+        'property_values_model');
 
 
 /* End of file autoload.php */

@@ -127,6 +127,14 @@
                                         </div>
                                       </div>
                                     </div>
+                                    <div class="row" id="add_type_values_row" style="display:none">
+                                        <div class="col-md-12">
+                                            <textarea name="type_values" id="add_type_values" cols="85" rows="4">
+                                                
+                                            </textarea>
+                                            <span class="help-block">Вводите каждое новое значение через запятую.</span>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -216,6 +224,14 @@
                                             </select>
                                         </div>
                                       </div>
+                                    </div>
+                                    <div class="row" id="edit_type_values_row" style="display:none">
+                                        <div class="col-md-12">
+                                            <textarea name="type_values" id="edit_type_values" cols="85" rows="4">
+                                                
+                                            </textarea>
+                                            <span class="help-block">Вводите каждое новое значение через запятую.</span>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
