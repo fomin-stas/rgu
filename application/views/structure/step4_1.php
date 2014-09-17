@@ -37,22 +37,17 @@
             <div class="step-pane active" id="step4">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <h3 class="center">
-                            Согласовывать результаты технических обследований централизованных систем горячего водоснабжения, 
-                            холодного водоснабжения и водоотведения
+                        <h3 class="center" >
+                            Полномочию присвоен статус. Полномочие исполняется.
                         </h3>
-                        <table class="table table-striped">
+                                                <table class="table table-striped table-bordered">
                             <tr>
-                                <td>ID</td>
-                                <td>4676529876</td>
+                                <td>ID полномочия:</td>
+                                <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
                                 <td><?= $authority_name ?></td>
-                            </tr>
-                            <tr>
-                                <td>Реквизиты постановления</td>
-                                <td>Постановление Правительства Санкт-Петербурга от 29.11.2013 № 940 "О мерах по реализации Закона Санкт-Петербурга "О разгранисении полномочий органов государственной власти Санкт-Петербурга в сфере водоснабжения и водоотведения"</td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
@@ -66,9 +61,16 @@
                                 <td>Срок ответа:</td>
                                 <td><? if (isset($srok_otveta)) echo $srok_otveta;?></td>
                             </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <table class="table table-striped table-condensed">
                             <tr>
-                                <td>Статус</td>
-                                <td><p style="color:green">КИС согласовал присвоение статуса полномочию</p></td>
+                                <td>Ответственный орган:</td>
+                                <td><?= $name_iogv ?></td>
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
@@ -87,6 +89,7 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
                     </div>
                 </div>
                 <div class="row">
@@ -118,8 +121,34 @@
                                                 <table class="table table-bordered">
                                                     <?php foreach ($service['properties'] as $name => $value): ?>
                                                         <tr>
-                                                            <td><?= $name; ?></td>
-                                                            <td><?= $value; ?></td>
+                                                            <td class="col-md-4"><?= $name; ?></td>
+                                                            <td class="col-md-5"><?= $value; ?></td>
+                                                            <td class="col-md-3">
+                                                                <label>
+                                                                    <input type="checkbox" name="myoption" class="ace ace-switch ace-switch-4 step3 btn-flat" checked />
+                                                                    <span class="lbl" data-lbl="Согласовано&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;На редактирование"></span>
+                                                                </label>
+
+                                                                <div class="modal fade" id="tr1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <form name="" method="post" action="">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                                    <h4>Комментарий</h4>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <textarea class="input-xxlarge center"></textarea>
+                                                                                </div>
+                                                                                <div class="modal-footer ">
+                                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </table>
@@ -133,7 +162,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <a href="structure/step4_1/<?= $id_authority ?>"><button class="btn btn-grey btn-sm pull-right">Изменить</button></a>
+                            <a href="structure/step4_1/<?= $id_authority ?>"><button class="btn btn-grey btn-sm pull-right">Отправить на доработку</button></a>
                         </div>
                     </div>
                 </div>
@@ -142,3 +171,26 @@
         </div>
     </div>
 
+<script type="text/javascript">
+    $('#step_file').ace_file_input({
+        no_file: "Присоединить файл",
+        btn_choose: "Выбрать",
+        btn_change: "Изменить",
+        enable_reset: true
+    });
+
+    $("#comments_modal2").on("submit", function() {
+        location = "step2";
+    });
+    $('#srok_otveta_3').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHiglight: true
+    });
+
+    $('.ace-switch-4.step3').click(function() {
+        $(this).parent().siblings('#tr1').modal({
+            show: true
+        });
+    });
+</script>

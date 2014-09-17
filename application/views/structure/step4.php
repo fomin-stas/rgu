@@ -120,7 +120,7 @@
                                                     <fieldset>
                                                         <div class="form-group">
                                                             <label for="sr0_<?= $service_num ?>" class="control-label col-md-3">Полное наименование</label>
-                                                            <textarea id="sr0_<?= $service_num ?>" name="sr0_<?= $service_num ?>" class="col-md-5"><?php if (isset($service['properties']['sr_0'])) echo $service['properties']['sr_0']; ?></textarea>
+                                                            <textarea id="sr0_<?= $service_num ?>" name="sr0_<?= $service_num ?>" class="col-md-5"<?php if($service['properties']['sr_0']['agreed']==1) echo ' disabled'; ?>><?php if (isset($service['properties']['sr_0'])) {echo $service['properties']['sr_0']['value']; }?></textarea>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="sr1_<?= $service_num ?>" class="control-label col-md-6">Краткое наименование услуги</label>

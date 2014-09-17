@@ -38,7 +38,7 @@ class Structure extends APP_Controller {
         $properties = $this->property->with('format')->order_by('order')->get_all();
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
-            $property['code'] = (isset($property['code']))?$property['code']:$property['id_property'] . '_code';
+            $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
@@ -118,10 +118,9 @@ class Structure extends APP_Controller {
             // add property to properties buffer
             $properties_buff[$property['id_property']] = $property;
             // create authority properties buffer
-            if($property['id_service_type'] == 6){
+            if ($property['id_service_type'] == 6) {
                 $authority_properties_codes[$property['code']] = $property;
             }
-
         }
         // prepare json grid
         foreach ((array) $authorities as $authority) {
@@ -174,7 +173,6 @@ class Structure extends APP_Controller {
                         foreach ((array) $service_properties as $p) {
                             if (array_key_exists($p['id_property'], $properties_buff)) {
                                 $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
-
                             }
                         }
                     }
@@ -184,17 +182,15 @@ class Structure extends APP_Controller {
 
             // check many services
             $size = count($values_buff);
-            if($size > 1) {
-                for ($i=0; $i < $size; $i++) { 
+            if ($size > 1) {
+                for ($i = 0; $i < $size; $i++) {
                     //for first row we are prepare collspan value
-                    
                     // prepare authorities keys to dispaly collspan grids
                     foreach ($values_buff[$i] as $key => $value) {
-                        if(array_key_exists($key, $authority_properties_codes)){
-                            if($i == 0) {
+                        if (array_key_exists($key, $authority_properties_codes)) {
+                            if ($i == 0) {
                                 $values_buff[$i]['attr'][$key]['rowspan'] = $size;
-                            }
-                            else{
+                            } else {
                                 $values_buff[$i]['attr'][$key]['display'] = 'none';
                             }
                         }
@@ -203,8 +199,7 @@ class Structure extends APP_Controller {
                     $grid_data[$executable_status][] = $values_buff[$i];
                     $grid_data['all'][] = $values_buff[$i];
                 }
-            }
-            else{
+            } else {
                 $grid_data[$executable_status][] = $values;
                 $grid_data['all'][] = $values;
             }
@@ -238,7 +233,7 @@ class Structure extends APP_Controller {
         if ($user != 'kis') {
             $view = 'uvedoml_iogv';
         }
-        
+
         $data['notifications'] = $notifications;
         $this->layout->view($view, $data);
     }
@@ -247,18 +242,18 @@ class Structure extends APP_Controller {
         $history_logs = $this->history_log->get_all();
         $logs_num = 0;
         foreach ($history_logs as $history_log) {
-            $data['history_logs'][$logs_num]['new']=$history_log['new'];
-            $data['history_logs'][$logs_num]['old']=$history_log['old'];
+            $data['history_logs'][$logs_num]['new'] = $history_log['new'];
+            $data['history_logs'][$logs_num]['old'] = $history_log['old'];
             $date_time = date_parse_from_format("Y.m.d H:i:s", $history_log['time']);
-            $data['history_logs'][$logs_num]['time']=$date_time['day'] . '/' . $date_time['month'] . '/' . $date_time['year'].' '.$date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'];
-            $property=$this->property->get($history_log['id_property']);
-            $data['history_logs'][$logs_num]['property_name']=$property['property_name'];
-            $data['history_logs'][$logs_num]['id_property']=$history_log['id_property'];
-            $user=$this->user->get($history_log['id_user']);
-            $data['history_logs'][$logs_num]['user_name']= $user->user_name;
+            $data['history_logs'][$logs_num]['time'] = $date_time['day'] . '/' . $date_time['month'] . '/' . $date_time['year'] . ' ' . $date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'];
+            $property = $this->property->get($history_log['id_property']);
+            $data['history_logs'][$logs_num]['property_name'] = $property['property_name'];
+            $data['history_logs'][$logs_num]['id_property'] = $history_log['id_property'];
+            $user = $this->user->get($history_log['id_user']);
+            $data['history_logs'][$logs_num]['user_name'] = $user->user_name;
             $logs_num++;
         }
-        $this->layout->view('journal',$data);
+        $this->layout->view('journal', $data);
     }
 
     public function chernovik() {
@@ -292,7 +287,7 @@ class Structure extends APP_Controller {
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('authority_name');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        
+
         $property['name_iogv'] = $this->input->post('name_iogv');
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
@@ -303,7 +298,7 @@ class Structure extends APP_Controller {
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
         // add notification
-        if($id_authority) {
+        if ($id_authority) {
             $this->activity->add_notification('new_authority', 6, $authority['id_organization'], $id_authority);
         }
         $property['authority_name'] = '<a href=structure/check_status_authority/' . $id_authority . '>' . $authority['authority_name'] . '</a>';
@@ -316,6 +311,27 @@ class Structure extends APP_Controller {
     }
 
     public function step2($id_authority) {
+        $this->check_status_authority($id_authority, 2);
+        $authority = $this->authority->get($id_authority);
+        $data = $authority;
+        $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
+        $organization = $this->organization_model->get($authority['id_organization']);
+        $data['organization'] = $organization->organization_name;
+        $data['spher'] = $this->spher->dropdown('name', 'name');
+        $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
+        $files = $this->file->get_many_by('id_authority', $id_authority);
+        foreach ($files as $value) {
+            $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
+        }
+        foreach ($authority_property as $value) {
+            $property = $this->property->get($value['id_property']);
+            $data[$property['code']] = $value['value'];
+        }
+        $data['comments'] = $this->view_only_timeline($id_authority);
+        $this->layout->view('razgran_p', $data);
+    }
+
+    public function step2_edit($id_authority) {
         $this->check_status_authority($id_authority, 2);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
@@ -389,7 +405,7 @@ class Structure extends APP_Controller {
         }
         $authority_data['id_authority_status'] = 2;
         $update = $this->authority->update($id_authority, $authority_data);
-        if($update) {
+        if ($update) {
             $authority = $this->authority->get($id_authority);
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
         }
@@ -398,7 +414,7 @@ class Structure extends APP_Controller {
     }
 
     public function step3($id_authority) {
-        $this->check_status_authority($id_authority, 3);
+       // $this->check_status_authority($id_authority, 3);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -419,7 +435,7 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
+                $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value']);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
@@ -427,7 +443,7 @@ class Structure extends APP_Controller {
     }
 
     public function agree($id_authority, $agree) {
-        if ($agree) {
+        if ($agree == 'true') {
             $authority_data['id_authority_status'] = 3;
             $url = 'structure/step4/' . $id_authority;
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
@@ -435,9 +451,20 @@ class Structure extends APP_Controller {
             $this->authority_property_model->_id_authority = $id_authority;
             $this->authority_property_model->insert_where_code_many($property);
         } else {
-            $authority_data['id_authority_status'] = 1;
-            $url = 'structure/arm_kis';
-            $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
+            $data = $_POST;
+            //$this->service_property->update_by(array('id_service'));
+            foreach ($data as $key => $value) {
+                $name = explode("_", $key);
+                if ($name[0] == 'ch' && $value == 'on') {
+                    $update_data=array('id_service' => $name[1],'id_property' => $name[2]);
+                     $update=       array('agreed' => 0);
+                    $this->service_property->update_by($update_data,$update);
+                }
+            }
+        
+        $authority_data['id_authority_status'] = 4;
+        $url = 'structure/arm_kis';
+        $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
         }
         $this->authority->update($id_authority, $authority_data);
         $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
@@ -496,7 +523,7 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['code']] = $value['value'];
+                $data['services'][$service['id_service']]['properties'][$property['code']] =array('value'=> $value['value'],'agreed'=>$value['agreed']);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
@@ -518,6 +545,12 @@ class Structure extends APP_Controller {
             case 3:
                 if ($step_num != 4)
                     redirect('structure/step4/' . $id_authority);
+
+                break;
+
+            case 4:
+                if ($step_num != 4)
+                    redirect('structure/step4_1/' . $id_authority);
 
                 break;
         }
@@ -582,7 +615,7 @@ class Structure extends APP_Controller {
         $properties = $this->property->with('format')->order_by('order')->get_all();
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
-            $property['code'] = (isset($property['code']))?$property['code']:$property['id_property'] . '_code';
+            $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
@@ -662,10 +695,9 @@ class Structure extends APP_Controller {
             // add property to properties buffer
             $properties_buff[$property['id_property']] = $property;
             // create authority properties buffer
-            if($property['id_service_type'] == 6){
+            if ($property['id_service_type'] == 6) {
                 $authority_properties_codes[$property['code']] = $property;
             }
-
         }
         // prepare json grid
         foreach ((array) $authorities as $authority) {
@@ -718,7 +750,6 @@ class Structure extends APP_Controller {
                         foreach ((array) $service_properties as $p) {
                             if (array_key_exists($p['id_property'], $properties_buff)) {
                                 $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
-
                             }
                         }
                     }
@@ -728,17 +759,15 @@ class Structure extends APP_Controller {
 
             // check many services
             $size = count($values_buff);
-            if($size > 1) {
-                for ($i=0; $i < $size; $i++) { 
+            if ($size > 1) {
+                for ($i = 0; $i < $size; $i++) {
                     //for first row we are prepare collspan value
-                    
                     // prepare authorities keys to dispaly collspan grids
                     foreach ($values_buff[$i] as $key => $value) {
-                        if(array_key_exists($key, $authority_properties_codes)){
-                            if($i == 0) {
+                        if (array_key_exists($key, $authority_properties_codes)) {
+                            if ($i == 0) {
                                 $values_buff[$i]['attr'][$key]['rowspan'] = $size;
-                            }
-                            else{
+                            } else {
                                 $values_buff[$i]['attr'][$key]['display'] = 'none';
                             }
                         }
@@ -747,8 +776,7 @@ class Structure extends APP_Controller {
                     $grid_data[$executable_status][] = $values_buff[$i];
                     $grid_data['all'][] = $values_buff[$i];
                 }
-            }
-            else{
+            } else {
                 $grid_data[$executable_status][] = $values;
                 $grid_data['all'][] = $values;
             }

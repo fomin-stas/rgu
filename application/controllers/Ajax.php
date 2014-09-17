@@ -66,6 +66,14 @@ class Ajax extends APP_Controller {
             $history_log['id_property']=$authority_property['id_property'];
             $this->history_log->insert_log($history_log);
         }
+        if ($property['id_service_type'] == 7) {
+            $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
+            $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+            $history_log['new'] = $insert_data['new_data'];
+            $history_log['old'] = $authority_property['value'];
+            $history_log['id_property']=$authority_property['id_property'];
+            $this->history_log->insert_log($history_log);
+        }
     }
 
     public function get_history_cell() {
