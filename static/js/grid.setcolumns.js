@@ -13,7 +13,7 @@ $.jgrid.extend({
 			top : 0,
 			left: 0,
 			width: 200,
-			height: 'auto',
+			height: '500px',
 			dataheight: 'auto',
 			modal: false,
 			drag: true,
@@ -52,13 +52,13 @@ $.jgrid.extend({
 				var formdata = "<div class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>\
                                                     <table class='ColTable' cellspacing='1' cellpading='2' border='0'><tbody>\
                                                     <tr><td colsan='3'><p>Выберите столбцы для отображения в таблице</p></td></tr>\
-                                                    <!--<tr><td><div class='input-group'>\
-                                                        <input type='text' class='form-control' id='search_col' />\
+                                                    <tr><td><div class='input-group'>\
+                                                        <input type='text' class='form-control' id='search_columns' />\
                                                         <span class='input-group-btn'>\
-                                                            <input type='button' class='btn btn-sm btn-info' value='Поиск' />\
+                                                            <input type='button' class='btn btn-info btn-sm' value='Поиск' />\
                                                         </span>\
                                                     </div></td></tr>\
-                                                    <tr><td><br>\
+                                                    <!--<tr><td><br>\
                                                         <select>\
                                                         <option>Полный перечень</option>\
                                                         <option>Сведения о полномочиях</option>\
@@ -141,6 +141,7 @@ $.jgrid.extend({
 				if(onBeforeShow) { p.beforeShowForm($("#"+dtbl)); }
 				$.jgrid.viewModal("#"+IDs.themodal,{gbox:"#gbox_"+gID,jqm:p.jqModal, jqM: true, modal:p.modal});
 				if(onAfterShow) { p.afterShowForm($("#"+dtbl)); }
+                  
 			}
 		});
 	}

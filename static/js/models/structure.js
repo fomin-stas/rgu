@@ -433,6 +433,22 @@ var Structure = {
 					top:107,
 					left:29
 				});
+				
+				$("#search_columns").on('keyup',function()
+				{
+					var rows=$(".ColTable tr"); //get all colum-names rows.
+					for (var i=2; i<rows.length; i++) //start from second row - the first row whith meaning data
+					{
+						if (rows[i].textContent.toLowerCase().match(this.value.toLowerCase())===null) //if row does not contain input's content
+						{
+							rows[i].style.display="none"; //hide this row
+						}
+						else {  // else show  this row.
+							rows[i].style.display="table-row";
+						} 
+					}
+				});
+				
 			return false;
 				
                 //jQuery(grid_selector).columnChooser
