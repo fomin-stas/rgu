@@ -7,12 +7,7 @@ class Ajax extends APP_Controller {
 
     function __construct() {
         parent::__construct();
-/*
-        $this->is_loggedIn();
-
-        if (!$this->input->is_ajax_request()) {
-            exit('It\'s not ajax request');
-        }*/
+        $this->layout->setLayout('ajax');
     }
 
     public function remove_property() {
@@ -77,7 +72,29 @@ class Ajax extends APP_Controller {
     }
 
     public function get_history_cell() {
-        echo 'Test history';
+        $result = '';
+        $history_log = array();
+        $row_id = $this->input->post('rowId');
+        $coll_index = $this->input->post('collIndex');
+        $cell_name = $this->input->post('cellName');
+
+        if(isset($row_id, $coll_index, $cell_name)) {
+            $property = $this->property->get_by('code', $cell_name);
+            
+            if(isset($property)) {
+                $user_id = $this->session->userdata('id');
+                $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
+                    array(
+                        //'id_user' => $user_id,
+                        'id_property' => $property['id_property'],
+                        )
+                    );
+
+            }
+
+            $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
+        }
+        echo $result;
     }
 
 }

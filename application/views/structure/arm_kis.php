@@ -201,116 +201,7 @@
             </div>
         </div>
         
-        <div class="modal fade" id="changes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <h4 class="center">
-                                История изменений
-                                <input type="text" id="timeline_search_input" class="pull-right input-sm">
-                                <i class="ace-icon fa fa-search nav-search-icon pull-right"></i>
-                            </h4>
-                            
-                            <div class="timeline-container">
-
-                                <div class="timeline-label">
-                                    <span class="label label-primary arrowed-in-right label-lg">
-                                        <b>Сегодня</b>
-                                    </span>
-                                </div>
-                                <div class="timeline-items">
-
-                                    <div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                            <span class="label label-info label-sm">Комитет по</span>
-                                        </div>
-                                        <div class="widget-box widget-color-blue">
-                                            <div class="widget-header widget-header-small">
-                                                <h5 class="widget-title smaller"><span class="grey"></span></h5>
-                                                <span class="widget-toolbar no-border">
-                                                     <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                     16:22
-                                                </span>
-                                                <span class="widget-toolbar">
-                                                    <a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a>
-                                                </span>
-                                            </div>
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                    Текущее значение
-                                                    <div class="space-6"></div>
-                                                    <div class="widget-toolbox clearfix">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                            <span class="label label-info label-sm">Комитет по</span>
-                                        </div>
-                                        <div class="widget-box widget-color-purple">
-                                            <div class="widget-header widget-header-small">
-                                                <h5 class="widget-title smaller">Изменено</h5>
-                                                <span class="widget-toolbar no-border">
-                                                     <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                     15:12
-                                                </span>
-                                                <span class="widget-toolbar">
-                                                    <a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a>
-                                                </span>
-                                            </div>
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                    Предыдущее значение
-                                                    <div class="space-6"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="timeline-label">
-                                    <span class="label label-success arrowed-in-right label-lg">
-                                        <b>Вчера</b>
-                                    </span>
-                                </div>
-                                <div class="timeline-items">
-
-                                    <div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                            <span class="label label-info label-sm">Комитет по</span>
-                                        </div>
-                                        <div class="widget-box widget-color-purple">
-                                            <div class="widget-header widget-header-small">
-                                                <h5 class="widget-title smaller">Изменено</h5>
-                                                <span class="widget-toolbar no-border">
-                                                     <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                     14:37
-                                                </span>
-                                                <span class="widget-toolbar">
-                                                    <a href="#" data-action="collapse"><i class="ace-icon fa fa-chevron-up"></i></a>
-                                                </span>
-                                            </div>
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                    Предыдущее значение
-                                                    <div class="space-6"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="modal fade" id="changes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
         
 		<div class="modal fade" id="multiselect_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -458,10 +349,17 @@
 
                 {title:"История изменений",action:function(event,ui)
 					{
+                        var rowId = getClickedRowId(event,ui),
+                            // get row data
+                            rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
+                            // get cell name by grid selector
+                            cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '')+'_', '');
+                            console.log(rowData, cellName, getClickedColNum(event,ui));
+
 						$.ajax({
 							url:'ajax/get_history_cell',
 							type:'POST',
-							data:'rowid='+getClickedRowId(event,ui)+'&colindex='+getClickedColNum(event,ui)+'&cellname='+ui.target[0].getAttribute('aria-describedby'),
+							data:'rowId='+rowId+'&collIndex='+getClickedColNum(event,ui)+'&cellName='+cellName,
 							success: function(data)
 							{
 								$('#changes').html(data);

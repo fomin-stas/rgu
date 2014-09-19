@@ -1,6 +1,7 @@
 var Structure = {
 	options: {
-		data:''
+		data:'',
+        grid_selector:'#grid-table-all'
 	},
 
 	init: function(){
@@ -21,6 +22,7 @@ var Structure = {
           $(this).tab('show');
             var tab_hash = e.target.hash.replace('#', '');
             var grid_selector = "#grid-table-"+tab_hash;
+                Structure.options.grid_selector = grid_selector;
             var pager_selector = "#grid-pager-"+tab_hash;
             var grid_data = eval('data.'+tab_hash);
 			$(window).triggerHandler('resize.jqGrid');
