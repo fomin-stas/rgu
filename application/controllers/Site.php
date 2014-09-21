@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Site extends APP_Controller {
 
-    function  __construct()  {
+    function __construct() {
         parent::__construct();
         $this->layout->setLayout('site');
     }
@@ -15,49 +15,79 @@ class Site extends APP_Controller {
     }
 
     public function login() {
-        
-        global $is_kis;
-        
-        // login request 
-        if($this->input->is_post() AND $this->form_validation->run()) {
-            $login_name = $this->input->post('login_name');   
-            $login_password = $this->input->post('login_password');   
-            $user = $this->user->get_by('user_name', $login_name);
-            if($user) {
-                // check user password
-                if($this->phpass->check($login_password, $user->password)) {
-                    // save userdata at session
-                    $userdata = array(
-                        'id' => $user->id_user,
-                        'id_organization' => $user->id_organization,
-                        'user_name' => $user->user_name,
-                        'loggedin' => true
-                    );
-                    $this->session->set_userdata($userdata);
 
-                    switch ($user->id_organization) {
-                        case 1:
-                            redirect('/structure/arm_kis');
-                            break;
-                        case 2:
-                            redirect('/structure/arm_iogv');
-                            break;    
-                    }
+        global $is_kis;
+
+        // login request 
+        if ($this->input->is_post() AND $this->form_validation->run()) {
+            $login_name = $this->input->post('login_name');
+            $login_password = $this->input->post('login_password');
+
+            $myCurl = curl_init();
+            curl_setopt_array($myCurl, array(
+                CURLOPT_URL => 'http://reestrgu.iac.spb.ru/auth/',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => http_build_query(array('login' => $login_name, 'password' => $login_password))
+            ));
+            $response_statistic = curl_exec($myCurl);
+            curl_close($myCurl);
+            $response_data = json_decode($response_statistic);
+
+            if ($response_data->access) {
+                // check user password
+                // save userdata at session
+                $userdata = array(
+                    'id' => $response_data->userID,
+                    'id_organization' => $response_data->iogvID[0],
+                    'user_name' => $login_name,
+                    'loggedin' => true,
+                    'user_type' => $response_data->userTypeRRGU
+                );
+                $this->session->set_userdata($userdata);
+                $result = $this->user->get($response_data->userID);
+                if (!$result) {
+                    $this->user->insert(array('id_user' => $response_data->userID, 'id_organization' => $response_data->iogvID[0], 'user_name' => $login_name));
                 }
-                else{
-                     $this->session->set_flashdata('message', 'Не верное имя пользователя или пароль!');
+                switch ($response_data->userTypeRRGU) {
+                    case 1:
+                        redirect('/structure/arm_kis');
+                        break;
+                    case 2:
+                        redirect('/structure/arm_iogv');
+                        break;
                 }
+            } else {
+                $this->session->set_flashdata('message', 'Не верное имя пользователя или пароль!');
             }
-            else{
-                $this->session->set_flashdata('message', 'Пользователя с такимименем не существует!');
-            } 
         }
         $this->layout->view('login');
     }
 
-    function logout()
-    {
+    function sync_organization() {
+        $myCurl = curl_init();
+        curl_setopt_array($myCurl, array(
+            CURLOPT_URL => 'http://reestrgu.iac.spb.ru/auth/iogv/',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query(array('password' => 'listIOGV4981'))
+        ));
+        $response_list_iogv = curl_exec($myCurl);
+        curl_close($myCurl);
+        $response_data = json_decode($response_list_iogv, true);
+        foreach ($response_data['iogvID'] as $key => $value) {
+            $result=  $this->organization_model->get($value);
+            if(!$result){
+                $this->organization_model->insert(array('id_organization'=>$value,'id_organization_rank'=>1,'organization_name'=>$response_data['iogvName'][$key]));
+            }else{
+                $this->organization_model->update($value,array('id_organization_rank'=>1,'organization_name'=>$response_data['iogvName'][$key]));
+            }
+        }
+    }
+
+    function logout() {
         $this->session->unset_userdata('loggedin');
         redirect('/');
     }
+
 }
