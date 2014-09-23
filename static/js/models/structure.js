@@ -160,7 +160,9 @@ var Structure = {
 
             //colorized column
             for (r=0; r<rowsCount; r++) {
-                $(grid_selector).jqGrid('setCell', r, cm[i].name, '',{'background-color':cm[i].color});
+                if(cm[i].color != '#ffffff') {
+                    $(grid_selector).jqGrid('setCell', r, cm[i].name, '',{'background-color':cm[i].color});
+                }
             }
         }
     },
@@ -237,7 +239,6 @@ var Structure = {
                     var rowData = $(this).jqGrid("getGridParam", "data")[rowid - 1];
                     // get cell model
                     var cm = $(this).jqGrid("getGridParam", "colModel");
-                    console.log(rowData, cm[iCol].name);
                     
                     jQuery(grid_selector).editCell(iRow,iCol,true);
                 },
@@ -317,7 +318,19 @@ var Structure = {
                         filterPlaceholder:"Поиск",
                         onChange:function(){}
                     });
-				},    
+				},  
+                beforeSubmitCell : function(rowid,celname,value,iRow,iCol) { 
+                    var result = {};
+                    // get row data by dblclick on cell
+                    var rowData = $(this).jqGrid("getGridParam", "data")[rowid - 1];
+                    var cm = $(this).jqGrid("getGridParam", "colModel");
+                    
+                    // prepare data for request
+                    result.id_authority = rowData.id_authority;
+                    result.id_service = rowData.id_service !== "" ? rowData.id_service : 0;
+                    result.code = cm[iCol].name;
+                    return result;
+                },   
                 //editurl: "/",//nothing is saved
                 caption: "Таблица полномочий АРМ КИС"
 
