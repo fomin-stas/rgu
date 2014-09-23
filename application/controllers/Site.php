@@ -53,8 +53,8 @@ class Site extends APP_Controller {
                     case 1:
                         redirect('/structure/arm_kis');
                         break;
-                    case 2:
-                        redirect('/structure/arm_iogv');
+                    default :
+                        redirect('/structure/arm_iogv/');
                         break;
                 }
             } else {
@@ -76,11 +76,11 @@ class Site extends APP_Controller {
         curl_close($myCurl);
         $response_data = json_decode($response_list_iogv, true);
         foreach ($response_data['iogvID'] as $key => $value) {
-            $result=  $this->organization_model->get($value);
-            if(!$result){
-                $this->organization_model->insert(array('id_organization'=>$value,'id_organization_rank'=>1,'organization_name'=>$response_data['iogvName'][$key]));
-            }else{
-                $this->organization_model->update($value,array('id_organization_rank'=>1,'organization_name'=>$response_data['iogvName'][$key]));
+            $result = $this->organization_model->get($value);
+            if (!$result) {
+                $this->organization_model->insert(array('id_organization' => $value, 'id_organization_rank' => 1, 'organization_name' => $response_data['iogvName'][$key]));
+            } else {
+                $this->organization_model->update($value, array('id_organization_rank' => 1, 'organization_name' => $response_data['iogvName'][$key]));
             }
         }
     }

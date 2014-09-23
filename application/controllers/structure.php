@@ -17,6 +17,7 @@ class Structure extends APP_Controller {
 
     public function arm_kis() {
         // load libs
+        $this->reestr(0);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
@@ -316,9 +317,13 @@ class Structure extends APP_Controller {
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
-        $data['organization'] = $organization->organization_name;
+        $data['organization'] = $organization['organization_name'];
         $data['spher'] = $this->spher->dropdown('name', 'name');
-        $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
+        $data['organization_provide_service'] = "[";
+        foreach($this->organization_model->get_all() as $value){
+            $data['organization_provide_service'] .= "'".$value['organization_name']."',";
+        }
+        $data['organization_provide_service'] = substr($data['organization_provide_service'], 0, -1).']';
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
             $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
@@ -555,6 +560,22 @@ class Structure extends APP_Controller {
                 break;
         }
     }
+    
+    private function reestr($user_type=-1){
+        $user_t=$this->session->userdata('user_type');
+        if (($user_type == -1) || ($user_type != $this->session->userdata('user_type'))){
+        switch ($this->session->userdata('user_type')) {
+                    case 1:
+                        redirect('/structure/arm_kis');
+                        break;
+                        default :
+                        redirect('/structure/arm_iogv/');
+                        break;
+                }
+        }else{
+            return;
+        }
+    }
 
     private function file_insert($id_authority) {
         $config['upload_path'] = 'file_storage/authority';
@@ -595,22 +616,23 @@ class Structure extends APP_Controller {
 
     public function arm_iogv() {
         // load libs
+        $this->reestr(2);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
         $this->zend->load('Zend/Json/Decoder');
         $this->zend->load('Zend/Json/Exception');
         $this->zend->load('Zend/Json/Expr');
-
+        $id_organization=$this->session->userdata('id_organization');
         $grid_data = array();
         $column_names = array();
         $column_models = array();
-
+        
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
-                ->get_all();
+                ->get_many_by(array('id_organization'=>$id_organization));
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
         //$properties = array_slice($properties, 0, 1);
@@ -786,7 +808,7 @@ class Structure extends APP_Controller {
         $grid_data['in_process'][] = array();
         $grid_data['in_working'][] = array();
         $grid_data['new_authorities'][] = array();
-        $this->layout->view('arm_kis', array(
+        $this->layout->view('arm_iogv', array(
             'grid_data' => $grid_data,
             //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),

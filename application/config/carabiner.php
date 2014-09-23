@@ -164,7 +164,8 @@ $config['groups']['site'] = array(
 		array('iris.min.js'),
 		array('models/structure.js'),
 		array('models/settings.js'),
-		array('models/app.js')
+		array('models/app.js'),
+                array('bootstrap-tag.min.js')
 	),
 	'css' => array(
 		array('bootstrap.min.css'),
