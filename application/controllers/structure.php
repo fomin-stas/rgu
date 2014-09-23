@@ -616,7 +616,7 @@ class Structure extends APP_Controller {
 
     public function arm_iogv() {
         // load libs
-        $this->reestr(2);
+        //$this->reestr(2);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
