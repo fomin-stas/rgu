@@ -128,12 +128,19 @@
                                       </div>
                                     </div>
                                     <div class="row" id="add_type_values_row" style="display:none">
-                                        <div class="col-md-12">
-                                            <textarea name="type_values" id="add_type_values" cols="85" rows="4">
-                                                
-                                            </textarea>
-                                            <span class="help-block">Вводите каждое новое значение через запятую.</span>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="add_type_values">Список значений</label>
+                                                <input type="text" class="form-control" id="add_type_values" name="add_type_values">
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="add_type_values_btn"> &nbsp; </label><br />
+                                                <button type="submit" class="form-control btn btn-primary" id="add_type_values_btn">Добавить значение</button>
+                                            </div>
+                                        </div>
+                                        <div id="add_type_values_list" class="col-md-12 b-type-values-list"></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -226,12 +233,19 @@
                                       </div>
                                     </div>
                                     <div class="row" id="edit_type_values_row" style="display:none">
-                                        <div class="col-md-12">
-                                            <textarea name="type_values" id="edit_type_values" cols="85" rows="4">
-                                                
-                                            </textarea>
-                                            <span class="help-block">Вводите каждое новое значение через запятую.</span>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="edit_type_values">Список значений</label>
+                                                <input type="text" class="form-control" id="edit_type_values" name="edit_type_values">
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="edit_type_values_btn"> &nbsp; </label><br />
+                                                <button type="submit" class="form-control btn btn-primary" id="edit_type_values_btn">Добавить значение</button>
+                                            </div>
+                                        </div>
+                                        <div id="edit_type_values_list" class="col-md-12 b-type-values-list"></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">

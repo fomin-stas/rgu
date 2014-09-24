@@ -61,6 +61,54 @@ var Settings = {
             }
         });
 
+        // add new values for property with select type
+        $('#add_type_values_btn').on('click', function(e){
+            e.preventDefault();
+            var elem = $('#add_type_values'),
+                value = $(elem).val(),
+                html = '<span class="label label-success"><input type="hidden" name="type_values[]" value="'+value+'">'+value+' <a href="#" class="a-value-remove">x</a></span>';
+            if(value.length > 0) {
+                $('#add_type_values_list').append(html);    
+            }    
+            $(elem).val('');
+        });
+
+        $('#add_type_values_list').on('click', '.a-value-remove', function(e){
+            e.preventDefault();
+            $(this).parent('.label').remove();
+        });
+
+        // add new values for property with select type
+        $('#edit_type_values_btn').on('click', function(e){
+            e.preventDefault();
+            var elem = $('#edit_type_values'),
+                value = $(elem).val(),
+                html = '<span class="label label-success"><input type="hidden" name="type_values[]" value="'+value+'">'+value+' <a href="#" class="a-value-remove">x</a></span>';
+            if(value.length > 0) {
+                $('#edit_type_values_list').append(html);    
+            }    
+            $(elem).val('');
+        });
+
+        $('#edit_type_values_list').on('click', '.a-value-remove', function(e){
+            e.preventDefault();
+            var elem = $(this), 
+                property_id = $(elem).data('property-value-id');
+            if(confirm('Вы действительно хотите удалить свойство?')) {
+                $.ajax({
+                    url: App.options.baseURL+'ajax/delete_property_by_id',
+                    type: 'post',
+                    data: {property_id: property_id},
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.success) {
+                            $(elem).parent('.label').remove();
+                        }
+                    }
+                });
+            }
+        });
+
         // edit row on Properties table
         $('#properties-table .a-edit').on('click', function(e){
             e.preventDefault();
@@ -72,6 +120,7 @@ var Settings = {
                     dataType: 'json',
                     success: function (data) {
                         if(data.success) {
+                            console.log(data);
                             var p = data.property;
                             // load data to modal
                             $('#edit_property_name').val(p.property_name)
@@ -81,6 +130,17 @@ var Settings = {
                             // check property tupe == select
                             if(p.id_property_type == 3){
                                 $('#edit_type_values_row').show();
+
+                                var values_html = '';
+                                if(p.values.length > 0) {
+                                    for (var i = p.values.length - 1; i >= 0; i--) {
+                                        console.log(p.values[i]);
+                                        values_html += '<span class="label label-success">'+p.values[i].value+' <a href="#" class="a-value-remove" data-property-value-id="'+p.values[i].property_value_id+'">x</a></span>';
+                                    };
+                                    if(values_html.length > 0) {
+                                        $('#edit_type_values_list').html(values_html);
+                                    }
+                                }
                             }
                             else{
                                 $('#edit_type_values_row').hide();

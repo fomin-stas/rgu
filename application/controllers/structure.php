@@ -17,7 +17,7 @@ class Structure extends APP_Controller {
 
     public function arm_kis() {
         // load libs
-        $this->reestr(0);
+        //$this->reestr(0);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');

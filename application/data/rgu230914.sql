@@ -445,6 +445,7 @@ CREATE TABLE property (
 
 ALTER TABLE public.property OWNER TO postgres;
 
+
 --
 -- TOC entry 202 (class 1259 OID 91616)
 -- Name: property_commits; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -543,6 +544,41 @@ ALTER TABLE public.property_id_property_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE property_id_property_seq OWNED BY property.id_property;
+
+
+--
+-- Name: property_values; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE property_values (
+    property_value_id integer NOT NULL,
+    property_id integer,
+    value character(100)
+);
+
+
+ALTER TABLE public.property_values OWNER TO postgres;
+
+--
+-- Name: property_values_property_value_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE property_values_property_value_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.property_values_property_value_id_seq OWNER TO postgres;
+
+--
+-- Name: property_values_property_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE property_values_property_value_id_seq OWNED BY property_values.property_value_id;
+
 
 
 --
@@ -841,7 +877,11 @@ ALTER TABLE ONLY property_commits ALTER COLUMN id_property_commit SET DEFAULT ne
 
 ALTER TABLE ONLY property_format ALTER COLUMN id_property_format SET DEFAULT nextval('property_format_id_property_format_seq'::regclass);
 
+--
+-- Name: property_value_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
 
+ALTER TABLE ONLY property_values ALTER COLUMN property_value_id SET DEFAULT nextval('property_values_property_value_id_seq'::regclass);
 --
 -- TOC entry 1942 (class 2604 OID 91481)
 -- Name: id_service; Type: DEFAULT; Schema: public; Owner: postgres

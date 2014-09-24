@@ -26,6 +26,10 @@ class Ajax extends APP_Controller {
         if (isset($id)) {
             $property = $this->property->get($id);
             if (isset($property)) {
+                $property['values'] = array();
+                if($property['id_property_type'] == 3){
+                    $property['values'] = $this->property_values_model->get_many_by('property_id', $property['id_property']);
+                }
                 //prepare options
                 $property['options'] = json_decode($property['options'], true);
 
@@ -95,6 +99,16 @@ class Ajax extends APP_Controller {
             $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
         }
         echo $result;
+    }
+
+    public function delete_property_by_id() {
+        $result['success'] = false;
+        $data = $_POST;
+        if(isset($data['property_id'])) {
+            // remove property
+            $result['success'] =  $this->property_values_model->delete($data['property_id']);
+        }
+        echo json_encode($result);
     }
 
 }

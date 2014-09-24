@@ -68,9 +68,8 @@ class Settings extends APP_Controller {
             if($result){
                 if($data['id_property_type'] == 3) {
                     $values = $this->input->post('type_values');
-                    $property_values = explode(",", $values);
-                    if(count($property_values) > 0) {
-                        foreach ($property_values as $key => $value) {
+                    if(count($values) > 0) {
+                        foreach ($values as $key => $value) {
                             $p = array(
                                 'property_id' => $result,
                                 'value' => $value
@@ -108,6 +107,18 @@ class Settings extends APP_Controller {
                 // update property
                 $result = $this->property->update($id_property, $data);
                 if($result){
+                    if($data['id_property_type'] == 3) {
+                        $values = $this->input->post('type_values');
+                        if(count($values) > 0) {
+                            foreach ($values as $key => $value) {
+                                $p = array(
+                                    'property_id' => (int)$id_property,
+                                    'value' => $value
+                                    );
+                                $this->property_values_model->insert($p);
+                            }
+                        }
+                    }
                     $this->session->set_flashdata('message', 'Cвойство успешно отредактировано');
                     redirect('/settings/index#');
                 }
