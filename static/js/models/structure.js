@@ -418,16 +418,19 @@ var Structure = {
         );
     
         //add new
-        jQuery(grid_selector).jqGrid('navGrid',pager_selector).jqGrid('navButtonAdd',pager_selector,
+        if (location.href.match('structure/arm_kis'))
         {
-            id:"#add_new",
-            buttonicon:"ace-icon fa fa-plus-circle purple",
-            caption:"",
-            title:"Новое полномочие",
-            onClickButton: function(){location="structure/step1";}
+			jQuery(grid_selector).jqGrid('navGrid',pager_selector).jqGrid('navButtonAdd',pager_selector,
+			{
+				id:"#add_new",
+				buttonicon:"ace-icon fa fa-plus-circle purple",
+				caption:"",
+				title:"Новое полномочие",
+				onClickButton: function(){location="structure/step1";}
 
-        });
-    
+			});
+		}
+		
         //set columns
         jQuery(grid_selector).jqGrid('navGrid',pager_selector).jqGrid('navButtonAdd',pager_selector,
         {
