@@ -68,7 +68,7 @@ $.jgrid.extend({
                                                     </td></tr>--></tbody></table>\
                                                 </div>";
                                 formdata += "<div id='"+dtbl+"' class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>";
-                                formdata += "<table class='ColTable' cellspacing='1' cellpading='2' border='0'><tbody>";
+                                formdata += "<table class='ColTable settings_list' cellspacing='1' cellpading='2' border='0'><tbody>";
 				for(i=0;i<this.p.colNames.length;i++){
 					if(!$t.p.colModel[i].hidedlg) { // added from T. Tomov
 						formdata += "<tr><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
@@ -141,7 +141,13 @@ $.jgrid.extend({
 				if(onBeforeShow) { p.beforeShowForm($("#"+dtbl)); }
 				$.jgrid.viewModal("#"+IDs.themodal,{gbox:"#gbox_"+gID,jqm:p.jqModal, jqM: true, modal:p.modal});
 				if(onAfterShow) { p.afterShowForm($("#"+dtbl)); }
-                  
+                
+                //aditional code here                
+				$('.ColTable.settings_list tbody').sortable({
+					axis:'y',
+					containment:'parent'
+				});
+                                
 			}
 		});
 	}

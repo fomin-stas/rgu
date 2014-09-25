@@ -221,3 +221,6 @@ input[type=checkbox].ace.ace-switch.ace-switch-4.step3:checked + .lbl::after {
 input[type=checkbox].ace.ace-switch.ace-switch-4.step3:checked + .lbl::before {
    text-indent: 30px;
 }
+
+td.ui-search-input .multiselect-container.dropdown-menu
+{max-width: 300px}

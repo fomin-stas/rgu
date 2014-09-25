@@ -155,7 +155,7 @@ var Structure = {
 //				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"};
 //				cm[i].searchoptions.attr={multiple:'multiple'};
 				cm[i].searchoptions={value:table_data_to_options(i)};
-				cm[i].searchoptions.attr={};
+				cm[i].searchoptions.attr={multiple:'multiple'};
 			}
 
             //colorized column
@@ -541,7 +541,7 @@ var Structure = {
                 
                 filters.map(function(){
                     $(this).on('change keyup',function(){
-                        var value=this.value;
+                        var value=$(this).val();
                         console.log("value: "+value);
                         var filter_index=getColumnIndexByName(this.name);
                         var column=$('tr[tabindex=-1] td[role="gridcell"]').map(function(){
@@ -588,10 +588,12 @@ var Structure = {
 									console.log("searchCheck: "+column[i].searchCheck);
 								}
 							}
-							else if (typeof value==='array')
+							else if (typeof value==='object')
 							{
+								if (value===null){value=['']}
 								column[i].searchCheck=1;
 								column[i].parentNode.style.display='none';
+								
 								for (var n=0; n<value.length; n++)
 								{
 									if(column[i].innerHTML.toLowerCase().match(value[n].toLowerCase())!==null)
@@ -622,6 +624,7 @@ var Structure = {
 										console.log("searchCheck: "+column[i].searchCheck);
 									}
 								}
+								
 							}
                         }
                     });
@@ -657,6 +660,10 @@ var Structure = {
 //            checkboxName:"multiselect[]",
 			nonSelectedText:"Не выбрано",
 			includeSelectAllOption:true,
+			enableCaseInsensitiveFiltering:true,
+			filterPlaceholder:"Поиск",
+			numberDisplayed:1,
+			maxHeight:300,
 			selectAllText:"Все",
 			onChange:function(){console.log('search');},
 //            templates:{
