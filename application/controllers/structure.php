@@ -649,6 +649,10 @@ class Structure extends APP_Controller {
         $properties = $this->property->with('format')->order_by('order')->get_all();
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
+            $options = json_decode($property['options'], true);
+            if(FALSE == $options['property_iogv_displayed']){
+                continue;
+            }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
             $model['name'] = $property['code'];
@@ -699,7 +703,7 @@ class Structure extends APP_Controller {
                     $model['width'] = 270;
                     break;
             }
-            $options = json_decode($property['options'], true);
+            
             if (count($options) > 0) {
                 foreach ($options as $key => $option) {
                     switch ($key) {
