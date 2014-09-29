@@ -186,8 +186,9 @@
 
             </div>
             <div class="form-group">
-                <label for="organization_provide_service2" class="control-label col-md-6">Наименование органов, участвующих в предоставлении услуги</label>
-                <input  name="organization_provide_service" class="organization_provide_service" id="organization_provide_service" value="zzzz" />
+                <label for="organization_provide_service" class="control-label col-md-6">Наименование органов, участвующих в предоставлении услуги</label>
+                <input  name="organization_provide_service" class="col-md-5" id="organization_provide_service" value="zzzz" />
+<!--
                 <script>
                     var tag_input = $('#sr1_3');
                     try {
@@ -201,6 +202,7 @@
                         tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
                     }
                 </script>
+-->
             </div>
             <div class="form-group">
                 <label for="list_npa_rf_sr" class="control-label col-md-6">Перечень НПА РФ, регулирующих предоставление услуги</label>
@@ -530,6 +532,22 @@
             $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
             $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('required', 'required');
         }
+        
+        //change textarea to tag-input
+        if (type=='sr')
+        {
+			var tag_input = $('#'+type + num[type] + '_3');
+			try {
+				tag_input.tag({
+					placeholder: tag_input.attr('placeholder'),
+					source: "<?= $organization_provide_service ?>"
+				});
+			}
+			catch (e) {
+				//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+				tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
+			}
+		}        
 
         //delete-buttons logic
         $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function() {
