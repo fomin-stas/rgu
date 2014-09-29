@@ -165,7 +165,8 @@ $config['groups']['site'] = array(
 		array('models/structure.js'),
 		array('models/settings.js'),
 		array('models/app.js'),
-                array('bootstrap-tag.min.js')
+        array('bootstrap-tag.min.js'),
+        array('jquery.gritter.min.js')
 	),
 	'css' => array(
 		array('bootstrap.min.css'),
@@ -178,6 +179,7 @@ $config['groups']['site'] = array(
 		array('ui.multiselect.css'),
 		array('ace.min.css'),
 		array('main.css'),
+		array('jquery.gritter.css ')
 			)
 	);
 

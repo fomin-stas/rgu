@@ -22,7 +22,7 @@ class Site extends APP_Controller {
         if ($this->input->is_post() AND $this->form_validation->run()) {
             $login_name = $this->input->post('login_name');
             $login_password = $this->input->post('login_password');
-
+            /*
             $myCurl = curl_init();
             curl_setopt_array($myCurl, array(
                 CURLOPT_URL => 'http://reestrgu.iac.spb.ru/auth/',
@@ -32,24 +32,24 @@ class Site extends APP_Controller {
             ));
             $response_statistic = curl_exec($myCurl);
             curl_close($myCurl);
-            $response_data = json_decode($response_statistic);
+            $response_data = json_decode($response_statistic);*/
 
-            if ($response_data->access) {
+            if (true){//$response_data->access) {
                 // check user password
                 // save userdata at session
                 $userdata = array(
-                    'id' => $response_data->userID,
-                    'id_organization' => $response_data->iogvID[0],
-                    'user_name' => $login_name,
+                    'id' => 154, // $response_data->userID,//154
+                    'id_organization' => 8958, // $response_data->iogvID[0],//8958
+                    'user_name' => 'ksk2004', // $login_name,//ksk2004
                     'loggedin' => true,
-                    'user_type' => $response_data->userTypeRRGU
+                    'user_type' => 1//$response_data->userTypeRRGU//1
                 );
                 $this->session->set_userdata($userdata);
-                $result = $this->user->get($response_data->userID);
+                $result = $this->user->get($userdata['id']);
                 if (!$result) {
-                    $this->user->insert(array('id_user' => $response_data->userID, 'id_organization' => $response_data->iogvID[0], 'user_name' => $login_name));
+                    $this->user->insert(array('id_user' => $userdata['id'], 'id_organization' => $userdata['id_organization'], 'user_name' => $login_name));
                 }
-                switch ($response_data->userTypeRRGU) {
+                switch (1){//$response_data->userTypeRRGU) {
                     case 1:
                         redirect('/structure/arm_kis');
                         break;

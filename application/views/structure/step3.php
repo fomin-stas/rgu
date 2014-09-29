@@ -123,22 +123,9 @@
                                                                         <input type="checkbox" name="ch_<?= $id_sirvices ?>_<?= $name; ?>" class="ace ace-switch ace-switch-4 step3 btn-flat" />
                                                                         <span class="lbl" data-lbl="Не согласовано &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Согласовано"></span>
                                                                     </label>
-                                                                    <div class="modal fade" id="tr1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog">
-                                                                            <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                                                        <h4>Комментарий</h4>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <textarea class="input-xxlarge center" name="ta_<?= $id_sirvices ?>_<?= $name; ?>"></textarea>
-                                                                                    </div>
-                                                                                    <div class="modal-footer ">
-                                                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
-                                                                                    </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <button type="button" class="com_bt btn btn-sm btn-primary" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
+                                                                        <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                    </button>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -230,7 +217,7 @@
 
 
 <script type="text/javascript">
- 
+
     $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
@@ -241,12 +228,43 @@
     $("#comments_modal2").on("submit", function() {
         location = "step2";
     });
+
     /*
-    $('#srok_otveta_3').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true, toda yHiglight: true
+     $('#srok_otveta_3').datepicker({
+     format: 'dd-mm-yyyy',
+     autoclose: true, toda yHiglight: true
+     });
+     */
+    $('.com_bt').click(function() {
+        //сделать ajax запрос за коментариями
+        id_service_property = $(this).attr('id');
+        comments = '';
+        
+        jQuery.gritter.add({
+    title: 'This is a sticky notice!',
+    text: 'Sticky content',
+    image: 'path/to/image',
+    sticky: true,
+    time: '',
+    class_name: 'gritter-info gritter-light gritter-center'
+});
+        
+        $.ajax({
+            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property,
+            type: 'get',
+            success: function(data) {
+                comments = data;
+                jQuery.gritter.add({
+                    title: 'Комментарии',
+                    text: comments,
+                    sticky: true,
+                    image: 'static/img/user.jpg',
+                    time: '',
+                    class_name: 'gritter-info  gritter-center'
+                });
+            }
+        });
     });
-*/
     $('.ace-switch-4.step3').click(function() {
         if ($('input:checked').length > 0) {
             $('#agree_btn').attr('disabled', true);
