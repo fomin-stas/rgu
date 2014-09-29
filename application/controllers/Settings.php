@@ -58,7 +58,9 @@ class Settings extends APP_Controller {
             $data['id_service_type'] = (int)$this->input->post('service_type');   
             $data['options']['property_align'] = $this->input->post('property_align');   
             $data['options']['property_width'] = $this->input->post('property_width');   
-            $data['options']['property_required'] = $this->input->post('property_required');   
+            $data['options']['property_required'] = ($this->input->post('property_required'))?true:false;   
+            $data['options']['property_iogv_displayed'] = ($this->input->post('property_iogv_displayed') == 'on')?true:false;   
+            $data['options']['property_other_users_displayed'] = ($this->input->post('property_other_users_displayed') == 'on')?true:false;   
             $data['options']['property_color'] = $this->input->post('property_color');   
             $data['options'] = json_encode($data['options']);
             $data['code'] = NULL;

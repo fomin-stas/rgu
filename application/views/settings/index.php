@@ -175,7 +175,17 @@
                                     </div>
                                   <div class="checkbox">
                                     <label>
+                                    <input type="checkbox" name="property_iogv_displayed" id="add_property_iogv_displayed" <?php echo set_checkbox('property_iogv_displayed', '1'); ?>> Отображается ли сведение(поле) на форме у ИОГВ по заполнению услуги/функции/фкн?
+                                    </label>
+                                  </div>
+                                  <div class="checkbox" style="display:none" id="add_property_required_box">
+                                    <label>
                                     <input type="checkbox" name="property_required" id="add_property_required" <?php echo set_checkbox('property_required', '1'); ?>> Свойство обязательно для заполнения?
+                                    </label>
+                                  </div>
+                                  <div class="checkbox" id="add_property_other_users_displayed_box">
+                                    <label>
+                                    <input type="checkbox" name="property_other_users_displayed" id="add_property_other_users_displayed" <?php echo set_checkbox('property_other_users_displayed', '1'); ?>> Доступен ли столбец в таблице полномочий для просмотра другими пользователями?
                                     </label>
                                   </div>
                                   <input type="hidden" name="method" value="add">
