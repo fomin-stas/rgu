@@ -109,6 +109,18 @@ var Settings = {
             }
         });
 
+        // set display value when we are create new property
+        $('#add_property_iogv_displayed').on('change', function(){
+            if($(this).is(':checked')) {
+                $('#add_property_required_box').show();
+                $('#add_property_other_users_displayed_box').hide();
+            }
+            else{
+                $('#add_property_required_box').hide();
+                $('#add_property_other_users_displayed_box').show();
+            }
+        });
+
         // edit row on Properties table
         $('#properties-table .a-edit').on('click', function(e){
             e.preventDefault();

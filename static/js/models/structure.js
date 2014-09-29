@@ -157,6 +157,13 @@ var Structure = {
 				cm[i].searchoptions={value:table_data_to_options(i)};
 				cm[i].searchoptions.attr={multiple:'multiple'};
 			}
+			else
+			{
+				cm[i].stype='select';
+                cm[i].searchoptions.attr={multiple:'multiple'};
+                cm[i].edittype='textarea';
+                cm[i].editoptions={};
+			}
 
             //colorized column
             for (r=0; r<rowsCount; r++) {

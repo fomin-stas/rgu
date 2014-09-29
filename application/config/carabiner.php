@@ -157,6 +157,7 @@ $config['groups']['site'] = array(
 		array('grid.locale-ru.js'),
 		array('grid.setcolumns.js'),
 		array('bootstrap-multiselect.js'),
+		array('bootstrap-tag.min.js'),
 		array('ace-elements.min.js'),
 		array('ace.min.js'),
 		array('jquery-ui.min.js'),
