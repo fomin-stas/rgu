@@ -105,40 +105,40 @@ var Structure = {
         }
         return result;
     },
+    
+    table_data_to_options: function (col)
+        {
+            var cells=$('tr[tabindex=-1] td[role="gridcell"]');
+            var column=[];
+            var obj={};
+            var result=':показать все'
+            for (k=0; k<cells.length; k++)
+            {
+                if (cells[k].cellIndex===col)
+                {
+                    if ((cells[k].innerHTML!='&nbsp;')&&(cells[k].innerHTML!=undefined)&&(cells[k].innerHTML!=''))
+                    {
+                        column.push(cells[k].innerHTML);
+                    }
+                }
+            }
+            var values=column.join().split(',');
+            for (var i=0; i<values.length; i++)
+            {
+                var str=values[i];
+                obj[str]=true;
+            }
+            var sorted=Object.keys(obj);
+            for (var z=0; z<sorted.length; z++)
+            {
+                result+=(';'+sorted[z]+':'+sorted[z]);
+            }
+            return result;
+        }, 
 
     render_colModel: function(grid_selector) {
         var cm=$(grid_selector).jqGrid('getGridParam','colModel'),
             rowsCount = $(grid_selector).getGridParam("records");
-        
-        function table_data_to_options(col)
-        {
-			var cells=$('tr[tabindex=-1] td[role="gridcell"]');
-			var column=[];
-			var obj={};
-			var result=':показать все'
-			for (k=0; k<cells.length; k++)
-			{
-				if (cells[k].cellIndex===col)
-				{
-					if ((cells[k].innerHTML!='&nbsp;')&&(cells[k].innerHTML!=undefined)&&(cells[k].innerHTML!=''))
-					{
-						column.push(cells[k].innerHTML);
-					}
-				}
-			}
-			var values=column.join().split(',');
-			for (var i=0; i<values.length; i++)
-			{
-				var str=values[i];
-				obj[str]=true;
-			}
-			var sorted=Object.keys(obj);
-			for (var z=0; z<sorted.length; z++)
-			{
-				result+=(';'+sorted[z]+':'+sorted[z]);
-			}
-			return result;
-		}                   
         
         for (var i=0; i<cm.length; i++)
         {   
@@ -154,8 +154,15 @@ var Structure = {
             {
 //				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"};
 //				cm[i].searchoptions.attr={multiple:'multiple'};
-				cm[i].searchoptions={value:table_data_to_options(i)};
+				cm[i].searchoptions={value:Structure.table_data_to_options(i)};
 				cm[i].searchoptions.attr={multiple:'multiple'};
+			}
+			else
+			{
+				cm[i].stype='select';
+                cm[i].searchoptions.attr={multiple:'multiple'};
+                cm[i].edittype='textarea';
+                cm[i].editoptions={};
 			}
 
             //colorized column
@@ -210,8 +217,8 @@ var Structure = {
                 deepempty: true,
                 ignoreCase: true,
 				mtype: "POST",
-                autowidth:true, 
-                shrinkToFit:false,
+                //autowidth:true, 
+                //shrinkToFit:false,
                 cellEdit: true,
                 cellsubmit: "remote",
 				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.

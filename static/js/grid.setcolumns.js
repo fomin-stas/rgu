@@ -71,7 +71,7 @@ $.jgrid.extend({
                                 formdata += "<table class='ColTable settings_list' cellspacing='1' cellpading='2' border='0'><tbody>";
 				for(i=0;i<this.p.colNames.length;i++){
 					if(!$t.p.colModel[i].hidedlg) { // added from T. Tomov
-						formdata += "<tr><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
+						formdata += "<tr id='"+(i)+"_sortable_row'><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
 						((this.p.colModel[i].hidden===false)?"checked":"") + "/>" +  "<label for='col_" + this.p.colModel[i].name + "'>" + this.p.colNames[i] + ((p.colnameview) ? " (" + this.p.colModel[i].name + ")" : "" )+ "</label></td></tr>";
 					}
 				}
@@ -141,13 +141,24 @@ $.jgrid.extend({
 				if(onBeforeShow) { p.beforeShowForm($("#"+dtbl)); }
 				$.jgrid.viewModal("#"+IDs.themodal,{gbox:"#gbox_"+gID,jqm:p.jqModal, jqM: true, modal:p.modal});
 				if(onAfterShow) { p.afterShowForm($("#"+dtbl)); }
-                
-                //aditional code here                
-				$('.ColTable.settings_list tbody').sortable({
-					axis:'y',
-					containment:'parent'
-				});
                                 
+                                //add reordering
+                                var index_before_reorder;
+                                $('.ColTable.settings_list tbody').sortable({
+                                    axis:'y',
+                                    containment:'parent',
+                                    stop:function(event,ui)
+                                    {
+                                        console.log(index_before_reorder);
+                                        console.log(ui.item[0].rowIndex);
+                                        var array_of_rowIndexes=$('.ui-sortable tr').map(function()
+                                        {
+                                          return parseInt(this.id);
+                                        });
+                                        $(grid_selector).remapColumns(array_of_rowIndexes,true,false);
+                                    }
+                                });
+    
 			}
 		});
 	}

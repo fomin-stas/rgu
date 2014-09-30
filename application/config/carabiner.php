@@ -157,6 +157,7 @@ $config['groups']['site'] = array(
 		array('grid.locale-ru.js'),
 		array('grid.setcolumns.js'),
 		array('bootstrap-multiselect.js'),
+		array('bootstrap-tag.min.js'),
 		array('ace-elements.min.js'),
 		array('ace.min.js'),
 		array('jquery-ui.min.js'),
@@ -165,7 +166,8 @@ $config['groups']['site'] = array(
 		array('models/structure.js'),
 		array('models/settings.js'),
 		array('models/app.js'),
-                array('bootstrap-tag.min.js')
+        array('bootstrap-tag.min.js'),
+        array('jquery.gritter.min.js')
 	),
 	'css' => array(
 		array('bootstrap.min.css'),
@@ -178,6 +180,7 @@ $config['groups']['site'] = array(
 		array('ui.multiselect.css'),
 		array('ace.min.css'),
 		array('main.css'),
+		array('jquery.gritter.css ')
 			)
 	);
 

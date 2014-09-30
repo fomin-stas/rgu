@@ -27,7 +27,7 @@ class Ajax extends APP_Controller {
             $property = $this->property->get($id);
             if (isset($property)) {
                 $property['values'] = array();
-                if($property['id_property_type'] == 3){
+                if ($property['id_property_type'] == 3) {
                     $property['values'] = $this->property_values_model->get_many_by('property_id', $property['id_property']);
                 }
                 //prepare options
@@ -54,7 +54,7 @@ class Ajax extends APP_Controller {
         }
         $authoritis = $this->authority->get_all();
         $authority = $authoritis[$insert_data['authority_num'] - 1];
-        $for_get=array('code'=>$insert_data['code']);
+        $for_get = array('code' => $insert_data['code']);
         $property = $this->property->get_by($for_get);
 
         if ($property['id_service_type'] == 6) {
@@ -62,7 +62,7 @@ class Ajax extends APP_Controller {
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
-            $history_log['id_property']=$authority_property['id_property'];
+            $history_log['id_property'] = $authority_property['id_property'];
             $this->history_log->insert_log($history_log);
         }
         if ($property['id_service_type'] == 7) {
@@ -70,7 +70,7 @@ class Ajax extends APP_Controller {
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
-            $history_log['id_property']=$authority_property['id_property'];
+            $history_log['id_property'] = $authority_property['id_property'];
             $this->history_log->insert_log($history_log);
         }
     }
@@ -82,18 +82,17 @@ class Ajax extends APP_Controller {
         $coll_index = $this->input->post('collIndex');
         $cell_name = $this->input->post('cellName');
 
-        if(isset($row_id, $coll_index, $cell_name)) {
+        if (isset($row_id, $coll_index, $cell_name)) {
             $property = $this->property->get_by('code', $cell_name);
-            
-            if(isset($property)) {
+
+            if (isset($property)) {
                 $user_id = $this->session->userdata('id');
                 $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
-                    array(
-                        //'id_user' => $user_id,
-                        'id_property' => $property['id_property'],
+                        array(
+                            //'id_user' => $user_id,
+                            'id_property' => $property['id_property'],
                         )
-                    );
-
+                );
             }
 
             $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
@@ -104,11 +103,24 @@ class Ajax extends APP_Controller {
     public function delete_property_by_id() {
         $result['success'] = false;
         $data = $_POST;
-        if(isset($data['property_id'])) {
+        if (isset($data['property_id'])) {
             // remove property
-            $result['success'] =  $this->property_values_model->delete($data['property_id']);
+            $result['success'] = $this->property_values_model->delete($data['property_id']);
         }
         echo json_encode($result);
+    }
+
+    public function get_property_comments($id) {
+        $property_array = explode("_", $id);
+        $service_property = $this->service_property->get_by(array('id_service' => $property_array[1],
+            'id_property' => $property_array[2]));
+        $this->load->view('ajax/comments_property',$service_property);
+    }
+
+    public function insert_comments() {
+        $id_service_property = $this->input->post('id_service_property');
+        $comment = $this->input->post('comment');
+        $this->property_comments->insert_comment($id_service_property, $comment);
     }
 
 }

@@ -34,7 +34,7 @@ class Structure extends APP_Controller {
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
-                ->limit(1)
+                ->limit(30)
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
