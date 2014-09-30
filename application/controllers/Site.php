@@ -85,13 +85,18 @@ class Site extends APP_Controller {
         }
     }
 
+    function logout() {
+        $this->session->unset_userdata('loggedin');
+        redirect('/');
+    }
+
     function parse_properties() {
         $this->load->library('phpexcel');
         $source_file = APPPATH.'data/excel/info.xlsx';
         $reader = PHPExcel_IOFactory::createReaderForFile($source_file);
         $excel = $reader->load($source_file);
         $excel->setActiveSheetIndex(0);
-        $cell_item = 1;
+        $cell_item = 0;
         while (true) {
             $property = array();
             $property['id_property_type'] = 2; // textarea
@@ -128,9 +133,98 @@ class Site extends APP_Controller {
         print('Done.');
     }
 
-    function logout() {
-        $this->session->unset_userdata('loggedin');
-        redirect('/');
+    function import_content() {
+        //header("Content-Type: text/html; charset=windows-1251");
+        $properties = $this->property->get_all();
+        $properties_keys = array();
+        // prepare properties for search
+        foreach ($properties as $key => $value) {
+            $properties[$key]['property_name'] = trim($value['property_name']);
+            $properties[$key]['property_short_name'] = trim($value['property_short_name']);
+        }
+        //var_dump($properties);  
+        $csv = fopen(APPPATH.'data/excel/import_content.csv', 'r');
+        $i = 0;
+        while (($row = fgetcsv($csv, 0, ';')) !== FALSE) {
+            // prepare properties keys
+            if($i == 0) {
+                $x = 0;
+                foreach ($row as $key => $value) {
+                    if($value != '') {
+                        $value = trim(mb_convert_encoding($value, "utf-8", "windows-1251"));
+                        $search = $this->recursive_array_search($value, $properties);
+
+                        if(FALSE == $search AND '0' != (string)$search) {
+                            //echo 'Свойство ' . $value . ' не найдено' . PHP_EOL;
+                        }
+                        else{
+                            $properties_keys[$key] = $properties[$search]['id_property'];    
+                        }
+                        $x++;
+                    }
+                }
+                //var_dump($properties_keys);
+            }
+            else{
+                $x = 0;
+                $authority = array();
+                $authority_property = array();
+                $authority_properties = array();
+                $service = array();
+                $service_property = array();
+                $service_properties = array();
+                foreach ($row as $key => $value) {
+                    if($value != '') {
+                        $value = mb_convert_encoding($value, "utf-8", "windows-1251");
+                        if($key < 12) {
+                            if(array_key_exists($key, $properties_keys)) {
+                                $authority_properties[$key]['value'] = $value;
+                                $authority_properties[$key]['property_id'] = $properties_keys[$key];
+                            }
+                        }
+                        else{
+                            if(array_key_exists($key, $properties_keys)) {
+                                $service_properties[$key]['value'] = $value;
+                                $service_properties[$key]['property_id'] = $properties_keys[$key];
+                            }
+                        }
+                        $x++;
+                    }
+                }
+                //insert authority and authority properties
+                $authority['id_organization'] = 2;
+                $authority['id_authority_status'] = 1;
+                $authority['authority_name'] = (isset($authority_properties[11]['value']))?$authority_properties[11]['value']:'';
+                $authority_id = $this->authority->insert($authority);
+                if($authority_id) {
+                    foreach ($authority_properties as $key => $value) {
+                        $authority_property['id_property'] = $value['property_id'];
+                        $authority_property['id_authority'] = $authority_id;
+                        $authority_property['value'] = $value['value'];
+                        $this->authority_property_model->insert($authority_property);
+                    }
+                }
+                
+                //insert service and cervice properties
+                $service['id_service_type'] = 8; 
+                $service['id_authority_status'] = 1; 
+                $service['id_authority'] = $authority_id; 
+                $service['service_name'] = (isset($service_properties[12]['value']))?$service_properties[12]['value']:''; 
+                $service_id = $this->service->insert($service);
+                if($service_id) {
+                    foreach ($service_properties as $key => $value) {
+                        $service_property['id_property'] = $value['property_id'];
+                        $service_property['id_service'] = $service_id;
+                        $service_property['value'] = $value['value'];
+                        $this->service_property->insert($service_property);
+                    }
+                }
+            }
+            //var_dump($row);
+            $i++;
+        }
+        fclose($csv);
+        print('Done.');
     }
 
     private function get_cell_value($excel, $cellOrCol, $row = null, $format = 'd.m.Y')
@@ -181,5 +275,15 @@ class Site extends APP_Controller {
         $data['value'] = $val;
         return $data;
     }
+
+    private function recursive_array_search($needle,$haystack) {
+        foreach($haystack as $key=>$value) {
+            $current_key=$key;
+            if($needle===$value OR (is_array($value) && $this->recursive_array_search($needle,$value))) {
+                return $current_key;
+            }
+        }
+        return false;
+    } 
 
 }

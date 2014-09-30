@@ -34,6 +34,7 @@ class Structure extends APP_Controller {
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
+                ->limit(1)
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -638,12 +639,14 @@ class Structure extends APP_Controller {
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
+                    ->limit(10)
                     ->get_many_by(array('id_organization' => $id_organization));
         } else {
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
+                    ->limit(10)
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();

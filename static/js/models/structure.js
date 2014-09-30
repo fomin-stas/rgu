@@ -210,6 +210,8 @@ var Structure = {
                 deepempty: true,
                 ignoreCase: true,
 				mtype: "POST",
+                autowidth:true, 
+                shrinkToFit:false,
                 cellEdit: true,
                 cellsubmit: "remote",
 				cellurl: 'ajax/edit_property',	//'string' - the url where the cell is to be saved.
