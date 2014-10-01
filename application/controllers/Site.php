@@ -40,6 +40,9 @@ class Site extends APP_Controller {
                 if($response_data->userTypeRRGU==4){
                     $response_data->iogvID[0]=1;
                 }
+                if(!isset($response_data->iogvID[0])){
+                    $response_data->iogvID[0]=1;
+                }
                 $userdata = array(
                     'id' => $response_data->userID,//154
                     'id_organization' => $response_data->iogvID[0],//8958
@@ -114,14 +117,14 @@ class Site extends APP_Controller {
             }
             $property['property_name'] = $cell['value'];
             $property['property_short_name'] = $cell['value'];
-            $property['code'] = 'sr_'.$cell_item;
+            $property['code'] = 'kis_'.$cell_item;
             $property['order'] = $cell_item;
             $property['options'] = array(
                 'property_align' => 'left',
                 'property_width' => '200',
                 'property_required' => false,
                 'property_color' => '#ffffff'
-                );
+            );
             // set property_required by color matching
             if($cell['color'] == 'B6DDE8'){
                 $property['options']['property_iogv_displayed'] = true;
@@ -287,6 +290,10 @@ class Site extends APP_Controller {
             }
         }
         return false;
-    } 
+    }
+    
+    public function update_property_by_table_01(){
+        
+    }
 
 }
