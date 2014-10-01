@@ -31,7 +31,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-            $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 330); // 330-empiric value
+            $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 380); // 380-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -69,7 +69,7 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-            $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 330); // 330-empiric value
+            $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 380); // 380-empiric value
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -223,7 +223,7 @@ var Structure = {
             },
             loadComplete: function () {
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-                $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 360);
+                $(grid_selector).jqGrid('setGridHeight', window.innerHeight - 380);
                 Structure.render_colModel(grid_selector);
                 var table = this;
                 setTimeout(function () {
