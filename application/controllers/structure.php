@@ -320,6 +320,7 @@ class Structure extends APP_Controller {
         $organization = $this->organization_model->get($authority['id_organization']);
         $data['organization'] = $organization['organization_name'];
         $data['spher'] = $this->spher->dropdown('name', 'name');
+        $data['organization_provide_service_dropdown'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['organization_provide_service'] = "[";
         foreach ($this->organization_model->get_all() as $value) {
             $data['organization_provide_service'] .= "'" . $value['organization_name'] . "',";

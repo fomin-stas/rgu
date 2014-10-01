@@ -84,6 +84,7 @@
                                     <?php endif; ?>
                                 </td>
                             </tr>
+                            
                         </table>
                     </div>
                 </div>
@@ -187,22 +188,8 @@
             </div>
             <div class="form-group">
                 <label for="organization_provide_service" class="control-label col-md-6">Наименование органов, участвующих в предоставлении услуги</label>
-                <input  name="organization_provide_service" class="col-md-5" id="organization_provide_service" value="zzzz" />
-<!--
-                <script>
-                    var tag_input = $('#sr1_3');
-                    try {
-                        tag_input.tag({
-                            placeholder: tag_input.attr('placeholder'),
-                            source: <?= $organization_provide_service ?>
-                        });
-                    }
-                    catch (e) {
-                        //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-                        tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
-                    }
-                </script>
--->
+                <?= form_dropdown('organization_provide_service[]', $organization_provide_service_dropdown, '', 'id="organization_provide_service" class="col-md-5" multiple'); ?>
+            </div>
             </div>
             <div class="form-group">
                 <label for="list_npa_rf_sr" class="control-label col-md-6">Перечень НПА РФ, регулирующих предоставление услуги</label>
@@ -478,93 +465,119 @@
 </div>
 
 <script type="text/javascript">
-    $('#step2_file').ace_file_input({
-        no_file: "Присоединить файл",
-        btn_choose: "Выбрать",
-        btn_change: "Изменить",
-        enable_reset: true
-    });
-    $('#send_btn').on('click', function() {
-        var text_fields = $('#tab_content textarea');
-        for (var textarea = 0; textarea < text_fields.length; textarea++) {
-            console.log(text_fields[textarea].value);
-            if (!text_fields[textarea].value) {
-                console.log(text_fields[textarea]);
+    $(document).ready(function () {
+        $('#step2_file').ace_file_input({
+            no_file: "Присоединить файл",
+            btn_choose: "Выбрать",
+            btn_change: "Изменить",
+            enable_reset: true
+        });
+        $('#send_btn').on('click', function () {
+            var text_fields = $('#tab_content textarea');
+            for (var textarea = 0; textarea < text_fields.length; textarea++) {
+                console.log(text_fields[textarea].value);
+                if (!text_fields[textarea].value) {
+                    console.log(text_fields[textarea]);
 //                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
 //                text_fields[textarea].css('border','1px solid red');
-                $('#alert_fieldrequest').modal('show');
-                return 'empty textarea';
+                    $('#alert_fieldrequest').modal('show');
+                    return 'empty textarea';
+                }
             }
-        }
-        $('#comments_modal').modal('show');
-    });
-
-    //add new functions and services
-    var num = {sr: 1, sn: 1, skn: 1};
-    function add_new_tab(type)
-    {
-        var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
-        tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
-        tab_pane[0].firstElementChild.name += num[type];
-        function tab_text()
-        {
-            if (type == 'sr') {
-                return 'Услуга';
-            }
-            else if (type == 'sn') {
-                return 'Функция';
-            }
-            else {
-                return 'Функция контроля/надзора';
-            }
-        }
-
-        //insert navigation-tab and content
-        var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + tab_pane[0].id + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
-        $('#razgran_u_f_tabs').append(tab);
-        $('#tab_content').append(tab_pane[0]);
-
-        //rename inputs and labels into type[num]_[i] form
-        for (var i = 0; i < $('#form_' + type + num[type] + ' label').length; i++)
-        {
-            $('#form_' + type + num[type] + ' label')[i].setAttribute('for', type + num[type] + '_' + i);
-            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('id', type + num[type] + '_' + i);
-            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
-            $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('required', 'required');
-        }
-        
-        //change textarea to tag-input
-        if (type=='sr')
-        {
-			var tag_input = $('#'+type + num[type] + '_3');
-			try {
-				tag_input.tag({
-					placeholder: tag_input.attr('placeholder'),
-					source: "<?= $organization_provide_service ?>"
-				});
-			}
-			catch (e) {
-				//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-				tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
-			}
-		}        
-
-        //delete-buttons logic
-        $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function() {
-            var tab_main = this.parentNode.parentNode;
-            $('#navtab_' + tab_main.id).remove();
-            tab_main.remove();
+            $('#comments_modal').modal('show');
         });
-        num[type]++;
-    }
-    $(".add_sr_btn").on('click', function() {
-        add_new_tab("sr");
-    });
-    $(".add_sn_btn").on('click', function() {
-        add_new_tab("sn");
-    });
-    $(".add_skn_btn").on('click', function() {
-        add_new_tab("skn");
+
+        //add new functions and services
+        var num = {sr: 1, sn: 1, skn: 1};
+        function add_new_tab(type)
+        {
+            var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
+            tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
+            tab_pane[0].firstElementChild.name += num[type];
+            function tab_text()
+            {
+                if (type == 'sr') {
+                    return 'Услуга';
+                }
+                else if (type == 'sn') {
+                    return 'Функция';
+                }
+                else {
+                    return 'Функция контроля/надзора';
+                }
+            }
+
+            //insert navigation-tab and content
+            var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + tab_pane[0].id + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
+            $('#razgran_u_f_tabs').append(tab);
+            $('#tab_content').append(tab_pane[0]);
+
+            //rename inputs and labels into type[num]_[i] form
+            for (var i = 0; i < $('#form_' + type + num[type] + ' label').length; i++)
+            {
+                $('#form_' + type + num[type] + ' label')[i].setAttribute('for', type + num[type] + '_' + i);
+                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('id', type + num[type] + '_' + i);
+                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
+                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('required', 'required');
+            }
+
+            //change textarea to tag-input
+            if (type == 'sr')
+            {
+                /* var tag_input = $('#' + type + num[type] + '_3');
+                 try {
+                 tag_input.tag({
+                 placeholder: tag_input.attr('placeholder'),
+                 source: "<?= $organization_provide_service ?>"
+                 });
+                 }
+                 catch (e) {
+                 //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+                 tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
+                 }*/
+            }
+
+            //delete-buttons logic
+            $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function () {
+                var tab_main = this.parentNode.parentNode;
+                $('#navtab_' + tab_main.id).remove();
+                tab_main.remove();
+            });
+            num[type]++;
+        }
+        $(document).on('click', ".add_sr_btn", function () {
+            add_new_tab("sr");
+
+            $('#sr1_3').tags({
+                suggestions:<?= $organization_provide_service ?>,
+                excludeList: ["not", "these", "words"]
+            });
+/*
+            var tag_input = $('#sr1_3');
+            try {
+                tag_input.tag({
+                    placeholder: tag_input.attr('placeholder'),
+                    source: <?= $organization_provide_service ?>
+                });
+            }
+            catch (e) {
+                //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+                tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
+            }*/
+        });
+        $(document).on('click', ".add_sn_btn", function () {
+            add_new_tab("sn");
+        });
+        $(".add_skn_btn").on('click', function () {
+            add_new_tab("skn");
+        });
+
+
+        $(function () {
+            // If using Bootstrap 2, be sure to include:
+            // Tags.bootstrapVersion = "2";
+
+        });
     });
 </script>
 
