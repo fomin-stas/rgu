@@ -426,7 +426,7 @@ class Structure extends APP_Controller {
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
-        $data['organization'] = $organization->organization_name;
+    $data['organization'] = $organization['organization_name'];
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
             $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);

@@ -114,8 +114,8 @@ class Site extends APP_Controller {
             }
             $property['property_name'] = $cell['value'];
             $property['property_short_name'] = $cell['value'];
-            $property['code'] = 'sr_'.$cell_item;
-            $property['order'] = $cell_item;
+            $property['code'] = 'kis_'.$cell_item;
+            $property['order'] = $cell_item+50;
             $property['options'] = array(
                 'property_align' => 'left',
                 'property_width' => '200',
