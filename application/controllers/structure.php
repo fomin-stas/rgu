@@ -360,7 +360,7 @@ class Structure extends APP_Controller {
     }
 
     //всю эту хренотень с шагами - в отдельный класс
-    public function step2_submit() {
+    public function step2_submit($update = false) {
         $data = $_POST;
         $id_authority = $data['id_authority'];
         foreach ($data as $name => $value) {
@@ -406,9 +406,14 @@ class Structure extends APP_Controller {
                     $service['service_name'] = $property['sk_0'];
                     break;
             }
-            $id_service = $this->service->insert($service);
-            $this->service_property->_id_service = $id_service;
-            $this->service_property->insert_where_code_many($property);
+            if (!$update) {
+                $id_service = $this->service->insert($service);
+                $this->service_property->_id_service = $id_service;
+                $this->service_property->insert_where_code_many($property);
+            } else {
+                $this->service_property->_id_service = $id_service;
+                $this->service_property->insert_where_code_many($property);
+            }
         }
         $authority_data['id_authority_status'] = 2;
         $update = $this->authority->update($id_authority, $authority_data);
@@ -421,12 +426,12 @@ class Structure extends APP_Controller {
     }
 
     public function step3($id_authority) {
-        // $this->check_status_authority($id_authority, 3);
+        $this->check_status_authority($id_authority, 3);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
-    $data['organization'] = $organization['organization_name'];
+        $data['organization'] = $organization['organization_name'];
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
             $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
@@ -462,19 +467,15 @@ class Structure extends APP_Controller {
             //$this->service_property->update_by(array('id_service'));
             foreach ($data as $key => $value) {
                 $name = explode("_", $key);
-                if ($name[0] == 'ch' && $value == 'on') {
-                    $update_data = array('id_service' => $name[1], 'id_property' => $name[2]);
-                    $update = array('agreed' => 0);
-                    $this->service_property->update_by($update_data, $update);
-                }
+                $update_data = array('id_service' => $name[0], 'id_property' => $name[1]);
+                $update = array('agreed' => $value);
+                $this->service_property->update_by($update_data, $update);
             }
-
             $authority_data['id_authority_status'] = 4;
             $url = 'structure/arm_kis';
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
         }
         $this->authority->update($id_authority, $authority_data);
-        $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
         redirect($url);
     }
 
@@ -504,9 +505,9 @@ class Structure extends APP_Controller {
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
-        if ($this->session->userdata('user_type')==1){
+        if ($this->session->userdata('user_type') == 1) {
             $this->layout->view('step4_1', $data);
-        }else{
+        } else {
             $this->layout->view('step4_1', $data);
         }
     }
@@ -516,7 +517,7 @@ class Structure extends APP_Controller {
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
-        $data['organization'] = $organization->organization_name;
+        $data['organization'] = $organization['organization_name'];
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         foreach ($authority_property as $value) {
@@ -539,6 +540,25 @@ class Structure extends APP_Controller {
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step4', $data);
+    }
+
+    public function update_properties() {
+        $data = $_POST;
+        $id_service=0;
+        foreach ($data as $key => $value) {
+            $name = explode("_", $key);
+            if (count($name) > 1) {
+                $code=substr_replace($name[0],"sr_",0,2);
+                $property=$this->property->get_by(array('code'=>$name[0]));
+                return;
+                $update_data = array('id_service' => $name[1], 'id_property' => $property['id_property']);
+                $update = array('value' => $value);
+                $this->service_property->update_by($update_data, $update);
+                $id_service=$name[1];
+            }
+        }
+        $service=$this->service->get($id_service);
+        $this->comment->insert_comment($service['id_authority'], $this->input->post('comment'));
     }
 
     public function check_status_authority($id_authority, $step_num = 0) {
@@ -654,7 +674,7 @@ class Structure extends APP_Controller {
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
             $options = json_decode($property['options'], true);
-            if(FALSE == $options['property_iogv_displayed']){
+            if (FALSE == $options['property_iogv_displayed']) {
                 continue;
             }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
@@ -707,7 +727,7 @@ class Structure extends APP_Controller {
                     $model['width'] = 270;
                     break;
             }
-            
+
             if (count($options) > 0) {
                 foreach ($options as $key => $option) {
                     switch ($key) {

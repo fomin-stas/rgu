@@ -15,9 +15,7 @@ class Site extends APP_Controller {
     }
 
     public function login() {
-
         global $is_kis;
-
         // login request 
         if ($this->input->is_post() AND $this->form_validation->run()) {
             $login_name = $this->input->post('login_name');

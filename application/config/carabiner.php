@@ -153,6 +153,8 @@ $config['groups']['site'] = array(
     'js' => array(
         array('ace-extra.min.js'),
         array('jquery.min.js'),
+        array('jquery-ui.min.js'),
+        array('jquery.ui-contextmenu.min.js'),
         array('bootstrap.min.js'),
         array('jquery.jqGrid.min.js'),
         array('grid.locale-ru.js'),
@@ -161,8 +163,6 @@ $config['groups']['site'] = array(
         array('bootstrap-tag.min.js'),
         array('ace-elements.min.js'),
         array('ace.min.js'),
-        array('jquery-ui.min.js'),
-        array('jquery.ui-contextmenu.min.js'),
         array('iris.min.js'),
         array('bootstrap-tag.min.js'),
         array('jquery.gritter.min.js'),

@@ -119,13 +119,27 @@
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
                                                                 <td class="col-md-5"><?= $value['value']; ?></td>
                                                                 <td class="col-md-3">
-                                                                    <label>
-                                                                        <input type="checkbox" name="ch_<?= $id_sirvices ?>_<?= $name; ?>" class="ace ace-switch ace-switch-4 step3 btn-flat" />
-                                                                        <span class="lbl" data-lbl="Не согласовано &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Согласовано"></span>
-                                                                    </label>
-                                                                    <button type="button" class="com_bt btn btn-sm btn-primary" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
-                                                                        <i class="ace-icon fa fa-comment icon-only"></i>
-                                                                    </button>
+                                                                    <div data-toggle="buttons" class="btn-group col-md-8">
+                                                                        <label class="btn btn-xs btn-success col-md-12" style="margin-bottom: 2px;">
+                                                                            <input type="radio" value="1" name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Согласовано             
+                                                                        </label>
+                                                                        
+                                                                        <label class="btn btn-xs btn-yellow col-md-12 active"  style="margin-bottom: 2px;">
+                                                                            <input type="radio" value="2" checked name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Не просмотренно
+                                                                        </label>
+
+                                                                        <label class="btn btn-xs btn-danger col-md-12">
+                                                                            <input type="radio" value="0" name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Не согласованно
+                                                                        </label>
+                                                                    </div>
+                                                                    <div  class=" col-md-4">
+                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
+                                                                            <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -229,26 +243,17 @@
         location = "step2";
     });
 
-    /*
+    
      $('#srok_otveta_3').datepicker({
-     format: 'dd-mm-yyyy',
-     autoclose: true, toda yHiglight: true
+     format: "DD-MM-YYYY",
+     autoclose: true, todayHiglight: true
      });
-     */
+     
     $('.com_bt').click(function() {
         //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
-        
-        jQuery.gritter.add({
-    title: 'This is a sticky notice!',
-    text: 'Sticky content',
-    image: 'path/to/image',
-    sticky: true,
-    time: '',
-    class_name: 'gritter-info gritter-light gritter-center'
-});
-        
+
         $.ajax({
             url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property,
             type: 'get',
