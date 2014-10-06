@@ -56,7 +56,10 @@ class Ajax extends APP_Controller {
         $authority = $authoritis[$insert_data['authority_num'] - 1];
         $for_get = array('code' => $insert_data['code']);
         $property = $this->property->get_by($for_get);
-
+        if(NULL == $property['id_service_type']) {
+            $property['id_service_type'] = 6;
+        }
+        
         if ($property['id_service_type'] == 6) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
@@ -64,6 +67,7 @@ class Ajax extends APP_Controller {
             $history_log['old'] = $authority_property['value'];
             $history_log['id_property'] = $authority_property['id_property'];
             $this->history_log->insert_log($history_log);
+            $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $authority['id_authority']);
         }
         if ($property['id_service_type'] == 7) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));

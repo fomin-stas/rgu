@@ -34,7 +34,7 @@ class Structure extends APP_Controller {
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
-                ->limit(100)
+                ->limit(30)
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -224,16 +224,24 @@ class Structure extends APP_Controller {
         $view = 'uvedoml_kis';
         $notifications = array();
 
-        $user = $this->session->userdata('user_name');
-        $notifications = $this->activity->order_by('time', 'DESC')->get_all();
+        $user_type = $this->session->userdata('user_type');
+        $user_organization_id = $this->session->userdata('id_organization');
+        
+        switch ($user_type) {
+            case 1:
+                $notifications = $this->activity->order_by('time', 'DESC')->limit(30)->get_all();
+                break;
+            
+            default:
+                $notifications = $this->activity->order_by('time', 'DESC')->limit(30)->get_many_by('id_organization', $user_organization_id);
+                $view = 'uvedoml_iogv';
+                break;
+        }
 
         foreach ($notifications as $key => $notification) {
             $notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
             $notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
             $notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
-        }
-        if ($user != 'kis') {
-            $view = 'uvedoml_iogv';
         }
 
         $data['notifications'] = $notifications;

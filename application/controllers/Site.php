@@ -118,6 +118,7 @@ class Site extends APP_Controller {
             $property['property_name'] = $cell['value'];
             $property['property_short_name'] = $cell['value'];
             $property['code'] = 'kis_'.$cell_item;
+            $property['id_service_type'] = ($cell_item < 12)?6:7;
             $property['order'] = $cell_item+50;
             $property['options'] = array(
                 'property_align' => 'left',
@@ -143,6 +144,7 @@ class Site extends APP_Controller {
         //header("Content-Type: text/html; charset=windows-1251");
         $properties = $this->property->get_all();
         $properties_keys = array();
+        $authority_added_buff = array();
         // prepare properties for search
         foreach ($properties as $key => $value) {
             $properties[$key]['property_name'] = trim($value['property_name']);
@@ -198,15 +200,32 @@ class Site extends APP_Controller {
                     }
                 }
                 //insert authority and authority properties
-                $authority['id_organization'] = 2;
+
+                // try get organiztion by organiztion_name
+                $organization = $this->organization_model->get_by('organization_name', (isset($authority_properties[10]['value']))?trim($authority_properties[10]['value']):'');
+                $authority_name = (isset($authority_properties[11]['value']))?$authority_properties[11]['value']:NULL;
+                $authority['id_organization'] = (NULL != $organization)?$organization['id_organization']:1;
                 $authority['id_authority_status'] = 1;
-                $authority['authority_name'] = (isset($authority_properties[11]['value']))?$authority_properties[11]['value']:'';
+                $authority['authority_name'] = $authority_name;
                 $authority_id = $this->authority->insert($authority);
                 if($authority_id) {
+                    // add authority to BUFF
+                    if(NULL != $authority_name) {
+                        $authority_added_buff[md5($authority_name)] = $authority_id;
+                    }
                     foreach ($authority_properties as $key => $value) {
                         $authority_property['id_property'] = $value['property_id'];
                         $authority_property['id_authority'] = $authority_id;
                         $authority_property['value'] = $value['value'];
+                        $this->authority_property_model->insert($authority_property);
+                    }
+                    // add authority CUSTOM ID
+                    //  HACK: Get property id by titile
+                    $custom_authority_id_property = $this->property->get_by('property_name', 'id полномочия');
+                    if(NULL != $custom_authority_id_property) {
+                        $authority_property['id_property'] = $custom_authority_id_property['id_property'];
+                        $authority_property['id_authority'] = $authority_id;
+                        $authority_property['value'] = $this->generate_authority_custom_id();
                         $this->authority_property_model->insert($authority_property);
                     }
                 }
@@ -214,7 +233,16 @@ class Site extends APP_Controller {
                 //insert service and cervice properties
                 $service['id_service_type'] = 8; 
                 $service['id_authority_status'] = 1; 
-                $service['id_authority'] = $authority_id; 
+                
+                // search authority id by aithority name hash in BUFF array
+                if(NULL != $authority_name AND array_key_exists(md5($authority_name), $authority_added_buff)) {
+                    $service['id_authority'] = $authority_added_buff[md5($authority_name)];
+                    //var_dump($service['id_authority']);
+                }
+                else{
+                    $service['id_authority'] = $authority_id;
+                }
+
                 $service['service_name'] = (isset($service_properties[12]['value']))?$service_properties[12]['value']:''; 
                 $service_id = $this->service->insert($service);
                 if($service_id) {
@@ -225,6 +253,9 @@ class Site extends APP_Controller {
                         $this->service_property->insert($service_property);
                     }
                 }
+                
+                //var_dump($organization, $authority_properties);
+                //if($i == 10) break;
             }
             //var_dump($row);
             $i++;
@@ -294,6 +325,10 @@ class Site extends APP_Controller {
     
     public function update_property_by_table_01(){
         
+    }
+
+    public function generate_authority_custom_id(){
+        return mt_rand(1, 999).'.'.mt_rand(1, 999).'.'.mt_rand(1, 999);
     }
 
 }
