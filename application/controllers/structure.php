@@ -289,13 +289,13 @@ class Structure extends APP_Controller {
     public function step1_submit() {
         $authority['authority_name'] = $this->input->post('authority_name');
         $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-
-        $property['name_iogv'] = $this->input->post('name_iogv');
+        $organization=$this->organization_model->get($this->input->post('name_iogv'));
+        $property['name_iogv'] = $organization['organization_name'];
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
         $property['srok_otveta'] = $this->input->post('srok_otveta');
         $property['executable_status'] = 'в разработке';
-        $authority['id_organization'] = $this->input->post('select_org');
+        $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
         $this->load->model('authority');
         $id_authority = $this->authority->insert($authority);
@@ -391,6 +391,7 @@ class Structure extends APP_Controller {
             }
         }
         foreach ($services as $name => $property) {
+            $property['agreed'] = 2;
             $service['id_authority'] = $id_authority;
             switch (substr($name, 0, 2)) {
                 case 'sr':
@@ -447,35 +448,41 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value']);
+                $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed']);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step3', $data);
     }
 
-    public function agree($id_authority, $agree) {
-        if ($agree == 'true') {
-            $authority_data['id_authority_status'] = 3;
-            $url = 'structure/step4/' . $id_authority;
-            $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_agree'));
-            $property['executable_status'] = 'в разработке';
-            $this->authority_property_model->_id_authority = $id_authority;
-            $this->authority_property_model->insert_where_code_many($property);
-        } else {
-            $data = $_POST;
-            //$this->service_property->update_by(array('id_service'));
-            foreach ($data as $key => $value) {
-                $name = explode("_", $key);
-                $update_data = array('id_service' => $name[0], 'id_property' => $name[1]);
-                $update = array('agreed' => $value);
-                $this->service_property->update_by($update_data, $update);
+    public function in_work($id_authority) {
+        $data = $_POST;
+        $agreeded = 0;
+        foreach ($data as $key => $value) {
+            $name = explode("_", $key);
+            if (!(int) $name[0]) {
+                continue;
             }
+            $update_data = array('id_service' => $name[0], 'id_property' => $name[1]);
+            $update = array('agreed' => $value);
+            $this->service_property->update_by($update_data, $update);
+            if ($value != 1) {
+                $agreeded = $agreeded + 1;
+            }
+        }
+        if ($agreeded > 0) {
             $authority_data['id_authority_status'] = 4;
-            $url = 'structure/arm_kis';
-            $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
+            $update_authority['value'] = 'в разработке';
+        } else {
+            $authority_data['id_authority_status'] = 3;
+            $update_authority['value'] = 'согласовано';
         }
         $this->authority->update($id_authority, $authority_data);
+        $this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
+        $property = $this->property->get_by(array('code' => 'executable_status'));
+        $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
+        $this->authority_property_model->update_by($update_data, $update_authority);
+        $url = 'structure/arm_kis';
         redirect($url);
     }
 
@@ -485,7 +492,7 @@ class Structure extends APP_Controller {
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
         $organization = $this->organization_model->get($authority['id_organization']);
-        $data['organization'] = $organization->organization_name;
+        $data['organization'] = $organization['organization_name'];
         $files = $this->file->get_many_by('id_authority', $id_authority);
         foreach ($files as $value) {
             $data['files'][] = array('file_name' => $value['file_name'], 'name' => $value['name']);
@@ -501,7 +508,7 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['property_name']] = $value['value'];
+                $data['services'][$service['id_service']]['properties'][$property['property_name']] = array('value'=>$value['value'],'id_property'=>$value['id_property']);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
@@ -535,30 +542,43 @@ class Structure extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['code']] = array('value' => $value['value'], 'agreed' => $value['agreed']);
+                $data['services'][$service['id_service']]['properties'][$property['code']] = array('value' => $value['value'], 'agreed' => $value['agreed'], 'property_name' => $property['property_name'], 'id_property' => $property['id_property']);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
         $this->layout->view('step4', $data);
     }
 
-    public function update_properties() {
+    public function update_properties($id_authority) {
         $data = $_POST;
-        $id_service=0;
         foreach ($data as $key => $value) {
             $name = explode("_", $key);
-            if (count($name) > 1) {
-                $code=substr_replace($name[0],"sr_",0,2);
-                $property=$this->property->get_by(array('code'=>$name[0]));
-                return;
-                $update_data = array('id_service' => $name[1], 'id_property' => $property['id_property']);
+            if (!(int) $name[0]) {
+                continue;
+            }
+            $update_data = array('id_service' => $name[1], 'id_property' => $name[0]);
+            $service_property = $this->service_property->get_by($update_data);
+            if ($service_property['value'] != $value) {
                 $update = array('value' => $value);
                 $this->service_property->update_by($update_data, $update);
-                $id_service=$name[1];
+                $history_log['new'] = $value;
+                $history_log['old'] = $service_property['value'];
+                $history_log['id_property'] = $service_property['id_property'];
+                $this->history_log->insert_log($history_log);
             }
         }
-        $service=$this->service->get($id_service);
-        $this->comment->insert_comment($service['id_authority'], $this->input->post('comment'));
+        $this->comment->insert_comment($id_authority, $this->input->post('comment'));
+        $update_authority['value'] = 'на согласовании';
+        $property = $this->property->get_by(array('code' => 'executable_status'));
+        $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
+        $this->authority_property_model->update_by($update_data, $update_authority);
+        $authority_data['id_authority_status'] = 2;
+        $update = $this->authority->update($id_authority, $authority_data);
+        $authority = $this->authority->get($id_authority);
+        $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
+
+        $url = 'structure/arm_iogv';
+        redirect($url);
     }
 
     public function check_status_authority($id_authority, $step_num = 0) {

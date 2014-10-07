@@ -166,6 +166,8 @@ $config['groups']['site'] = array(
         array('iris.min.js'),
         array('bootstrap-tag.min.js'),
         array('jquery.gritter.min.js'),
+        array('bootstrap-datepicker.js'),
+        array('locales/bootstrap-datepicker.ru.js'),
         array('models/structure.js'),
         array('models/settings.js'),
         array('models/app.js')
@@ -181,6 +183,8 @@ $config['groups']['site'] = array(
         array('ui.multiselect.css'),
         array('ace.min.css'),
         array('main.css'),
+        array('datepicker.css'),
+        array('datepicker3.css'),
         array('bootstrap-tags.css'),
         array('jquery.gritter.css')
     )
