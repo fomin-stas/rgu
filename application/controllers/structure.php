@@ -30,11 +30,17 @@ class Structure extends APP_Controller {
         $column_models = array();
         $properties = array();
         $authority_properties_codes = array();
+        $total_rows = 0;
+        $size_rows = 0;
+        $limit_rows = $this->input->get('rows', 30);
+        $page = $this->input->get('page', 1);
+        $table_index = $this->input->get('type', 'all');
+
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
-                ->limit(30)
+                ->limit($limit_rows, ($limit_rows * ($page - 1)))
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -210,6 +216,19 @@ class Structure extends APP_Controller {
         $grid_data['in_process'][] = array();
         $grid_data['in_working'][] = array();
         $grid_data['new_authorities'][] = array();
+
+        // is ajax 
+        if ($this->input->is_ajax_request()) {
+            $response = array(
+                'Rows' => $grid_data[$table_index],
+                'Total' => 300,
+                'Records' => 30,
+                'Page' => $this->input->get('page', 1),
+                );
+            echo json_encode($response, true);
+            exit(1);
+        }
+
         $this->layout->view('arm_kis', array(
             'grid_data' => $grid_data,
             //'column_models' => json_encode($column_models),
@@ -643,19 +662,26 @@ class Structure extends APP_Controller {
         $column_names = array();
         $column_models = array();
 
+        $total_rows = 0;
+        $size_rows = 0;
+        $limit_rows = $this->input->get('rows', 30);
+        $page = $this->input->get('page', 1);
+        $table_index = $this->input->get('type', 'all');
+
+
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
-                    ->limit(10)
+                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
                     ->get_many_by(array('id_organization' => $id_organization));
         } else {
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
-                    ->limit(10)
+                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -829,6 +855,19 @@ class Structure extends APP_Controller {
         $grid_data['in_process'][] = array();
         $grid_data['in_working'][] = array();
         $grid_data['new_authorities'][] = array();
+
+        // is ajax 
+        if ($this->input->is_ajax_request()) {
+            $response = array(
+                'Rows' => $grid_data[$table_index],
+                'Total' => 300,
+                'Records' => 30,
+                'Page' => $this->input->get('page', 1),
+                );
+            echo json_encode($response, true);
+            exit(1);
+        }
+
         $this->layout->view('arm_iogv', array(
             'grid_data' => $grid_data,
             //'column_models' => json_encode($column_models),

@@ -1,7 +1,8 @@
 var Structure = {
     options: {
         data: '',
-        grid_selector: '#grid-table-all'
+        grid_selector: '#grid-table-all',
+        grid_selector_tab: 'all',
     },
     init: function () {
         console.log('Structure');
@@ -19,6 +20,7 @@ var Structure = {
             e.preventDefault();
             $(this).tab('show');
             var tab_hash = e.target.hash.replace('#', '');
+                Structure.options.grid_selector_tab = tab_hash;
             var grid_selector = "#grid-table-" + tab_hash;
             Structure.options.grid_selector = grid_selector;
             var pager_selector = "#grid-pager-" + tab_hash;
@@ -187,49 +189,39 @@ var Structure = {
             subGrid: false,
             altRows: true,
             data: grid_data,
-            datatype: "local",
+            //datatype: "local",
             height: "auto",
-            /*colNames:['ID полномочия','Наименование полномочия в соответствии с положением ИОГВ','Статус согласования разграничния полномочия', 'Наименование государственной функции (услуги)', 'ID услуги/функции','Статус согласования услуги/функци','Срок ответа','Тип','Статус исполнения','Наименование ИОГВ СПб'],
-             colModel:[
-             {name:'id_poln',index:'id_poln', sorttype:"int", editable: false, fixed:true, width:'100',formatter:linkToStep,unformat:unLinkToStep},
-             {name:'name_iogv',index:'name_iogv', editable:true, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250',formatter:linkToStep,unformat:unLinkToStep},
-             {name:'status_poln',index:'status_poln', stype:'select',edittype:"select",editoptions: {value:"Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"},
-             searchoptions:{
-             sopt:['cn'],
-             value:":показать все;Полномочию присвоен статус:Полномочию присвоен статус;На согласовании:На согласовании"
-             }, 
-             editable: false, fixed:true, width:'250'},
-             {name:'name_usl',index:'name_usl', editable: false, edittype:"textarea", editoptions:{rows:"3"}, fixed:true, width:'250'},
-             {name:'id_usl',index:'id_usl', sorttype:"int", editable: false, fixed:true, width:'100'},
-             {name:'status_usl',index:'status_usl', sortable:true,editable:false,stype:'select', edittype:"select",editoptions:{value:"ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается АР:разрабатывается АР"},searchoptions:{sopt:['cn'],value:":показать все;ожидает согласования КИС:ожидает согласования КИС;ожидает ответа ИОГВ:ожидает ответа ИОГВ;разрабатывается регламент:разрабатывается регламент"}, width:'200', fixed:true},
-             {name:'srok_otveta',index:'srok_otveta', sorttype:"date", editable:false, fixed:true, width:'120',searchoptions:{dataInit:function(elem){$(elem).datepicker;},sopt:['cn']}},
-             {name:'type',index:'type', editable: false, stype:'select', edittype:"select",editoptions: {value:"услуга:услуга;функция:функция"},searchoptions:{sopt:['cn'],value:":показать все;услуга:услуга;функция:функция"}, fixed:true, width:'100'},
-             {name:'status_isp',index:'status_isp', editable: false, edittype:"select",stype:'select',editoptions: {value:"общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"},searchoptions:{sopt:['cn'],value:":показать все;общая:общая;исполняемая:исполняемая;исключаемая:исключаемая;исключено:исключено;дополнительно:дополнительно"}, fixed:true, width:'120'},
-             {name:'name_iogvspb',index:'name_iogvspb', editable: true,stype:'select', edittype:"select",editoptions: {value:"архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"},searchoptions:{sopt:['cn'],value:":показать все;архивный комитет:архивный комитет;комитет по здравоохранению:комитет по здравоохранению;комитет по оразованию:комитет по образованию"}, fixed:true}
-             //{name:'nomer_punkta_iogv',index:'nomer_punkta_iogv', editable: true, fixed:true},
-             //{name:'vnes_izm_npa',index:'vnes_izm_npa', editable: true, fixed:true},
-             //{name:'isp_is',index:'isp_is', editable: true, fixed:true}
-             ], */
             colNames: column_names,
             colModel: column_models,
-            //viewrecords : true,
-            rowNum: -1,
+            viewrecords : true,
+            rowNum: 20,
             rownumbers: true,
-            //rowList:[10,20,30],
+            rowList:[20,40,60],
             pager: pager_selector,
-            pgbuttons: false,
+            pgbuttons: true,
             pginput: false,
             sortable: true,
             multiselect: true,
             multiboxonly: true,
             deepempty: true,
             ignoreCase: true,
-            mtype: "POST",
             //autowidth:true, 
             //shrinkToFit:false,
             cellEdit: true,
             cellsubmit: "remote",
             cellurl: 'ajax/edit_property', //'string' - the url where the cell is to be saved.
+            mtype: "GET",
+            url:_options.page+'?type='+Structure.options.grid_selector_tab,
+            datatype: "json",
+            jsonReader: {
+                root: "Rows",
+                page: "Page",
+                total: "Total",
+                records: "Records",
+                //repeatitems: false,
+                //userdata: "UserData",   
+                //id: "Id"
+            }, 
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
             beforeProcessing: function (data)
             {

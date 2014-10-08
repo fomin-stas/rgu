@@ -33,7 +33,7 @@ class Site extends APP_Controller {
             $response_statistic = curl_exec($myCurl);
             curl_close($myCurl);
             $response_data = json_decode($response_statistic);
-
+            
             if ($response_data->access) {
                 // check user password
                 // save userdata at session
