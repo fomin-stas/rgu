@@ -201,7 +201,7 @@
 </div>
 
 <script type="text/javascript">
-num=0;
+    num=0;
     $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",

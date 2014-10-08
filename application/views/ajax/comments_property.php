@@ -27,7 +27,7 @@
             type: 'post',
             data: data_comment,
             success: function(data) {
-                    
+                    $.gritter.removeAll();
                 }
             });
         });

@@ -98,60 +98,69 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <div class="widget-toolbar">
-                                <ul id="razgran_u_f_tabs" class="nav nav-tabs">
-                                    <?php $service_num = 0; ?>
-                                    <?php foreach ($services as $service): ?>
-                                        <?php $service_num++; ?>
-                                        <li <?php if ($service_num == 1) echo 'class="active"'; ?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'] . ' ' . $service_num; ?></a></li>
-                                    <?php endforeach; ?>
-                                </ul>
+                <form action="structure/re_edit/<?= $id_authority ?>" method="post">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <div class="widget-toolbar">
+                                    <ul id="razgran_u_f_tabs" class="nav nav-tabs">
+                                        <?php $service_num = 0; ?>
+                                        <?php foreach ($services as $service): ?>
+                                            <?php $service_num++; ?>
+                                            <li <?php if ($service_num == 1) echo 'class="active"'; ?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'] . ' ' . $service_num; ?></a></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main padding-16">
-                                <div class="tab-content">
-                                    <?php $tab_num = 0; ?>
-                                    <?php foreach ($services as $id_service => $service): ?>
-                                        <?php $tab_num++; ?>
-                                        <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
-                                            <table class="table table-bordered">
-                                                <?php foreach ($service['properties'] as $name => $value): ?>
-                                                    <tr>
-                                                        <td class="col-md-4"><?= $name; ?></td>
-                                                        <td class="col-md-5"><?= $value['value']; ?></td>
-                                                        <td class="col-md-2">
-                                                            <label >
-                                                                <input type="checkbox" name="myoption" class="ace ace-switch ace-switch-4 step3 btn-flat" checked />
-                                                                <span class="lbl" data-lbl="Согласовано&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;На редактирование"></span>
-                                                            </label>
-                                                        </td >
-                                                        <td class="col-md-1">
-                                                            <div>
-                                                                <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_service ?>_<?= $value['id_property']; ?>">
-                                                                    <i class="ace-icon fa fa-comment icon-only"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </table>
-                                            <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
-                                        </div>
-                                    <?php endforeach; ?>
+                            <div class="widget-body">
+                                <div class="widget-main padding-16">
+                                    <div class="tab-content">
+                                        <?php $tab_num = 0; ?>
+                                        <?php foreach ($services as $id_service => $service): ?>
+                                            <?php $tab_num++; ?>
+                                            <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
+                                                <table class="table table-bordered">
+                                                    <?php foreach ($service['properties'] as $name => $value): ?>
+                                                        <tr>
+                                                            <td class="col-md-4"><?= $name; ?></td>
+                                                            <td class="col-md-5"><?= $value['value']; ?></td>
+                                                            <td class="col-md-2">
+                                                                <div data-toggle="buttons" class="btn-group col-md-12">
+                                                                    <label class="btn btn-sm btn-success col-md-12 active" style="margin-bottom: 2px;">
+                                                                        <input type="radio" value="1" checked name="<?= $id_service . '_' . $value['id_property'] ?>">
+                                                                        Согласовано             
+                                                                    </label>
+
+                                                                    <label class="btn btn-sm btn-danger col-md-12">
+                                                                        <input type="radio" value="0" name="<?= $id_service . '_' . $value['id_property'] ?>">
+                                                                        Не согласованно
+                                                                    </label>
+                                                                </div>
+                                                            </td >
+                                                            <td class="col-md-1">
+                                                                <div>
+                                                                    <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_service ?>_<?= $value['id_property']; ?>">
+                                                                        <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </table>
+                                                <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <a href="structure/step4_1/<?= $id_authority ?>"><button class="btn btn-grey btn-sm pull-right">Отправить на доработку</button></a>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <button type="submit" class="btn btn-grey btn-sm pull-right">Отправить на доработку</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 

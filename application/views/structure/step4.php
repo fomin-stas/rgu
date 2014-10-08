@@ -151,7 +151,7 @@
                                                                     <form name="step4_com" method="post">
                                                                         <div class="modal-header">
                                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                                                                            <a href="structure/step3"><button type="submit" class="btn btn-primary">Отправить</button></a>
+                                                                            <button type="submit" class="btn btn-primary">Отправить</button>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
