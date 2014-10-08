@@ -657,6 +657,8 @@ var Structure = {
 
         }
 
+		$.jgrid.no_legacy_api = true;
+		$.jgrid.useJSON = true;
         //enable search/filter toolbar
         var myDefaultSearch = "cn";
         jQuery(grid_selector).jqGrid('filterToolbar', {defaultSearch: myDefaultSearch,
@@ -666,16 +668,64 @@ var Structure = {
             clearSearch: false,
             beforeSearch: function ()
             {
-                //Change search-algoitm to multiselect. From stackoverflow
                 var postData = $(grid_selector).jqGrid('getGridParam', 'postData');
                 postData.filters = $.parseJSON(postData.filters);
                 console.log(postData.filters);
-                return true;
+//                return true; //prevents triggering
+				
+				var filters=postData.filters;
+				var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
+				separator=",";
+				cm=$(grid_selector).jqGrid('getGridParam','colModel');
 
+				if (filters && filters.rules !== undefined && filters.rules.length > 0) {
+					rules = filters.rules;
+					for (i = 0; i < rules.length; i++) {
+						rule = rules[i];
+						iCol = getColumnIndexByName.call(this, rule.field);
+						cmi = cm[iCol];
+						if (iCol >= 0 &&
+								((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
+									&& (rule.op === myDefaultSearch)) ||
+								(typeof (cmi.searchoptions) === "object" &&
+									$.isArray(cmi.searchoptions.sopt) &&
+									cmi.searchoptions.sopt[0] === rule.op)) {
+							// make modifications only for the 'contains' operation
+							parts = rule.data.split(separator);
+							if (parts.length > 1) {
+								if (filters.groups === undefined) {
+									filters.groups = [];
+								}
+								group = {
+									groupOp: 'OR',
+									groups: [],
+									rules: []
+								};
+								filters.groups.push(group);
+								console.log(filters.groups);
+								for (j = 0, l = parts.length; j < l; j++) {
+									str = parts[j];
+									if (str) {
+										// skip empty '', which exist in case of two separaters of once
+										group.rules.push({
+											data: parts[j],
+											op: rule.op,
+											field: rule.field
+										});
+									}
+								}
+								rules.splice(i, 1);
+								i--; // to skip i++
+							}
+						}
+					}
+					this.p.postData.filters = JSON.stringify(filters);
+					
+				}
             }
 
         });
-        search_with_tb_filters();
+//        search_with_tb_filters();
 
         //multiselect
         $('.ui-search-input select').multiselect({
