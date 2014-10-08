@@ -1,4 +1,3 @@
-
 <div class="main-container">
     <div class="container">
         <div id="my-wizard" data-target="#step-container" class="wizard">
@@ -106,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <form name="step3_disagree_com" method="post" action="structure/agree/<?= $id_authority; ?>/false">
+                                <form name="step3_disagree_com" method="post" action="structure/in_work/<?= $id_authority; ?>">
                                     <div class="widget-main padding-16">
                                         <div class="tab-content">
                                             <?php $tab_num = 0; ?>
@@ -119,13 +118,27 @@
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
                                                                 <td class="col-md-5"><?= $value['value']; ?></td>
                                                                 <td class="col-md-3">
-                                                                    <label>
-                                                                        <input type="checkbox" name="ch_<?= $id_sirvices ?>_<?= $name; ?>" class="ace ace-switch ace-switch-4 step3 btn-flat" />
-                                                                        <span class="lbl" data-lbl="Не согласовано &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Согласовано"></span>
-                                                                    </label>
-                                                                    <button type="button" class="com_bt btn btn-sm btn-primary" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
-                                                                        <i class="ace-icon fa fa-comment icon-only"></i>
-                                                                    </button>
+                                                                    <div data-toggle="buttons" class="btn-group col-md-8">
+                                                                        <label class="btn btn-sm btn-success col-md-12 <?php if ($value['agreed'] == 1) echo 'active'; ?>" style="margin-bottom: 2px;">
+                                                                            <input type="radio" value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Согласовано             
+                                                                        </label>
+
+                                                                        <label class="btn btn-sm btn-yellow col-md-12 <?php if ($value['agreed'] == 2) echo 'active'; ?>"  style="margin-bottom: 2px;">
+                                                                            <input type="radio" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Не просмотренно
+                                                                        </label>
+
+                                                                        <label class="btn btn-sm btn-danger col-md-12 <?php if ($value['agreed'] == 0) echo 'active'; ?>">
+                                                                            <input type="radio" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            Не согласованно
+                                                                        </label>
+                                                                    </div>
+                                                                    <div  class=" col-md-4">
+                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
+                                                                            <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -138,8 +151,8 @@
                                                 <input type="file" multiple id="step_file" name="step_file">
                                             </span>
                                             <div class="form-group pull-right">
-                                                <label for="srok_otveta_3" class="control-label">Срок ответа</label>
-                                                <input id="srok_otveta_3" type="text">
+                                                <label for="srok_otveta" class="control-label">Срок ответа</label>
+                                                <input id="srok_otveta" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -174,8 +187,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal1" >Согласовать</button>
-                        <button id="disagree_btn" class="btn btn-grey btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal2">Не согласовать</button>
+                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal2" >В работу</button>
                     </div>
                 </div>
             </div>
@@ -188,36 +200,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="comments_modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form name="step3_agree_com" method="post" action="structure/agree/<?= $id_authority; ?>/true">
-                <div class="modal-header">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-primary">Отправить</button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                    <textarea class="input-xxlarge center" name="comment_st3_agree"></textarea>
-                    <div class="space-6"></div>
-                    <table class="table">
-                        <tr>
-                            <td>Предыдущие комментарии:</td>
-                        </tr>
-                        <tr>
-                            <td> <?= $comments ?></td>
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
 <script type="text/javascript">
-
+    num=0;
     $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
@@ -225,54 +209,36 @@
         enable_reset: true
     });
 
-    $("#comments_modal2").on("submit", function() {
-        location = "step2";
+    $('#srok_otveta').datepicker({
+        format: "dd-mm-yyyy",
+        weekStart: 1,
+        startDate: "-all earlier dates will be disabled",
+        language: "ru",
+        daysOfWeekDisabled: "0,6",
+        autoclose: true,
+        todayHighlight: true
     });
 
-    /*
-     $('#srok_otveta_3').datepicker({
-     format: 'dd-mm-yyyy',
-     autoclose: true, toda yHiglight: true
-     });
-     */
     $('.com_bt').click(function() {
         //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
-        
-        jQuery.gritter.add({
-    title: 'This is a sticky notice!',
-    text: 'Sticky content',
-    image: 'path/to/image',
-    sticky: true,
-    time: '',
-    class_name: 'gritter-info gritter-light gritter-center'
-});
-        
+
         $.ajax({
-            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property,
+            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
             type: 'get',
             success: function(data) {
+                num=num+1;
                 comments = data;
                 jQuery.gritter.add({
-                    title: 'Комментарии',
+                    title: '<br>Комментарии',
                     text: comments,
                     sticky: true,
-                    image: 'static/img/user.jpg',
                     time: '',
-                    class_name: 'gritter-info  gritter-center'
+                    class_name: 'gritter-info gritter-light'
                 });
             }
         });
     });
-    $('.ace-switch-4.step3').click(function() {
-        if ($('input:checked').length > 0) {
-            $('#agree_btn').attr('disabled', true);
-        } else {
-            $('#agree_btn').attr('disabled', false);
-        }
-        $(this).parent().siblings('#tr1').modal({
-            show: true
-        });
-    });
+
 </script>

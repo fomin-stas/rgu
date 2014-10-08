@@ -16,7 +16,6 @@ class Ajax extends APP_Controller {
         if (isset($id)) {
             $result['success'] = $this->property->delete($id);
         }
-
         echo json_encode($result);
     }
 
@@ -56,10 +55,11 @@ class Ajax extends APP_Controller {
         $authority = $authoritis[$insert_data['authority_num'] - 1];
         $for_get = array('code' => $insert_data['code']);
         $property = $this->property->get_by($for_get);
+
         if(NULL == $property['id_service_type']) {
             $property['id_service_type'] = 6;
         }
-        
+
         if ($property['id_service_type'] == 6) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
@@ -85,10 +85,8 @@ class Ajax extends APP_Controller {
         $row_id = $this->input->post('rowId');
         $coll_index = $this->input->post('collIndex');
         $cell_name = $this->input->post('cellName');
-
         if (isset($row_id, $coll_index, $cell_name)) {
             $property = $this->property->get_by('code', $cell_name);
-
             if (isset($property)) {
                 $user_id = $this->session->userdata('id');
                 $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
@@ -98,7 +96,6 @@ class Ajax extends APP_Controller {
                         )
                 );
             }
-
             $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
         }
         echo $result;
@@ -114,17 +111,19 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
-    public function get_property_comments($id) {
+    public function get_property_comments($id,$num=0) {
         $property_array = explode("_", $id);
-        $service_property = $this->service_property->get_by(array('id_service' => $property_array[1],
-            'id_property' => $property_array[2]));
+        $service_property = $this->service_property->get_by(array('id_service' => $property_array[1],'id_property' => $property_array[2]));
+        $service_property['num']=$num;
+        $service_property['property_comments']=$this->property_comments->get_many_by(array('id_service_property'=>$service_property['id_service_property']));
         $this->load->view('ajax/comments_property',$service_property);
     }
 
     public function insert_comments() {
-        $id_service_property = $this->input->post('id_service_property');
+        $id = $this->input->post('id');
+        $property_array = explode("_", $id);
         $comment = $this->input->post('comment');
-        $this->property_comments->insert_comment($id_service_property, $comment);
+        $this->property_comments->insert_comment($property_array[1], $comment);
     }
 
 }

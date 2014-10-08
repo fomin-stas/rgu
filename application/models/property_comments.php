@@ -8,7 +8,7 @@ class Property_comments extends APP_Model {
     public function insert_comment($id_service_property, $comment) {
         $comments['comment'] = $comment;
         $comments['id_service_property'] = $id_service_property;
-        $comments['id_user'] = $this->session->userdata('id');
+        $comments['user'] = $this->session->userdata('user_name');
         $datestring = "%Y-%m-%d %h:%i:%a";
         $time = time();
         $comments['date_comment'] = mdate($datestring, $time);

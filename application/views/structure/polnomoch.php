@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name_iogv" class="control-label col-md-5">Наименование ИОГВ СПб</label>
-                                    <?= form_dropdown('name_iogv', $db_iogv, '', 'id="name_iogv" class="col-md-5"'); ?>
+                                    <?= form_dropdown('name_iogv', $db, '', 'id="name_iogv" class="col-md-5"'); ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="rekvisit_npa" class="control-label col-md-5">Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня</label>
@@ -60,10 +60,6 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <div class="form-group pull-left">
-                                        <label for="select_org" class="control-label col-md-5">Выберите организацию</label> 
-                                        <?= form_dropdown('select_org', $db, $db[1], 'id="select_org" class="col-md-5"'); ?>
-                                    </div>
                                     <div class="form-group pull-right">
                                         <label class="control-label" for="srok_otveta">Установите срок ответа</label>
                                         <input type="text" name="srok_otveta" id="srok_otveta">
@@ -130,8 +126,12 @@
         enable_reset: true
     });
     $('#srok_otveta').datepicker({
-		format:'dd-mm-yyy',
+        format: "dd-mm-yyyy",
+        weekStart: 1,
+        startDate: "-all earlier dates will be disabled",
+        language: "ru",
+        daysOfWeekDisabled: "0,6",
         autoclose: true,
-        todayHiglight: true
+        todayHighlight: true
     });
 </script>

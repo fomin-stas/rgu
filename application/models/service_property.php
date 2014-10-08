@@ -33,5 +33,31 @@ class Service_property extends APP_Model {
             return FALSE;
         }
     }
+    
+     public function update_where_code($data, $skip_validation = FALSE) {
+        if ($skip_validation === FALSE) {
+            $data = $this->validate($data);
+        }
+        if ($data !== FALSE) {
+            $sql = 'UPDATE ' . $this->_table . 'SET value=? where id_property=? and id_service=?';
+            $query = $this->db->query($sql, array($data['value'], $data['code'],$this->_id_service));
+            return $query;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function update_where_code_many($data, $skip_validation = FALSE) {
+        if ($skip_validation === FALSE) {
+            $data = $this->validate($data);
+        }
+        if ($data !== FALSE) {
+            foreach ($data as $insert_data['code'] => $insert_data['value']) {
+                $this->update_where_code($insert_data);
+            }
+        } else {
+            return FALSE;
+        }
+    }
 
 }

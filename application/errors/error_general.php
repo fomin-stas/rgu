@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Error</title>
+<title>Ошибка</title>
 <style type="text/css">
 
 body {

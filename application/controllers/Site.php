@@ -15,9 +15,7 @@ class Site extends APP_Controller {
     }
 
     public function login() {
-
         global $is_kis;
-
         // login request 
         if ($this->input->is_post() AND $this->form_validation->run()) {
             $login_name = $this->input->post('login_name');
@@ -33,19 +31,25 @@ class Site extends APP_Controller {
             $response_statistic = curl_exec($myCurl);
             curl_close($myCurl);
             $response_data = json_decode($response_statistic);
-            
+
+            if(!isset($response_data)){
+                show_error('Нет соединения с сервером авторизации.');
+                    return;
+            }
+
             if ($response_data->access) {
                 // check user password
                 // save userdata at session
                 if($response_data->userTypeRRGU==4){
                     $response_data->iogvID[0]=1;
                 }
-                if(!isset($response_data->iogvID[0])){
-                    $response_data->iogvID[0]=1;
+                if(!isset($response_data->groupIogvID[0])){
+                    show_error('Пользователь не привязан ни к одной организации.');
+                    return;
                 }
                 $userdata = array(
                     'id' => $response_data->userID,//154
-                    'id_organization' => $response_data->iogvID[0],//8958
+                    'id_organization' => $response_data->groupIogvID[0],//8958
                     'user_name' => $login_name,//ksk2004
                     'loggedin' => true,
                     'user_type' => $response_data->userTypeRRGU//1
