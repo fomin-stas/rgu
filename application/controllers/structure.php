@@ -32,10 +32,19 @@ class Structure extends APP_Controller {
         $authority_properties_codes = array();
         $total_rows = 0;
         $size_rows = 0;
-        $limit_rows = $this->input->get('rows', 30);
-        $page = $this->input->get('page', 1);
-        $table_index = $this->input->get('type', 'all');
-
+        $limit_rows = $this->input->get('rows', true);
+        if(!$limit_rows) {
+            $limit_rows = 20;
+        }
+        $page = $this->input->get('page', true);
+        if(!$page) {
+            $page = 1;
+        }
+        $table_index = $this->input->get('type', true);
+        if(!$table_index) {
+            $table_index = 'all';
+        }
+        
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
@@ -113,12 +122,6 @@ class Structure extends APP_Controller {
                 }
             }
             $model['cellattr'] = new Zend_Json_Expr('Structure.cellFormat');
-            /* switch ($property['code']) {
-              case 'name_iogv':
-              $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
-              $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
-              break;
-              } */
 
             // linked to colmn model
             $column_models[] = $model;
@@ -130,6 +133,7 @@ class Structure extends APP_Controller {
                 $authority_properties_codes[$property['code']] = $property;
             }
         }
+
         // prepare json grid
         foreach ((array) $authorities as $authority) {
             $values = array();
@@ -231,7 +235,6 @@ class Structure extends APP_Controller {
 
         $this->layout->view('arm_kis', array(
             'grid_data' => $grid_data,
-            //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
                 )
