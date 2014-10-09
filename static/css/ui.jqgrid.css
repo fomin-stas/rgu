@@ -203,7 +203,11 @@ input[class="search empty ui-widget-content ui-corner-all"]{height: auto !import
 /*scrollbar to bottom of page*/
 /*.main-container .tabbable{width:auto !important}*/
 /*.main-container, .main-container::before{max-width:none !important;width:auto !important}*/
-body{background-color: white !important}
+body
+{
+	background-color: white !important;
+	font-family:Helvetica Neue,Helvetica,Arial,sans-serif !important;
+}
 /*.grid_wrapper{height: 70%;overflow:scroll}*/
 th .multiselect-container.dropdown-menu {z-index: 9999 !important;}
 th button.multiselect.dropdown-toggle{max-width: 100%;overflow-x: hidden;width: 70px; padding: 0px;font-size: 11px;}
@@ -224,3 +228,6 @@ input[type=checkbox].ace.ace-switch.ace-switch-4.step3:checked + .lbl::before {
 
 td.ui-search-input .multiselect-container.dropdown-menu
 {max-width: 300px}
+.nav-tabs[class*="tab-color-"]>li.active>a:hover,
+.nav-tabs[class*="tab-color-"]>li.active>a
+{background-color:#C6699F !important;}
