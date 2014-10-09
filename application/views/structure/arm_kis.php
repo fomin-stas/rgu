@@ -2,16 +2,16 @@
             <div class="tabbable col-md-12" id="gridTabs">
                 <ul class="nav nav-tabs tab-color-blue background-blue padding-12">
                     <li>
-                        <a href="#new_authorities" data-toggle="tab">Новые согласования (<?=count($grid_data['new_authorities'])-1?>)</a>
+                        <a href="#new_authorities" data-toggle="tab">Новые согласования (<?=count($grid_data['new_authorities'])?>)</a>
                     </li>
                     <li>
-                        <a href="#in_working" data-toggle="tab">Полномочия в работе (<?=count($grid_data['in_working'])-1?>)</a>
+                        <a href="#in_working" data-toggle="tab">Полномочия в работе (<?=count($grid_data['in_working'])?>)</a>
                     </li>
                     <li>
-                        <a href="#in_process" data-toggle="tab">Исполняемые (<?=count($grid_data['in_process'])-1?>)</a>
+                        <a href="#in_process" data-toggle="tab">Исполняемые (<?=count($grid_data['in_process'])?>)</a>
                     </li>
                     <li  class="active">
-                        <a href="#all" data-toggle="tab">Полный перечень (<?=count($grid_data['all'])-1?>)</a>
+                        <a href="#all" data-toggle="tab">Полный перечень (<?=count($grid_data['all'])?>)</a>
                     </li>
                 </ul>
                 <div class="tab-content">
