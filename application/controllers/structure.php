@@ -17,7 +17,7 @@ class Structure extends APP_Controller {
 
     public function arm_kis() {
         // load libs
-        //$this->reestr(0);
+        $this->reestr(0);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
@@ -246,10 +246,7 @@ class Structure extends APP_Controller {
         $data = array();
         $view = 'uvedoml_kis';
         $notifications = array();
-        
         $id_organization = $this->session->userdata('id_organization');
-
-
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
             $notifications = $this->activity
                     ->order_by('time', 'DESC')
@@ -261,13 +258,11 @@ class Structure extends APP_Controller {
                     ->get_all();
         }        
         $user = $this->session->userdata('user_name');
-
         foreach ($notifications as $key => $notification) {
             $notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
             $notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
             $notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
         }
-
         $data['notifications'] = $notifications;
         $this->layout->view($view, $data);
     }
