@@ -213,18 +213,16 @@
                         <h4 class="modal-title">Редактирование</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
 <!--
+                        <div class="row">
                             <select class="mselect_select" id="mselect_select"></select>
                             <button type="button" id="mselect_add" class="btn btn-info btn-sm">Добавить</button>
--->
                         </div>
                         <hr>
                         <div class="row">
-<!--
                             <textarea id="mselect_textarea" class="col-md-12"></textarea>
--->
                         </div>
+-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
@@ -244,9 +242,11 @@
                         <h4 class="modal-title">Редактирование</h4>
                     </div>
                     <div class="modal-body">
+<!--
                         <div class="row">
                             <textarea id="textarea_textarea" class="col-md-12"></textarea>
                         </div>
+-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="textarea_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
@@ -266,11 +266,11 @@
                         <h4 class="modal-title">Редактирование</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
 <!--
+                        <div class="row">
                             <select class="select_select" id="select_select"></select>
--->
                         </div>
+-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
