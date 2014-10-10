@@ -17,7 +17,7 @@ class Structure extends APP_Controller {
 
     public function arm_kis() {
         // load libs
-        $this->reestr(0);
+        $this->reestr(1);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
@@ -645,7 +645,6 @@ class Structure extends APP_Controller {
         $update = $this->authority->update($id_authority, $authority_data);
         $authority = $this->authority->get($id_authority);
         $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
-
         $url = 'structure/arm_iogv';
         redirect($url);
     }
