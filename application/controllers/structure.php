@@ -768,7 +768,7 @@ class Structure extends APP_Controller {
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
             $authorities = $this->authority
                     ->with('status')
-                    ->with('organization')
+                    ->with('organization')  
                     ->with('properties')
                     ->limit($limit_rows, ($limit_rows * ($page - 1)))
                     ->get_many_by(array('id_organization' => $id_organization));
@@ -784,7 +784,7 @@ class Structure extends APP_Controller {
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
             $options = json_decode($property['options'], true);
-            if (FALSE == $options['property_iogv_displayed']) {
+            if (array_key_exists('property_iogv_displayed', $options) AND FALSE == $options['property_iogv_displayed']) {
                 continue;
             }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
