@@ -26,7 +26,7 @@
                                 <?foreach((array)$notifications as $notification):?>
                                 <tr id="notification_<?=$notification['id_activity_feed']?>">
                                     <td><?=$notification['id_activity_feed']?></td>
-                                    <td><?=$notification['authority']['authority_name']?></td>
+                                    <td><a href="structure/check_status_authority/<?=$notification['id_object'] ?>"><?=$notification['authority']['authority_name']?></a></td>
                                     <td><?php if(isset($notification['service']['service_name'])) echo $notification['service']['service_name'];?></td>
                                     <td style="color:<?=$notification['message']['color']?>"><?=$notification['message']['text']?></td>
                                     <td><?=$notification['time']?></td>

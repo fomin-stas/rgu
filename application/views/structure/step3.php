@@ -117,24 +117,38 @@
                                                             <tr>
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
                                                                 <td class="col-md-5"><?= $value['value']; ?></td>
-                                                                <td class="col-md-3">
-                                                                    <div data-toggle="buttons" class="btn-group col-md-8">
-                                                                        <label class="btn btn-sm btn-success col-md-12 <?php if ($value['agreed'] == 1) echo 'active'; ?>" style="margin-bottom: 2px;">
-                                                                            <input type="radio" value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
-                                                                            Согласовано             
+                                                                <td class="col-md-3" style="padding-left: 2px">
+                                                                    <div class="col-sm-9" style="padding-left: 2px">
+                                                                        <label>
+                                                                            <input type="radio" class="ace " value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>"> 
+                                                                            <span class="lbl">Согласовано</span>
                                                                         </label>
-
-                                                                        <label class="btn btn-sm btn-yellow col-md-12 <?php if ($value['agreed'] == 2) echo 'active'; ?>"  style="margin-bottom: 2px;">
-                                                                            <input type="radio" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
-                                                                            Не просмотренно
+                                                                        <label>
+                                                                            <input type="radio" class="ace" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <span class="lbl">Не просмотрено</span>
                                                                         </label>
-
-                                                                        <label class="btn btn-sm btn-danger col-md-12 <?php if ($value['agreed'] == 0) echo 'active'; ?>">
-                                                                            <input type="radio" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
-                                                                            Не согласованно
+                                                                        <label>
+                                                                            <input type="radio" class="ace" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <span class="lbl">Не согласовано</span>
                                                                         </label>
                                                                     </div>
-                                                                    <div  class=" col-md-4">
+                                                                    <!--   <div data-toggle="buttons" class="btn-group col-md-8">
+                                                                       <!--    <label class="btn btn-sm btn-success col-md-12 <?php if ($value['agreed'] == 1) echo 'active'; ?>" style="margin-bottom: 2px;">
+                                                                               <input type="radio" value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                               Согласовано             
+                                                                           </label>
+
+                                                                           <label class="btn btn-sm btn-yellow col-md-12 <?php if ($value['agreed'] == 2) echo 'active'; ?>"  style="margin-bottom: 2px;">
+                                                                               <input type="radio" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                               Не просмотренно
+                                                                           </label>
+
+                                                                           <label class="btn btn-sm btn-danger col-md-12 <?php if ($value['agreed'] == 0) echo 'active'; ?>">
+                                                                               <input type="radio" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                               Не согласованно
+                                                                           </label>
+                                                                       </div>-->
+                                                                    <div  class=" col-sm-3" style="padding-left: 2px">
                                                                         <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
                                                                             <i class="ace-icon fa fa-comment icon-only"></i>
                                                                         </button>
@@ -201,7 +215,7 @@
 </div>
 
 <script type="text/javascript">
-    num=0;
+    num = 0;
     $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
@@ -228,7 +242,7 @@
             url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
             type: 'get',
             success: function(data) {
-                num=num+1;
+                num = num + 1;
                 comments = data;
                 jQuery.gritter.add({
                     title: '<br>Комментарии',
