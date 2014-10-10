@@ -779,7 +779,7 @@ class Structure extends APP_Controller {
         //$properties = array_slice($properties, 0, 1);
         foreach ((array) $properties as $property) {
             $options = json_decode($property['options'], true);
-            if (array_key_exists('property_iogv_displayed', $options) AND FALSE == $options['property_iogv_displayed']) {
+            if (array_key_exists('property_iogv_displayed', (array)$options) AND FALSE == $options['property_iogv_displayed']) {
                 continue;
             }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
