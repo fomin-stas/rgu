@@ -135,6 +135,10 @@ class Structure extends APP_Controller {
         }
 
         // prepare json grid
+        $grid_data['all']            = array();
+        $grid_data['in_process']     = array();
+        $grid_data['in_working']     = array();
+        $grid_data['new_authorities']= array();
         foreach ((array) $authorities as $authority) {
             $values = array();
 
@@ -216,10 +220,7 @@ class Structure extends APP_Controller {
                 $grid_data['all'][] = $values;
             }
         }
-        $grid_data['all'][] = array();
-        $grid_data['in_process'][] = array();
-        $grid_data['in_working'][] = array();
-        $grid_data['new_authorities'][] = array();
+        
 
         // is ajax 
         if ($this->input->is_ajax_request()) {
@@ -742,12 +743,21 @@ class Structure extends APP_Controller {
         $grid_data = array();
         $column_names = array();
         $column_models = array();
-
+        $authority_properties_codes = array();
         $total_rows = 0;
         $size_rows = 0;
-        $limit_rows = $this->input->get('rows', 30);
-        $page = $this->input->get('page', 1);
-        $table_index = $this->input->get('type', 'all');
+        $limit_rows = $this->input->get('rows', true);
+        if(!$limit_rows) {
+            $limit_rows = 20;
+        }
+        $page = $this->input->get('page', true);
+        if(!$page) {
+            $page = 1;
+        }
+        $table_index = $this->input->get('type', true);
+        if(!$table_index) {
+            $table_index = 'all';
+        }
 
 
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
@@ -839,12 +849,7 @@ class Structure extends APP_Controller {
                 }
             }
             $model['cellattr'] = new Zend_Json_Expr('Structure.cellFormat');
-            /* switch ($property['code']) {
-              case 'name_iogv':
-              $model['formatter'] = new Zend_Json_Expr('App.linkToStep');
-              $model['unformat'] = new Zend_Json_Expr('App.unLinkToStep');
-              break;
-              } */
+            
             // linked to colmn model
             $column_models[] = $model;
 
@@ -856,6 +861,10 @@ class Structure extends APP_Controller {
             }
         }
         // prepare json grid
+        $grid_data['all']            = array();
+        $grid_data['in_process']     = array();
+        $grid_data['in_working']     = array();
+        $grid_data['new_authorities']= array();
         foreach ((array) $authorities as $authority) {
             $values = array();
             // create row values
@@ -932,10 +941,6 @@ class Structure extends APP_Controller {
                 $grid_data['all'][] = $values;
             }
         }
-        $grid_data['all'][] = array();
-        $grid_data['in_process'][] = array();
-        $grid_data['in_working'][] = array();
-        $grid_data['new_authorities'][] = array();
 
         // is ajax 
         if ($this->input->is_ajax_request()) {
