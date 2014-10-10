@@ -162,10 +162,10 @@ var Structure = {
             }
             else if (cm[i].stype == 'select')
             {
-//				cm[i].searchoptions={value:":показать все;opt1:opt1;opt2:opt2"};
-//				cm[i].searchoptions.attr={multiple:'multiple'};
                 cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
+                cm[i].edittype = 'textarea';
+                cm[i].editoptions = {};
             }
             else
             {
@@ -274,13 +274,13 @@ var Structure = {
 //                        console.log(soptions);
 //
                         $('#multiselect_edit').modal('show');
-//                        $('#mselect_textarea')[0].value = value;
+                        $('#mselect_textarea')[0].value = value;
 //                        console.log('show');
                         $('#mselect_change').unbind('click').on('click', function () {
-//                            $('#' + iRow + '_' + cellname)[0].value = $('#mselect_textarea')[0].value;
+                            $('#' + iRow + '_' + cellname)[0].value = $('#mselect_textarea')[0].value;
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#multiselect_edit').modal('hide');
-//                            $('#mselect_textarea')[0].value = '';
+                            $('#mselect_textarea')[0].value = '';
 //                            $('#mselect_select')[0].options = '';
                         });
 
@@ -297,14 +297,15 @@ var Structure = {
 //
                         $('#select_edit').modal('show');
 //                        $('#select_select')[0].value = value;
+							$('#select_textarea')[0].value = value;
 //                        console.log('show');
                         $('#select_change').unbind('click').on('click', function () {
-//                            //$('#'+iRow+'_'+cellname)[0].value=$('#select_select')[0].value; //if edittype is textares, this should work
+                            $('#'+iRow+'_'+cellname)[0].value=$('#select_textarea')[0].value; //if edittype is textares, this should work
 //                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#select_edit').modal('hide');
 //                            $('#select_select')[0].options = '';
-
+							$('#select_textarea')[0].value = '';
                         });
                     }
 
