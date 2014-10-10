@@ -19,4 +19,12 @@ class Authority extends APP_Model {
 			'primary_key' => 'id_authority',
                         'order_by' => 'code'), 
 		);
+
+	public function get_sizes_by_status() {
+		$result['all'] = $this->count_all();
+        $result['in_process'] = $this->count_by('id_authority_status', 4);
+        $result['in_working'] = $this->count_by('id_authority_status', 1);
+        $result['new_authorities'] = $this->count_by('id_authority_status', array(2,3));
+        return $result;
+	}
 }

@@ -17,7 +17,7 @@ class Structure extends APP_Controller {
 
     public function arm_kis() {
         // load libs
-        $this->reestr(0);
+        //$this->reestr(0);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
@@ -53,7 +53,7 @@ class Structure extends APP_Controller {
                 ->get_all();
 
         $properties = $this->property->with('format')->order_by('order')->get_all();
-        //$properties = array_slice($properties, 0, 1);
+        
         foreach ((array) $properties as $property) {
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
             $column_names[] = $property['property_name'];
@@ -147,6 +147,23 @@ class Structure extends APP_Controller {
                 $values[$model['name']] = '';
             }
 
+            // HACK: Executable status 
+            $executable_status = 'new_authorities';
+                switch ($authority['id_authority_status']) {
+                    case 2:
+                        $executable_status = 'new_authorities';
+                        break;
+                    case 3:
+                        $executable_status = 'new_authorities';
+                        break;
+                    case 4:
+                        $executable_status = 'in_process';
+                        break;
+                    default:
+                        $executable_status = 'in_working';
+                        break;
+                }
+            
             // add athority properties to grid
             foreach ((array) $authority['properties'] as $p) {
                 if (array_key_exists($p['id_property'], $properties_buff)) {
@@ -154,28 +171,6 @@ class Structure extends APP_Controller {
                 }
                 $values['id_authority'] = $authority['id_authority'];
                 $values['id_authority_status'] = $authority['id_authority_status'];
-
-                // HACK: Executable status 
-                $executable_status = 'new_authorities';
-                if ($p['id_property'] == 8) {
-                    switch (mb_convert_case($p['value'], MB_CASE_LOWER, "UTF-8")) {
-                        case 'исполняемая':
-                            $executable_status = 'in_process';
-                            break;
-                        case 'исполняемое':
-                            $executable_status = 'in_process';
-                            break;
-                        case 'общее':
-                            $executable_status = 'in_working';
-                            break;
-                        case 'в разработке':
-                            $executable_status = 'in_working';
-                            break;
-                        default:
-                            $executable_status = 'new_authorities';
-                            break;
-                    }
-                }
             }
             //add service properties to grid
             $this->load->model('service');
@@ -238,6 +233,7 @@ class Structure extends APP_Controller {
             'grid_data' => $grid_data,
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
+            'authority_sizes' => $this->authority->get_sizes_by_status(),
                 )
         );
     }
@@ -871,6 +867,24 @@ class Structure extends APP_Controller {
             foreach ($column_models as $model) {
                 $values[$model['name']] = '';
             }
+            
+            // HACK: Executable status 
+            $executable_status = 'new_authorities';
+            switch ($authority['id_authority_status']) {
+                case 2:
+                    $executable_status = 'new_authorities';
+                    break;
+                case 3:
+                    $executable_status = 'new_authorities';
+                    break;
+                case 4:
+                    $executable_status = 'in_process';
+                    break;
+                default:
+                    $executable_status = 'in_working';
+                    break;
+            }
+
             // add athority properties to grid
             foreach ((array) $authority['properties'] as $p) {
                 if (array_key_exists($p['id_property'], $properties_buff)) {
@@ -878,27 +892,6 @@ class Structure extends APP_Controller {
                 }
                 $values['id_authority'] = $authority['id_authority'];
                 $values['id_authority_status'] = $authority['id_authority_status'];
-                // HACK: Executable status 
-                $executable_status = 'new_authorities';
-                if ($p['id_property'] == 8) {
-                    switch (mb_convert_case($p['value'], MB_CASE_LOWER, "UTF-8")) {
-                        case 'исполняемая':
-                            $executable_status = 'in_process';
-                            break;
-                        case 'исполняемое':
-                            $executable_status = 'in_process';
-                            break;
-                        case 'общее':
-                            $executable_status = 'in_working';
-                            break;
-                        case 'в разработке':
-                            $executable_status = 'in_working';
-                            break;
-                        default:
-                            $executable_status = 'new_authorities';
-                            break;
-                    }
-                }
             }
             //add service properties to grid
             $this->load->model('service');
@@ -956,9 +949,9 @@ class Structure extends APP_Controller {
 
         $this->layout->view('arm_iogv', array(
             'grid_data' => $grid_data,
-            //'column_models' => json_encode($column_models),
             'column_models' => Zend_Json::encode($column_models, false, array('enableJsonExprFinder' => true)),
             'column_names' => json_encode($column_names),
+            'authority_sizes' => $this->authority->get_sizes_by_status(),
                 )
         );
     }
