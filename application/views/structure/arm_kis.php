@@ -2,16 +2,16 @@
             <div class="tabbable col-md-12" id="gridTabs">
                 <ul class="nav nav-tabs tab-color-blue background-blue padding-12">
                     <li>
-                        <a href="#new_authorities" data-toggle="tab">Новые согласования (<?=count($grid_data['new_authorities'])?>)</a>
+                        <a href="#new_authorities" data-toggle="tab">Новые согласования (<?=$authority_sizes['new_authorities']?>)</a>
                     </li>
                     <li>
-                        <a href="#in_working" data-toggle="tab">Полномочия в работе (<?=count($grid_data['in_working'])?>)</a>
+                        <a href="#in_working" data-toggle="tab">Полномочия в работе (<?=$authority_sizes['in_working']?>)</a>
                     </li>
                     <li>
-                        <a href="#in_process" data-toggle="tab">Исполняемые (<?=count($grid_data['in_process'])?>)</a>
+                        <a href="#in_process" data-toggle="tab">Исполняемые (<?=$authority_sizes['in_process']?>)</a>
                     </li>
                     <li  class="active">
-                        <a href="#all" data-toggle="tab">Полный перечень (<?=count($grid_data['all'])?>)</a>
+                        <a href="#all" data-toggle="tab">Полный перечень (<?=$authority_sizes['all']?>)</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -219,10 +219,10 @@
                             <button type="button" id="mselect_add" class="btn btn-info btn-sm">Добавить</button>
                         </div>
                         <hr>
+-->
                         <div class="row">
                             <textarea id="mselect_textarea" class="col-md-12"></textarea>
                         </div>
--->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
@@ -242,11 +242,9 @@
                         <h4 class="modal-title">Редактирование</h4>
                     </div>
                     <div class="modal-body">
-<!--
                         <div class="row">
                             <textarea id="textarea_textarea" class="col-md-12"></textarea>
                         </div>
--->
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="textarea_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
@@ -271,6 +269,9 @@
                             <select class="select_select" id="select_select"></select>
                         </div>
 -->
+						<div class="row">
+                            <textarea id="select_textarea" class="col-md-12"></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
