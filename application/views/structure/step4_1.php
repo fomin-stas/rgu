@@ -125,15 +125,14 @@
                                                             <td class="col-md-4"><?= $name; ?></td>
                                                             <td class="col-md-5"><?= $value['value']; ?></td>
                                                             <td class="col-md-2">
-                                                                <div data-toggle="buttons" class="btn-group col-md-12">
-                                                                    <label class="btn btn-sm btn-success col-md-12 active" style="margin-bottom: 2px;">
-                                                                        <input type="radio" value="1" checked name="<?= $id_service . '_' . $value['id_property'] ?>">
-                                                                        Согласовано             
+                                                                <div class="col-md-12" style="padding-left: 2px; padding-right: 1px">
+                                                                    <label>
+                                                                        <input type="radio" class="ace " value="1" checked name="<?= $id_service . '_' . $value['id_property'] ?>"> 
+                                                                        <span class="lbl">Согласовано</span>
                                                                     </label>
-
-                                                                    <label class="btn btn-sm btn-danger col-md-12">
-                                                                        <input type="radio" value="0" name="<?= $id_service . '_' . $value['id_property'] ?>">
-                                                                        Не согласованно
+                                                                    <label>
+                                                                        <input type="radio" class="ace" value="0"  name="<?= $id_service . '_' . $value['id_property'] ?>">
+                                                                        <span class="lbl">Редактировать</span>
                                                                     </label>
                                                                 </div>
                                                             </td >
