@@ -153,9 +153,9 @@ class Structure extends APP_Controller {
                     case 2:
                         $executable_status = 'new_authorities';
                         break;
-                    case 3:
+                    /*case 3:
                         $executable_status = 'new_authorities';
-                        break;
+                        break;*/
                     case 4:
                         $executable_status = 'in_process';
                         break;
@@ -874,9 +874,9 @@ class Structure extends APP_Controller {
                 case 2:
                     $executable_status = 'new_authorities';
                     break;
-                case 3:
+                /*case 3:
                     $executable_status = 'new_authorities';
-                    break;
+                    break;*/
                 case 4:
                     $executable_status = 'in_process';
                     break;
