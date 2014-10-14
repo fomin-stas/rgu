@@ -14,10 +14,10 @@ class Structure extends APP_Controller {
         $user_id = $this->session->userdata('id');
         $user_info = $this->user->get($user_id);
         if($this->session->userdata('user_type') == 1) {
-            $this->notifications_size = $this->activity->count_all();
+            $this->notifications_size = $this->activity->count_by(array('status' => 1));
         }
         else{
-            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization']));   
+            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));   
         }
     }
 

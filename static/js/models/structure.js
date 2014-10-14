@@ -505,7 +505,25 @@ var Structure = {
                     id: "#to_excel_btn",
                     buttonicon: "ace-icon fa fa-external-link red",
                     caption: "",
-                    title: "Выгрузить в Excel"
+                    title: "Выгрузить в Excel",
+                    onClickButton: function(e){ 
+                        var cols = [];
+                        var colModel = $(this).getGridParam('colModel');
+                        var selRows = $(this).getGridParam('selrow');
+                        console.log(selRows, colModel);
+                        /*$.each(colModel, function(i) {
+                            if (!this.hidden) {
+                                cols.push(this.name);
+                            }
+                        });
+                        console.log(cols);
+                        var pdata = $(this).jqGrid('getGridParam', 'postData');
+                        var params ={
+                            gridParams: jQuery.param(pdata),
+                            columns: JSON.stringify(cols),
+                        }
+                        App.send('ajax/export_excel', 'post', params);*/
+                    }, 
 
                 });
 

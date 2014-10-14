@@ -148,4 +148,8 @@ class Ajax extends APP_Controller {
         $this->property_comments->insert_comment($property_array[1], $comment);
     }
 
+    function export_excel() {
+        var_dump($_POST);
+    }
+
 }
