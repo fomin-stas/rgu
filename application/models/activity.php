@@ -2,7 +2,7 @@
 
 class Activity extends APP_Model { 
 	public $_table = 'activity_feed';
-	public $primary_key = 'id_activity';
+	public $primary_key = 'id_activity_feed';
 	protected $return_type = 'array';
 
 	public function add_notification($event_name, $id_service_type, $id_organization, $id_object = null, $message = null, $skip_validation = false){

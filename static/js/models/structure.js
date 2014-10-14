@@ -906,5 +906,17 @@ var Structure = {
         }
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child(" + requested_col_num + ")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child(" + requested_col_num + ")").hide(); //hide all td of this column
-    }
+    },
+
+    initNotifications: function (){
+        //select all
+        $('#selectAll').on('click', function(){
+            if($(this).is(':checked')) {
+                $('.delete_trigger').prop('checked', true);
+            }
+            else {
+                $('.delete_trigger').prop('checked', false);
+            }
+        });
+    },
 }

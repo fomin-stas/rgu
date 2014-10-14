@@ -62,7 +62,13 @@ class Ajax extends APP_Controller {
 
         if ($property['id_service_type'] == 6) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+            if(empty($authority_property)){
+                $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
+                $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
+            }
+            else{
+                $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+            }
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
             $history_log['id_property'] = $authority_property['id_property'];
@@ -71,6 +77,13 @@ class Ajax extends APP_Controller {
         }
         if ($property['id_service_type'] == 7) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
+            if(empty($authority_property)){
+                $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
+                $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
+            }
+            else{
+                $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+            }
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             $history_log['new'] = $insert_data['new_data'];
             $history_log['old'] = $authority_property['value'];
@@ -85,18 +98,27 @@ class Ajax extends APP_Controller {
         $row_id = $this->input->post('rowId');
         $coll_index = $this->input->post('collIndex');
         $cell_name = $this->input->post('cellName');
-        if (isset($row_id, $coll_index, $cell_name)) {
-            $property = $this->property->get_by('code', $cell_name);
-            if (isset($property)) {
-                $user_id = $this->session->userdata('id');
-                $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
-                        array(
-                            //'id_user' => $user_id,
-                            'id_property' => $property['id_property'],
-                        )
-                );
+        $authority_id = $this->input->post('authority_id');
+        if (isset($row_id, $coll_index, $cell_name, $authority_id)) {
+            $authority = $this->authority->get($authority_id);
+            // User info 
+            $user_id = $this->session->userdata('id');
+            $id_organization = $this->session->userdata('id_organization');
+            if(isset($authority) AND ($authority['id_organization'] == $id_organization OR $id_organization == 1 OR $id_organization == 31554)) {
+                $property = $this->property->get_by('code', $cell_name);
+                if (isset($property)) {
+                    $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
+                            array(
+                                //'id_user' => $user_id,
+                                'id_property' => $property['id_property'],
+                            )
+                    );
+                }
+                $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
             }
-            $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
+            else{
+                $result = $this->layout->view('history_cell_access_denied', array(), true);
+            }
         }
         echo $result;
     }

@@ -19,6 +19,9 @@ var App = {
 			case 'settings/index':
 				Settings.initIndex();
 				break;	
+			case 'structure/uvedoml':
+				Structure.initNotifications();
+				break;	
 			default:
 				return null;
 				break;	
