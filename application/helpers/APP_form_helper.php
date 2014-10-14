@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 
 if (!function_exists('load_form_textaea')) {
 
-    function load_form_textaea($id_service, $code, $service, $comments = false) {
+    function load_form_textaea($id_service, $code, $service, $comments = false, $buttons=false) {
         if ($service['properties'][$code]['agreed'] == 1) {
             $disabled = ' disabled';
             $has_essror = "";
@@ -33,10 +33,16 @@ if (!function_exists('load_form_textaea')) {
                         </button>
                     </div>';
         }
+        if($buttons != false){
+            $data['buttons']=$buttons;
+            $data['id_service']=$id_service;
+            $data['id_property']=$id_property;
+            $this->load->view('structure/elements/agreement',$data);
+        }
         return $textarea_group . '</div>';
     }
-
 }
+
 if (!function_exists('load_form_dropdown')) {
     function load_form_dropdown($id_service, $code, $selects, $service, $comments = false, $multy = false) {
         if ($service['properties'][$code]['agreed'] == 1) {
