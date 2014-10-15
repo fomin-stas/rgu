@@ -464,6 +464,7 @@ var Structure = {
                                     recreateForm: true,
                                     modal: true,
                                     width: 500,
+                                    dataheight:300,
                                     jqModal: true,
                                     colnameview: false,
                                     updateAfterCheck: true,

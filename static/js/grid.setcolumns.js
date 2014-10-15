@@ -49,7 +49,7 @@ $.jgrid.extend({
 				if(onAfterShow) { p.afterShowForm($("#"+dtbl)); }
 			} else {
 				var dh = isNaN(p.dataheight) ? p.dataheight : p.dataheight+"px";
-				var formdata = "<div class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>\
+				var formdata = "<div class='formdata' style='width:100%;overflow:auto;position:relative;'>\
                                                     <table class='ColTable' cellspacing='1' cellpading='2' border='0'><tbody>\
                                                     <tr><td colsan='3'><p>Выберите столбцы для отображения в таблице</p></td></tr>\
                                                     <tr><td><div class='input-group'>\
@@ -76,7 +76,7 @@ $.jgrid.extend({
 					}
 				}
 				formdata += "</tbody></table></div>";
-                                formdata += "<div class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>";
+                                formdata += "<div class='formdata' style='width:100%;overflow:auto;position:relative;'>";
                                 //formdata += "<input type='checkbox' style='margin-right:5px;' id='save_parameters' /><label for='save_parameters'>Сохранить настройки</label>";
                                 //formdata += "<input type='button' id='new_sved' style='margin-right:5px;' class='btn btn-info pull-right' value='Добавить сведение'></div>";
 				var bS  = !p.updateAfterCheck ? "<a href='javascript:void(0)' id='dData' class='fm-button ui-state-default ui-corner-all'>"+p.bSubmit+"</a>" : "",
