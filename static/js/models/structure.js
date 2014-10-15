@@ -464,6 +464,7 @@ var Structure = {
                                     recreateForm: true,
                                     modal: true,
                                     width: 500,
+                                    dataheight:300,
                                     jqModal: true,
                                     colnameview: false,
                                     updateAfterCheck: true,
@@ -505,7 +506,25 @@ var Structure = {
                     id: "#to_excel_btn",
                     buttonicon: "ace-icon fa fa-external-link red",
                     caption: "",
-                    title: "Выгрузить в Excel"
+                    title: "Выгрузить в Excel",
+                    onClickButton: function(e){ 
+                        var cols = [];
+                        var colModel = $(this).getGridParam('colModel');
+                        var selRows = $(this).getGridParam('selrow');
+                        console.log(selRows, colModel);
+                        /*$.each(colModel, function(i) {
+                            if (!this.hidden) {
+                                cols.push(this.name);
+                            }
+                        });
+                        console.log(cols);
+                        var pdata = $(this).jqGrid('getGridParam', 'postData');
+                        var params ={
+                            gridParams: jQuery.param(pdata),
+                            columns: JSON.stringify(cols),
+                        }
+                        App.send('ajax/export_excel', 'post', params);*/
+                    }, 
 
                 });
 
@@ -906,5 +925,17 @@ var Structure = {
         }
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child(" + requested_col_num + ")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child(" + requested_col_num + ")").hide(); //hide all td of this column
-    }
+    },
+
+    initNotifications: function (){
+        //select all
+        $('#selectAll').on('click', function(){
+            if($(this).is(':checked')) {
+                $('.delete_trigger').prop('checked', true);
+            }
+            else {
+                $('.delete_trigger').prop('checked', false);
+            }
+        });
+    },
 }

@@ -5,10 +5,20 @@ if (!defined('BASEPATH'))
 
 class Structure extends APP_Controller {
 
+    public $notifications_size = 0;
     function __construct() {
         parent::__construct();
 
         $this->is_loggedIn();
+
+        $user_id = $this->session->userdata('id');
+        $user_info = $this->user->get($user_id);
+        if($this->session->userdata('user_type') == 1) {
+            $this->notifications_size = $this->activity->count_by(array('status' => 1));
+        }
+        else{
+            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));   
+        }
     }
 
     public function index() {
@@ -153,9 +163,9 @@ class Structure extends APP_Controller {
                     case 2:
                         $executable_status = 'new_authorities';
                         break;
-                    case 3:
+                    /*case 3:
                         $executable_status = 'new_authorities';
-                        break;
+                        break;*/
                     case 4:
                         $executable_status = 'in_process';
                         break;
@@ -242,24 +252,45 @@ class Structure extends APP_Controller {
         $data = array();
         $view = 'uvedoml_kis';
         $notifications = array();
+
+        // add to archive
+        if($this->input->is_post()){
+            $items = $this->input->post('selectedItems');
+            $this->activity->update_many($items, array('status' => 2));
+        }
         $id_organization = $this->session->userdata('id_organization');
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
             $notifications = $this->activity
                     ->order_by('time', 'DESC')
-                    ->get_many_by(array('id_organization' => $id_organization));
+                    ->get_many_by(array('id_organization' => $id_organization, 'status' => 1));
+            $archived_notifications = $this->activity
+                    ->order_by('time', 'DESC')
+                    ->get_many_by(array('id_organization' => $id_organization, 'status' => 2));        
                     $view = 'uvedoml_iogv';
         } else {
             $notifications = $this->activity
                     ->order_by('time', 'DESC')
-                    ->get_all();
+                    ->get_many_by(array('status' => 1));
+            $archived_notifications = $this->activity
+                    ->order_by('time', 'DESC')
+                    ->get_many_by(array('status' => 2));
         }        
         $user = $this->session->userdata('user_name');
-        foreach ($notifications as $key => $notification) {
+        
+        foreach ((array)$notifications as $key => $notification) {
             $notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
             $notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
             $notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
         }
+
+        foreach ((array)$archived_notifications as $key => $notification) {
+            $archived_notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
+            $archived_notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
+            $archived_notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
+        }
+
         $data['notifications'] = $notifications;
+        $data['archived_notifications'] = $archived_notifications;
         $this->layout->view($view, $data);
     }
 
@@ -873,9 +904,9 @@ class Structure extends APP_Controller {
                 case 2:
                     $executable_status = 'new_authorities';
                     break;
-                case 3:
+                /*case 3:
                     $executable_status = 'new_authorities';
-                    break;
+                    break;*/
                 case 4:
                     $executable_status = 'in_process';
                     break;

@@ -361,12 +361,16 @@
                             rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
                             // get cell name by grid selector
                             cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '')+'_', '');
-                            console.log(rowData, cellName, getClickedColNum(event,ui));
 
 						$.ajax({
 							url:'ajax/get_history_cell',
 							type:'POST',
-							data:'rowId='+rowId+'&collIndex='+getClickedColNum(event,ui)+'&cellName='+cellName,
+							data:{
+                              rowId:rowId,
+                              collIndex:getClickedColNum(event,ui),
+                              cellName:cellName,
+                              authority_id:rowData['id_authority'],
+                            },
 							success: function(data)
 							{
 								$('#changes').html(data);
