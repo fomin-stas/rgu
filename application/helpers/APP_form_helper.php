@@ -81,3 +81,73 @@ if (!function_exists('load_form_dropdown')) {
     }
 
 }
+
+if (!function_exists('load_form_textaea_step2')) {
+
+    function load_form_textaea_step2($num, $code, $comments = false, $buttons=false) {
+        $property = $this->property->get_by(array('code'=>$code));
+        if (isset($service['properties'][$code]['value'])) {
+            $value = $service['properties'][$code]['value'];
+        } else {
+            $value = '';
+        }
+        $textarea_group = '<div class="form-group">'
+                . '<label for="' . $code . '_' . $num . '" class="control-label col-md-4">' . $property['property_name'] . '</label>
+                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6"></textarea>
+                                                        ';
+        if ($comments) {
+            $textarea_group = $textarea_group .
+                    '<div  class=" col-md-2">
+                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
+                            <i class="ace-icon fa fa-comment icon-only"></i>
+                        </button>
+                    </div>';
+        }
+        if($buttons != false){
+            $data['buttons']=$buttons;
+            $data['id_service']=$num;
+            $data['id_property']=$code;
+            $this->load->view('structure/elements/agreement',$data);
+        }
+        return $textarea_group . '</div>';
+    }
+}
+
+if (!function_exists('load_form_dropdown_step2')) {
+    function load_form_dropdown_step2($id_service, $code, $selects, $service, $comments = false, $multy = false) {
+       /* if ($service['properties'][$code]['agreed'] == 1) {
+            $disabled = ' disabled';
+            $has_essror = "";
+        } else {
+            $disabled = ' ';
+            $has_essror = "has-error";
+        }
+        $id_property = $service['properties'][$code]['id_property'];
+        $property_name = $service['properties'][$code]['property_name'];
+        if (isset($service['properties'][$code]['value'])) {
+            $value = $service['properties'][$code]['value'];
+        } else {
+            $value = '';
+        }
+        $name = $id_property . '_' . $id_service;
+        if ($multy) {
+            $dropdown_group = '<div class="form-group ' . $has_essror . '">'
+                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
+                    . form_multiselect($name.'[]', $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'. $disabled);
+        } else {
+            $dropdown_group = '<div class="form-group ' . $has_essror . '">'
+                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
+                    . form_dropdown($name, $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'.$disabled);
+        }
+        if ($comments) {
+            $dropdown_group = $dropdown_group .
+                    '<div  class=" col-md-2">
+                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $id_service . '_' . $id_property . '">
+                            <i class="ace-icon fa fa-comment icon-only"></i>
+                        </button>
+                    </div>';
+        }
+        return $dropdown_group . '</div>';*/
+    }
+
+}

@@ -125,5 +125,14 @@ class Ajax extends APP_Controller {
         $comment = $this->input->post('comment');
         $this->property_comments->insert_comment($property_array[1], $comment);
     }
+    
+    public function get_service($type,$service_num){
+        $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
+        $data['spher'] = $this->spher->dropdown('name', 'name');
+        $data['service_num']=$service_num;
+        if($type=='sr'){
+            $this->load->view('structure/step_2/service',$data);
+        }
+    }
 
 }

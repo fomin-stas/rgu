@@ -394,6 +394,10 @@
                 <textarea id="short_name_skn" class="col-md-5"></textarea>
             </div>
             <div class="form-group">
+                <label for="short_name_skn" class="control-label col-md-6">Сокращенное наименование</label>
+                <textarea id="short_name_skn" class="col-md-5"></textarea>
+            </div>
+            <div class="form-group">
                 <label for="act_list_skn" class="control-label col-md-6">Перечень и тексты нормативных правовых актов, непосредственно регулирующих исполнение функции контроля (надзора), с указанием их реквизитов и источников официального опубликования (в том числе наименование и текст административного регламента с указанием реквизитов утвердившего его нормативного правового акта и источников официального опубликования либо наименование и текст проекта административного регламента).</label>
                 <textarea id="act_list_skn" class="col-md-5"></textarea>
             </div>
@@ -510,16 +514,17 @@
             //insert navigation-tab and content
             var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + tab_pane[0].id + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
             $('#razgran_u_f_tabs').append(tab);
-            $('#tab_content').append(tab_pane[0]);
+            $.ajax({
+            url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
+            type: 'get',
+            success: function(data) {
+                $('#tab_content').append(data);
+            }
+        });
+            
 
             //rename inputs and labels into type[num]_[i] form
-            for (var i = 0; i < $('#form_' + type + num[type] + ' label').length; i++)
-            {
-                $('#form_' + type + num[type] + ' label')[i].setAttribute('for', type + num[type] + '_' + i);
-                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('id', type + num[type] + '_' + i);
-                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('name', type + num[type] + '_' + i);
-                $('#form_' + type + num[type] + ' label')[i].nextElementSibling.setAttribute('required', 'required');
-            }
+            
 
             //change textarea to tag-input
             if (type == 'sr')
@@ -545,13 +550,11 @@
             });
             num[type]++;
         }
+        
         $(document).on('click', ".add_sr_btn", function () {
             add_new_tab("sr");
 
-            $('#sr1_3').tags({
-                suggestions:<?= $organization_provide_service ?>,
-                excludeList: ["not", "these", "words"]
-            });
+            
 /*
             var tag_input = $('#sr1_3');
             try {
