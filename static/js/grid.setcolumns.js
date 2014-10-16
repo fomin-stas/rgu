@@ -126,6 +126,12 @@ $.jgrid.extend({
 							if(p.ShrinkToFit===true) {
 								$($t).jqGrid("setGridWidth",$t.grid.width-0.001,true);
 							}
+							try{
+								$(window).triggerHandler('resize.jqGrid');
+							}
+							catch(e){
+								console.log("No additional grid resizing event available");
+							}
 						}
 						return this;
 					});
