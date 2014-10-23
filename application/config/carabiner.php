@@ -151,24 +151,22 @@ $config['force_curl'] = FALSE;
 // jQuery (latest, as of 1.xx)
 $config['groups']['site'] = array(
     'js' => array(
-        array('ace-extra.min.js'),
         array('jquery.min.js'),
         array('jquery-ui.min.js'),
         array('jquery.ui-contextmenu.min.js'),
         array('bootstrap.min.js'),
+        array('ace.min.js'),
+        array('ace-extra.min.js'),
+        array('ace-elements.min.js'),
         array('jquery.jqGrid.min.js'),
         array('grid.locale-ru.js'),
         array('grid.setcolumns.js'),
         array('bootstrap-multiselect.js'),
         array('bootstrap-tag.min.js'),
-        array('ace-elements.min.js'),
-        array('ace.min.js'),
         array('iris.min.js'),
-        array('bootstrap-tag.min.js'),
         array('jquery.gritter.min.js'),
         array('bootstrap-datepicker.js'),
         array('locales/bootstrap-datepicker.ru.js'),
-        //array('bootstrap-checkbox.js'),
         array('models/structure.js'),
         array('models/settings.js'),
         array('models/app.js')
@@ -186,9 +184,7 @@ $config['groups']['site'] = array(
         array('main.css'),
         array('datepicker.css'),
         array('datepicker3.css'),
-        array('bootstrap-tags.css'),
+        array('bootstrap-tag.less'),
         array('jquery.gritter.css')
     )
 );
-
-

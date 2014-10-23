@@ -33,15 +33,15 @@
                         <table class="table table-striped table-bordered">
                             <tr>
                                 <td>ID полномочия:</td>
-                                <td><?= $authority_id ?></td>
+                                <td><?= (isset($authority_id))?$authority_id:"<font font-color=red>Отсутствует</font>"; ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= $authority_name ?></td>
+                                <td><?= (isset($authority_name))?$authority_name:"<font font-color=red>Отсутствует</font>"; ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= $punkt_iogv ?></td>
+                                <td><?=(isset($punkt_iogv))?$punkt_iogv:"<font font-color=red>Отсутствует</font>";  ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
@@ -51,6 +51,7 @@
                                 <td>Срок ответа:</td>
                                 <td><? if (isset($srok_otveta)) echo $srok_otveta;?></td>
                             </tr>
+
 
                         </table>
                     </div>
@@ -543,11 +544,11 @@
             }
 
             //delete-buttons logic
-            $('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function () {
+            /*$('#' + tab_pane[0].id + ' .delete_this_pane')[0].addEventListener('click', function () {
                 var tab_main = this.parentNode.parentNode;
                 $('#navtab_' + tab_main.id).remove();
                 tab_main.remove();
-            });
+            });*/
             num[type]++;
         }
         

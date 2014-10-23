@@ -12,7 +12,7 @@
             var grid_data = 
             [ 
                     <?php foreach ($history_logs as $value): ?>
-                            {date_izm:'<?=$value['time']?>',kem_izm:'<?=$value['user_name']?>',izm_sved:'<?=$value['property_name']?>',n_str_table:'<?=$value['id_property']?>',prev_znach:'<?=$value['old']?>',new_znach:'<?=$value['new']?>'},
+                            {date_izm:'<?=$value['time']?>',kem_izm:'<?=$value['user_name']?>',izm_sved:'<?=(isset($value["property_name"]))?$value["property_name"]:"Отсутствует"?>',n_str_table:'<?=$value['id_property']?>',prev_znach:'<?=$value['old']?>',new_znach:'<?=$value['new']?>'},
                     <?php endforeach; ?>                
                     {date_izm:"21.04.2014",kem_izm:"Комитет по информатизации и связи",izm_sved:'Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня',n_str_table:"78",prev_znach:"-",new_znach:"ФЗ от 10.12.2010 №356-ФЗ"}
             ];

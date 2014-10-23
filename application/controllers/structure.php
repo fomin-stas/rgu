@@ -313,7 +313,7 @@ class Structure extends APP_Controller {
             $date_time = date_parse_from_format("Y.m.d H:i:s", $history_log['time']);
             $data['history_logs'][$logs_num]['time'] = $date_time['day'] . '/' . $date_time['month'] . '/' . $date_time['year'] . ' ' . $date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'];
             $property = $this->property->get($history_log['id_property']);
-            $data['history_logs'][$logs_num]['property_name'] = $property['property_name'];
+            $data['history_logs'][$logs_num]['property_name'] = (isset($property['property_name']))?$property['property_name']:"Отсутствует";
             $data['history_logs'][$logs_num]['id_property'] = $history_log['id_property'];
             $user = $this->user->get($history_log['id_user']);
             $data['history_logs'][$logs_num]['user_name'] = $user->user_name;
@@ -746,7 +746,7 @@ class Structure extends APP_Controller {
             $date_time = date_parse_from_format("Y.m.d H:i:s", $value['time']);
             $comments_data[$date_time['day'] . '-' . $date_time['month'] . '-' . $date_time['year']] [] = array('time' => $date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'],
                 'message' => $value['message'],
-                'user_name' => $user->user_name);
+                'user_name' => $user['user_name']);
         }
         if (isset($comments_data)) {
             $data['comments_data'] = $comments_data;
@@ -758,7 +758,9 @@ class Structure extends APP_Controller {
 
     public function arm_iogv() {
         // load libs
+        echo '1';
         $this->reestr(2);
+        echo '2';
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
         $this->zend->load('Zend/Json/Encoder');
@@ -773,6 +775,7 @@ class Structure extends APP_Controller {
         $total_rows = 0;
         $size_rows = 0;
         $limit_rows = $this->input->get('rows', true);
+        echo '3';
         if(!$limit_rows) {
             $limit_rows = 20;
         }
@@ -784,7 +787,7 @@ class Structure extends APP_Controller {
         if(!$table_index) {
             $table_index = 'all';
         }
-
+        echo '4';
 
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
             $authorities = $this->authority

@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 
 if (!function_exists('load_form_textaea')) {
 
-    function load_form_textaea($id_service, $code, $service, $comments = false, $buttons=false) {
+    function load_form_textaea($id_service, $code, $service, $comments = false, $buttons = false) {
         if ($service['properties'][$code]['agreed'] == 1) {
             $disabled = ' disabled';
             $has_essror = "";
@@ -33,17 +33,19 @@ if (!function_exists('load_form_textaea')) {
                         </button>
                     </div>';
         }
-        if($buttons != false){
-            $data['buttons']=$buttons;
-            $data['id_service']=$id_service;
-            $data['id_property']=$id_property;
-            $this->load->view('structure/elements/agreement',$data);
+        if ($buttons != false) {
+            $data['buttons'] = $buttons;
+            $data['id_service'] = $id_service;
+            $data['id_property'] = $id_property;
+            $this->load->view('structure/elements/agreement', $data);
         }
         return $textarea_group . '</div>';
     }
+
 }
 
 if (!function_exists('load_form_dropdown')) {
+
     function load_form_dropdown($id_service, $code, $selects, $service, $comments = false, $multy = false) {
         if ($service['properties'][$code]['agreed'] == 1) {
             $disabled = ' disabled';
@@ -62,12 +64,12 @@ if (!function_exists('load_form_dropdown')) {
         $name = $id_property . '_' . $id_service;
         if ($multy) {
             $dropdown_group = '<div class="form-group ' . $has_essror . '">'
-                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
-                    . form_multiselect($name.'[]', $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'. $disabled);
+                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">' . $property_name . '</label>'
+                    . form_multiselect($name . '[]', $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"' . $disabled);
         } else {
             $dropdown_group = '<div class="form-group ' . $has_essror . '">'
-                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
-                    . form_dropdown($name, $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'.$disabled);
+                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">' . $property_name . '</label>'
+                    . form_dropdown($name, $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"' . $disabled);
         }
         if ($comments) {
             $dropdown_group = $dropdown_group .
@@ -84,8 +86,14 @@ if (!function_exists('load_form_dropdown')) {
 
 if (!function_exists('load_form_textaea_step2')) {
 
-    function load_form_textaea_step2($num, $code, $comments = false, $buttons=false) {
-        $property = $this->property->get_by(array('code'=>$code));
+    function load_form_textaea_step2($num, $code, $propertis, $comments = false, $buttons = false) {
+        foreach ($propertis as $property_array) {
+            if ($property_array['code'] == $code) {
+                $property = $property_array;
+            } else {
+                continue;
+            }
+        }
         if (isset($service['properties'][$code]['value'])) {
             $value = $service['properties'][$code]['value'];
         } else {
@@ -103,51 +111,67 @@ if (!function_exists('load_form_textaea_step2')) {
                         </button>
                     </div>';
         }
-        if($buttons != false){
-            $data['buttons']=$buttons;
-            $data['id_service']=$num;
-            $data['id_property']=$code;
-            $this->load->view('structure/elements/agreement',$data);
+        if ($buttons != false) {
+            $data['buttons'] = $buttons;
+            $data['id_service'] = $num;
+            $data['id_property'] = $code;
+            $this->load->view('structure/elements/agreement', $data);
         }
         return $textarea_group . '</div>';
     }
+
 }
 
 if (!function_exists('load_form_dropdown_step2')) {
-    function load_form_dropdown_step2($id_service, $code, $selects, $service, $comments = false, $multy = false) {
-       /* if ($service['properties'][$code]['agreed'] == 1) {
-            $disabled = ' disabled';
-            $has_essror = "";
-        } else {
-            $disabled = ' ';
-            $has_essror = "has-error";
+
+    function load_form_dropdown_step2($num, $code, $selects, $propertis, $comments = false, $multy = false) {        
+        foreach ($propertis as $property_array) {
+            if ($property_array['code'] == $code) {
+                $property = $property_array;
+            } else {
+                continue;
+            }
         }
-        $id_property = $service['properties'][$code]['id_property'];
-        $property_name = $service['properties'][$code]['property_name'];
-        if (isset($service['properties'][$code]['value'])) {
-            $value = $service['properties'][$code]['value'];
-        } else {
-            $value = '';
-        }
-        $name = $id_property . '_' . $id_service;
+        $id_property = $property['id_property'];
+        $property_name = $property['property_name'];
+
+        $name = $code . '_' . $num ;
         if ($multy) {
-            $dropdown_group = '<div class="form-group ' . $has_essror . '">'
-                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
-                    . form_multiselect($name.'[]', $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'. $disabled);
+            $selects=  to_multy($selects);
+            $dropdown_group = ' <div class="form-group">'
+                    . '             <label for = "' . $code . '_' . $num . '" class = "control-label col-md-4">' . $property_name . '</label>'
+                    .'<div class="multy_tags col-md-6">'
+                    . '             <input class="input-tag" id="' . $code . '_' . $num . '" type="text" name="' . $code . '_' . $num . '" >'
+                    .'</div>'
+                    . " <script> 
+                            $('#" . $code . "_" . $num . "').tag({source:$selects});
+                        </script>";
         } else {
-            $dropdown_group = '<div class="form-group ' . $has_essror . '">'
-                    . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">'.$property_name.'</label>'
-                    . form_dropdown($name, $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"'.$disabled);
+            $dropdown_group = '<div class="form-group">'
+                    . '        <label for = "' . $code . '_' . $num . '" class = "control-label col-md-4">' . $property_name . '</label>'
+                    . form_dropdown($name, $selects, '', 'id="' . $name . '" name="' . $name . '" class="col-md-6"');
         }
         if ($comments) {
             $dropdown_group = $dropdown_group .
                     '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $id_service . '_' . $id_property . '">
+                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
                             <i class="ace-icon fa fa-comment icon-only"></i>
                         </button>
                     </div>';
         }
-        return $dropdown_group . '</div>';*/
+        return $dropdown_group . '</div>';
     }
 
+}
+
+function to_multy($selects){
+    $data="[";
+    $count=0;
+    foreach ($selects as $value){
+        ($count>0)?$data=$data.",":$data=$data;
+        $data=$data."'".$value."'";
+        $count++;
+    }
+    $data=$data."]";
+    return $data;
 }

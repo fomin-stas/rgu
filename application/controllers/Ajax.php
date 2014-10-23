@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -152,7 +151,8 @@ class Ajax extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num']=$service_num;
-        if($type=='sr'){
+        $data['property']= $this->property->get_all();
+        if($type==='sr'){
             $this->load->view('structure/step_2/service',$data);
         }
     }

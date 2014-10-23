@@ -4,10 +4,16 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Comments extends APP_Controller {
-
+    public $notifications_size = 0;
     function __construct() {
         parent::__construct();
         $this->is_loggedIn();
+        if($this->session->userdata('user_type') == 1) {
+            $this->notifications_size = $this->activity->count_by(array('status' => 1));
+        }
+        else{
+            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));   
+        }
     }
 
     public function view($id_authority) {
@@ -18,7 +24,7 @@ class Comments extends APP_Controller {
             $date_time = date_parse_from_format("Y.m.d H:i:s", $value['time']);
             $comments_data[$date_time['day'] . '-' . $date_time['month'] . '-' . $date_time['year']] [] = array('time' => $date_time['hour'] . ':' . $date_time['minute'] . ':' . $date_time['second'],
                 'message' => $value['message'],
-                'user_name' => $user->user_name);
+                'user_name' => $user['user_name']);
         }
         $data['comments_data'] = $comments_data;
         $this->layout->view('timeline', $data);

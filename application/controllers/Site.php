@@ -41,15 +41,15 @@ class Site extends APP_Controller {
                 // check user password
                 // save userdata at session
                 if($response_data->userTypeRRGU==4){
-                    $response_data->iogvID[0]=1;
+                    $response_data->groupIogvID=1;
                 }
-                if(!isset($response_data->groupIogvID[0])){
+                if(!isset($response_data->groupIogvID)){
                     show_error('Пользователь не привязан ни к одной организации.');
                     return;
                 }
                 $userdata = array(
                     'id' => $response_data->userID,//154
-                    'id_organization' => $response_data->groupIogvID[0],//8958
+                    'id_organization' => $response_data->groupIogvID,//8958
                     'user_name' => $login_name,//ksk2004
                     'loggedin' => true,
                     'user_type' => $response_data->userTypeRRGU//1
@@ -59,7 +59,7 @@ class Site extends APP_Controller {
                 if (!$result) {
                     $this->user->insert(array('id_user' => $userdata['id'], 'id_organization' => $userdata['id_organization'], 'user_name' => $login_name));
                 }
-                switch (1){//$response_data->userTypeRRGU) {
+                switch ($response_data->userTypeRRGU) {
                     case 1:
                         redirect('/structure/arm_kis');
                         break;
