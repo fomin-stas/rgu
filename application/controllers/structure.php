@@ -343,7 +343,7 @@ class Structure extends APP_Controller {
     }
 
     public function step1() {
-        $db = $this->organization_model->dropdown('organization_name');
+        $db = $this->organization_model->dropdown_ROIV('organization_name');
         $db_iogv = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['db'] = $db;
         $data['db_iogv'] = $db_iogv;
