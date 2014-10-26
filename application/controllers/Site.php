@@ -87,11 +87,10 @@ class Site extends APP_Controller {
         $response_data = json_decode($response_list_iogv, true);
         foreach ($response_data['iogvID'] as $key => $value) {
             $result = $this->organization_model->get($value);
-            if (!$result) {
-                $this->organization_model->insert(array('id_organization' => $value, 'id_organization_rank' => 1, 'organization_name' => $response_data['iogvName'][$key]));
-            } else {
-                $this->organization_model->update($value, array('id_organization_rank' => 1, 'organization_name' => $response_data['iogvName'][$key]));
-            }
+            $organazation_type= $response_data['iogvTYPE'][$key]=='РОИВ'?1:2;
+            !$result
+                    ?$this->organization_model->insert(array('id_organization' => $value, 'id_organization_rank' => $organazation_type, 'organization_name' => $response_data['iogvName'][$key]))
+                    :$this->organization_model->update($value, array('id_organization_rank' => $organazation_type, 'organization_name' => $response_data['iogvName'][$key]));
         }
     }
 

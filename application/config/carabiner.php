@@ -184,7 +184,6 @@ $config['groups']['site'] = array(
         array('main.css'),
         array('datepicker.css'),
         array('datepicker3.css'),
-        array('bootstrap-tag.less'),
         array('jquery.gritter.css')
     )
 );
