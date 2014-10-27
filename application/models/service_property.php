@@ -6,14 +6,16 @@ class Service_property extends APP_Model {
     public $primary_key = 'id_service_property';
     protected $return_type = 'array';
     public $_id_service = '';
+    public $_agreed=2;
 
     public function insert_where_code($data, $skip_validation = FALSE) {
         if ($skip_validation === FALSE) {
             $data = $this->validate($data);
         }
+        $data['agreed']= !isset($data['agreed'])?$this->_agreed:$data['agreed'];
         if ($data !== FALSE) {
             $sql = 'INSERT INTO ' . $this->_table . '(id_service, id_property, value, agreed) SELECT ?,id_property,?,? FROM property WHERE code=?';
-            $query = $this->db->query($sql, array($this->_id_service, $data['value'], $data['code'],$data['agreed']));
+            $query = $this->db->query($sql, array($this->_id_service, $data['value'],$data['agreed'], $data['code']));
             $insert_id = $this->_database->insert_id();
             return $insert_id;
         } else {

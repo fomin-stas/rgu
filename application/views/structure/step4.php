@@ -141,10 +141,10 @@
                                                         <?= load_form_textaea($id_service, 'sr_20', $service, true); ?>
                                                         <?= load_form_textaea($id_service, 'sr_21', $service, true); ?>
                                                         <?= load_form_textaea($id_service, 'sr_22', $service, true); ?>
-                                                        <?= load_form_textaea($id_service, 'sr_23', $service, true); ?>
-                                                        <?= load_form_textaea($id_service, 'sr_24', $service, true); ?>
+                                                        <?= load_form_file($id_service, 'sr_23', $service, true); ?>
+                                                        <?= load_form_file($id_service, 'sr_24', $service, true); ?>
 
-                                                        <button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>
+                                                        <!--<button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>-->
                                                         <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
@@ -172,7 +172,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <span class="col-md-6">
-                                                                <input type="file" multiple id="step_file" name="step_file">
+                                                                <input type="file" multiple id="step_file" name="step_file" class="files">
                                                             </span>
                                                         </div>
                                                     </fieldset>
@@ -203,13 +203,14 @@
 
 <script type="text/javascript">
     num=0;
-    $('#step_file').ace_file_input({
-        no_file: "Присоединить файл",
-        btn_choose: "Выбрать",
-        btn_change: "Изменить",
-        onchange: null,
-        enable_reset: true
-    });
+
+$('.files').ace_file_input({
+            no_file: "Присоединить файл",
+            btn_choose: "Выбрать",
+            btn_change: "Изменить",
+            enable_reset: true
+        });
+
 
     $('.com_bt').click(function() {
         //сделать ajax запрос за коментариями

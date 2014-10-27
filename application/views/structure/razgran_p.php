@@ -96,7 +96,7 @@
                         <button class="btn btn-info btn-sm pull-left add_skn_btn">Функция контроля и надзора</button>
                     </div>
                 </div>
-                <form name="step2_com" method="post" action="structure/step2_submit">
+                <form name="step2_com" method="post" action="structure/step2_submit" enctype="multipart/form-data">
                     <input value="<?= $id_authority ?>" name="id_authority" hidden>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">

@@ -6,7 +6,10 @@ class Organization_model extends APP_Model {
         protected $return_type = 'array';
         protected $return_insert_id=false;
         public function dropdown_ROIV($args){
-            $this->_set_where(array('id_organization_rank'=>1));
-            return $this->dropdown($args);
+            $result=$this->get_many_by(array('id_organization_rank'=>1));
+            foreach($result as $key => $value){
+                $data[$value['id_organization']]=$value['organization_name'];
+            }
+            return $data;
         }
 }

@@ -154,6 +154,8 @@ class Ajax extends APP_Controller {
         $data['property']= $this->property->get_all();
         if($type==='sr'){
             $this->load->view('structure/step_2/service',$data);
+        }elseif($type==='sn'){
+            $this->load->view('structure/step_2/function',$data);
         }
     }
 

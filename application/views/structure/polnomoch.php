@@ -49,6 +49,10 @@
                                     <label for="project_post" class="control-label col-md-5">Проект постановления Правительства (наименование и дата согласования Юридическим комитетом)</label>
                                     <textarea id="project_post" name="project_post" class="col-md-5"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>
+                                    <?= form_dropdown('service_subject', array("РОИВ"=>"РОИВ","КИС"=>"КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
+                                </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-10">

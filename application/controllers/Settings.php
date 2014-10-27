@@ -24,7 +24,6 @@ class Settings extends APP_Controller {
             $buff[$item['id_service_type']] = $item;
         }
         $service_types = $buff;
-
         if($this->input->is_post()) {
             switch ($this->input->post('method')) {
                 case 'add':
