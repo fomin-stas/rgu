@@ -359,7 +359,7 @@ class Structure extends APP_Controller {
         $property['project_post'] = $this->input->post('project_post');
         $property['srok_otveta'] = $this->input->post('srok_otveta');
         $property['executable_status'] = 'в разработке';
-        $property['service_subject'] = $this->input->post('srok_otveta');
+        $property['service_subject'] = $this->input->post('service_subject');
         $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
         $this->load->model('authority');
@@ -431,8 +431,10 @@ class Structure extends APP_Controller {
         $services = $this->post_parsing($data);
         $data = $_FILES;
         $files = $this->post_parsing($data, true);
-        foreach ($files as $key => $value) {
-            $services[$key] = $services[$key] + $value;
+        if ($files != 0) {
+            foreach ($files as $key => $value) {
+                $services[$key] = $services[$key] + $value;
+            }
         }
         foreach ($services as $name => $property) {
             $property['agreed'] = 2;
@@ -500,7 +502,7 @@ class Structure extends APP_Controller {
                     break;
             }
         }
-        return $services;
+        return isset($services)?$services:0;
     }
 
     public function step3($id_authority) {
@@ -682,8 +684,9 @@ class Structure extends APP_Controller {
             if (!(int) $name[0]) {
                 continue;
             }
-            if(!(int)$name[1] || !(int)$name[0])continue;
-            $value=$this->file_insert(0, $key,true);
+            if (!(int) $name[1] || !(int) $name[0])
+                continue;
+            $value = $this->file_insert(0, $key, true);
             $update_data = array('id_service' => $name[1], 'id_property' => $name[0]);
             $service_property = $this->service_property->get_by($update_data);
             if ($service_property['value'] != $value) {

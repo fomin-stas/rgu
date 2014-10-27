@@ -156,6 +156,8 @@ class Ajax extends APP_Controller {
             $this->load->view('structure/step_2/service',$data);
         }elseif($type==='sn'){
             $this->load->view('structure/step_2/function',$data);
+        }elseif($type==='sk'){
+            $this->load->view('structure/step_2/control',$data);
         }
     }
 

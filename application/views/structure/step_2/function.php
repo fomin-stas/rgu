@@ -1,4 +1,4 @@
-<div class="tab-pane active" id="pane_sr<?= $service_num ?>">
+<div class="tab-pane active" id="pane_sn<?= $service_num ?>">
     <div class="form-horizontal" >
         <div>
             <?= load_form_textaea_step2($service_num, 'sn_0', $property, true); ?>
@@ -15,7 +15,7 @@
             <?= load_form_textaea_step2($service_num, 'sn_11', $property, true); ?>
             <?= load_form_textaea_step2($service_num, 'sn_12', $property, true); ?>
             <?= load_form_textaea_step2($service_num, 'sn_13', $property, true); ?>
-            <?= load_form_dropdown_step2($service_num, 'sn_1', array("ДА" => "ДА", "НЕТ" => "НЕТ"), $property, true) ?>
+            <?= load_form_dropdown_step2($service_num, 'sn_14', array("ДА" => "ДА", "НЕТ" => "НЕТ"), $property, true) ?>
             <?= load_form_textaea_step2($service_num, 'sn_15', $property, true); ?>
             <?= load_form_textaea_step2($service_num, 'sn_16', $property, true); ?>
             <?= load_form_textaea_step2($service_num, 'sn_17', $property, true); ?>
