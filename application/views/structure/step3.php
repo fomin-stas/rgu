@@ -165,7 +165,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                                                    <textarea class="input-xxlarge center" name="comment_st3_disagree" required></textarea>
+                                                    <textarea class="input-xxlarge center" name="comment_st3_disagree"></textarea>
                                                     <div class="space-6"></div>
                                                     <table class="table">
                                                         <tr>

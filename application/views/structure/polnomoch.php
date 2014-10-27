@@ -74,7 +74,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <span class="col-md-6">
-                                        <input type="file" required multiple id="step_file" name="step_file">
+                                        <input type="file" multiple id="step_file" name="step_file">
                                     </span>
                                     <input type="button" id="send_btn" class="btn btn-info pull-right"  data-toggle="modal" data-target="#comments_modal" value="Отправить в работу">
                                 </div>

@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                                    <textarea class="input-xxlarge left" name="comment_st2" required></textarea>
+                                    <textarea class="input-xxlarge left" name="comment_st2"></textarea>
                                     <div class="space-6"></div>
 
                                     <table class="table">
