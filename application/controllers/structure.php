@@ -351,9 +351,24 @@ class Structure extends APP_Controller {
     }
 
     public function step1_submit() {
-        $authority['authority_name'] = $this->input->post('authority_name');
-        $property['punkt_iogv'] = $this->input->post('punkt_iogv');
-        $organization = $this->organization_model->get($this->input->post('name_iogv'));
+        if(isset($this->input->post('authority_name'))){
+            $authority['authority_name'] =$this->input->post('authority_name');
+        }else{
+            show_error('Не введено наименование полномочия!');
+            return;
+        }
+        if(isset($this->input->post('punkt_iogv'))){
+            $property['punkt_iogv'] =$this->input->post('punkt_iogv');
+        }else{
+            show_error('Не введен номер пункта в положении об ИОГВ!');
+            return;
+        }
+        if(isset($this->input->post('name_iogv'))){
+            $organization = $this->organization_model->get($this->input->post('name_iogv'));
+        }else{
+            show_error('Не выбрана организация!');
+            return;
+        }
         $property['name_iogv'] = $organization['organization_name'];
         $property['rekvisit_npa'] = $this->input->post('rekvisit_npa');
         $property['project_post'] = $this->input->post('project_post');
