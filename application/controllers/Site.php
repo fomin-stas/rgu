@@ -56,6 +56,7 @@ class Site extends APP_Controller {
                     'id_organization' => $response_data->groupIogvID,//8958
                     'user_name' => $login_name,//ksk2004
                     'loggedin' => true,
+                    'organization_name' => $response_data->groupIogvNAME,
                     'user_type' => $response_data->userTypeRRGU//1
                 );
                 $this->session->set_userdata($userdata);

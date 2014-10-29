@@ -9,9 +9,7 @@ class Structure extends APP_Controller {
 
     function __construct() {
         parent::__construct();
-
         $this->is_loggedIn();
-
         $user_id = $this->session->userdata('id');
         $user_info = $this->user->get($user_id);
         if ($this->session->userdata('user_type') == 1) {
@@ -200,7 +198,6 @@ class Structure extends APP_Controller {
                     $values_buff[] = $values;
                 }
             }
-
 // check many services
             $size = count($values_buff);
             if ($size > 1) {
@@ -216,7 +213,6 @@ class Structure extends APP_Controller {
                             }
                         }
                     }
-
                     $grid_data[$executable_status][] = $values_buff[$i];
                     $grid_data['all'][] = $values_buff[$i];
                 }
@@ -225,7 +221,6 @@ class Structure extends APP_Controller {
                 $grid_data['all'][] = $values;
             }
         }
-
 
 // is ajax 
         if ($this->input->is_ajax_request()) {
@@ -252,7 +247,6 @@ class Structure extends APP_Controller {
         $data = array();
         $view = 'uvedoml_kis';
         $notifications = array();
-
 // add to archive
         if ($this->input->is_post()) {
             $items = $this->input->post('selectedItems');
@@ -344,7 +338,9 @@ class Structure extends APP_Controller {
 
     public function step1() {
         $db = $this->organization_model->dropdown_ROIV('organization_name');
-        $db_iogv = $this->organization_model->dropdown('organization_name', 'organization_name');
+        $db_iogv = $this->organization_model
+                            ->order_by('organization_name')
+                            ->dropdown('organization_name', 'organization_name');
         $data['db'] = $db;
         $data['db_iogv'] = $db_iogv;
         $this->layout->view('polnomoch', $data);

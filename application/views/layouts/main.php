@@ -28,7 +28,7 @@
             <div class="navbar-container">
                 <div class="navbar-header pull-left">
                     <a href="structure/arm_kis" class="navbar-brand">
-                        <small>Полномочия, услуги и функции Санкт-Петербурга</small>
+                        <small><?= $this->session->userdata('organization_name')?></small>
                     </a>
                     <a href="structure/arm_kis" class="navbar-brand">
                         <small></small>
@@ -59,8 +59,8 @@
                         <li class="light-blue">
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                 <span class="user-info">
-                                    <small>Добро пожаловать,</small>
-                                    <?= $this->session->userdata('user_name')?>
+                                    Добро <br>пожаловать
+                                   
                                 </span>
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>

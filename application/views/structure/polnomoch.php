@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>
-                                    <?= form_dropdown('service_subject', array("РОИВ"=>"РОИВ","КИС"=>"КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
+                                    <?= form_dropdown('service_subject', array("Отраслевой орган"=>"Отраслевой орган","КИС"=>"КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
                                 </div>
                                 <br>
                                 <div class="row">
