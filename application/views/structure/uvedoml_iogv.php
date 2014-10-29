@@ -29,10 +29,16 @@
                                     <tr id="notification_<?=$notification['id_activity_feed']?>">
                                         <td><input type="checkbox" id="notification_select_<?=$notification['id_activity_feed']?>" name="selectedItems[]" value="<?=$notification['id_activity_feed']?>" class="delete_trigger"></td>
                                         <td><?=$notification['id_activity_feed']?></td>
-                                        <td><?=$notification['authority']['authority_name']?></td>
+                                        <td><a href="structure/check_status_authority/<?=$notification['id_object'] ?>"><?=$notification['authority']['authority_name']?></a></td>
                                         <td><?php if(isset($notification['service']['service_name'])) echo $notification['service']['service_name'];?></td>
                                         <td style="color:<?=$notification['message']['color']?>"><?=$notification['message']['text']?></td>
                                         <td><?=$notification['time']?></td>
+                                        <!--<td><input type="checkbox" id="notification_select_<?=$notification['id_activity_feed']?>" name="selectedItems[]" value="<?=$notification['id_activity_feed']?>" class="delete_trigger"></td>
+                                        <td><?=$notification['id_activity_feed']?></td>
+                                        <td><?=$notification['authority']['authority_name']?></td>
+                                        <td><?php if(isset($notification['service']['service_name'])) echo $notification['service']['service_name'];?></td>
+                                        <td style="color:<?=$notification['message']['color']?>"><?=$notification['message']['text']?></td>
+                                        <td><?=$notification['time']?></td>-->
                                     </tr>
                                     <?endforeach;?>
                                 </tbody>

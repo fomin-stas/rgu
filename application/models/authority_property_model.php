@@ -32,5 +32,9 @@ class Authority_property_model extends APP_Model {
             return FALSE;
         }
     }
-
+    
+    public function get_authority_property_by_code($id_authority,$code){
+        $property=$this->property->get_by('code',$code);
+        return $this->authority_property_model->get_by(array('id_authority'=>$id_authority,'id_property'=>$property['id_property']));        
+    }
 }

@@ -12,7 +12,7 @@ class Comments extends APP_Controller {
             $this->notifications_size = $this->activity->count_by(array('status' => 1));
         }
         else{
-            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));   
+            $this->notifications_size = $this->activity->count_by(array('id_organization' => $this->session->userdata('id_organization'), 'status' => 1));   
         }
     }
 

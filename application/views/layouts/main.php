@@ -42,11 +42,10 @@
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-blue dropdown-caret dropdown-close">
-                                <li><a href="structure/arm_kis">Полномочия</a></li>
-                                <li class="divider"></li>
+                                <li><a href="structure/reestr">Полномочия</a></li>
+                               <!-- <li class="divider"></li>
                                 <li><a href="structure/chernovik">Черновики</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Реестр услуг и функций</a></li>
+                                -->
                                 <li class="divider"></li>
                                 <li><a href="structure/journal">Журнал изменений</a></li>
                             </ul>
@@ -66,8 +65,9 @@
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
                             <ul class="user-menu dropdown-menu dropdown-menu-right dropdown-blue dropdown-caret dropdown-close">
-                                <li><a href="settings/index"><i class="ace-icon fa fa-cogs"></i>Настройки</a></li>
-                                <li class="divider"></li>
+                                <?php echo $this->session->userdata('user_type')==1?'<li><a href="settings/index"><i class="ace-icon fa fa-cogs"></i>Настройки</a></li><li class="divider"></li>':'';
+                                        ?>
+                                
                                 <li><a href="<?=site_url('/logout')?>"><i class="ace-icon fa fa-power-off"></i>Выход</a></li>
                             </ul>
                         </li>

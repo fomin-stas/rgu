@@ -16,11 +16,10 @@ class Site extends APP_Controller {
 
     public function login() {
         global $is_kis;
-        // login request 
+        // login request
         if ($this->input->is_post() AND $this->form_validation->run()) {
             $login_name = $this->input->post('login_name');
             $login_password = $this->input->post('login_password');
-      
             $myCurl = curl_init();
             curl_setopt_array($myCurl, array(
                 CURLOPT_URL => 'http://reestrgu.iac.spb.ru/auth/',
@@ -31,15 +30,20 @@ class Site extends APP_Controller {
             $response_statistic = curl_exec($myCurl);
             curl_close($myCurl);
             $response_data = json_decode($response_statistic);
+            /*$response_data->userTypeRRGU=1;
+            $response_data->groupIogvID=31554;
+            $response_data->access=true;
+            $response_data->userID=5;*/
 
-            if(!isset($response_data)){
+           /* if(!isset($response_data)){
                 show_error('Нет соединения с сервером авторизации.');
                     return;
-            }
-
+            }*/
+            
             if ($response_data->access) {
                 // check user password
                 // save userdata at session
+                
                 if($response_data->userTypeRRGU==4){
                     $response_data->groupIogvID=1;
                 }

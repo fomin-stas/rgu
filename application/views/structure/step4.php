@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <form class="form-horizontal" action="structure/update_properties/<?= $id_authority ?>" method="post">
+                                <form class="form-horizontal" action="structure/update_properties/<?= $id_authority ?>" method="post" enctype="multipart/form-data">
                                     <fieldset>
                                         <div class="widget-main padding-16">
                                             <div class="tab-content">

@@ -109,20 +109,14 @@
                                 <div class="widget-body">
                                     <div class="widget-main padding-16">
                                         <div class="tab-content" id="tab_content"></div>
-                                        <div class="row">
-                                            <span class="col-md-6">
-                                                <input type="file" multiple id="step2_file" name="step2_file[]">
-                                            </span>
-                                            <div class="form-group pull-right">
-                                                <label for="sogl_inst" class="control-label">Согласующие инстанции</label>
-                                                <select id="sogl_inst" class="">
-                                                    <option>Комитет по информации и связи</option>
-                                                    <option>КРИОГВ</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <span class="col-md-6">
+                                    <input type="file" multiple id="step_file" name="step2_file">
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -189,24 +183,25 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#step2_file').ace_file_input({
+
+        $('#step_file').ace_file_input({
             no_file: "Присоединить файл",
             btn_choose: "Выбрать",
             btn_change: "Изменить",
             enable_reset: true
         });
-        $('#send_btn').on('click', function () {
-//            var text_fields = $('#tab_content textarea');
-//            for (var textarea = 0; textarea < text_fields.length; textarea++) {
-//                console.log(text_fields[textarea].value);
-//                if (!text_fields[textarea].value) {
-//                    console.log(text_fields[textarea]);
-////                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
-////                text_fields[textarea].css('border','1px solid red');
-//                    $('#alert_fieldrequest').modal('show');
-//                    return 'empty textarea';
-//                }
-//            }
+        $('#send_btn').on('click', function() {
+            var text_fields = $('#tab_content textarea');
+            for (var textarea = 0; textarea < text_fields.length; textarea++) {
+                console.log(text_fields[textarea].value);
+                if (!text_fields[textarea].value) {
+                    console.log(text_fields[textarea]);
+//                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
+//                text_fields[textarea].css('border','1px solid red');
+                    $('#alert_fieldrequest').modal('show');
+                    return 'empty textarea';
+                }
+            }
             $('#comments_modal').modal('show');
         });
 
@@ -215,8 +210,8 @@
         function add_new_tab(type)
         {
             /*var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
-            tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
-            tab_pane[0].firstElementChild.name += num[type];*/
+             tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
+             tab_pane[0].firstElementChild.name += num[type];*/
             function tab_text()
             {
                 if (type == 'sr') {
@@ -231,7 +226,7 @@
             }
 
             //insert navigation-tab and content
-            var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_'+ type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
+            var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
             $('#razgran_u_f_tabs').append(tab);
             $.ajax({
                 url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
@@ -254,11 +249,7 @@
         });
 
 
-        $(function() {
-            // If using Bootstrap 2, be sure to include:
-            // Tags.bootstrapVersion = "2";
 
-        });
     });
 </script>
 
