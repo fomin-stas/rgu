@@ -346,19 +346,19 @@ class Structure extends APP_Controller {
     }
 
     public function step1_submit() {
-        if ($this->input->post('authority_name')) {
+        if ($this->input->post('authority_name')!=false) {
             $authority['authority_name'] = $this->input->post('authority_name');
         } else {
             show_error('Не введено наименование полномочия!');
             return;
         }
-        if ($this->input->post('punkt_iogv')) {
+        if ($this->input->post('punkt_iogv')!=false) {
             $property['punkt_iogv'] = $this->input->post('punkt_iogv');
         } else {
             show_error('Не введен номер пункта в положении об ИОГВ!');
             return;
         }
-        if ($this->input->post('name_iogv')) {
+        if ($this->input->post('name_iogv')!=false) {
             $organization = $this->organization_model->get($this->input->post('name_iogv'));
         } else {
             show_error('Не выбрана организация!');
@@ -373,7 +373,7 @@ class Structure extends APP_Controller {
         $property['service_subject'] = $this->input->post('service_subject')?$this->input->post('service_subject'):'';
         $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
-        $this->load->model('authority');
+        
         $id_authority = $this->authority->insert($authority);
 // add notification
         if ($id_authority) {
