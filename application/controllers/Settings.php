@@ -62,7 +62,8 @@ class Settings extends APP_Controller {
             $data['options']['property_other_users_displayed'] = ($this->input->post('property_other_users_displayed') == 'on')?true:false;   
             $data['options']['property_color'] = $this->input->post('property_color');   
             $data['options'] = json_encode($data['options']);
-            $data['code'] = 'kis_'.$this->property->get_kis_number();
+            $data['code'] = NULL;
+
             // insert new property
             $result = $this->property->insert($data);
             if($result){
@@ -103,7 +104,7 @@ class Settings extends APP_Controller {
                 $data['options']['property_color'] = $this->input->post('property_color');   
                 $data['options']['property_show_other_users'] = $this->input->post('property_show_other_users');   
                 $data['options'] = json_encode($data['options']);
-                //$data['code'] = NULL;
+                $data['code'] = NULL;
                 // update property
                 $result = $this->property->update($id_property, $data);
                 if($result){
