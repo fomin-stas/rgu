@@ -31,33 +31,29 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-bordered">
-                            <tr>
+                                                     <tr>
                                 <td>ID полномочия:</td>
-                                <td><?= (isset($authority_id)) ? $authority_id : "<font font-color=red>Отсутствует</font>"; ?></td>
+                                <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= (isset($authority_name)) ? $authority_name : "<font font-color=red>Отсутствует</font>"; ?></td>
+                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= (isset($punkt_iogv)) ? $punkt_iogv : "<font font-color=red>Отсутствует</font>"; ?></td>
+                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= $name_iogv ?></td>
+                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
                                 <td><? if (isset($srok_otveta)) echo $srok_otveta;?></td>
                             </tr>
-
-
                         </table>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-condensed">
@@ -109,7 +105,6 @@
                                 <div class="widget-body">
                                     <div class="widget-main padding-16">
                                         <div class="tab-content" id="tab_content"></div>
-
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +115,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
                             <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
@@ -140,7 +134,6 @@
                                     <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                                     <textarea class="input-xxlarge left" name="comment_st2"></textarea>
                                     <div class="space-6"></div>
-
                                     <table class="table">
                                         <tr>
                                             <td>Предыдущие комментарии:</td>
@@ -204,7 +197,6 @@
             }
             $('#comments_modal').modal('show');
         });
-
         //add new functions and services
         var num = {sr: 1, sn: 1, sk: 1};
         function add_new_tab(type)
@@ -224,7 +216,6 @@
                     return 'Функция контроля/надзора';
                 }
             }
-
             //insert navigation-tab and content
             var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a></li>";
             $('#razgran_u_f_tabs').append(tab);
@@ -237,7 +228,6 @@
             });
             num[type]++;
         }
-
         $(document).on('click', ".add_sr_btn", function() {
             add_new_tab("sr");
         });
@@ -247,9 +237,6 @@
         $(document).on('click', ".add_sk_btn", function() {
             add_new_tab("sk");
         });
-
-
-
     });
 </script>
 

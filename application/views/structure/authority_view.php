@@ -47,15 +47,15 @@
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= $authority_name ?></td>
+                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= $punkt_iogv ?></td>
+                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= $name_iogv ?></td>
+                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
@@ -70,7 +70,7 @@
                         <table class="table table-striped table-condensed">
                             <tr>
                                 <td>Ответственный орган:</td>
-                                <td><?= $name_iogv ?></td>
+                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>

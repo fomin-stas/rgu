@@ -299,7 +299,6 @@ class Structure extends APP_Controller {
                     ->order_by('time', 'DESC')
                     ->get_all();
         }
-        $history_logs = $this->history_log->get_all();
         $logs_num = 0;
         foreach ($history_logs as $history_log) {
             $data['history_logs'][$logs_num]['new'] = $history_log['new'];
