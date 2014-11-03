@@ -35,21 +35,21 @@
                     <div class="col-md-10 col-md-offset-1">
                         <h3 class="center">Присвоение статуса полномочию</h3>
                         <table class="table table-striped table-bordered">
-                                                        <tr>
+                            <tr>
                                 <td>ID полномочия:</td>
                                 <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
+                                <td><?= isset($authority_name) ? $name_iogv : 'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
@@ -64,7 +64,7 @@
                         <table class="table table-striped table-condensed">
                             <tr>
                                 <td>Ответственный орган:</td>
-                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Статус:</td>
@@ -132,7 +132,7 @@
                                                                             <span class="lbl">Не согласовано</span>
                                                                         </label>
                                                                     </div>
-                           
+
                                                                     <div  class=" col-sm-3" style="padding-left: 2px">
                                                                         <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
                                                                             <i class="ace-icon fa fa-comment icon-only"></i>
@@ -142,6 +142,11 @@
                                                             </tr>
                                                         <?php endforeach; ?>
                                                     </table>
+                                                    <div class="row">
+                                                        <span class="col-md-12">
+                                                            <button type="button" class="btn btn-green btn-sm pull-right saccess" id="success_sk_<?= $id_sirvices ?>"><i class="ace-icon fa fa-square-o align-top bigger-125"></i>Согласовать статус функции контроля (надзора)</button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             <?php endforeach; ?>
                                         </div>
@@ -186,7 +191,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal2" >В работу</button>
+                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2 " data-toggle="modal" data-target="#comments_modal2" >В работу</button>
                     </div>
                 </div>
             </div>
@@ -219,7 +224,6 @@
     });
 
     $('.com_bt').click(function() {
-        //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
 
@@ -236,6 +240,42 @@
                     time: '',
                     class_name: 'gritter-info gritter-light'
                 });
+            }
+        });
+    });
+    $(".saccess").on('click', function() {
+        id = $(this).attr('id');
+        saccess_params = new Array();
+        saccess_params = id.split('_');
+        bootbox.confirm({
+            message: "<h3 align='center'>Согласовать статус статус функции контроля (надзора)?</h3>",
+            buttons: {
+                confirm: {
+                    label: "Да, согласовать.",
+                    className: "btn-primary btn-sm"
+                },
+                cancel: {
+                    label: "Нет не согласовать.",
+                    className: "btn-sm"
+                }
+            },
+            callback: function(result) {
+                if (result == 1) {
+                    $.ajax({
+                        url: App.options.baseURL + 'ajax/confirm/' + saccess_params[1] + '/' + saccess_params[2],
+                        type: 'get',
+                        success: function() {
+                                jQuery.gritter.add({
+                                    title: '<h3>Статус успешно присвоен!</h3>',
+                                    text: comments,
+                                    sticky: true,
+                                    time: '',
+                                    class_name: 'gritter-center gritter-light'
+                                });
+                            });
+                        }
+                    });
+                }
             }
         });
     });

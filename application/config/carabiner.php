@@ -166,6 +166,7 @@ $config['groups']['site'] = array(
         array('iris.min.js'),
         array('jquery.gritter.min.js'),
         array('bootstrap-datepicker.js'),
+        array('bootbox.min.js'),
         array('locales/bootstrap-datepicker.ru.js'),
         array('models/structure.js'),
         array('models/settings.js'),

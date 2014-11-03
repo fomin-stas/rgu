@@ -164,5 +164,10 @@ class Ajax extends APP_Controller {
     function export_excel() {
         var_dump($_POST);
     }
+    
+    function confirm($type,$id_service){
+        $property=  $this->service_property->update_where_code();
+        echo 0;
+    }
 
 }

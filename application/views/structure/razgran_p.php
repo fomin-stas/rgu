@@ -31,17 +31,17 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-bordered">
-                                                     <tr>
+                            <tr>
                                 <td>ID полномочия:</td>
                                 <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
+                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>

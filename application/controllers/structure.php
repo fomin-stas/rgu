@@ -24,7 +24,6 @@ class Structure extends APP_Controller {
     }
 
     public function arm_kis() {
-// load libs
         $this->reestr(1);
         $this->load->library('zend');
         $this->zend->load('Zend/Json');
@@ -762,7 +761,7 @@ class Structure extends APP_Controller {
         $writer =$this->authority_property_model->get_authority_property_by_code($id_authority,'service_subject');
         switch ($authority['id_authority_status']) {
             case 1:
-                if (($writer['value']=="РОИВ" && $this->session->userdata('user_type')==1) || $this->session->userdata('user_type')>2){
+                if (($writer['value']=="Отраслевой орган" && $this->session->userdata('user_type')==1) || $this->session->userdata('user_type')>2){
                     redirect('structure/authority_view/' . $id_authority.'/'.$authority['id_authority_status']);
                 }
                 elseif ($step_num != 2)
@@ -781,7 +780,7 @@ class Structure extends APP_Controller {
                 elseif ($step_num != 4)
                     redirect('structure/step4/' . $id_authority);
                 break;
-            case 4: if (($writer['value']=="РОИВ" && $this->session->userdata('user_type')==1) || $this->session->userdata('user_type')>2){
+            case 4: if (($writer['value']=="Отраслевой орган" && $this->session->userdata('user_type')==1) || $this->session->userdata('user_type')>2){
                     redirect('structure/authority_view/' . $id_authority.'/'.$authority['id_authority_status']);
                 }
                 elseif ($step_num != 4)
