@@ -43,6 +43,7 @@ $route['404_override'] = '';
 
 $route['login'] = 'site/login';
 $route['logout'] = 'site/logout';
-
+$route['structure/step1'] = "agreeds/step1";
+$route['structure/check_status_authority/(:any)'] = "agreeds/check_status_authority/$1";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
