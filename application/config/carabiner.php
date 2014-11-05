@@ -155,6 +155,9 @@ $config['groups']['site'] = array(
         array('jquery-ui.min.js'),
         array('jquery.ui-contextmenu.min.js'),
         array('bootstrap.min.js'),
+        array('ace.min.js'),
+        array('ace-extra.min.js'),
+        array('ace-elements.min.js'),
         array('jquery.jqGrid.min.js'),
         array('grid.locale-ru.js'),
         array('grid.setcolumns.js'),
@@ -165,12 +168,9 @@ $config['groups']['site'] = array(
         array('bootstrap-datepicker.js'),
         array('bootbox.min.js'),
         array('locales/bootstrap-datepicker.ru.js'),
-        array('ace-extra.min.js'),
-        array('ace-elements.min.js'),
-        array('ace.min.js'),
         array('models/structure.js'),
         array('models/settings.js'),
-        array('models/app.js'),
+        array('models/app.js')
     ),
     'css' => array(
         array('bootstrap.min.css'),
@@ -179,16 +179,12 @@ $config['groups']['site'] = array(
         array('bootstrap-multiselect.css'),
         array('ui.jqgrid.css'),
         array('jquery-ui.min.css'),
-        array('main.css'),
-        array('datepicker.css'),
-        array('datepicker3.css'),
-        array('jquery.gritter.css'),
         array('searchFilter.css'),
         array('ui.multiselect.css'),
         array('ace.min.css'),
-        array('ace-part2.min.css'),
-        array('ace-skins.min.css'),
-        array('ace-rtl.min.css'),
-        array('ace-ie.min.css')
+        array('main.css'),
+        array('datepicker.css'),
+        array('datepicker3.css'),
+        array('jquery.gritter.css')
     )
 );
