@@ -43,12 +43,13 @@
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-blue dropdown-caret dropdown-close">
-                                <li><a href="structure/reestr">Полномочия</a></li>
-                               <!-- <li class="divider"></li>
+                               <!-- <li><a href="structure/reestr">Полномочия</a></li>
+                                <li class="divider"></li>
                                 <li><a href="structure/chernovik">Черновики</a></li>
                                 -->
                                 <li class="divider"></li>
                                 <li><a href="structure/journal">Журнал изменений</a></li>
+
                             </ul>
                         </li>
                         <li class="light-blue">

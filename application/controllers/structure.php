@@ -290,11 +290,11 @@ class Structure extends APP_Controller {
     public function journal() {
         $id_organization = $this->session->userdata('id_organization');
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
-            $history_logs = $this->activity
+            $history_logs = $this->history_log
                     ->order_by('time', 'DESC')
                     ->get_many_by(array('id_organization' => $id_organization));
         } else {
-            $history_logs = $this->activity
+            $history_logs = $this->history_log
                     ->order_by('time', 'DESC')
                     ->get_all();
         }
