@@ -156,6 +156,7 @@ $config['groups']['site'] = array(
         array('jquery.ui-contextmenu.min.js'),
         array('bootstrap.min.js'),
         array('jquery.jqGrid.min.js'),
+        array('jquery.cookie.js'),
         array('grid.locale-ru.js'),
         array('grid.setcolumns.js'),
         array('bootstrap-multiselect.js'),
@@ -186,6 +187,7 @@ $config['groups']['site'] = array(
         array('searchFilter.css'),
         array('ui.multiselect.css'),
         array('ace.min.css'),
+        array('ace-part2.min.css'),
         array('ace-skins.min.css')
     )
 );

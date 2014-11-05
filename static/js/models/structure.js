@@ -185,6 +185,8 @@ var Structure = {
         }
     },
     renderGrid: function (grid_selector, pager_selector, grid_data) {
+        organization_name=$.cookie('fsi_organization_name');
+        alert(organization_name);
         jQuery(grid_selector).jqGrid({
             subGrid: false,
             altRows: true,
@@ -349,7 +351,7 @@ var Structure = {
                 return result;
             },
             //editurl: "/",//nothing is saved
-            caption: "Таблица полномочий АРМ КИС"
+            caption: organization_name
 
         });
         //navButtons
