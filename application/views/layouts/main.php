@@ -28,7 +28,7 @@
             <div class="navbar-container">
                 <div class="navbar-header pull-left">
                     <a href="structure/arm_kis" class="navbar-brand">
-                        <small><?= $this->session->userdata('organization_name')?></small>
+                        <small>Полномочия, услуги и функции Санкт-Петербурга</small>
                     </a>
                     <a href="structure/arm_kis" class="navbar-brand">
                         <small></small>

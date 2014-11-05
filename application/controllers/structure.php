@@ -10,14 +10,7 @@ class Structure extends APP_Controller {
     function __construct() {
         parent::__construct();
         $this->is_loggedIn();
-        /*$this->load->helper('cookie');
-        $cookie = array(
-            'name' => 'organization_name',
-            'value' => $this->session->userdata('organization_name')
-        );
-        $err = set_cookie($cookie);
-        SetCookie("Test", "Value");
-        $rt = get_cookie('organization_name');*/
+        SetCookie("organization_name", $this->session->userdata('organization_name'));
         $user_id = $this->session->userdata('id');
         $user_info = $this->user->get($user_id);
         if ($this->session->userdata('user_type') == 1) {
