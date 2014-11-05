@@ -43,17 +43,17 @@
                             систем горячего водоснабжения, холодного водоснабжения и водоотведения
                         </h3>
                         <table class="table table-striped">
-                                                     <tr>
+                            <tr>
                                 <td>ID полномочия:</td>
                                 <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
+                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <a href="structure/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                        <a href="agreeds/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                     </div>
                 </div>
                 <div class="row">
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <form class="form-horizontal" action="structure/update_properties/<?= $id_authority ?>" method="post" enctype="multipart/form-data">
+                                <form class="form-horizontal" action="agreeds/update_properties/<?= $id_authority ?>" method="post" enctype="multipart/form-data">
                                     <fieldset>
                                         <div class="widget-main padding-16">
                                             <div class="tab-content">
@@ -261,7 +261,7 @@
                 num = num + 1;
                 comments = data;
                 jQuery.gritter.add({
-                    title: '<br>Комментарии',
+                    title: 'Комментарии',
                     text: comments,
                     sticky: true,
                     time: '',

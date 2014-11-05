@@ -24,7 +24,7 @@
         <hr>
         <div class="step-content" id="step-container">
             <div class="step-pane active" id="step1">
-                <form class="form-horizontal" method="post" role="form" action="structure/step1_submit" enctype="multipart/form-data">
+                <form class="form-horizontal" method="post" role="form" action="agreeds/step1_submit" enctype="multipart/form-data">
                     <fieldset>
                         <div class="col-md-offset-1">
                             <h4 class="col-md-10 center">Добавление нового полномочия</h4>
@@ -56,8 +56,8 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <a href="structure/arm_kis"><input type="button" class="btn btn-grey pull-right btn-sm col-md-3" value="Закрыть"></a>
-                                        <a href="structure/step1"><input type="button" class="btn btn-info pull-right btn-sm col-md-3" value="Сохранить как черновик"></a>
+                                        <a href="agreeds/arm_kis"><input type="button" class="btn btn-grey pull-right btn-sm col-md-3" value="Закрыть"></a>
+                                        <a href="agreeds/step1"><input type="button" class="btn btn-info pull-right btn-sm col-md-3" value="Сохранить как черновик"></a>
                                     </div>
                                 </div>
                             </div>

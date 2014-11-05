@@ -31,17 +31,17 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <table class="table table-striped table-bordered">
-                                                     <tr>
+                            <tr>
                                 <td>ID полномочия:</td>
                                 <td><?= $authority_id ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
+                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
@@ -87,12 +87,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <button class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
-                        <button class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
-                        <button class="btn btn-info btn-sm pull-left add_sk_btn">Функция контроля и надзора</button>
+                        <button type="button" class="btn btn-info btn-sm pull-left add_sr_btn">Услуга</button>
+                        <button type="button" class="btn btn-info btn-sm pull-left add_sn_btn">Функция</button>
+                        <button type="button" class="btn btn-info btn-sm pull-left add_sk_btn">Функция контроля и надзора</button>
                     </div>
                 </div>
-                <form name="step2_com" method="post" action="structure/step2_submit" enctype="multipart/form-data">
+                <form name="step2_com" method="post" action="agreeds/step2_submit" enctype="multipart/form-data">
                     <input value="<?= $id_authority ?>" name="id_authority" hidden>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
@@ -117,10 +117,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <button class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
-                            <button class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
-                            <button class="btn btn-info btn-sm pull-left add_sk_btn">Добавить функцию контроля и надзора</button>
-                            <button id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
+                            <button type="button" class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
+                            <button type="button"class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
+                            <button type="button"class="btn btn-info btn-sm pull-left add_sk_btn">Добавить функцию контроля и надзора</button>
+                            <button type="button" id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
                         </div>
                     </div>
                     <div class="modal fade" id="comments_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

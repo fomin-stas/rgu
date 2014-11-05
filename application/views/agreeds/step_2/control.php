@@ -19,15 +19,14 @@
             <?= load_form_textaea_step2($service_num, 'sk_15', $property, false); ?>
             <?= load_form_textaea_step2($service_num, 'sk_16', $property, false); ?>
             <?= load_form_textaea_step2($service_num, 'sk_17', $property, false); ?>
-            <script>
-                $('.files').ace_file_input({
-                    no_file: "Присоединить файл",
-                    btn_choose: "Выбрать",
-                    btn_change: "Изменить",
-                    enable_reset: true
-                });
-            </script>
         </div>
     </div>
 </div>
-
+<script>
+    $('.files').ace_file_input({
+        no_file: "Присоединить файл",
+        btn_choose: "Выбрать",
+        btn_change: "Изменить",
+        enable_reset: true
+    });
+</script>

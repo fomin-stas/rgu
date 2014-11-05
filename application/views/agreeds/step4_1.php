@@ -2,19 +2,19 @@
     <div class="container">
         <div id="my-wizard" data-target="#step-container" class="wizard">
             <ul class="wizard-steps">
-                <li data-target="#step1" class="<?=$step==0?'active':'complete';?>">
+                <li data-target="#step1" class="complete">
                     <span class="step">1</span>
                     <span class="title">Новое полномочие</span>
                 </li>
-                <li data-target="#step2" class="<?php if($step==1)echo 'active'; else echo $step>1?'complete':'';?>">
+                <li data-target="#step2" class="complete">
                     <span class="step">2</span>
                     <span class="title">Присвоение статуса полномочию</span>
                 </li>
-                <li data-target="#step3" class="<?php if($step==2)echo 'active'; else echo $step>2?'complete':'';?>">
+                <li data-target="#step3" class="complete">
                     <span class="step">3</span>
                     <span class="title">Согласование присвоения статуса</span>
                 </li>
-                <li data-target="#step4" class="<?php if($step==3)echo 'active'; else echo $step>3?'complete':'';?>">
+                <li data-target="#step4" class="active">
                     <span class="step">4</span>
                     <span class="title">Полномочию присвоен статус</span>
                 </li>
@@ -47,11 +47,11 @@
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$name_iogv:'не установлено' ?></td>
+                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
@@ -70,7 +70,7 @@
                         <table class="table table-striped table-condensed">
                             <tr>
                                 <td>Ответственный орган:</td>
-                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= $name_iogv ?></td>
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
@@ -94,11 +94,11 @@
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <a href="structure/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                    <a href="agreeds/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                 </div>
             </div>
             <div class="row">
-                <?php if (isset($services)): ?>
+                <form action="agreeds/re_edit/<?= $id_authority ?>" method="post">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="widget-box">
                             <div class="widget-header">
@@ -122,8 +122,20 @@
                                                 <table class="table table-bordered">
                                                     <?php foreach ($service['properties'] as $name => $value): ?>
                                                         <tr>
-                                                            <td class="col-md-5"><?= $name; ?></td>
-                                                            <td class="col-md-6"><?= $value['value'];  ?></td>
+                                                            <td class="col-md-4"><?= $name; ?></td>
+                                                            <td class="col-md-5"><?= $value['value']; ?></td>
+                                                            <td class="col-md-2">
+                                                                <div class="col-md-12" style="padding-left: 2px; padding-right: 1px">
+                                                                    <label>
+                                                                        <input type="radio" class="ace " value="1" checked name="<?= $id_service . '_' . $value['id_property'] ?>"> 
+                                                                        <span class="lbl">Согласовано</span>
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" class="ace" value="0"  name="<?= $id_service . '_' . $value['id_property'] ?>">
+                                                                        <span class="lbl">Редактировать</span>
+                                                                    </label>
+                                                                </div>
+                                                            </td >
                                                             <td class="col-md-1">
                                                                 <div>
                                                                     <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_service ?>_<?= $value['id_property']; ?>">
@@ -134,7 +146,7 @@
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </table>
-                                                <a href="structure/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
+                                                <a href="agreeds/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -142,9 +154,15 @@
                             </div>
                         </div>
                     </div>
-                <?php endif; ?>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <button type="submit" class="btn btn-grey btn-sm pull-right">Отправить на доработку</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -155,6 +173,19 @@
         btn_choose: "Выбрать",
         btn_change: "Изменить",
         enable_reset: true
+    });
+
+    $("#comments_modal2").on("submit", function() {
+        location = "step2";
+    });
+    $('#srok_otveta').datepicker({
+        format: "dd-mm-yyyy",
+        weekStart: 1,
+        startDate: "-all earlier dates will be disabled",
+        language: "ru",
+        daysOfWeekDisabled: "0,6",
+        autoclose: true,
+        todayHighlight: true
     });
 
     $('.com_bt').click(function() {
@@ -169,28 +200,13 @@
                 num = num + 1;
                 comments = data;
                 jQuery.gritter.add({
-                    title: '<br>Комментарии',
+                    title: 'Комментарии',
                     text: comments,
                     sticky: true,
                     time: '',
                     class_name: 'gritter-info gritter-light'
                 });
             }
-        });
-    });
-
-    $("#comments_modal2").on("submit", function() {
-        location = "step2";
-    });
-    $('#srok_otveta_3').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        todayHiglight: true
-    });
-
-    $('.ace-switch-4.step3').click(function() {
-        $(this).parent().siblings('#tr1').modal({
-            show: true
         });
     });
 </script>

@@ -1,4 +1,3 @@
-
 <div class="main-container">
     <div class="container">
         <div id="my-wizard" data-target="#step-container" class="wizard">
@@ -42,15 +41,15 @@
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= $authority_name ?></td>
+                                <td><?= isset($authority_name) ? $authority_name : 'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= $punkt_iogv ?></td>
+                                <td><?= isset($punkt_iogv) ? $punkt_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= $name_iogv ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
@@ -65,11 +64,11 @@
                         <table class="table table-striped table-condensed">
                             <tr>
                                 <td>Ответственный орган:</td>
-                                <td><?= $name_iogv ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Статус:</td>
-                                <td><p style="color:red">Ожидает присвоения статуса полномочию</p></td>
+                                <td><?= $id_authority_status==3?'<p style="color:green">Полномочию присвоен статус</p>':'<p id="status_text" style="color:red">Ожидает присвоения статуса полномочию</p>'?></td>
                             </tr>
                             <tr>
                                 <td>Комментарий:</td>
@@ -106,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <form name="step3_disagree_com" method="post" action="structure/agree/<?= $id_authority; ?>/false">
+                                <form name="step3_disagree_com" method="post" action="agreeds/in_work/<?= $id_authority; ?>">
                                     <div class="widget-main padding-16">
                                         <div class="tab-content">
                                             <?php $tab_num = 0; ?>
@@ -118,26 +117,26 @@
                                                             <tr>
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
                                                                 <td class="col-md-5"><?= $value['value']; ?></td>
-                                                                <td class="col-md-3">
-                                                                    <label>
-                                                                        <input type="checkbox" name="ch_<?= $id_sirvices ?>_<?= $name; ?>" class="ace ace-switch ace-switch-4 step3 btn-flat" />
-                                                                        <span class="lbl" data-lbl="Не согласовано &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Согласовано"></span>
-                                                                    </label>
-                                                                    <div class="modal fade" id="tr1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog">
-                                                                            <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                                                        <h4>Комментарий</h4>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <textarea class="input-xxlarge center" name="ta_<?= $id_sirvices ?>_<?= $name; ?>"></textarea>
-                                                                                    </div>
-                                                                                    <div class="modal-footer ">
-                                                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
-                                                                                    </div>
-                                                                            </div>
-                                                                        </div>
+                                                                <td class="col-md-3" style="padding-left: 2px">
+                                                                    <div class="col-sm-9" style="padding-left: 2px">
+                                                                        <label>
+                                                                            <input type="radio" class="ace " value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>"> 
+                                                                            <span class="lbl">Согласовано</span>
+                                                                        </label>
+                                                                        <label>
+                                                                            <input type="radio" class="ace" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <span class="lbl">Не просмотрено</span>
+                                                                        </label>
+                                                                        <label>
+                                                                            <input type="radio" class="ace" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <span class="lbl">Не согласовано</span>
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div  class=" col-sm-3" style="padding-left: 2px">
+                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
+                                                                            <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                        </button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -145,15 +144,22 @@
                                                     </table>
                                                 </div>
                                             <?php endforeach; ?>
+                                            <div class="row">
+                                                <span class="col-md-12">
+                                                    <button type="button" class="btn <?= $id_authority_status==3?'disabled':'btn-danger'?> btn-sm pull-right saccess" id="success_sk_<?= $id_sirvices ?>"><?= $id_authority_status==3?'Статус полномочия согласован':'Согласовать статус полномочия'?></button>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <span class="col-md-6">
                                                 <input type="file" multiple id="step_file" name="step_file">
                                             </span>
-                                            <div class="form-group pull-right">
-                                                <label for="srok_otveta_3" class="control-label">Срок ответа</label>
-                                                <input id="srok_otveta_3" type="text">
-                                            </div>
+                                            <span class="col-md-6">
+                                                <div class="form-group pull-right">
+                                                    <label for="srok_otveta" class="control-label">Срок ответа</label>
+                                                    <input id="srok_otveta" type="text">
+                                                </div>
+                                            </span>
                                         </div>
                                     </div>
 
@@ -187,8 +193,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal1" >Согласовать</button>
-                        <button id="disagree_btn" class="btn btn-grey btn-sm pull-right col-md-2" data-toggle="modal" data-target="#comments_modal2">Не согласовать</button>
+                        <button id="agree_btn" class="btn btn-info btn-sm pull-right col-md-2 " data-toggle="modal" data-target="#comments_modal2" >В работу</button>
                     </div>
                 </div>
             </div>
@@ -201,36 +206,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="comments_modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form name="step3_agree_com" method="post" action="structure/agree/<?= $id_authority; ?>/true">
-                <div class="modal-header">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-primary">Отправить</button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                    <textarea class="input-xxlarge center" name="comment_st3_agree"></textarea>
-                    <div class="space-6"></div>
-                    <table class="table">
-                        <tr>
-                            <td>Предыдущие комментарии:</td>
-                        </tr>
-                        <tr>
-                            <td> <?= $comments ?></td>
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
 <script type="text/javascript">
- 
+    num = 0;
     $('#step_file').ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
@@ -238,23 +215,78 @@
         enable_reset: true
     });
 
-    $("#comments_modal2").on("submit", function() {
-        location = "step2";
+    $('#srok_otveta').datepicker({
+        format: "dd-mm-yyyy",
+        weekStart: 1,
+        startDate: "-all earlier dates will be disabled",
+        language: "ru",
+        daysOfWeekDisabled: "0,6",
+        autoclose: true,
+        todayHighlight: true
     });
-    /*
-    $('#srok_otveta_3').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true, toda yHiglight: true
-    });
-*/
-    $('.ace-switch-4.step3').click(function() {
-        if ($('input:checked').length > 0) {
-            $('#agree_btn').attr('disabled', true);
-        } else {
-            $('#agree_btn').attr('disabled', false);
-        }
-        $(this).parent().siblings('#tr1').modal({
-            show: true
+
+    $('.com_bt').click(function () {
+        id_service_property = $(this).attr('id');
+        comments = '';
+
+        $.ajax({
+            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
+            type: 'get',
+            success: function (data) {
+                num = num + 1;
+                comments = data;
+                jQuery.gritter.add({
+                    title: 'Комментарии',
+                    text: comments,
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-info gritter-light'
+                });
+            }
         });
     });
+    $(".saccess").on('click', function () {
+        saccess_button=this;
+        bootbox.confirm({
+            message: "<h3 align='center'>Согласовать статус полномочия?</h3>",
+            buttons: {
+                confirm: {
+                    label: "Да, согласовать.",
+                    className: "btn-primary btn-sm"
+                },
+                cancel: {
+                    label: "Нет не согласовать.",
+                    className: "btn-sm"
+                }
+            },
+            callback: function (result) {
+                if (result == 1) {
+                    $(saccess_button).removeClass('btn-danger').addClass('disabled').text('Статус услуги согласован');
+                    $('#status_text').text('Полномочию присвоен статус').css('color','green');
+                    $.ajax({
+                        url: App.options.baseURL + 'ajax/confirm/' + <?= $id_authority ?>,
+                        type: 'get',
+                        success: function (data) {
+                            if (data == 0) {
+                                text = '<h3>Статус успешно присвоен!</h3>';
+                                type_greeter = 'gritter-info';
+                            } else {
+                                text = '<h3>Произошла ошибка при присвоении статуса!</h3>';
+                                type_greeter = 'gritter-error';
+                            }
+                            jQuery.gritter.add({
+                                title: "",
+                                text: text,
+                                sticky: false,
+                                time: '',
+                                class_name: 'gritter-center ' + type_greeter
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+
 </script>

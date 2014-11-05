@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -55,17 +56,16 @@ class Ajax extends APP_Controller {
         $for_get = array('code' => $insert_data['code']);
         $property = $this->property->get_by($for_get);
 
-        if(NULL == $property['id_service_type']) {
+        if (NULL == $property['id_service_type']) {
             $property['id_service_type'] = 6;
         }
 
         if ($property['id_service_type'] == 6) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            if(empty($authority_property)){
+            if (empty($authority_property)) {
                 $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
                 $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            }
-            else{
+            } else {
                 $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             }
             $history_log['new'] = $insert_data['new_data'];
@@ -76,11 +76,10 @@ class Ajax extends APP_Controller {
         }
         if ($property['id_service_type'] == 7) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            if(empty($authority_property)){
+            if (empty($authority_property)) {
                 $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
                 $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            }
-            else{
+            } else {
                 $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             }
             $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
@@ -103,7 +102,7 @@ class Ajax extends APP_Controller {
             // User info 
             $user_id = $this->session->userdata('id');
             $id_organization = $this->session->userdata('id_organization');
-            if(isset($authority) AND ($authority['id_organization'] == $id_organization OR $id_organization == 1 OR $id_organization == 31554)) {
+            if (isset($authority) AND ( $authority['id_organization'] == $id_organization OR $id_organization == 1 OR $id_organization == 31554)) {
                 $property = $this->property->get_by('code', $cell_name);
                 if (isset($property)) {
                     $history_log = $this->history_log->order_by('time', 'DESC')->get_many_by(
@@ -114,8 +113,7 @@ class Ajax extends APP_Controller {
                     );
                 }
                 $result = $this->layout->view('history_cell', array('history_log' => $history_log), true);
-            }
-            else{
+            } else {
                 $result = $this->layout->view('history_cell_access_denied', array(), true);
             }
         }
@@ -132,12 +130,12 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
-    public function get_property_comments($id,$num=0) {
+    public function get_property_comments($id, $num = 0) {
         $property_array = explode("_", $id);
-        $service_property = $this->service_property->get_by(array('id_service' => $property_array[1],'id_property' => $property_array[2]));
-        $service_property['num']=$num;
-        $service_property['property_comments']=$this->property_comments->get_many_by(array('id_service_property'=>$service_property['id_service_property']));
-        $this->load->view('ajax/comments_property',$service_property);
+        $service_property = $this->service_property->get_by(array('id_service' => $property_array[1], 'id_property' => $property_array[2]));
+        $service_property['num'] = $num;
+        $service_property['property_comments'] = $this->property_comments->get_many_by(array('id_service_property' => $service_property['id_service_property']));
+        $this->load->view('ajax/comments_property', $service_property);
     }
 
     public function insert_comments() {
@@ -146,23 +144,28 @@ class Ajax extends APP_Controller {
         $comment = $this->input->post('comment');
         $this->property_comments->insert_comment($property_array[1], $comment);
     }
-    
-    public function get_service($type,$service_num){
+
+    public function get_service($type, $service_num) {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['spher'] = $this->spher->dropdown('name', 'name');
-        $data['service_num']=$service_num;
-        $data['property']= $this->property->get_all();
-        if($type==='sr'){
-            $this->load->view('structure/step_2/service',$data);
-        }elseif($type==='sn'){
-            $this->load->view('structure/step_2/function',$data);
-        }elseif($type==='sk'){
-            $this->load->view('structure/step_2/control',$data);
+        $data['service_num'] = $service_num;
+        $data['property'] = $this->property->get_all();
+        if ($type === 'sr') {
+            $this->load->view('agreeds/step_2/service', $data);
+        } elseif ($type === 'sn') {
+            $this->load->view('agreeds/step_2/function', $data);
+        } elseif ($type === 'sk') {
+            $this->load->view('agreeds/step_2/control', $data);
         }
     }
 
     function export_excel() {
         var_dump($_POST);
+    }
+
+    function confirm($id_authority) {
+        $authority_data['id_authority_status'] = 3;
+        echo $this->authority->update($id_authority, $authority_data)?0:1;
     }
 
 }
