@@ -4,7 +4,7 @@
         <base href="<?php echo base_url(); ?>" />
         <?$this->carabiner->empty_cache();?>
         <?$this->carabiner->display('site', 'css');?>
-        
+        <?$this->carabiner->display('site', 'js')?>
         <!--[if lte IE 9>
         <link href="static/css/ace-part2.min.css" type="text/css" rel="stylesheet" />
         <![endif]-->
@@ -15,15 +15,16 @@
         <script src="static/js/html5shiv.js"></script>
         <script src="static/js/respond.min.js"></script>
         <![endif]-->
-    </head>
-    <body>
-    <script type="text/javascript">
+            <script type="text/javascript">
             var _options = {
                 'page':'<?=$this->router->fetch_class()?>/<?=$this->router->fetch_method()?>',
                 'baseURL':'<?=base_url()?>'
             };
         </script>
-        <?$this->carabiner->display('site', 'js')?>
+    </head>
+    <body>
+
+        
         <div class="navbar navbar-default navbar-fixed-top h-navbar">
             <div class="navbar-container">
                 <div class="navbar-header pull-left">
@@ -51,7 +52,7 @@
                             </ul>
                         </li>
                         <li class="light-blue">
-                            <a href="structure/uvedoml">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="structure/uvedoml">
                                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
                                 <span class="badge badge-important"><?=isset($this->notifications_size)?$this->notifications_size:0?></span>
                             </a>

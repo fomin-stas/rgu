@@ -362,7 +362,7 @@ class Agreeds extends APP_Controller {
     }
 
     public function authority_view($id_authority, $id_authority_status) {
-        $this->check_status_authority($id_authority);
+        $this->check_status_authority($id_authority, 5);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $data['step'] = $id_authority_status;
@@ -447,13 +447,17 @@ class Agreeds extends APP_Controller {
         switch ($authority['id_authority_status']) {
             case 1:
                 if (($writer['value'] == "Отраслевой орган" && $this->session->userdata('user_type') == 1) || $this->session->userdata('user_type') > 2) {
-                    redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    if ($step_num != 5) {
+                        redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    }
                 } elseif ($step_num != 2)
                     redirect('agreeds/step2/' . $id_authority);
                 break;
             case 2:
                 if ($this->session->userdata('user_type') > 1) {
-                    redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    if ($step_num != 5) {
+                        redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    }
                 } elseif ($status['value'] == 'отправленно на доработку') {
                     redirect('agreeds/step4_1/' . $id_authority);
                 } elseif ($step_num != 3)
@@ -461,20 +465,24 @@ class Agreeds extends APP_Controller {
                 break;
             case 3:
                 if (($this->session->userdata('user_type') == 2 && ($status['value'] == 'согласовано' || $status['value'] == 'на согласовании' || !$is_writer)) || $this->session->userdata('user_type') > 2) {
-                    redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    if ($step_num != 5) {
+                        redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    }
                 } elseif ($status['value'] == 'отправленно на доработку' && $is_writer) {
-                    if ($step_num != 3){
+                    if ($step_num != 3) {
                         redirect('agreeds/step4_1/' . $id_authority);
                     }
                 } elseif (($this->session->userdata('user_type') == 1) && ($status['value'] == 'согласовано') && $step_num != 4) {
                     redirect('agreeds/step4/' . $id_authority);
-                }elseif(($this->session->userdata('user_type') == 1) && ($status['value'] == 'на согласовании') && $step_num != 3) {
+                } elseif (($this->session->userdata('user_type') == 1) && ($status['value'] == 'на согласовании') && $step_num != 3) {
                     redirect('agreeds/step3/' . $id_authority);
                 }
                 break;
             case 4:
                 if (($writer['value'] == "Отраслевой орган" && $this->session->userdata('user_type') == 1) || $this->session->userdata('user_type') > 2) {
-                    redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    if ($step_num != 5) {
+                        redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
+                    }
                 } elseif ($status['value'] == 'отправленно на доработку') {
                     redirect('agreeds/step4_1/' . $id_authority);
                 } elseif ($step_num != 4) {
