@@ -64,7 +64,7 @@ class Structure extends APP_Controller {
 
         foreach ((array) $properties as $property) {
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
-            $column_names[] = $property['property_name'];
+            $column_names[] = $property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
             switch ($property['format']['property_format_name']) {
@@ -404,7 +404,7 @@ class Structure extends APP_Controller {
                 continue;
             }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
-            $column_names[] = $property['property_name'];
+            $column_names[] = $property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
             switch ($property['format']['property_format_name']) {
