@@ -35,7 +35,7 @@
                     </a>
                 </div>
                 <div class="navbar-buttons navbar-header pull-right">
-                    <ul class="ace-nav">
+                    <ul class="nav ace-nav">
                         <li class="light-blue">
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                 <span>Навигация</span>
