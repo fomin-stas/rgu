@@ -108,11 +108,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <span class="col-md-6">
-                                    <input type="file" multiple id="step_file" name="step2_file">
-                                </span>
-                            </div>
+
                         </div>
                     </div>
                     <div class="row">
@@ -135,6 +131,23 @@
                                     <textarea class="input-xxlarge left" name="comment_st2"></textarea>
                                     <div class="space-6"></div>
                                     <table class="table">
+                                        <tr>
+                                            <td> 
+                                                <div class="row">
+                                                    <div id="file_div">
+                                                        <span class="col-md-10">
+                                                            <input type="file" multiple id="step_file" name="step_file" class="files">
+                                                        </span>
+                                                    </div>
+                                                    <button type="button" id="add_file" class="btn btn-warning btn-xs col-md-1">
+                                                        <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
+                                                    </button>
+                                                    <script>
+
+                                                    </script>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>Предыдущие комментарии:</td>
                                         </tr>
@@ -175,7 +188,7 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $('#step_file').ace_file_input({
             no_file: "Присоединить файл",
@@ -183,7 +196,15 @@
             btn_change: "Изменить",
             enable_reset: true
         });
-        $('#send_btn').on('click', function() {
+
+        num_files = 1;
+        $('#add_file').click(function () {
+            var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
+            $('#file_div').append(str);
+            num_files++;
+        });
+
+        $('#send_btn').on('click', function () {
 //            var text_fields = $('#tab_content textarea');
 //            for (var textarea = 0; textarea < text_fields.length; textarea++) {
 //                console.log(text_fields[textarea].value);
@@ -222,22 +243,22 @@
             $.ajax({
                 url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
                 type: 'get',
-                success: function(data) {
+                success: function (data) {
                     $('#tab_content').append(data);
                 }
             });
             num[type]++;
         }
-        $(document).on('click', ".add_sr_btn", function() {
+        $(document).on('click', ".add_sr_btn", function () {
             add_new_tab("sr");
         });
-        $(document).on('click', ".add_sn_btn", function() {
+        $(document).on('click', ".add_sn_btn", function () {
             add_new_tab("sn");
         });
-        $(document).on('click', ".add_sk_btn", function() {
+        $(document).on('click', ".add_sk_btn", function () {
             add_new_tab("sk");
         });
-        $(document).on("click", ".close_tab", function() {
+        $(document).on("click", ".close_tab", function () {
             var anchor = $(this).siblings('a');
             $(anchor.attr('href')).remove();
             $(this).parent().remove();

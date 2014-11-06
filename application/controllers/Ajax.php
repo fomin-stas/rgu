@@ -51,8 +51,7 @@ class Ajax extends APP_Controller {
                 $insert_data['new_data'] = $value;
             }
         }
-        $authoritis = $this->authority->get_all();
-        $authority = $authoritis[$insert_data['authority_num'] - 1];
+        $authority = $this->authority->get($data['id_authority']);
         $for_get = array('code' => $insert_data['code']);
         $property = $this->property->get_by($for_get);
 

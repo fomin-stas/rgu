@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>
-                                    <?= form_dropdown('service_subject', array("Отраслевой орган"=>"Отраслевой орган","КИС"=>"КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
+                                    <?= form_dropdown('service_subject', array("Отраслевой орган" => "Отраслевой орган", "КИС" => "КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
                                 </div>
                                 <br>
                                 <div class="row">
@@ -73,9 +73,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <span class="col-md-6">
-                                        <input type="file" multiple id="step_file" name="step_file">
-                                    </span>
+
                                     <input type="button" id="send_btn" class="btn btn-info pull-right"  data-toggle="modal" data-target="#comments_modal" value="Отправить в работу">
                                 </div>
                             </div>
@@ -90,6 +88,16 @@
                                     </div>
                                     <div class="modal-body">
                                         <textarea class="input-xxlarge center" name="comment_st1"></textarea>
+                                        <div class="row">
+                                            <div id="file_div">
+                                                <span class="col-md-10">
+                                                    <input type="file" multiple id="step_file" name="step_file" class="files">
+                                                </span>
+                                            </div>
+                                            <button type="button" id="add_file" class="btn btn-warning btn-xs col-md-1">
+                                                <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
@@ -129,6 +137,14 @@
         btn_change: "Изменить",
         enable_reset: true
     });
+
+    num_files = 1;
+    $('#add_file').click(function () {
+        var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
+        $('#file_div').append(str);
+        num_files++;
+    });
+
     $('#srok_otveta').datepicker({
         format: "dd-mm-yyyy",
         weekStart: 1,

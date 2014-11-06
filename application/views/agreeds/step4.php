@@ -76,7 +76,7 @@
                                 <td>
                                     <?php if (isset($files)): ?>
                                         <?php foreach ($files as $file): ?>
-                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                    <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
                                         <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
@@ -147,9 +147,9 @@
                                                         <?= isset($service['properties']['sn_12']) ? load_form_textaea($id_service, 'sn_12', $service, true) : ''; ?>
                                                         <?= isset($service['properties']['sn_14']) ? load_form_dropdown($id_service, 'sn_14', array("ДА" => "ДА", "НЕТ" => "НЕТ"), $service, true) : ''; ?>
 
-   
+
                                                         <?= isset($service['properties']['sk_12']) ? load_form_textaea($id_service, 'sk_12', $service, true) : ''; ?>
-                                                        
+
 
                                                         <?= isset($service['properties']['sr_23']) ? load_form_file($id_service, 'sr_23', $service, true) : ''; ?>
                                                         <?= isset($service['properties']['sr_27']) ? load_form_textaea($id_service, 'sr_27', $service, true) : ''; ?>
@@ -172,22 +172,24 @@
                                                             <div class="modal-body">
                                                                 <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                                                                 <textarea class="input-xxlarge center col-md-11" name="comment"></textarea>
-                                                                <br>
-                                                                <div class="row">
-                                                                    <div id="file_div">
-                                                                        <span class="col-md-10">
-                                                                            <input type="file" multiple id="step_file" name="step_file" class="files">
-                                                                        </span>
-                                                                        <span class="col-md-10">
-                                                                            <input type="file" multiple id="step_file1" name="step_file1" class="files">
-                                                                        </span>
-                                                                    </div>
-                                                                    <button class="btn btn-warning btn-xs col-md-1">
-                                                                        <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="space-6"></div>
                                                                 <table class="table">
+                                                                    <tr>
+                                                                        <td> 
+                                                                            <div class="row">
+                                                                                <div id="file_div">
+                                                                                    <span class="col-md-10">
+                                                                                        <input type="file" multiple id="step_file" name="step_file" class="files">
+                                                                                    </span>
+                                                                                </div>
+                                                                                <button type="button" id="add_file" class="btn btn-warning btn-xs col-md-1">
+                                                                                    <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
+                                                                                </button>
+                                                                                <script>
+
+                                                                                </script>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr>
                                                                         <td>Предыдущие комментарии:</td>
                                                                     </tr>
@@ -223,16 +225,22 @@
 
 <script type="text/javascript">
     num = 0;
-
-    $('.files').ace_file_input({
+    
+    $(".files").ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
         btn_change: "Изменить",
         enable_reset: true
     });
+    num_files = 1;
+    $('#add_file').click(function () {
+        var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
+        $('#file_div').append(str);
+        num_files++;
+    });
 
 
-    $('.com_bt').click(function() {
+    $('.com_bt').click(function () {
         //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
@@ -240,7 +248,7 @@
         $.ajax({
             url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
             type: 'get',
-            success: function(data) {
+            success: function (data) {
                 num = num + 1;
                 comments = data;
                 jQuery.gritter.add({

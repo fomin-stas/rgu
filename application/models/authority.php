@@ -25,7 +25,7 @@ class Authority extends APP_Model {
             $result['all'] = $id_organization==0?$this->count_all():$this->count_by('id_organization',$id_organization);
             $result['in_process'] = $id_organization==0?$this->count_by(array('id_authority_status'=> 4)):$this->count_by(array('id_authority_status'=> 4,'id_organization'=>$id_organization));
             $result['in_working'] = $id_organization==0?$this->count_by(array('id_authority_status'=> 1)):$this->count_by(array('id_authority_status'=> 1,'id_organization'=>$id_organization));
-            $result['new_authorities'] = $id_organization==0?$this->count_by(array('id_authority_status'=> array(2.3))):$this->count_by(array('id_authority_status'=> array(2.3),'id_organization'=>$id_organization));
+            $result['new_authorities'] = $id_organization==0?$this->count_by(array('id_authority_status'=> array(2,3))):$this->count_by(array('id_authority_status'=> array(2,3),'id_organization'=>$id_organization));
         return $result;
     }
 

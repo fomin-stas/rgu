@@ -124,8 +124,10 @@ class Agreeds extends APP_Controller {
     }
 
     public function step2_submit($update = false) {
+        
         $data = $_POST;
         $id_authority = $data['id_authority'];
+        $this->step_files_insert($id_authority);
         $services = $this->post_parsing($data);
         $data = $_FILES;
         $files = $this->post_parsing($data, true);
@@ -236,6 +238,7 @@ class Agreeds extends APP_Controller {
     }
 
     public function in_work($id_authority) {
+        $this->step_files_insert($id_authority);
         $data = $_POST;
         $agreeded = 0;
         foreach ($data as $key => $value) {

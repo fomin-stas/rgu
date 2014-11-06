@@ -79,7 +79,7 @@
                                 <td>
                                     <?php if (isset($files)): ?>
                                         <?php foreach ($files as $file): ?>
-                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                    <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
                                         <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
@@ -152,9 +152,6 @@
                                         </div>
                                         <div class="row">
                                             <span class="col-md-6">
-                                                <input type="file" multiple id="step_file" name="step_file">
-                                            </span>
-                                            <span class="col-md-6">
                                                 <div class="form-group pull-right">
                                                     <label for="srok_otveta" class="control-label">Срок ответа</label>
                                                     <input id="srok_otveta" type="text">
@@ -175,6 +172,23 @@
                                                     <textarea class="input-xxlarge center" name="comment_st3_disagree"></textarea>
                                                     <div class="space-6"></div>
                                                     <table class="table">
+                                                        <tr>
+                                                                        <td> 
+                                                                            <div class="row">
+                                                                                <div id="file_div">
+                                                                                    <span class="col-md-10">
+                                                                                        <input type="file" multiple id="step_file" name="step_file" class="files">
+                                                                                    </span>
+                                                                                </div>
+                                                                                <button type="button" id="add_file" class="btn btn-warning btn-xs col-md-1">
+                                                                                    <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
+                                                                                </button>
+                                                                                <script>
+
+                                                                                </script>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
                                                         <tr>
                                                             <td>Предыдущие комментарии:</td>
                                                         </tr>
@@ -213,6 +227,13 @@
         btn_choose: "Выбрать",
         btn_change: "Изменить",
         enable_reset: true
+    });
+
+    num_files = 1;
+    $('#add_file').click(function () {
+        var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
+        $('#file_div').append(str);
+        num_files++;
     });
 
     $('#srok_otveta').datepicker({
