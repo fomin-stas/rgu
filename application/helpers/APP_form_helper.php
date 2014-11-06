@@ -149,7 +149,7 @@ if (!function_exists('load_form_textaea_step2')) {
         }
         $textarea_group = '<div class="form-group">'
                 . '<label for="' . $code . '_' . $num . '" class="control-label col-md-4">' . $property['property_name'] . '</label>
-                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:40%"></textarea>
+                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:20%"></textarea>
                                                         ';
         if ($comments) {
             $textarea_group = $textarea_group .
