@@ -184,17 +184,17 @@
             enable_reset: true
         });
         $('#send_btn').on('click', function() {
-            var text_fields = $('#tab_content textarea');
-            for (var textarea = 0; textarea < text_fields.length; textarea++) {
-                console.log(text_fields[textarea].value);
-                if (!text_fields[textarea].value) {
-                    console.log(text_fields[textarea]);
-//                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
-//                text_fields[textarea].css('border','1px solid red');
-                    $('#alert_fieldrequest').modal('show');
-                    return 'empty textarea';
-                }
-            }
+//            var text_fields = $('#tab_content textarea');
+//            for (var textarea = 0; textarea < text_fields.length; textarea++) {
+//                console.log(text_fields[textarea].value);
+//                if (!text_fields[textarea].value) {
+//                    console.log(text_fields[textarea]);
+////                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
+////                text_fields[textarea].css('border','1px solid red');
+//                    $('#alert_fieldrequest').modal('show');
+//                    return 'empty textarea';
+//                }
+//            }
             $('#comments_modal').modal('show');
         });
         //add new functions and services
