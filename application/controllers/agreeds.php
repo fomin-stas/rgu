@@ -501,6 +501,7 @@ class Agreeds extends APP_Controller {
         //$config['encrypt_name'] = true;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload($file_name)) {
+            return;
             $error = array('error' => $this->upload->display_errors());
             if ($is_property) {
                 return $this->upload->display_errors();
