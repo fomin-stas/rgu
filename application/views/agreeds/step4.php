@@ -49,15 +49,15 @@
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
+                                <td><?= isset($authority_name) ? $authority_name : 'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv) ? $punkt_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
@@ -114,73 +114,47 @@
                                                 <?php foreach ($services as $id_service => $service): ?>
                                                     <?php $tab_num++; ?>
                                                     <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
-
-
                                                         <?= isset($service['properties']['sr_0']) ? load_form_textaea($id_service, 'sr_0', $service, true) : ''; ?>
                                                         <?= isset($service['properties']['sr_1']) ? load_form_textaea($id_service, 'sr_1', $service, true) : ''; ?>
                                                         <?= isset($service['properties']['sr_2']) ? load_form_dropdown($id_service, 'sr_2', $spher, $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_3']) ? load_form_dropdown($id_service, 'sr_3', $organization_provide_service, $service, true, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_3']) ? load_form_dropdown($id_service, 'sr_3', array('Не выбрано' => 'Не выбрано', 'Администрация района' => 'Администрация района', 'Внебюджетный фонд' => 'Внебюджетный фонд', 'Государственное учреждение' => 'Государственное учреждение', 'ГУЖА' => 'ГУЖА', 'Органы местного самоуправления' => 'Органы местного самоуправления', 'Федеральный орган исполнительной власти' => 'Федеральный орган исполнительной власти'), $service, true, false) : ''; ?>
                                                         <?= isset($service['properties']['sr_4']) ? load_form_textaea($id_service, 'sr_4', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_5']) ? load_form_textaea($id_service, 'sr_5', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_6']) ? load_form_textaea($id_service, 'sr_6', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_7']) ? load_form_textaea($id_service, 'sr_7', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_8']) ? load_form_textaea($id_service, 'sr_8', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_9']) ? load_form_dropdown($id_service, 'sr_9', array("Юр." => "Юр.", "Физ." => "Физ."), $service, true, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_10']) ? load_form_textaea($id_service, 'sr_10', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_11']) ? load_form_textaea($id_service, 'sr_11', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_12']) ? load_form_textaea($id_service, 'sr_12', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_13']) ? load_form_textaea($id_service, 'sr_13', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_14']) ? load_form_textaea($id_service, 'sr_14', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_15']) ? load_form_textaea($id_service, 'sr_15', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_16']) ? load_form_textaea($id_service, 'sr_16', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_17']) ? load_form_dropdown($id_service, 'sr_17', array("безвозмездно" => "безвозмездно", "возмездно" => "возмездно", "по-разному" => "по-разному", "не установлено" => "не установлено"), $service, true, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_18']) ? load_form_textaea($id_service, 'sr_18', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_19']) ? load_form_textaea($id_service, 'sr_19', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_20']) ? load_form_textaea($id_service, 'sr_20', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_21']) ? load_form_textaea($id_service, 'sr_21', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_22']) ? load_form_textaea($id_service, 'sr_22', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_23']) ? load_form_file($id_service, 'sr_23', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sr_24']) ? load_form_file($id_service, 'sr_24', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_5']) ? load_form_textaea($id_service, 'sr_5', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_6']) ? load_form_dropdown($id_service, 'sr_6', array("в традиционном порядке" => "в традиционном порядке", "через МФЦ" => "через МФЦ", "в электронном виде" => "в электронном виде"), $service, true, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_7']) ? load_form_textaea($id_service, 'sr_7', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_8']) ? load_form_textaea($id_service, 'sr_8', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_9']) ? load_form_dropdown($id_service, 'sr_9', array("физические лица" => "физические лица", "юридические лица" => "юридические лица", "индивидуальные предприниматели" => "индивидуальные предприниматели"), $service, true, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_10']) ? load_form_textaea($id_service, 'sr_10', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_11']) ? load_form_textaea($id_service, 'sr_11', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_12']) ? load_form_textaea($id_service, 'sr_12', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_13']) ? load_form_textaea($id_service, 'sr_13', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_14']) ? load_form_textaea($id_service, 'sr_14', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_15']) ? load_form_textaea($id_service, 'sr_15', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_16']) ? load_form_textaea($id_service, 'sr_16', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_17']) ? load_form_dropdown($id_service, 'sr_17', array("безвозмездно" => "безвозмездно", "возмездно" => "возмездно", "не установлено" => "не установлено"), $service, true, false) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_18']) ? load_form_textaea($id_service, 'sr_18', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_19']) ? load_form_textaea($id_service, 'sr_19', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_20']) ? load_form_dropdown($id_service, 'sr_20', array("Да" => "Да", "Нет" => "Нет"), $service, true, false) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_21']) ? load_form_textaea($id_service, 'sr_21', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_22']) ? load_form_textaea($id_service, 'sr_22', $service, true) : ''; ?>
 
-                                                        <?= isset($service['properties']['sn_0']) ? load_form_textaea($id_service, 'sn_0', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_1']) ? load_form_dropdown($id_service, 'sn_1', array("Администрация района" => "Администрация района", "ВФ" => "ВФ", "ГУ" => "ГУ", "ГУЖА" => "ГУЖА", "МУ" => "МУ", "ОМСУ" => "ОМСУ", "ПНО" => "ПНО", "ФОИВ" => "ФОИВ"), $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_2']) ? load_form_textaea($id_service, 'sn_2', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_3']) ? load_form_textaea($id_service, 'sn_3', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_4']) ? load_form_textaea($id_service, 'sn_4', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_5']) ? load_form_textaea($id_service, 'sn_5', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_6']) ? load_form_textaea($id_service, 'sn_6', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_7']) ? load_form_textaea($id_service, 'sn_7', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_8']) ? load_form_textaea($id_service, 'sn_8', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_9']) ? load_form_textaea($id_service, 'sn_9', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_10']) ? load_form_textaea($id_service, 'sn_10', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_11']) ? load_form_textaea($id_service, 'sn_11', $service, true) : ''; ?>
+                                                        <?= ''; //isset($service['properties']['sr_24']) ? load_form_file($id_service, 'sr_24', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_25']) ? load_form_dropdown($id_service, 'sr_25', array("Рождение ребенка" => "Рождение ребенка", "Смена фамилии" => "Смена фамилии", "Индивидуальное жилищное строительство" => "Индивидуальное жилищное строительство", "открытие своего дела" => "открытие своего дела", "Смена места жительства" => "Смена места жительства", "Утрата документов" => "Утрата документов", "Потеря или поиск работы" => "Потеря или поиск работы", "Утрата близкого человека" => "Утрата близкого человека", "Выход на пенсию" => "Выход на пенсию"), $service, true, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_26']) ? load_form_dropdown($id_service, 'sr_26', array("Государственная (муниципальная) услуга" => "Государственная (муниципальная) услуга", "услуга бюджетного учреждения, предоставляемая на основании государственного (муниципального) задания" => "услуга бюджетного учреждения, предоставляемая на основании государственного (муниципального) задания", "услуга, необходимая и обязательная для предоставления государственной (муниципальной) услуги" => "услуга, необходимая и обязательная для предоставления государственной (муниципальной) услуги"), $service, true, false) : ''; ?>
+
+                                                        <?= isset($service['properties']['sr_28']) ? load_form_dropdown($id_service, 'sr_28', array("Да" => "Да", "Нет" => "Нет"), $service, true, false) : ''; ?>
+
                                                         <?= isset($service['properties']['sn_12']) ? load_form_textaea($id_service, 'sn_12', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_13']) ? load_form_textaea($id_service, 'sn_13', $service, true) : ''; ?>
                                                         <?= isset($service['properties']['sn_14']) ? load_form_dropdown($id_service, 'sn_14', array("ДА" => "ДА", "НЕТ" => "НЕТ"), $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_15']) ? load_form_textaea($id_service, 'sn_15', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_16']) ? load_form_textaea($id_service, 'sn_16', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_17']) ? load_form_textaea($id_service, 'sn_17', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sn_18']) ? load_form_textaea($id_service, 'sn_18', $service, true) : ''; ?>
 
-                                                        <?= isset($service['properties']['sk_0']) ? load_form_textaea($id_service, 'sk_0', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_1']) ? load_form_textaea($id_service, 'sk_1', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_2']) ? load_form_textaea($id_service, 'sk_2', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_3']) ? load_form_textaea($id_service, 'sk_3', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_4']) ? load_form_textaea($id_service, 'sk_4', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_5']) ? load_form_textaea($id_service, 'sk_5', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_6']) ? load_form_textaea($id_service, 'sk_6', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_7']) ? load_form_textaea($id_service, 'sk_7', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_8']) ? load_form_textaea($id_service, 'sk_8', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_9']) ? load_form_textaea($id_service, 'sk_9', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_10']) ? load_form_textaea($id_service, 'sk_10', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_11']) ? load_form_textaea($id_service, 'sk_11', $service, true) : ''; ?>
+   
                                                         <?= isset($service['properties']['sk_12']) ? load_form_textaea($id_service, 'sk_12', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_13']) ? load_form_textaea($id_service, 'sk_13', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_14']) ? load_form_textaea($id_service, 'sk_14', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_15']) ? load_form_textaea($id_service, 'sk_15', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_16']) ? load_form_textaea($id_service, 'sk_16', $service, true) : ''; ?>
-                                                        <?= isset($service['properties']['sk_17']) ? load_form_textaea($id_service, 'sk_17', $service, true) : ''; ?>
                                                         
+
+                                                        <?= isset($service['properties']['sr_23']) ? load_form_file($id_service, 'sr_23', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_27']) ? load_form_textaea($id_service, 'sr_27', $service, true) : ''; ?>
+                                                        <?= isset($service['properties']['sr_29']) ? load_form_textaea($id_service, 'sr_29', $service, true) : ''; ?>
+
                                                         <!--<button class="btn btn-info btn-sm pull-left" id="save_as_chern_usl">Сохранить как черновик</button>-->
 
 
@@ -197,7 +171,21 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
-                                                                <textarea class="input-xxlarge center" name="comment"></textarea>
+                                                                <textarea class="input-xxlarge center col-md-11" name="comment"></textarea>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div id="file_div">
+                                                                        <span class="col-md-10">
+                                                                            <input type="file" multiple id="step_file" name="step_file" class="files">
+                                                                        </span>
+                                                                        <span class="col-md-10">
+                                                                            <input type="file" multiple id="step_file1" name="step_file1" class="files">
+                                                                        </span>
+                                                                    </div>
+                                                                    <button class="btn btn-warning btn-xs col-md-1">
+                                                                        <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
+                                                                    </button>
+                                                                </div>
                                                                 <div class="space-6"></div>
                                                                 <table class="table">
                                                                     <tr>
@@ -211,11 +199,6 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <span class="col-md-6">
-                                                    <input type="file" multiple id="step_file" name="step_file" class="files">
-                                                </span>
                                             </div>
                                         </div>
                                     </fieldset>

@@ -217,7 +217,7 @@
                 }
             }
             //insert navigation-tab and content
-            var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + " <span class='close_tab'>×</span></a></li>";
+            var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a><span class='close_tab'>×</span></li>";
             $('#razgran_u_f_tabs').append(tab);
             $.ajax({
                 url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
@@ -238,9 +238,9 @@
             add_new_tab("sk");
         });
         $(document).on("click", ".close_tab", function() {
-            var anchor = $(this).parent();
+            var anchor = $(this).siblings('a');
             $(anchor.attr('href')).remove();
-            $(this).parent().parent().remove();
+            $(this).parent().remove();
             $(".nav-tabs li").children('a').first().click();
         });
     });

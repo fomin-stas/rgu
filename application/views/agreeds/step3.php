@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <form name="step3_disagree_com" method="post" action="agreeds/in_work/<?= $id_authority; ?>">
+                                <form name="step3_disagree_com" method="post" action="agreeds/in_work/<?= $id_authority; ?>" enctype="multipart/form-data">
                                     <div class="widget-main padding-16">
                                         <div class="tab-content">
                                             <?php $tab_num = 0; ?>

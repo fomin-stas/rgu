@@ -46,8 +46,8 @@
                                     <textarea id="rekvisit_npa" name="rekvisit_npa" class="col-md-5"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="project_post" class="control-label col-md-5">Проект постановления Правительства (наименование и дата согласования Юридическим комитетом)</label>
-                                    <textarea id="project_post" name="project_post" class="col-md-5"></textarea>
+                                    <label for="project_post" class="control-label col-md-5">Наименование информационной системы органа власти, с использованием которой осуществляется полномочие</label>
+                                    <textarea id="project_post" name="information_system_roiv" class="col-md-5"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>

@@ -63,7 +63,7 @@ if (!function_exists('load_form_file')) {
         }
         $textarea_group = '<div class="form-group ' . $has_essror . '">'
                 . '<label for="' . $id_property . '_' . $id_service . '" class="control-label col-md-4">' . $property_name . '</label>';
-        $textarea_group .=  $disabled != ' disabled'? '<span class="col-md-6"><input type="file" multiple  id="' . $id_property . '_' . $id_service . '" name="' . $id_property . '_' . $id_service . '" class="col-md-6 files">'.$value.'</span>':'<span class="col-md-6">'.$value.'</span>';
+        $textarea_group .= $disabled != ' disabled' ? '<span class="col-md-6"><input type="file" multiple  id="' . $id_property . '_' . $id_service . '" name="' . $id_property . '_' . $id_service . '" class="col-md-6 files">' . $value . '</span>' : '<span class="col-md-6">' . $value . '</span>';
         if ($comments) {
             $textarea_group = $textarea_group .
                     '<div  class=" col-md-2">
@@ -102,18 +102,18 @@ if (!function_exists('load_form_dropdown')) {
         }
         $name = $id_property . '_' . $id_service;
         if ($multy) {
-            $selects=  to_multy($selects);
+            $selects = to_multy($selects);
             $dropdown_group = ' <div class="form-group ' . $has_essror . '">'
                     . '             <label for = "' . $name . '" class = "control-label col-md-4">' . $property_name . '</label>'
-                    .'<div class="multy_tags col-md-6" '.$disabled.'>'
-                    . '             <input class="input-tag" id="' . $name . '" type="text" name="' . $name . '" value="'.$value.'" '.$disabled.'>'
-                    .'</div>'
+                    . '<div class="multy_tags col-md-6" ' . $disabled . '>'
+                    . '             <input class="input-tag" id="' . $name . '" type="text" name="' . $name . '" value="' . $value . '" ' . $disabled . '>'
+                    . '</div>'
                     . " <script> 
                             $('#" . $name . "').tag({source:$selects});";
-            
-            $dropdown_group .= $disabled==' disabled'? "$('#" . $name . "').next().attr('disabled','".$disabled."');
-                                                        $('#" . $name . "').prev().children('button').attr('disabled','".$disabled."');
-                                                    </script>":"</script>";
+
+            $dropdown_group .= $disabled == ' disabled' ? "$('#" . $name . "').next().attr('disabled','" . $disabled . "');
+                                                        $('#" . $name . "').prev().children('button').attr('disabled','" . $disabled . "');
+                                                    </script>" : "</script>";
         } else {
             $dropdown_group = '<div class="form-group ' . $has_essror . '">'
                     . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">' . $property_name . '</label>'
@@ -135,13 +135,7 @@ if (!function_exists('load_form_dropdown')) {
 if (!function_exists('load_form_textaea_step2')) {
 
     function load_form_textaea_step2($num, $code, $propertis, $comments = false, $buttons = false) {
-        foreach ($propertis as $property_array) {
-            if ($property_array['code'] == $code) {
-                $property = $property_array;
-            } else {
-                continue;
-            }
-        }
+        $property = get_property_by_code($code,$propertis);
         if (isset($service['properties'][$code]['value'])) {
             $value = $service['properties'][$code]['value'];
         } else {
@@ -149,7 +143,7 @@ if (!function_exists('load_form_textaea_step2')) {
         }
         $textarea_group = '<div class="form-group">'
                 . '<label for="' . $code . '_' . $num . '" class="control-label col-md-4">' . $property['property_name'] . '</label>
-                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:20%"></textarea>
+                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:100px"></textarea>
                                                         ';
         if ($comments) {
             $textarea_group = $textarea_group .
@@ -172,7 +166,8 @@ if (!function_exists('load_form_textaea_step2')) {
 
 if (!function_exists('load_form_dropdown_step2')) {
 
-    function load_form_dropdown_step2($num, $code, $selects, $propertis, $comments = false, $multy = false) {        
+    function load_form_dropdown_step2($num, $code, $selects, $propertis, $comments = false, $multy = false) {
+        $property = get_property_by_code($code,$propertis);
         foreach ($propertis as $property_array) {
             if ($property_array['code'] == $code) {
                 $property = $property_array;
@@ -183,14 +178,14 @@ if (!function_exists('load_form_dropdown_step2')) {
         $id_property = $property['id_property'];
         $property_name = $property['property_name'];
 
-        $name = $code . '_' . $num ;
+        $name = $code . '_' . $num;
         if ($multy) {
-            $selects=  to_multy($selects);
+            $selects = to_multy($selects);
             $dropdown_group = ' <div class="form-group">'
                     . '             <label for = "' . $code . '_' . $num . '" class = "control-label col-md-4">' . $property_name . '</label>'
-                    .'<div class="multy_tags col-md-6">'
+                    . '<div class="multy_tags col-md-6">'
                     . '             <input class="input-tag" id="' . $code . '_' . $num . '" type="text" name="' . $code . '_' . $num . '" >'
-                    .'</div>'
+                    . '</div>'
                     . " <script> 
                             $('#" . $code . "_" . $num . "').tag({source:$selects});
                         </script>";
@@ -214,7 +209,8 @@ if (!function_exists('load_form_dropdown_step2')) {
 
 if (!function_exists('load_form_file_step2')) {
 
-    function load_form_file_step2($num, $code, $propertis, $comments = false, $buttons = false) { 
+    function load_form_file_step2($num, $code, $propertis, $comments = false, $buttons = false) {
+        $property = get_property_by_code($code,$propertis);
         foreach ($propertis as $property_array) {
             if ($property_array['code'] == $code) {
                 $property = $property_array;
@@ -249,16 +245,69 @@ if (!function_exists('load_form_file_step2')) {
         }
         return $textarea_group . '</div>';
     }
-    }
 
-function to_multy($selects){
-    $data="[";
-    $count=0;
-    foreach ($selects as $value){
-        ($count>0)?$data=$data.",":$data=$data;
-        $data=$data."'".$value."'";
+}
+
+function to_multy($selects) {
+    $data = "[";
+    $count = 0;
+    foreach ($selects as $value) {
+        ($count > 0) ? $data = $data . "," : $data = $data;
+        $data = $data . "'" . $value . "'";
         $count++;
     }
-    $data=$data."]";
+    $data = $data . "]";
     return $data;
+}
+
+function get_property_by_code($code,$propertis) {
+    switch ($code) {
+        case 'sn_0':
+            $d_code = 'sr_0';
+            break;
+        case 'sn_1':
+            $d_code = 'sr_1';
+            break;
+        case 'sn_3':
+            $d_code = 'sr_3';
+            break;
+        case 'sn_4':
+            $d_code = 'sr_4';
+            break;
+        case 'sn_27':
+            $d_code = 'sr_27';
+            break;
+        case 'sn_29':
+            $d_code = 'sr_29';
+            break;
+        case 'sk_0':
+            $d_code = 'sr_0';
+            break;
+        case 'sk_1':
+            $d_code = 'sr_1';
+            break;
+        case 'sk_4':
+            $d_code = 'sr_4';
+            break;
+        case 'sk_23':
+            $d_code = 'sr_23';
+            break;
+        case 'sk_27':
+            $d_code = 'sr_27';
+            break;
+        case 'sk_29':
+            $d_code = 'sr_29';
+            break;
+        default :
+            $d_code=$code;
+            break;
+    }
+    foreach ($propertis as $property_array) {
+        if ($property_array['code'] == $d_code) {
+            $property = $property_array;
+        } else {
+            continue;
+        }
+    }
+    return $property;
 }

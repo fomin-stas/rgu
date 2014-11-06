@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="row">
-                <form action="agreeds/re_edit/<?= $id_authority ?>" method="post">
+                <form action="agreeds/re_edit/<?= $id_authority ?>" method="post" enctype="multipart/form-data">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="widget-box">
                             <div class="widget-header">

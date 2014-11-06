@@ -53,14 +53,13 @@ class Agreeds extends APP_Controller {
             return;
         }
         $property['name_iogv'] = $organization['organization_name'];
-        $property['rekvisit_npa'] = $this->input->post('rekvisit_npa') ? $this->input->post('rekvisit_npa') : '';
+        $property["information_system_roiv"] = $this->input->post("information_system_roiv") ? $this->input->post('information_system_roiv') : '';
         $property['project_post'] = $this->input->post('project_post') ? $this->input->post('project_post') : '';
         $property['srok_otveta'] = $this->input->post('srok_otveta') ? $this->input->post('srok_otveta') : '';
         $property['executable_status'] = 'в разработке';
         $property['service_subject'] = $this->input->post('service_subject') ? $this->input->post('service_subject') : '';
         $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
-
         $id_authority = $this->authority->insert($authority);
 // add notification
         if ($id_authority) {
@@ -301,6 +300,7 @@ class Agreeds extends APP_Controller {
     }
 
     public function re_edit($id_authority) {
+        $this->step_files_insert($id_authority);
         $data = $_POST;
         $agreeded = 0;
         foreach ($data as $key => $value) {
@@ -317,12 +317,10 @@ class Agreeds extends APP_Controller {
             }
         }
         if ($agreeded > 0) {
-            $update_authority['value'] = 'в разработке';
+            $update_authority['value'] = 'отправленно на доработку';
         } else {
             $update_authority['value'] = 'согласовано';
         }
-        //$this->authority->update($id_authority, $authority_data);
-        //$this->comment->insert_comment($id_authority, $this->input->post('comment_st3_disagree'));
         $property = $this->property->get_by(array('code' => 'executable_status'));
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
         $this->authority_property_model->update_by($update_data, $update_authority);
@@ -392,6 +390,7 @@ class Agreeds extends APP_Controller {
     }
 
     public function update_properties($id_authority) {
+        $this->step_files_insert($id_authority);
         $data = $_POST;
         foreach ($data as $key => $value) {
             $name = explode("_", $key);
@@ -454,14 +453,17 @@ class Agreeds extends APP_Controller {
                     redirect('agreeds/step2/' . $id_authority);
                 break;
             case 2:
-                if ($this->session->userdata('user_type') > 1) {
+                if ($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') {
                     if ($step_num != 5) {
                         redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
                     }
-                } elseif ($status['value'] == 'отправленно на доработку') {
-                    redirect('agreeds/step4_1/' . $id_authority);
-                } elseif ($step_num != 3)
+                } elseif ($status['value'] == 'отправленно на доработку' && $is_writer) {
+                    if ($step_num != 3) {
+                        redirect('agreeds/step4_1/' . $id_authority);
+                    }
+                } elseif ($step_num != 3) {
                     redirect('agreeds/step3/' . $id_authority);
+                }
                 break;
             case 3:
                 if (($this->session->userdata('user_type') == 2 && ($status['value'] == 'согласовано' || $status['value'] == 'на согласовании' || !$is_writer)) || $this->session->userdata('user_type') > 2) {
@@ -489,6 +491,13 @@ class Agreeds extends APP_Controller {
                     redirect('agreeds/step4_1/' . $id_authority);
                 }
                 break;
+        }
+    }
+
+    private function step_files_insert($id_authority) {
+        $this->file_insert($id_authority, 'step_file');
+        for ($i = 1; $i < 20; $i++) {
+            $this->file_insert($id_authority, 'step_file'.$i);
         }
     }
 

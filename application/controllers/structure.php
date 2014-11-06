@@ -404,7 +404,7 @@ class Structure extends APP_Controller {
                 continue;
             }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
-            $column_names[] = $property['property_short_name'];
+            $column_names[] = $column_names[] = $property['property_short_name']=='' || is_null($property['property_short_name'])?$property['property_name']:$property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
             switch ($property['format']['property_format_name']) {
