@@ -158,13 +158,7 @@ class Structure extends APP_Controller {
 // HACK: Executable status 
             $executable_status = 'new_authorities';
             switch ($authority['id_authority_status']) {
-                case 2:
-                    $executable_status = 'new_authorities';
-                    break;
-                /* case 3:
-                  $executable_status = 'new_authorities';
-                  break; */
-                case 4:
+                case 3:
                     $executable_status = 'in_process';
                     break;
                 default:
@@ -184,11 +178,11 @@ class Structure extends APP_Controller {
             $this->load->model('service');
             $this->load->model('service_property');
             $values_buff = array();
-            $temp_values=$values;
+            $temp_values = $values;
             $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
             if (isset($services) AND count($services) > 0) {
                 foreach ($services as $service) {
-                    $values=$temp_values;
+                    $values = $temp_values;
                     $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
                     if (count($service_properties)) {
                         foreach ((array) $service_properties as $p) {
@@ -222,8 +216,61 @@ class Structure extends APP_Controller {
                 $grid_data[$executable_status][] = $values;
                 $grid_data['all'][] = $values;
             }
-        }
+        
+        
+        if ($authority['is_new']=='t') {
+                $executable_status = 'new_authorities';
+                // add athority properties to grid
+                foreach ((array) $authority['properties'] as $p) {
+                    if (array_key_exists($p['id_property'], $properties_buff)) {
+                        $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+                    }
+                    $values['id_authority'] = $authority['id_authority'];
+                    $values['id_authority_status'] = $authority['id_authority_status'];
+                }
+//add service properties to grid
 
+                $values_buff = array();
+                $temp_values = $values;
+                $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
+                if (isset($services) AND count($services) > 0) {
+                    foreach ($services as $service) {
+                        $values = $temp_values;
+                        $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+                        if (count($service_properties)) {
+                            foreach ((array) $service_properties as $p) {
+                                if (array_key_exists($p['id_property'], $properties_buff)) {
+                                    $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+                                }
+                            }
+                        }
+                        $values_buff[] = $values;
+                    }
+                }
+// check many services
+                $size = count($values_buff);
+                if ($size > 1) {
+                    for ($i = 0; $i < $size; $i++) {
+//for first row we are prepare collspan value
+// prepare authorities keys to dispaly collspan grids
+                        foreach ($values_buff[$i] as $key => $value) {
+                            if (array_key_exists($key, $authority_properties_codes)) {
+                                if ($i == 0) {
+                                    $values_buff[$i]['attr'][$key]['rowspan'] = $size;
+                                } else {
+                                    $values_buff[$i]['attr'][$key]['display'] = 'none';
+                                }
+                            }
+                        }
+                        $grid_data[$executable_status][] = $values_buff[$i];
+                        
+                    }
+                } else {
+                    $grid_data[$executable_status][] = $values;
+                    
+                }
+            }
+}
 // is ajax 
         if ($this->input->is_ajax_request()) {
             $response = array(
@@ -364,14 +411,22 @@ class Structure extends APP_Controller {
         $this->zend->load('Zend/Json/Decoder');
         $this->zend->load('Zend/Json/Exception');
         $this->zend->load('Zend/Json/Expr');
+        $this->load->model('service');
+        $this->load->model('service_property');
+
         $id_organization = $this->session->userdata('id_organization');
         $grid_data = array();
         $column_names = array();
         $column_models = array();
+        $properties = array();
         $authority_properties_codes = array();
         $total_rows = 0;
         $size_rows = 0;
         $limit_rows = $this->input->get('rows', true);
+
+
+
+
         if (!$limit_rows) {
             $limit_rows = 20;
         }
@@ -399,14 +454,10 @@ class Structure extends APP_Controller {
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
-//$properties = array_slice($properties, 0, 1);
+
         foreach ((array) $properties as $property) {
-            $options = json_decode($property['options'], true);
-            if (array_key_exists('property_iogv_displayed', (array) $options) AND FALSE == $options['property_iogv_displayed']) {
-                continue;
-            }
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
-            $column_names[] = $column_names[] = $property['property_short_name'] == '' || is_null($property['property_short_name']) ? $property['property_name'] : $property['property_short_name'];
+            $column_names[] = $property['property_short_name'] == '' || is_null($property['property_short_name']) ? $property['property_name'] : $property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
             switch ($property['format']['property_format_name']) {
@@ -455,7 +506,7 @@ class Structure extends APP_Controller {
                     $model['width'] = 270;
                     break;
             }
-
+            $options = json_decode($property['options'], true);
             if (count($options) > 0) {
                 foreach ($options as $key => $option) {
                     switch ($key) {
@@ -483,6 +534,7 @@ class Structure extends APP_Controller {
                 $authority_properties_codes[$property['code']] = $property;
             }
         }
+
 // prepare json grid
         $grid_data['all'] = array();
         $grid_data['in_process'] = array();
@@ -490,6 +542,7 @@ class Structure extends APP_Controller {
         $grid_data['new_authorities'] = array();
         foreach ((array) $authorities as $authority) {
             $values = array();
+
 // create row values
             foreach ($column_models as $model) {
                 $values[$model['name']] = '';
@@ -498,13 +551,7 @@ class Structure extends APP_Controller {
 // HACK: Executable status 
             $executable_status = 'new_authorities';
             switch ($authority['id_authority_status']) {
-                case 2:
-                    $executable_status = 'new_authorities';
-                    break;
-                /* case 3:
-                  $executable_status = 'new_authorities';
-                  break; */
-                case 4:
+                case 3:
                     $executable_status = 'in_process';
                     break;
                 default:
@@ -522,11 +569,12 @@ class Structure extends APP_Controller {
             }
 //add service properties to grid
 
-
             $values_buff = array();
-            $services = $this->service->get_many_by(array('id_authority' => $authority['id_authority']));
+            $temp_values = $values;
+            $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
             if (isset($services) AND count($services) > 0) {
                 foreach ($services as $service) {
+                    $values = $temp_values;
                     $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
                     if (count($service_properties)) {
                         foreach ((array) $service_properties as $p) {
@@ -559,6 +607,59 @@ class Structure extends APP_Controller {
             } else {
                 $grid_data[$executable_status][] = $values;
                 $grid_data['all'][] = $values;
+            }
+
+            if ($authority['is_new']=='t') {
+                $executable_status = 'new_authorities';
+                // add athority properties to grid
+                foreach ((array) $authority['properties'] as $p) {
+                    if (array_key_exists($p['id_property'], $properties_buff)) {
+                        $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+                    }
+                    $values['id_authority'] = $authority['id_authority'];
+                    $values['id_authority_status'] = $authority['id_authority_status'];
+                }
+//add service properties to grid
+
+                $values_buff = array();
+                $temp_values = $values;
+                $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
+                if (isset($services) AND count($services) > 0) {
+                    foreach ($services as $service) {
+                        $values = $temp_values;
+                        $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
+                        if (count($service_properties)) {
+                            foreach ((array) $service_properties as $p) {
+                                if (array_key_exists($p['id_property'], $properties_buff)) {
+                                    $values[$properties_buff[$p['id_property']]['code']] = $p['value'];
+                                }
+                            }
+                        }
+                        $values_buff[] = $values;
+                    }
+                }
+// check many services
+                $size = count($values_buff);
+                if ($size > 1) {
+                    for ($i = 0; $i < $size; $i++) {
+//for first row we are prepare collspan value
+// prepare authorities keys to dispaly collspan grids
+                        foreach ($values_buff[$i] as $key => $value) {
+                            if (array_key_exists($key, $authority_properties_codes)) {
+                                if ($i == 0) {
+                                    $values_buff[$i]['attr'][$key]['rowspan'] = $size;
+                                } else {
+                                    $values_buff[$i]['attr'][$key]['display'] = 'none';
+                                }
+                            }
+                        }
+                        $grid_data[$executable_status][] = $values_buff[$i];
+                        
+                    }
+                } else {
+                    $grid_data[$executable_status][] = $values;
+                   
+                }
             }
         }
 

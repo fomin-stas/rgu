@@ -81,7 +81,7 @@
                                 <td>
                                     <?php if (isset($files)): ?>
                                         <?php foreach ($files as $file): ?>
-                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
                                         <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
@@ -94,7 +94,7 @@
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <a href="agreeds/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                    <a href="agreeds/history_polnomoch/<?=$id_authority?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                 </div>
             </div>
             <div class="row">

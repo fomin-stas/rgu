@@ -74,7 +74,7 @@
                                 <td>
                                     <?php if (isset($files)): ?>
                                         <?php foreach ($files as $file): ?>
-                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
                                         <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов

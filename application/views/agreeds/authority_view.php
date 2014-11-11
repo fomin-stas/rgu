@@ -94,7 +94,7 @@
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <a href="agreeds/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                    <a href="agreeds/history_polnomoch/<?=$id_authority?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                 </div>
             </div>
             <div class="row">
@@ -134,7 +134,7 @@
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </table>
-                                                <a href="agreeds/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
+                                                
                                             </div>
                                         <?php endforeach; ?>
                                     </div>

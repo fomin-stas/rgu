@@ -60,6 +60,7 @@ class Agreeds extends APP_Controller {
         $property['service_subject'] = $this->input->post('service_subject') ? $this->input->post('service_subject') : '';
         $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
+        $authority['is_new'] = 'true';
         $id_authority = $this->authority->insert($authority);
 // add notification
         if ($id_authority) {
@@ -73,11 +74,13 @@ class Agreeds extends APP_Controller {
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
         }
         $this->file_insert($id_authority, 'step_file');
+        $this->authority->set_is_new($id_authority);
         redirect('structure/arm_kis');
     }
 
     public function step2($id_authority) {
         $this->check_status_authority($id_authority, 2);
+        $this->authority->rest_is_new($id_authority);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -124,7 +127,7 @@ class Agreeds extends APP_Controller {
     }
 
     public function step2_submit($update = false) {
-        
+
         $data = $_POST;
         $id_authority = $data['id_authority'];
         $this->step_files_insert($id_authority);
@@ -164,6 +167,7 @@ class Agreeds extends APP_Controller {
             }
         }
         $authority_data['id_authority_status'] = 2;
+
         $update = $this->authority->update($id_authority, $authority_data);
         if ($update) {
             $authority = $this->authority->get($id_authority);
@@ -172,6 +176,11 @@ class Agreeds extends APP_Controller {
         if ($this->input->post('comment_st2')) {
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st2'));
         }
+        $this->authority->set_is_new($id_authority);
+        $update_authority['value'] = 'на согласовании';
+        $property = $this->property->get_by(array('code' => 'executable_status'));
+        $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
+        $this->authority_property_model->update_by($update_data, $update_authority);
         redirect('structure/arm_iogv');
     }
 
@@ -210,6 +219,7 @@ class Agreeds extends APP_Controller {
 
     public function step3($id_authority) {
         $this->check_status_authority($id_authority, 3);
+        $this->authority->rest_is_new($id_authority);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -266,11 +276,13 @@ class Agreeds extends APP_Controller {
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
         $this->authority_property_model->update_by($update_data, $update_authority);
         $url = 'structure/arm_kis';
+        $this->authority->set_is_new($id_authority);
         redirect($url);
     }
 
     public function step4($id_authority) {
         $this->check_status_authority($id_authority, 4);
+        $this->authority->rest_is_new($id_authority);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -328,11 +340,13 @@ class Agreeds extends APP_Controller {
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
         $this->authority_property_model->update_by($update_data, $update_authority);
         $url = 'structure/arm_kis';
+        $this->authority->set_is_new($id_authority);
         redirect($url);
     }
 
     public function step4_1($id_authority) {
         $this->check_status_authority($id_authority, 3);
+        $this->authority->rest_is_new($id_authority);
         $authority = $this->authority->get($id_authority);
         $data = $authority;
         $authority_property = $this->authority_property_model->get_many_by('id_authority', $id_authority);
@@ -438,6 +452,7 @@ class Agreeds extends APP_Controller {
         $authority = $this->authority->get($id_authority);
         $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
         $url = 'structure/arm_iogv';
+        $this->authority->set_is_new($id_authority);
         redirect($url);
     }
 
@@ -456,7 +471,7 @@ class Agreeds extends APP_Controller {
                     redirect('agreeds/step2/' . $id_authority);
                 break;
             case 2:
-                if ($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') {
+                if (($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') || ($this->session->userdata('user_type')==1 && $status['value'] == 'отправленно на доработку')) {
                     if ($step_num != 5) {
                         redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
                     }
@@ -469,7 +484,7 @@ class Agreeds extends APP_Controller {
                 }
                 break;
             case 3:
-                if (($this->session->userdata('user_type') == 2 && ($status['value'] == 'согласовано' || $status['value'] == 'на согласовании' || !$is_writer)) || $this->session->userdata('user_type') > 2) {
+                if (($this->session->userdata('user_type') == 2 && ($status['value'] == 'согласовано' || $status['value'] == 'на согласовании' || !$is_writer)) || ($this->session->userdata('user_type') > 2) || ($this->session->userdata('user_type') == 1 && !$is_writer && $status['value'] == 'отправленно на доработку')) {
                     if ($step_num != 5) {
                         redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
                     }
@@ -500,7 +515,7 @@ class Agreeds extends APP_Controller {
     private function step_files_insert($id_authority) {
         $this->file_insert($id_authority, 'step_file');
         for ($i = 1; $i < 20; $i++) {
-            $this->file_insert($id_authority, 'step_file'.$i);
+            $this->file_insert($id_authority, 'step_file' . $i);
         }
     }
 
@@ -550,8 +565,28 @@ class Agreeds extends APP_Controller {
         }
     }
 
-    public function history_polnomoch() {
-        $this->layout->view('history_polnomoch');
+    public function history_polnomoch($id_authority) {
+        $data = array();
+        $view = 'history_authority';
+        $notifications = array();
+// add to archive
+        if ($this->input->is_post()) {
+            $items = $this->input->post('selectedItems');
+            $this->activity->update_many($items, array('status' => 2));
+        }
+        $id_organization = $this->session->userdata('id_organization');
+        $notifications = $this->activity
+                ->order_by('time', 'DESC')
+                ->get_many_by(array('id_object' => $id_authority));
+        $user = $this->session->userdata('user_name');
+
+        foreach ((array) $notifications as $key => $notification) {
+            $notifications[$key]['message'] = $this->activity->get_notification_message_by_event($notification['id_event_type']);
+            $notifications[$key]['authority'] = $this->authority->get($notification['id_object']);
+            $notifications[$key]['service'] = $this->service->get_by('id_authority', $notification['id_object']);
+        }
+        $data['notifications'] = $notifications;
+        $this->layout->view($view, $data);
     }
 
     public function history_usl_func() {

@@ -88,7 +88,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <a href="agreeds/history_polnomoch"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                        <a href="agreeds/history_polnomoch/<?=$id_authority?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                     </div>
                 </div>
                 <div class="row">
