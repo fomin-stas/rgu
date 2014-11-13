@@ -220,6 +220,7 @@
         });
         //add new functions and services
         var num = {sr: 1, sn: 1, sk: 1};
+        restore_progress("<?= $authority_id ?>"); //load state from localstorage
         function add_new_tab(type)
         {
             /*var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
@@ -265,5 +266,58 @@
             $(".nav-tabs li").children('a').first().click();
         });
     });
+    
+    //autosave and restore logic   
+    window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);
+            
+	function supports_html5_storage() {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	}
+   
+	function save_progress(index)
+	{
+		if(!supports_html5_storage(index)){return false;};
+		localStorage[index] = document.getElementById('step2').innerHTML;
+		localStorage[index+'_num_sr'] = num.sr;
+		localStorage[index+'_num_sn'] = num.sn;
+		localStorage[index+'_num_skn'] = num.skn;
+		function tag_values_to_localstorage(tagname)
+		{
+			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
+			{
+				var elem = document.getElementsByTagName(tagname)[i];
+				if(elem.id){localStorage[elem.id+index] = elem.value;}
+			}
+		}
+		tag_values_to_localstorage("TEXTAREA");
+		tag_values_to_localstorage("SELECT");
+	}
+	
+	function restore_progress(index)
+	{
+		console.log('progress restored');
+		if(!supports_html5_storage()){console.log('local storage not support');return false;};
+		if (localStorage[index])
+		{
+			document.getElementById('step2').innerHTML = localStorage[index];
+			num.sr = localStorage[index+'_num_sr'] || 1;
+			num.sn = localStorage[index+'_num_sn'] || 1;
+			num.skn = localStorage[index+'_num_skn'] || 1;
+				
+			function add_values_from_localstorage(tagname)
+			{
+				for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
+				{
+					var elem = document.getElementsByTagName(tagname)[i];
+					if(elem.id){elem.value = localStorage[elem.id+index];}
+				}
+			}
+			add_values_from_localstorage("TEXTAREA");
+			add_values_from_localstorage("SELECT");
+		}
+	}
 </script>
-
