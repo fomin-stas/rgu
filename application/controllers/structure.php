@@ -53,13 +53,32 @@ class Structure extends APP_Controller {
             $table_index = 'all';
         }
 
+        if ($this->input->is_ajax_request()){
+            if (isset($_GET['filters'])){
+            $authority_array=$this->authority->serch($_GET['filters']);
+            $authorities = $this->authority
+                ->with('status')
+                ->with('organization')
+                ->with('properties')
+                ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                ->get_many($authority_array);
+            }else{
+                $authorities = $this->authority
+                ->with('status')
+                ->with('organization')
+                ->with('properties')
+                ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                ->get_all();
+            }
+        }else{
+
         $authorities = $this->authority
                 ->with('status')
                 ->with('organization')
                 ->with('properties')
                 ->limit($limit_rows, ($limit_rows * ($page - 1)))
                 ->get_all();
-
+        }
         $properties = $this->property->with('format')->order_by('order')->get_all();
 
         foreach ((array) $properties as $property) {

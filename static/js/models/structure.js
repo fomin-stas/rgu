@@ -20,7 +20,7 @@ var Structure = {
             e.preventDefault();
             $(this).tab('show');
             var tab_hash = e.target.hash.replace('#', '');
-                Structure.options.grid_selector_tab = tab_hash;
+            Structure.options.grid_selector_tab = tab_hash;
             var grid_selector = "#grid-table-" + tab_hash;
             Structure.options.grid_selector = grid_selector;
             var pager_selector = "#grid-pager-" + tab_hash;
@@ -33,14 +33,14 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-            $(grid_selector).jqGrid('setGridHeight',window.innerHeight-
-					$('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height()-
-					$('.ui-state-default.ui-jqgrid-hdiv').height()-
-					$('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height()-
-					$('.ui-pager-control').height()-
-					$('.navbar.navbar-default.navbar-fixed-top.h-navbar').height()-
-					50
-			);
+            $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
+                    $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
+                    $('.ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('.ui-pager-control').height() -
+                    $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
+                    50
+                    );
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -52,7 +52,9 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-
+//        var tag_input = $('.ui-search-input').children()
+//        tag_input.tag({placeholder: tag_input.attr('placeholder123'),
+//            source: ['tag 1', 'tag 2']});
     },
     initIOGV: function () {
         console.log('Structure IOGV');
@@ -78,14 +80,14 @@ var Structure = {
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-            $(grid_selector).jqGrid('setGridHeight',window.innerHeight-
-					$('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height()-
-					$('.ui-state-default.ui-jqgrid-hdiv').height()-
-					$('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height()-
-					$('.ui-pager-control').height()-
-					$('.navbar.navbar-default.navbar-fixed-top.h-navbar').height()-
-					50
-			);
+            $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
+                    $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
+                    $('.ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('.ui-pager-control').height() -
+                    $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
+                    50
+                    );
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -185,7 +187,7 @@ var Structure = {
         }
     },
     renderGrid: function (grid_selector, pager_selector, grid_data) {
-        organization_name=$.cookie('organization_name');
+        organization_name = $.cookie('organization_name');
         jQuery(grid_selector).jqGrid({
             subGrid: false,
             altRows: true,
@@ -194,10 +196,10 @@ var Structure = {
             height: "auto",
             colNames: column_names,
             colModel: column_models,
-            viewrecords : true,
+            viewrecords: true,
             rowNum: 20,
             rownumbers: true,
-            rowList:[20,40,60],
+            rowList: [20, 40, 60],
             pager: pager_selector,
             pgbuttons: true,
             pginput: false,
@@ -212,7 +214,7 @@ var Structure = {
             cellsubmit: "remote",
             cellurl: 'ajax/edit_property', //'string' - the url where the cell is to be saved.
             mtype: "GET",
-            url:_options.page+'?type='+Structure.options.grid_selector_tab,
+            url: _options.page + '?type=' + Structure.options.grid_selector_tab,
             datatype: "json",
             jsonReader: {
                 root: "Rows",
@@ -222,7 +224,7 @@ var Structure = {
                 //repeatitems: false,
                 //userdata: "UserData",   
                 //id: "Id"
-            }, 
+            },
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
             beforeProcessing: function (data)
             {
@@ -230,14 +232,14 @@ var Structure = {
             },
             loadComplete: function () {
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-                $(grid_selector).jqGrid('setGridHeight',window.innerHeight-
-						$('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height()-
-						$('.ui-state-default.ui-jqgrid-hdiv').height()-
-						$('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height()-
-						$('.ui-pager-control').height()-
-						$('.navbar.navbar-default.navbar-fixed-top.h-navbar').height()-
-						50
-				);
+                $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
+                        $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
+                        $('.ui-state-default.ui-jqgrid-hdiv').height() -
+                        $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                        $('.ui-pager-control').height() -
+                        $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
+                        50
+                        );
                 Structure.render_colModel(grid_selector);
                 var table = this;
                 setTimeout(function () {
@@ -298,15 +300,15 @@ var Structure = {
 //
                         $('#select_edit').modal('show');
 //                        $('#select_select')[0].value = value;
-							$('#select_textarea')[0].value = value;
+                        $('#select_textarea')[0].value = value;
 //                        console.log('show');
                         $('#select_change').unbind('click').on('click', function () {
-                            $('#'+iRow+'_'+cellname)[0].value=$('#select_textarea')[0].value; //if edittype is textares, this should work
+                            $('#' + iRow + '_' + cellname)[0].value = $('#select_textarea')[0].value; //if edittype is textares, this should work
 //                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#select_edit').modal('hide');
 //                            $('#select_select')[0].options = '';
-							$('#select_textarea')[0].value = '';
+                            $('#select_textarea')[0].value = '';
                         });
                     }
 
@@ -465,7 +467,7 @@ var Structure = {
                                     recreateForm: true,
                                     modal: true,
                                     width: 500,
-                                    dataheight:300,
+                                    dataheight: 300,
                                     jqModal: true,
                                     colnameview: false,
                                     updateAfterCheck: true,
@@ -508,25 +510,24 @@ var Structure = {
                     buttonicon: "ace-icon fa fa-external-link red",
                     caption: "",
                     title: "Выгрузить в Excel",
-                    onClickButton: function(e){ 
+                    onClickButton: function (e) {
                         var cols = [];
                         var colModel = $(this).getGridParam('colModel');
                         var selRows = $(this).getGridParam('selrow');
                         console.log(selRows, colModel);
                         /*$.each(colModel, function(i) {
-                            if (!this.hidden) {
-                                cols.push(this.name);
-                            }
-                        });
-                        console.log(cols);
-                        var pdata = $(this).jqGrid('getGridParam', 'postData');
-                        var params ={
-                            gridParams: jQuery.param(pdata),
-                            columns: JSON.stringify(cols),
-                        }
-                        App.send('ajax/export_excel', 'post', params);*/
-                    }, 
-
+                         if (!this.hidden) {
+                         cols.push(this.name);
+                         }
+                         });
+                         console.log(cols);
+                         var pdata = $(this).jqGrid('getGridParam', 'postData');
+                         var params ={
+                         gridParams: jQuery.param(pdata),
+                         columns: JSON.stringify(cols),
+                         }
+                         App.send('ajax/export_excel', 'post', params);*/
+                    },
                 });
 
         //footer (pager) search
@@ -678,71 +679,71 @@ var Structure = {
 
         }
 
-		$.jgrid.no_legacy_api = true;
-		$.jgrid.useJSON = true;
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
         //enable search/filter toolbar
         var myDefaultSearch = "cn";
         jQuery(grid_selector).jqGrid('filterToolbar', {defaultSearch: myDefaultSearch,
             searchOnEnter: false,
             enableClear: true,
             stringResult: true,
-            clearSearch: false,
+            clearSearch: true,
             beforeSearch: function ()
             {
                 var postData = $(grid_selector).jqGrid('getGridParam', 'postData');
                 postData.filters = $.parseJSON(postData.filters);
                 console.log(postData.filters);
 //                return true; //prevents triggering
-				
-				var filters=postData.filters;
-				var rules,iCol,rule,cmi,cm,i,parts,separator,group,l,j,str;
-				separator=",";
-				cm=$(grid_selector).jqGrid('getGridParam','colModel');
 
-				if (filters && filters.rules !== undefined && filters.rules.length > 0) {
-					rules = filters.rules;
-					for (i = 0; i < rules.length; i++) {
-						rule = rules[i];
-						iCol = getColumnIndexByName.call(this, rule.field);
-						cmi = cm[iCol];
-						if (iCol >= 0 &&
-								((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
-									&& (rule.op === myDefaultSearch)) ||
-								(typeof (cmi.searchoptions) === "object" &&
-									$.isArray(cmi.searchoptions.sopt) &&
-									cmi.searchoptions.sopt[0] === rule.op)) {
-							// make modifications only for the 'contains' operation
-							parts = rule.data.split(separator);
-							if (parts.length > 1) {
-								if (filters.groups === undefined) {
-									filters.groups = [];
-								}
-								group = {
-									groupOp: 'OR',
-									groups: [],
-									rules: []
-								};
-								filters.groups.push(group);
-								console.log(filters.groups);
-								for (j = 0, l = parts.length; j < l; j++) {
-									str = parts[j];
-									if (str) {
-										// skip empty '', which exist in case of two separaters of once
-										group.rules.push({
-											data: parts[j],
-											op: rule.op,
-											field: rule.field
-										});
-									}
-								}
-								rules.splice(i, 1);
-								i--; // to skip i++
-							}
-						}
-					}
-					this.p.postData.filters = JSON.stringify(filters);
-					
-				}
+                var filters = postData.filters;
+                var rules, iCol, rule, cmi, cm, i, parts, separator, group, l, j, str;
+                separator = ",";
+                cm = $(grid_selector).jqGrid('getGridParam', 'colModel');
+
+                if (filters && filters.rules !== undefined && filters.rules.length > 0) {
+                    rules = filters.rules;
+                    for (i = 0; i < rules.length; i++) {
+                        rule = rules[i];
+                        iCol = getColumnIndexByName.call(this, rule.field);
+                        cmi = cm[iCol];
+                        if (iCol >= 0 &&
+                                ((cmi.searchoptions === undefined || cmi.searchoptions.sopt === undefined)
+                                        && (rule.op === myDefaultSearch)) ||
+                                (typeof (cmi.searchoptions) === "object" &&
+                                        $.isArray(cmi.searchoptions.sopt) &&
+                                        cmi.searchoptions.sopt[0] === rule.op)) {
+                            // make modifications only for the 'contains' operation
+                            parts = rule.data.split(separator);
+                            if (parts.length > 1) {
+                                if (filters.groups === undefined) {
+                                    filters.groups = [];
+                                }
+                                group = {
+                                    groupOp: 'OR',
+                                    groups: [],
+                                    rules: []
+                                };
+                                filters.groups.push(group);
+                                console.log(filters.groups);
+                                for (j = 0, l = parts.length; j < l; j++) {
+                                    str = parts[j];
+                                    if (str) {
+                                        // skip empty '', which exist in case of two separaters of once
+                                        group.rules.push({
+                                            data: parts[j],
+                                            op: rule.op,
+                                            field: rule.field
+                                        });
+                                    }
+                                }
+                                rules.splice(i, 1);
+                                i--; // to skip i++
+                            }
+                        }
+                    }
+                    this.p.postData.filters = JSON.stringify(filters);
+
+                }
             }
 
         });
@@ -927,11 +928,10 @@ var Structure = {
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child(" + requested_col_num + ")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child(" + requested_col_num + ")").hide(); //hide all td of this column
     },
-
-    initNotifications: function (){
+    initNotifications: function () {
         //select all
-        $('#selectAll').on('click', function(){
-            if($(this).is(':checked')) {
+        $('#selectAll').on('click', function () {
+            if ($(this).is(':checked')) {
                 $('.delete_trigger').prop('checked', true);
             }
             else {

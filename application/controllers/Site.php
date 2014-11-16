@@ -75,7 +75,6 @@ class Site extends APP_Controller {
             } else {
                 $this->session->set_flashdata('message', 'Не верное имя пользователя или пароль!');
             }
-            
         }
         $this->layout->view('login');
     }
@@ -146,8 +145,7 @@ class Site extends APP_Controller {
         print('Done.');
     }
 
-    function import_content() {
-        //header("Content-Type: text/html; charset=windows-1251");
+    function import_content($import_limit=4000) {
         $properties = $this->property->get_all();
         $properties_keys = array();
         $authority_added_buff = array();
@@ -156,11 +154,17 @@ class Site extends APP_Controller {
             $properties[$key]['property_name'] = trim($value['property_name']);
             $properties[$key]['property_short_name'] = trim($value['property_short_name']);
         }
-        //var_dump($properties);  
+        //@@@@($properties);  
         $csv = fopen(APPPATH . 'data/excel/import_content.csv', 'r');
         $i = 0;
+        $impo = 0;
         while (($row = fgetcsv($csv, 0, ';')) !== FALSE) {
             // prepare properties keys
+            /* limits of import*/
+              $impo = $impo + 1;
+            if ($impo == $import_limit) {
+                break;
+            }
             if ($i == 0) {
                 $x = 0;
                 foreach ($row as $key => $value) {
@@ -176,7 +180,7 @@ class Site extends APP_Controller {
                         $x++;
                     }
                 }
-                //var_dump($properties_keys);
+                //@@@@($properties_keys);
             } else {
                 $x = 0;
                 $authority = array();
@@ -205,20 +209,53 @@ class Site extends APP_Controller {
                 //insert authority and authority properties
                 // try get organiztion by organiztion_name
                 $organization = $this->organization_model->get_by('organization_name', (isset($authority_properties[10]['value'])) ? trim($authority_properties[10]['value']) : '');
+                if (is_null($organization)) {
+                    show_error($authority_properties[10]['value'] . ' - не существует');
+                    echo $authority_properties[10]['value'] . ' - не существует';
+                    continue;
+                }
                 $authority_name = (isset($authority_properties[11]['value'])) ? $authority_properties[11]['value'] : NULL;
-                $authority['id_organization'] = (NULL != $organization) ? $organization['id_organization'] : 1;
-                $authority['id_authority_status'] = 1;
+                if (NULL != $organization) {
+                    $authority['id_organization'] = $organization['id_organization'];
+                } else {
+                    echo $authority_properties[10]['value'] . ' - не соответствует организация<br>';
+                    continue;
+                }
+                $authority['id_authority_status'] = 2;
                 $authority['authority_name'] = $authority_name;
+                $authority['is_new']='true';
                 $authority_id = $this->authority->insert($authority);
                 if ($authority_id) {
                     // add authority to BUFF
                     if (NULL != $authority_name) {
                         $authority_added_buff[md5($authority_name)] = $authority_id;
                     }
+                    $authority_property['id_property'] = 18;
+                    $authority_property['value'] = 'Отраслевой орган';
+                    $authority_property['id_authority'] = $authority_id;
+                    $this->authority_property_model->insert($authority_property);
+                    $authority_property['id_property'] = 8;
+                    $authority_property['value'] = 'на согласовании';
+                    $authority_property['id_authority'] = $authority_id;
+                    $this->authority_property_model->insert($authority_property);
+                    $authority_property['id_property'] = 8;
+                    $authority_property['value'] = 'на согласовании';
+                    $authority_property['id_authority'] = $authority_id;
+                    $this->authority_property_model->insert($authority_property);
                     foreach ($authority_properties as $key => $value) {
                         $authority_property['id_property'] = $value['property_id'];
                         $authority_property['id_authority'] = $authority_id;
-                        $authority_property['value'] = $value['value'];
+                        if ($authority_property['id_property'] == 13) {
+                            $authority_property['value'] = '<a href=agreeds/check_status_authority/' . $authority_property['id_authority'] . '/0/1>' . $value['value'] . '</a>';
+                        } elseif ($authority_property['id_property'] == 7) {
+
+                            $authority_property['value'] = $value['value'];
+                            $this->authority_property_model->insert($authority_property);
+                            $authority_property['id_property'] = 11;
+                            $authority_property['value'] = '<a href=agreeds/check_status_authority/' . $authority_property['id_authority'] . '/0/1>' . $authority_id . '-' . $value['value'] . ' ' . rand(1, 99) . '</a>';
+                        } else {
+                            $authority_property['value'] = $value['value'];
+                        }
                         $this->authority_property_model->insert($authority_property);
                     }
                     // add authority CUSTOM ID
@@ -231,38 +268,156 @@ class Site extends APP_Controller {
                         $this->authority_property_model->insert($authority_property);
                     }
                 }
-
                 //insert service and cervice properties
-                $service['id_service_type'] = 8;
-                $service['id_authority_status'] = 1;
-
+                switch ($service_properties[15]['value']) {
+                    case 'функция':
+                        $service['id_service_type'] = 8;
+                        break;
+                    case 'услуга':
+                        $service['id_service_type'] = 7;
+                        break;
+                    case 'функция контроля и надзора':
+                        $service['id_service_type'] = 9;
+                        break;
+                    default:
+                        break;
+                }
+                $service['id_authority_status'] = 2;
                 // search authority id by aithority name hash in BUFF array
                 if (NULL != $authority_name AND array_key_exists(md5($authority_name), $authority_added_buff)) {
                     $service['id_authority'] = $authority_added_buff[md5($authority_name)];
-                    //var_dump($service['id_authority']);
+                    //@@@@($service['id_authority']);
                 } else {
                     $service['id_authority'] = $authority_id;
                 }
-
                 $service['service_name'] = (isset($service_properties[12]['value'])) ? $service_properties[12]['value'] : '';
                 $service_id = $this->service->insert($service);
+                $this->preinstall_property($service_id, $service['id_service_type']);
+                $service_property['id_property'] = 73;
+                $service_property['id_service'] = $service_id;
+                $service_property['value'] = $service_properties[12]['value'];
+                $service_property['agreed'] = 0;
+                $this->service_property->insert($service_property);
                 if ($service_id) {
                     foreach ($service_properties as $key => $value) {
                         $service_property['id_property'] = $value['property_id'];
                         $service_property['id_service'] = $service_id;
                         $service_property['value'] = $value['value'];
+                        $service_property['agreed'] = 0;
                         $this->service_property->insert($service_property);
                     }
                 }
-
-                //var_dump($organization, $authority_properties);
-                //if($i == 10) break;
             }
-            //var_dump($row);
             $i++;
         }
         fclose($csv);
         print('Done.');
+    }
+
+    private function preinstall_property($service_id, $id_service_type) {
+        $service_property['id_service'] = $service_id;
+        $service_property['agreed'] = 0;
+        switch ($id_service_type) {
+            case 7:
+                $service_property['id_property'] = 74;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 173;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 75;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 174;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 176;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 178;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 187;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1076;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1077;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1079;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 193;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1078;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1080;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                break;
+            case 8:
+                $service_property['id_property'] = 74;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 75;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 174;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+
+                $service_property['id_property'] = 1037;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1049;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+
+                $service_property['id_property'] = 1078;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1080;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                break;
+            case 9:
+                $service_property['id_property'] = 74;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 173;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 75;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 174;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+
+                $service_property['id_property'] = 1037;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1049;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+
+                $service_property['id_property'] = 193;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1078;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                $service_property['id_property'] = 1080;
+                $service_property['value'] = '';
+                $this->service_property->insert($service_property);
+                break;
+            default:
+                break;
+        }
     }
 
     private function get_cell_value($excel, $cellOrCol, $row = null, $format = 'd.m.Y') {

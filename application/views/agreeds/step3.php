@@ -109,32 +109,31 @@
                                     <div class="widget-main padding-16">
                                         <div class="tab-content">
                                             <?php $tab_num = 0; ?>
-                                            <?php foreach ($services as $id_sirvices => $service): ?>
+                                            <?php foreach ($services as $id_services => $service): ?>
                                                 <?php $tab_num++; ?>
                                                 <div class="tab-pane <?php if ($tab_num == 1) echo 'active'; ?>" id="usl_<?= $tab_num; ?>" hidden>
                                                     <table class="table table-bordered">
-                                                        <?php foreach ($service['properties'] as $name => $value): ?>
+                                                        <?php if(isset($service['properties']))foreach ($service['properties'] as $name => $value): ?>
                                                             <tr>
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
                                                                 <td class="col-md-5"><?= $value['value']; ?></td>
                                                                 <td class="col-md-3" style="padding-left: 2px">
                                                                     <div class="col-sm-9" style="padding-left: 2px">
                                                                         <label>
-                                                                            <input type="radio" class="ace " value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>"> 
+                                                                            <input type="radio" class="ace " value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_services . '_' . $name ?>"> 
                                                                             <span class="lbl">Согласовано</span>
                                                                         </label>
                                                                         <label>
-                                                                            <input type="radio" class="ace" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <input type="radio" class="ace" value="2" <?php if ($value['agreed'] == 2) echo 'checked'; ?> name="<?= $id_services . '_' . $name ?>">
                                                                             <span class="lbl">Не просмотрено</span>
                                                                         </label>
                                                                         <label>
-                                                                            <input type="radio" class="ace" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_sirvices . '_' . $name ?>">
+                                                                            <input type="radio" class="ace" value="0" <?php if ($value['agreed'] == 0) echo 'checked'; ?> name="<?= $id_services . '_' . $name ?>">
                                                                             <span class="lbl">Не согласовано</span>
                                                                         </label>
                                                                     </div>
-
                                                                     <div  class=" col-sm-3" style="padding-left: 2px">
-                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_sirvices ?>_<?= $name; ?>">
+                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_services ?>_<?= $name; ?>">
                                                                             <i class="ace-icon fa fa-comment icon-only"></i>
                                                                         </button>
                                                                     </div>
@@ -146,7 +145,7 @@
                                             <?php endforeach; ?>
                                             <div class="row">
                                                 <span class="col-md-12">
-                                                    <button type="button" class="btn <?= $id_authority_status==3?'disabled':'btn-danger'?> btn-sm pull-right saccess" id="success_sk_<?= $id_sirvices ?>"><?= $id_authority_status==3?'Статус полномочия согласован':'Согласовать статус полномочия'?></button>
+                                                    <button type="button" class="btn <?= $id_authority_status==3?'disabled':'btn-danger'?> btn-sm pull-right saccess" id="success_sk_<?= $id_services ?>"><?= $id_authority_status==3?'Статус полномочия согласован':'Согласовать статус полномочия'?></button>
                                                 </span>
                                             </div>
                                         </div>

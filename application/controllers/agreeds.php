@@ -240,6 +240,7 @@ class Agreeds extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
+                if (($property['id_service_type'] == NULL) || (is_null($property['id_service_type'] == NULL))) continue;
                 $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed']);
             }
         }
@@ -251,6 +252,7 @@ class Agreeds extends APP_Controller {
         $this->step_files_insert($id_authority);
         $data = $_POST;
         $agreeded = 0;
+        $count_properties=0;
         foreach ($data as $key => $value) {
             $name = explode("_", $key);
             if (!(int) $name[0]) {
@@ -262,8 +264,9 @@ class Agreeds extends APP_Controller {
             if ($value != 1) {
                 $agreeded = $agreeded + 1;
             }
+            $count_properties=$count_properties+1;
         }
-        if ($agreeded > 0) {
+        if (($agreeded > 0) || ($count_properties==0)) {
             $update_authority['value'] = 'отправленно на доработку';
         } else {
             $update_authority['value'] = 'согласовано';
