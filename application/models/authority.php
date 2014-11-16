@@ -39,47 +39,34 @@ class Authority extends APP_Model {
 
     public function serch($request) {
         $after = json_decode($request);
-        $query = '';
-        $from = '';
-        $is_ath = false;
-        $is_sp = false;
-        $second = 0;
+        $is_first = true;
         foreach ($after->rules as $rule) {
+            $query = '';
+            $from = '';
+            $at_array = array();
             $property = $this->property->get_by('code', $rule->field);
             if (!isset($property['id_service_type']) || ($property['id_service_type'] != 6)) {
-                if (!$is_sp) {
-                    $from = $from . ",service  sr,  service_property sep";
-                    $is_sp = true;
-                    if ($second > 0) {
-                        $query = $query . " AND ";
-                    }else {
-                        $query = $query . ' where ';
-                    }
-                    $second = $second + 1;
-                    $query = $query . " ath.id_authority=sr.id_authority and sep.id_service=sr.id_service ";
-                }
+                $from = $from . ",service  sr,  service_property sep";
+                $query = $query . " where ath.id_authority=sr.id_authority and sep.id_service=sr.id_service ";
                 $query = $query . " AND (sep.id_property=" . $property['id_property'] . " AND sep.value LIKE '%" . $rule->data . "%') ";
             } else {
-                if (!$is_ath) {
-                    $from = $from . ",authority_property ap";
-                    $is_ath = true;
-                    if ($second > 0) {
-                        $query = $query . " AND ";
-                    }else {
-                        $query = $query . ' where ';
-                    }
-                    $second = $second + 1;
-                    $query = $query . " ap.id_authority=ath.id_authority ";
-                }
+                $from = $from . ",authority_property ap";
+                $query = $query . " where ap.id_authority=ath.id_authority ";
                 $query = $query . " AND (ap.id_property=" . $property['id_property'] . " AND ap.value LIKE '%" . $rule->data . "%') ";
             }
+            $sql = "SELECT ath.id_authority FROM  authority ath " . $from . $query . ' GROUP BY ath.id_authority';
+            $res = $this->db->query($sql);
+            foreach ($res->result_array() as $row) {
+                $at_array[] = $row['id_authority'];
+            }
+            if ($is_first) {
+                $return_array = $at_array;
+                $is_first = false;
+            } else {
+                $return_array = array_intersect($return_array, $at_array);
+            }
         }
-        $sql = "SELECT ath.id_authority FROM  authority ath " . $from . $query;
-        $res = $this->db->query($sql);
-        foreach ($res->result_array() as $row){
-            $at_array[]=$row['id_authority'];
-        }
-        return $at_array;
+        return $return_array;
     }
 
 }

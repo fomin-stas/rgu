@@ -52,9 +52,11 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-//        var tag_input = $('.ui-search-input').children()
-//        tag_input.tag({placeholder: tag_input.attr('placeholder123'),
-//            source: ['tag 1', 'tag 2']});
+        var tag_input = $('.ui-search-input').children();
+        tag_input.tag({source: ['tag 1', 'tag 2']});
+        tag_input.on('added', function (e, value) {
+            $(grid_selector).trigger("reloadGrid");
+        });
     },
     initIOGV: function () {
         console.log('Structure IOGV');
@@ -412,7 +414,7 @@ var Structure = {
         },
         {
             //search form
-            width: 1200,
+            width: 1700,
             recreateForm: true,
             afterShowSearch: function (e) {
                 var form = $(e[0]);
@@ -684,7 +686,7 @@ var Structure = {
         //enable search/filter toolbar
         var myDefaultSearch = "cn";
         jQuery(grid_selector).jqGrid('filterToolbar', {defaultSearch: myDefaultSearch,
-            searchOnEnter: false,
+            searchOnEnter: true,
             enableClear: true,
             stringResult: true,
             clearSearch: true,
@@ -697,7 +699,7 @@ var Structure = {
 
                 var filters = postData.filters;
                 var rules, iCol, rule, cmi, cm, i, parts, separator, group, l, j, str;
-                separator = ",";
+                separator = ";";
                 cm = $(grid_selector).jqGrid('getGridParam', 'colModel');
 
                 if (filters && filters.rules !== undefined && filters.rules.length > 0) {
