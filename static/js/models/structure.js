@@ -52,11 +52,11 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-        var tag_input = $('.ui-search-input').children();
-        tag_input.tag({source: ['tag 1', 'tag 2']});
-        tag_input.on('added', function (e, value) {
-            $(grid_selector).trigger("reloadGrid");
-        });
+//        var tag_input = $('.ui-search-input').children();
+//        tag_input.tag({source: ['tag 1', 'tag 2']});
+//        tag_input.on('added', function (e, value) {
+//            $(grid_selector).trigger("reloadGrid");
+//        });
     },
     initIOGV: function () {
         console.log('Structure IOGV');
@@ -749,7 +749,7 @@ var Structure = {
             }
 
         });
-//        search_with_tb_filters();
+        //search_with_tb_filters();
 
         //multiselect
         $('.ui-search-input select').multiselect({
@@ -767,9 +767,9 @@ var Structure = {
             onChange: function () {
                 console.log('search');
             },
-//            templates:{
-//              ul:"<ul class='dropdown-menu'></ul>"
-//          }
+            templates:{
+              ul:"<ul class='dropdown-menu'></ul>"
+          }
         });
 
         //multiselect cell editing

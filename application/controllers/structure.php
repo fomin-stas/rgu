@@ -56,6 +56,9 @@ class Structure extends APP_Controller {
         if ($this->input->is_ajax_request()){
             if (isset($_GET['filters'])){
             $authority_array=$this->authority->serch($_GET['filters']);
+            if (count($authority_array) == 0){
+                $authority_array[0]=0;
+            }
             $authorities = $this->authority
                 ->with('status')
                 ->with('organization')

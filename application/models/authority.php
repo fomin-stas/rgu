@@ -41,18 +41,38 @@ class Authority extends APP_Model {
         $after = json_decode($request);
         $is_first = true;
         foreach ($after->rules as $rule) {
+
+            $property = $this->property->get_by('code', $rule->field);
+            $search_data_array = explode(";", $rule->data);
+
             $query = '';
             $from = '';
             $at_array = array();
-            $property = $this->property->get_by('code', $rule->field);
+            
             if (!isset($property['id_service_type']) || ($property['id_service_type'] != 6)) {
                 $from = $from . ",service  sr,  service_property sep";
                 $query = $query . " where ath.id_authority=sr.id_authority and sep.id_service=sr.id_service ";
-                $query = $query . " AND (sep.id_property=" . $property['id_property'] . " AND sep.value LIKE '%" . $rule->data . "%') ";
+                $query = $query . " AND (sep.id_property=" . $property['id_property'] . " AND ( ";
+                $count_el = 0;
+                foreach ($search_data_array as $key => $search_data) {
+                    $search_data = trim($search_data);
+                    if ($count_el > 0) $query = $query . ' OR ';
+                    $count_el = $count_el + 1;
+                    $query = $query . " sep.value LIKE '%" . $search_data . "%' ";
+                }
+                $query = $query . " ))";
             } else {
                 $from = $from . ",authority_property ap";
                 $query = $query . " where ap.id_authority=ath.id_authority ";
-                $query = $query . " AND (ap.id_property=" . $property['id_property'] . " AND ap.value LIKE '%" . $rule->data . "%') ";
+                $query = $query . " AND (ap.id_property=" . $property['id_property'] . " AND (";
+                $count_el = 0;
+                foreach ($search_data_array as $key => $search_data) {
+                    $search_data = trim($search_data);
+                    if ($count_el > 0) $query = $query . ' OR ';
+                    $count_el = $count_el + 1;
+                    $query = $query . " ap.value LIKE '%" . $search_data . "%' ";
+                }
+                $query = $query . " ))";
             }
             $sql = "SELECT ath.id_authority FROM  authority ath " . $from . $query . ' GROUP BY ath.id_authority';
             $res = $this->db->query($sql);
