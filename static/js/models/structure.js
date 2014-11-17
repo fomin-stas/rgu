@@ -159,6 +159,8 @@ var Structure = {
             if (cm[i].stype == 'multiselect')
             {
                 cm[i].stype = 'select';
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //here we set select options (values). It could be an abject {a:'a',b:'b'} or a string "a:a;b:b"
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -166,7 +168,8 @@ var Structure = {
             }
             else if (cm[i].stype == 'select')
             {
-                cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -174,7 +177,8 @@ var Structure = {
             else
             {
                 cm[i].stype = 'select';
-                cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -279,6 +283,9 @@ var Structure = {
 //                        console.log(soptions);
 //
                         $('#multiselect_edit').modal('show');
+                        $('#multiselect_edit').on('hide.bs.modal',function(event){
+                            jQuery(grid_selector).saveCell(iRow,iCol);
+                        });    
                         $('#mselect_textarea')[0].value = value;
 //                        console.log('show');
                         $('#mselect_change').unbind('click').on('click', function () {
@@ -301,6 +308,9 @@ var Structure = {
 //                        console.log(soptions);
 //
                         $('#select_edit').modal('show');
+                        $('#select_edit').on('hide.bs.modal',function(event){
+                            jQuery(grid_selector).saveCell(iRow,iCol);
+                        });
 //                        $('#select_select')[0].value = value;
                         $('#select_textarea')[0].value = value;
 //                        console.log('show');
@@ -318,6 +328,9 @@ var Structure = {
                 else
                 {
                     $('#textarea_edit').modal('show');
+                    $('#textarea_edit').on('hide.bs.modal',function(event){
+                            jQuery(grid_selector).saveCell(iRow,iCol);
+                        });
                     $('#textarea_textarea')[0].value = value;
                     console.log('show');
                     $('#textarea_change').unbind('click').on('click', function () {
