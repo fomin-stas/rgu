@@ -159,6 +159,8 @@ var Structure = {
             if (cm[i].stype == 'multiselect')
             {
                 cm[i].stype = 'select';
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //here we set select options (values). It could be an abject {a:'a',b:'b'} or a string "a:a;b:b"
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -166,7 +168,8 @@ var Structure = {
             }
             else if (cm[i].stype == 'select')
             {
-                cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -174,7 +177,8 @@ var Structure = {
             else
             {
                 cm[i].stype = 'select';
-                cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
+                cm[i].searchoptions = {value:{}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
