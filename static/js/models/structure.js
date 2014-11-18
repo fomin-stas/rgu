@@ -382,7 +382,7 @@ var Structure = {
 
                 // prepare data for request
                 result.id_authority = rowData.id_authority;
-                result.id_service = rowData.id_service !== "" ? rowData.id_service : 0;
+                result.id_service = rowData.id_service !== undefined ? rowData.id_service : 0;
                 result.code = cm[iCol].name;
                 return result;
             },
