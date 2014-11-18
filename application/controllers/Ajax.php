@@ -56,7 +56,7 @@ class Ajax extends APP_Controller {
         $property = $this->property->get_by($for_get);
 
         if (NULL == $property['id_service_type']) {
-            $property['id_service_type'] = 6;
+            $property['id_service_type'] = 7;
         }
 
         if ($property['id_service_type'] == 6) {
@@ -73,7 +73,7 @@ class Ajax extends APP_Controller {
             $this->history_log->insert_log($history_log);
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $authority['id_authority']);
         }
-        if ($property['id_service_type'] == 7) {
+        if ($property['id_service_type'] != 6) {
             $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
             if (empty($authority_property)) {
                 $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
@@ -165,6 +165,11 @@ class Ajax extends APP_Controller {
     function confirm($id_authority) {
         $authority_data['id_authority_status'] = 3;
         echo $this->authority->update($id_authority, $authority_data)?0:1;
+    }
+    
+    public function propertys_array($chto=''){
+        $i=json_encode(array($chto));
+        echo $i;
     }
 
 }

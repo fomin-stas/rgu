@@ -397,4 +397,8 @@
         }
         return cellid;
     }
+    $(window).load(function () {
+  $('.ui-search-toolbar').removeClass('ui-search-toolbar');
+});
+    
 </script>

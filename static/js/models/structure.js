@@ -49,14 +49,26 @@ var Structure = {
                 $(grid_selector).jqGrid('setGridWidth', parent_column.width());
             }
         });
-
+        
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-//        var tag_input = $('.ui-search-input').children();
-//        tag_input.tag({source: ['tag 1', 'tag 2']});
-//        tag_input.on('added', function (e, value) {
-//            $(grid_selector).trigger("reloadGrid");
-//        });
+        var tag_input = $('.ui-search-input').children();
+        tag_input.tag({
+            source: function (query, process) {
+                var r1=this.$element;
+                var r2=$(r).parent();
+                $.ajax({url: 'ajax/propertys_array/' + encodeURIComponent(query)})
+                        .done(function (result_items) {
+                            results = $.parseJSON(result_items);
+                            process(results);
+                        });
+            }
+        });
+        tag_input.on('added', function (e, value) {
+            var sgrid = $(grid_selector)[0];
+            sgrid.triggerToolbar();
+
+        });
     },
     initIOGV: function () {
         console.log('Structure IOGV');
@@ -160,7 +172,7 @@ var Structure = {
             {
                 cm[i].stype = 'select';
                 //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
-                cm[i].searchoptions = {value:{}}; //here we set select options (values). It could be an abject {a:'a',b:'b'} or a string "a:a;b:b"
+                cm[i].searchoptions = {value: {}}; //here we set select options (values). It could be an abject {a:'a',b:'b'} or a string "a:a;b:b"
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -169,7 +181,7 @@ var Structure = {
             else if (cm[i].stype == 'select')
             {
                 //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
-                cm[i].searchoptions = {value:{}}; //select options
+                cm[i].searchoptions = {value: {}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
                 cm[i].edittype = 'textarea';
                 cm[i].editoptions = {};
@@ -283,9 +295,9 @@ var Structure = {
 //                        console.log(soptions);
 //
                         $('#multiselect_edit').modal('show');
-                        $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal',function(event){
-                            jQuery(grid_selector).restoreCell(iRow,iCol);
-                        });    
+                        $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
+                            jQuery(grid_selector).restoreCell(iRow, iCol);
+                        });
                         $('#mselect_textarea')[0].value = value;
 //                        console.log('show');
                         $('#mselect_change').unbind('click').on('click', function () {
@@ -311,8 +323,8 @@ var Structure = {
 //                        $('#select_edit').on('hide.bs.modal',function(event){
 //                            jQuery(grid_selector).saveCell(iRow,iCol);
 //                        });
-                        $('#select_edit').unbind('hide.bs.modal').on('hide.bs.modal',function(event){
-                            jQuery(grid_selector).restoreCell(iRow,iCol);
+                        $('#select_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
+                            jQuery(grid_selector).restoreCell(iRow, iCol);
                         });
 //                        $('#select_select')[0].value = value;
                         $('#select_textarea')[0].value = value;
@@ -334,8 +346,8 @@ var Structure = {
 //                    $('#textarea_edit').on('hide.bs.modal',function(event){
 //                            jQuery(grid_selector).saveCell(iRow,iCol);
 //                        });
-                    $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal',function(event){
-                        jQuery(grid_selector).restoreCell(iRow,iCol);
+                    $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
+                        jQuery(grid_selector).restoreCell(iRow, iCol);
                     });
                     $('#textarea_textarea')[0].value = value;
                     console.log('show');
@@ -433,7 +445,7 @@ var Structure = {
         },
         {
             //search form
-            width: 1700,
+            width: 1400,
             recreateForm: true,
             afterShowSearch: function (e) {
                 var form = $(e[0]);
@@ -786,9 +798,9 @@ var Structure = {
             onChange: function () {
                 console.log('search');
             },
-            templates:{
-              ul:"<ul class='dropdown-menu'></ul>"
-          }
+            templates: {
+                ul: "<ul class='dropdown-menu'></ul>"
+            }
         });
 
         //multiselect cell editing
@@ -960,4 +972,4 @@ var Structure = {
             }
         });
     },
-}
+};

@@ -38,8 +38,12 @@ class Authority extends APP_Model {
     }
 
     public function serch($request) {
+        if(is_array($request)) return 0;
         $after = json_decode($request);
         $is_first = true;
+        $return_array=array();
+        if(is_null($after)) return 0;
+        if(count($after->rules) == 0) return 0;
         foreach ($after->rules as $rule) {
 
             $property = $this->property->get_by('code', $rule->field);

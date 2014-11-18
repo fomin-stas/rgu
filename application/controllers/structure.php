@@ -53,34 +53,48 @@ class Structure extends APP_Controller {
             $table_index = 'all';
         }
 
-        if ($this->input->is_ajax_request()){
-            if (isset($_GET['filters'])){
-            $authority_array=$this->authority->serch($_GET['filters']);
-            if (count($authority_array) == 0){
-                $authority_array[0]=0;
-            }
-            $authorities = $this->authority
-                ->with('status')
-                ->with('organization')
-                ->with('properties')
-                ->limit($limit_rows, ($limit_rows * ($page - 1)))
-                ->get_many($authority_array);
-            }else{
+        if ($this->input->is_ajax_request()) {
+            if (isset($_GET['filters'])) {
+                $authority_array = $this->authority->serch($_GET['filters']);
+                if (!is_array($authority_array)) {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_all();
+                } elseif (count($authority_array) == 0) {
+                    $authority_array[0] = 0;
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_many($authority_array);
+                } else {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_many($authority_array);
+                }
+            } else {
                 $authorities = $this->authority
-                ->with('status')
-                ->with('organization')
-                ->with('properties')
-                ->limit($limit_rows, ($limit_rows * ($page - 1)))
-                ->get_all();
+                        ->with('status')
+                        ->with('organization')
+                        ->with('properties')
+                        ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                        ->get_all();
             }
-        }else{
+        } else {
 
-        $authorities = $this->authority
-                ->with('status')
-                ->with('organization')
-                ->with('properties')
-                ->limit($limit_rows, ($limit_rows * ($page - 1)))
-                ->get_all();
+            $authorities = $this->authority
+                    ->with('status')
+                    ->with('organization')
+                    ->with('properties')
+                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                    ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
 
@@ -238,9 +252,9 @@ class Structure extends APP_Controller {
                 $grid_data[$executable_status][] = $values;
                 $grid_data['all'][] = $values;
             }
-        
-        
-        if ($authority['is_new']=='t') {
+
+
+            if ($authority['is_new'] == 't') {
                 $executable_status = 'new_authorities';
                 // add athority properties to grid
                 foreach ((array) $authority['properties'] as $p) {
@@ -285,14 +299,12 @@ class Structure extends APP_Controller {
                             }
                         }
                         $grid_data[$executable_status][] = $values_buff[$i];
-                        
                     }
                 } else {
                     $grid_data[$executable_status][] = $values;
-                    
                 }
             }
-}
+        }
 // is ajax 
         if ($this->input->is_ajax_request()) {
             $response = array(
@@ -631,7 +643,7 @@ class Structure extends APP_Controller {
                 $grid_data['all'][] = $values;
             }
 
-            if ($authority['is_new']=='t') {
+            if ($authority['is_new'] == 't') {
                 $executable_status = 'new_authorities';
                 // add athority properties to grid
                 foreach ((array) $authority['properties'] as $p) {
@@ -676,11 +688,9 @@ class Structure extends APP_Controller {
                             }
                         }
                         $grid_data[$executable_status][] = $values_buff[$i];
-                        
                     }
                 } else {
                     $grid_data[$executable_status][] = $values;
-                   
                 }
             }
         }
