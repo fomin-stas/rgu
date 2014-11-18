@@ -55,13 +55,15 @@ var Structure = {
         var tag_input = $('.ui-search-input').children();
         tag_input.tag({
             source: function (query, process) {
-                var r1=this.$element;
-                var r2=$(r).parent();
-                $.ajax({url: 'ajax/propertys_array/' + encodeURIComponent(query)})
-                        .done(function (result_items) {
-                            results = $.parseJSON(result_items);
-                            process(results);
-                        });
+                var r1=this.$element[0].previousSibling.name;
+                //var r2=$(r).parent();
+                $.ajax({
+                    url: 'ajax/propertys_array/' + encodeURIComponent(query),
+                    data: r1
+                }).done(function (result_items) {
+                    results = $.parseJSON(result_items);
+                    process(results);
+                });
             }
         });
         tag_input.on('added', function (e, value) {
