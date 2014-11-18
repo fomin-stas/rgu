@@ -135,16 +135,15 @@ class Structure extends APP_Controller {
                 case 'select':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['stype'] = 'select';
-                    $model['edittype'] = 'select';
-//$model['editoptions'] = [];
-                    $model['width'] = 270;
+                    $model['width'] = 220;
+                    $model['stype'] = 'text';
+                    $model['edittype'] = 'text';
                     break;
                 case 'multiselect':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['stype'] = 'select';
-                    $model['edittype'] = 'select';
+                    //$model['stype'] = 'text';
+                    $model['edittype'] = 'text';
 //$model['editoptions'] = [];
                     $model['width'] = 270;
                     break;

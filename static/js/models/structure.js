@@ -56,7 +56,9 @@ var Structure = {
             source: function (query, process) {
                 var r1=this.$element[0].previousSibling.name;
                 $.ajax({
-                    url: 'ajax/propertys_array/' + encodeURIComponent(query) + '/' + r1
+                    method : 'POST',
+                    url: 'ajax/propertys_array/' + r1,
+                    data: 'text=' + query
                 }).done(function (result_items) {
                     results = $.parseJSON(result_items);
                     process(results);

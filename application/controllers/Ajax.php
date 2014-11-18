@@ -189,7 +189,8 @@ class Ajax extends APP_Controller {
         echo $this->authority->update($id_authority, $authority_data) ? 0 : 1;
     }
 
-    public function propertys_array($text, $code) {
+    public function propertys_array( $code) {
+        $text=$this->input->post('text');
         $values = $this->property->serch_values_by_code($text, $code);
         echo json_encode($values);
     }

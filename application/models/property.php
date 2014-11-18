@@ -26,7 +26,7 @@ class Property extends APP_Model {
         $query = $this->db->query($sql);
         if ($query->num_rows()>0){
             foreach ($query->result() as $row){
-                $result[]=$row->value;
+                $result[]=strip_tags($row->value);
             }
         }
         return $result;
