@@ -211,14 +211,14 @@ class Structure extends APP_Controller {
                 $values['id_authority_status'] = $authority['id_authority_status'];
             }
 //add service properties to grid
-            $this->load->model('service');
-            $this->load->model('service_property');
+
             $values_buff = array();
             $temp_values = $values;
             $services = $this->service->get_many_by('id_authority', $authority['id_authority']);
             if (isset($services) AND count($services) > 0) {
                 foreach ($services as $service) {
                     $values = $temp_values;
+                    $values['id_service'] = $service['id_service'];
                     $service_properties = $this->service_property->get_many_by('id_service', $service['id_service']);
                     if (count($service_properties)) {
                         foreach ((array) $service_properties as $p) {

@@ -208,7 +208,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span>
                 </button>
                 <h4 class="modal-title">Редактирование</h4>
             </div>
@@ -220,13 +220,13 @@
                                         </div>
                                         <hr>
                 -->
-<!--
-                <div class="row">
-                    <textarea id="mselect_textarea" class="col-md-12"></textarea>
-                </div>
--->
-				<hr>
-				<div id="multiselect_editor"></div>
+                <!--
+                                <div class="row">
+                                    <textarea id="mselect_textarea" class="col-md-12"></textarea>
+                                </div>
+                -->
+                <hr>
+                <div id="multiselect_editor"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" id="mselect_reset" class="btn btn-info btn-sm pull-left">Сбросить</button>
@@ -246,12 +246,12 @@
                 <h4 class="modal-title">Редактирование</h4>
             </div>
             <div class="modal-body">
-<!--
-                <div class="row">
-                    <textarea id="textarea_textarea" class="col-md-12"></textarea>
-                </div>
--->
-				<hr>
+                <!--
+                                <div class="row">
+                                    <textarea id="textarea_textarea" class="col-md-12"></textarea>
+                                </div>
+                -->
+                <hr>
                 <div id="textarea_editor"></div>
             </div>
             <div class="modal-footer">
@@ -277,12 +277,12 @@
                                             <select class="select_select" id="select_select"></select>
                                         </div>
                 -->
-<!--
-                <div class="row">
-                    <textarea id="select_textarea" class="col-md-12"></textarea>
-                </div>
--->
-				
+                <!--
+                                <div class="row">
+                                    <textarea id="select_textarea" class="col-md-12"></textarea>
+                                </div>
+                -->
+
                 <div id="select_editor"></div>
             </div>
             <div class="modal-footer">
@@ -410,7 +410,7 @@
         return cellid;
     }
     $(window).load(function () {
-  $('.ui-search-toolbar').removeClass('ui-search-toolbar');
-});
-    
+        $('.ui-search-toolbar').removeClass('ui-search-toolbar');
+    });
+
 </script>

@@ -29,7 +29,6 @@ var Structure = {
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
         });
 
-
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
@@ -56,10 +55,8 @@ var Structure = {
         tag_input.tag({
             source: function (query, process) {
                 var r1=this.$element[0].previousSibling.name;
-                //var r2=$(r).parent();
                 $.ajax({
-                    url: 'ajax/propertys_array/' + encodeURIComponent(query),
-                    data: r1
+                    url: 'ajax/propertys_array/' + encodeURIComponent(query) + '/' + r1
                 }).done(function (result_items) {
                     results = $.parseJSON(result_items);
                     process(results);

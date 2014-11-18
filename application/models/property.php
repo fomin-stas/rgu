@@ -17,4 +17,18 @@ class Property extends APP_Model {
         $kis_num    = explode("_", $kis['code']);
         return $kis_num[1] + 1;
     }
+    
+    public function serch_values_by_code($text, $code){
+        $result=array();
+        $property=$this->get_by(array("code"=>$code));
+        $from= $property['id_service_type']!=6?"service_property":'authority_property ';
+        $sql="SELECT value FROM property pr,".$from." sr where pr.code='".$code."' AND pr.id_property=sr.id_property AND sr.value LIKE '%".$text."%' GROUP BY value";
+        $query = $this->db->query($sql);
+        if ($query->num_rows()>0){
+            foreach ($query->result() as $row){
+                $result[]=$row->value;
+            }
+        }
+        return $result;
+    }
 }
