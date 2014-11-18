@@ -848,7 +848,7 @@ var Structure = {
         
         //run wysiwyg editor
         $('#multiselect_editor, #select_editor, #textarea_editor').ace_wysiwyg({
-//			toolbar:{
+			toolbar:{
 //				fontSize:{
 //					name: 'fontSize',
 //					title: 'font size',
@@ -871,21 +871,25 @@ var Structure = {
 //					button_class: 'btn-purple',
 //					button_text: 'ссылка'
 //				}
-//			}
+			}
 		});
 
         //Structure.add_hide_btn();
         var counter=0;
-        $('#grid-table-all_rn').prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-search red"></span>');
+        $('tr[class=""][role="rowheader"] th div').first().prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>');
         $('#hide_search').on('click', function(){
             counter=!counter;
             if(counter)
             {
                 $('.ui-search-table').hide();
+		$(this).removeClass('fa-minus');
+		$(this).addClass('fa-plus');
             }
             else
             {
                 $('.ui-search-table').show();
+		$(this).removeClass('fa-plus');
+		$(this).addClass('fa-minus');
             }
         });
         
