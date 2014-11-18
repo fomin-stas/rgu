@@ -851,50 +851,47 @@ var Structure = {
         
         //run wysiwyg editor
         $('#multiselect_editor, #select_editor, #textarea_editor').ace_wysiwyg({
-			toolbar:{
-				fontSize:{
-					name: 'fontSize',
-					title: 'font size',
-					values:{1 : 'Size#1' , 2 : 'Size#2' , 3 : 'Size#3' , 4 : 'Size#4' , 5 : 'Size#5'}
-				},
-				bold:{
-					name: 'bold',
-					title: 'bold',
-					icon: 'ace-icon fa fa-bold'
-				},
-				italic:{
-					name: 'italic',
-					title: 'italic',
-					icon: 'ace-icon fa fa-italic'
-				},
-				createLink:{
-					name: 'createLink',
-					title: 'link',
-					placeholder: 'ссылка',
-					button_class: 'btn-purple',
-					button_text: 'ссылка'
-				}
-			}
+//			toolbar:{
+//				fontSize:{
+//					name: 'fontSize',
+//					title: 'font size',
+//					values:{1 : 'Size#1' , 2 : 'Size#2' , 3 : 'Size#3' , 4 : 'Size#4' , 5 : 'Size#5'}
+//				},
+//				bold:{
+//					name: 'bold',
+//					title: 'bold',
+//					icon: 'ace-icon fa fa-bold'
+//				},
+//				italic:{
+//					name: 'italic',
+//					title: 'italic',
+//					icon: 'ace-icon fa fa-italic'
+//				},
+//				createLink:{
+//					name: 'createLink',
+//					title: 'link',
+//					placeholder: 'ссылка',
+//					button_class: 'btn-purple',
+//					button_text: 'ссылка'
+//				}
+//			}
 		});
 
         //Structure.add_hide_btn();
-        function add_search_inputs ()
-        {
-            var counter=0;
-            $('#grid-table-all_rn').prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-search red"></span>');
-            $('#hide_search').on('click', function(){
-                counter=!counter;
-                if(counter)
-                {
-                    $('.ui-search-table').hide();
-                }
-                else
-                {
-                    $('.ui-search-table').show();
-                }
-            });
-        }
-        add_search_inputs;
+        var counter=0;
+        $('#grid-table-all_rn').prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-search red"></span>');
+        $('#hide_search').on('click', function(){
+            counter=!counter;
+            if(counter)
+            {
+                $('.ui-search-table').hide();
+            }
+            else
+            {
+                $('.ui-search-table').show();
+            }
+        });
+        
     },
     styleCheckbox: function (table) {
 
