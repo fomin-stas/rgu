@@ -172,7 +172,8 @@ var Structure = {
         {
             if (cm[i].stype == 'multiselect')
             {
-                cm[i].stype = 'select';
+                //cm[i].stype = 'select';
+                cm[i].stype = 'text';
                 //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
                 cm[i].searchoptions = {value: {}}; //here we set select options (values). It could be an abject {a:'a',b:'b'} or a string "a:a;b:b"
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
@@ -182,6 +183,7 @@ var Structure = {
             }
             else if (cm[i].stype == 'select')
             {
+                cm[i].stype = 'text';
                 //cm[i].searchoptions = {value: Structure.table_data_to_options(i)};
                 cm[i].searchoptions = {value: {}}; //select options
                 cm[i].searchoptions.attr = {multiple: 'multiple'};
