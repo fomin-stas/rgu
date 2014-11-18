@@ -74,18 +74,24 @@ class Ajax extends APP_Controller {
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $authority['id_authority']);
         }
         if ($property['id_service_type'] != 6) {
-            $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            if (empty($authority_property)) {
-                $this->authority_property_model->insert(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
-                $authority_property = $this->authority_property_model->get_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']));
-            } else {
-                $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+            $service = $this->service->get_by(array('id_authority' => $authority['id_authority']));
+            if(!empty($service)) {
+                $authority_property = $this->service_property->get_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']));
+                if (empty($authority_property)) {
+                    $this->service_property->insert(array('id_service' => $service['id_service'], 'id_property' => $property['id_property'], 'value' => $insert_data['new_data']));
+                    $authority_property = $this->service_property->get_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']));
+                    $authority_property['value']='Данные отсутствуют';
+                } else {
+                    $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+                }
+                $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
+                $history_log['new'] = $insert_data['new_data'];
+                $history_log['old'] = $authority_property['value'];
+                $history_log['id_property'] = $authority_property['id_property'];
+                $this->history_log->insert_log($history_log);
+            }else{
+                echo -1;
             }
-            $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
-            $history_log['new'] = $insert_data['new_data'];
-            $history_log['old'] = $authority_property['value'];
-            $history_log['id_property'] = $authority_property['id_property'];
-            $this->history_log->insert_log($history_log);
         }
     }
 
@@ -164,11 +170,11 @@ class Ajax extends APP_Controller {
 
     function confirm($id_authority) {
         $authority_data['id_authority_status'] = 3;
-        echo $this->authority->update($id_authority, $authority_data)?0:1;
+        echo $this->authority->update($id_authority, $authority_data) ? 0 : 1;
     }
-    
-    public function propertys_array($chto=''){
-        $i=json_encode(array($chto));
+
+    public function propertys_array($chto = '') {
+        $i = json_encode(array($chto));
         echo $i;
     }
 
