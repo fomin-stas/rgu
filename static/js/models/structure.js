@@ -302,13 +302,13 @@ var Structure = {
                         $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
                             jQuery(grid_selector).restoreCell(iRow, iCol);
                         });
-                        $('#mselect_textarea')[0].value = value;
+                        $('#multiselect_editor')[0].innerHTML = value;
 //                        console.log('show');
                         $('#mselect_change').unbind('click').on('click', function () {
-                            $('#' + iRow + '_' + cellname)[0].value = $('#mselect_textarea')[0].value;
+                            $('#' + iRow + '_' + cellname)[0].value = $('#multiselect_editor')[0].innerHTML;
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#multiselect_edit').modal('hide');
-                            $('#mselect_textarea')[0].value = '';
+                            $('#multiselect_editor')[0].innerHTML = '';
 //                            $('#mselect_select')[0].options = '';
                         });
 
@@ -331,15 +331,15 @@ var Structure = {
                             jQuery(grid_selector).restoreCell(iRow, iCol);
                         });
 //                        $('#select_select')[0].value = value;
-                        $('#select_textarea')[0].value = value;
+                        $('#select_editor')[0].innerHTML = value;
 //                        console.log('show');
                         $('#select_change').unbind('click').on('click', function () {
-                            $('#' + iRow + '_' + cellname)[0].value = $('#select_textarea')[0].value; //if edittype is textares, this should work
+                            $('#' + iRow + '_' + cellname)[0].value = $('#select_editor')[0].innerHTML; //if edittype is textares, this should work
 //                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#select_edit').modal('hide');
 //                            $('#select_select')[0].options = '';
-                            $('#select_textarea')[0].value = '';
+                            $('#select_editor')[0].innerHTML = '';
                         });
                     }
 
@@ -353,12 +353,13 @@ var Structure = {
                     $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
                         jQuery(grid_selector).restoreCell(iRow, iCol);
                     });
-                    $('#textarea_textarea')[0].value = value;
+                    $('#textarea_editor')[0].innerHTML = value;
                     console.log('show');
                     $('#textarea_change').unbind('click').on('click', function () {
-                        $('#' + iRow + '_' + cellname)[0].value = $('#textarea_textarea')[0].value;
+                        $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
                         jQuery(grid_selector).saveCell(iRow, iCol);
                         $('#textarea_edit').modal('hide');
+                        $('#textarea_editor')[0].innerHTML="";
                     });
                 }
 
@@ -847,6 +848,34 @@ var Structure = {
                 dropdown_ul.style.left = parseInt(dropdown_ul.style.left) - true_delta;
             }
         });
+        
+        //run wysiwyg editor
+        $('#multiselect_editor, #select_editor, #textarea_editor').ace_wysiwyg({
+			toolbar:{
+				fontSize:{
+					name: 'fontSize',
+					title: 'font size',
+					values:{1 : 'Size#1' , 2 : 'Size#2' , 3 : 'Size#3' , 4 : 'Size#4' , 5 : 'Size#5'}
+				},
+				bold:{
+					name: 'bold',
+					title: 'bold',
+					icon: 'ace-icon fa fa-bold'
+				},
+				italic:{
+					name: 'italic',
+					title: 'italic',
+					icon: 'ace-icon fa fa-italic'
+				},
+				createLink:{
+					name: 'createLink',
+					title: 'link',
+					placeholder: 'ссылка',
+					button_class: 'btn-purple',
+					button_text: 'ссылка'
+				}
+			}
+		});
 
         //Structure.add_hide_btn();
         function add_search_inputs ()

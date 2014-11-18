@@ -161,6 +161,8 @@ $config['groups']['site'] = array(
         array('grid.setcolumns.js'),
         array('bootstrap-multiselect.js'),
         array('bootstrap-tag.min.js'),
+        array('jquery.hotkeys.min.js'),
+        array('bootstrap-wysiwyg.min.js'),
         array('iris.min.js'),
         array('jquery.gritter.min.js'),
         array('bootstrap-datepicker.js'),
