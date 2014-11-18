@@ -55,13 +55,15 @@ var Structure = {
         var tag_input = $('.ui-search-input').children();
         tag_input.tag({
             source: function (query, process) {
-                var r1=this.$element;
-                var r2=$(r).parent();
-                $.ajax({url: 'ajax/propertys_array/' + encodeURIComponent(query)})
-                        .done(function (result_items) {
-                            results = $.parseJSON(result_items);
-                            process(results);
-                        });
+                var r1=this.$element[0].previousSibling.name;
+                //var r2=$(r).parent();
+                $.ajax({
+                    url: 'ajax/propertys_array/' + encodeURIComponent(query),
+                    data: r1
+                }).done(function (result_items) {
+                    results = $.parseJSON(result_items);
+                    process(results);
+                });
             }
         });
         tag_input.on('added', function (e, value) {
@@ -380,7 +382,7 @@ var Structure = {
 
                 // prepare data for request
                 result.id_authority = rowData.id_authority;
-                result.id_service = rowData.id_service !== "" ? rowData.id_service : 0;
+                result.id_service = rowData.id_service !== undefined ? rowData.id_service : 0;
                 result.code = cm[iCol].name;
                 return result;
             },
@@ -845,6 +847,23 @@ var Structure = {
         });
 
         //Structure.add_hide_btn();
+        function add_search_inputs ()
+        {
+            var counter=0;
+            $('#grid-table-all_rn').prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-search red"></span>');
+            $('#hide_search').on('click', function(){
+                counter=!counter;
+                if(counter)
+                {
+                    $('.ui-search-table').hide();
+                }
+                else
+                {
+                    $('.ui-search-table').show();
+                }
+            });
+        }
+        add_search_inputs;
     },
     styleCheckbox: function (table) {
 
