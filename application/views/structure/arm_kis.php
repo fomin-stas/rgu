@@ -336,7 +336,7 @@
                                 }
                             },
                             {title: "Редактировать", action: function (event, ui) {
-                                    jQuery(grid_selector).jqGrid('editGridRow', getClickedRowId(event, ui), {width: 450});
+                                    jQuery(Structure.options.grid_selector).jqGrid('editGridRow', getClickedRowId(event, ui), {width: 450});
                                 }},
                             {title: "История изменений", action: function (event, ui)
                                 {
