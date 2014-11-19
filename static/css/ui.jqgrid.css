@@ -231,3 +231,13 @@ td.ui-search-input .multiselect-container.dropdown-menu
 .nav-tabs[class*="tab-color-"]>li.active>a:hover,
 .nav-tabs[class*="tab-color-"]>li.active>a
 {background-color:#C6699F !important;}
+
+/*celledit modals*/
+#multiselect_editor,
+#select_editor,
+#textarea_editor
+{
+	border:2px solid lightblue;
+	height:100px;
+	overflow-y: scroll;
+}
