@@ -878,7 +878,7 @@ var Structure = {
 
         //Structure.add_hide_btn();
         var counter=0;
-        $('tr[class=""][role="rowheader"] th div').first().prepend('<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>');
+        $('tr[class=""][role="rowheader"] th div').first().innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
         $('#hide_search').on('click', function(){
             counter=!counter;
             if(counter)
