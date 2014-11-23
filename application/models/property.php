@@ -38,4 +38,17 @@ class Property extends APP_Model {
         }
         return $result;
     }
+    
+    public function iogv_property(){
+        $return_array = array();
+        $sql="SELECT * FROM property WHERE options NOT LIKE '%\"property_iogv_displayed\":false%'  ORDER BY \"order\"";
+        $query = $this->db->query($sql);
+        foreach ($query->result_array() as $key => $value) {
+            $sql="SELECT * FROM property_format WHERE id_property_format=".$value['id_property_type'];
+            $format = $this->db->query($sql);
+            $value['format'] = $format->row_array();
+            $return_array[] = $value;
+        }
+        return $return_array;
+    }
 }

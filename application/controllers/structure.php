@@ -541,8 +541,8 @@ class Structure extends APP_Controller {
                         ->get_all();
             }
         }
-        $properties = $this->property->with('format')->order_by('order')->get_all();
-
+        //$properties = $this->property->with('format')->order_by('order')->get_all();
+        $properties = $this->property->iogv_property();
         foreach ((array) $properties as $property) {
             $property['code'] = (isset($property['code'])) ? $property['code'] : $property['id_property'] . '_code';
             $column_names[] = $property['property_short_name'] == '' || is_null($property['property_short_name']) ? $property['property_name'] : $property['property_short_name'];
@@ -570,7 +570,7 @@ class Structure extends APP_Controller {
                     $model['stype'] = 'text';
                     break;
                 case 'textarea':
-                    $model['editable'] = true;
+                    $model['editable'] = false;
                     $model['fixed'] = true;
                     $model['edittype'] = 'textarea';
                     $model['editoptions']['rows'] = 3;
@@ -580,7 +580,7 @@ class Structure extends APP_Controller {
                 case 'select':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['stype'] = 'select';
+                    $model['stype'] = 'text';
                     $model['edittype'] = 'select';
 //$model['editoptions'] = [];
                     $model['width'] = 270;
@@ -588,8 +588,8 @@ class Structure extends APP_Controller {
                 case 'multiselect':
                     $model['editable'] = false;
                     $model['fixed'] = true;
-                    $model['stype'] = 'select';
-                    $model['edittype'] = 'select';
+                    $model['stype'] = 'text';
+                    $model['edittype'] = 'text';
 //$model['editoptions'] = [];
                     $model['width'] = 270;
                     break;

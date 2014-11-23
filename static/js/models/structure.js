@@ -48,15 +48,16 @@ var Structure = {
                 $(grid_selector).jqGrid('setGridWidth', parent_column.width());
             }
         });
-        
+
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+        
         var tag_input = $('.ui-search-input').children();
         tag_input.tag({
             source: function (query, process) {
-                var r1=this.$element[0].previousSibling.name;
+                var r1 = this.$element[0].previousSibling.name;
                 $.ajax({
-                    method : 'POST',
+                    method: 'POST',
                     url: 'ajax/propertys_array/' + r1,
                     data: 'text=' + query
                 }).done(function (result_items) {
@@ -119,6 +120,30 @@ var Structure = {
 
         Structure.renderGrid(grid_selector, pager_selector, grid_data);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+        var tag_input = $('.ui-search-input').children();
+        tag_input.tag({
+            source: function (query, process) {
+                var r1 = this.$element[0].previousSibling.name;
+                $.ajax({
+                    method: 'POST',
+                    url: 'ajax/propertys_array/' + r1,
+                    data: 'text=' + query
+                }).done(function (result_items) {
+                    results = $.parseJSON(result_items);
+                    process(results);
+                });
+            }
+        });
+        tag_input.on('added', function (e, value) {
+            var sgrid = $(grid_selector)[0];
+            sgrid.triggerToolbar();
+
+        });
+        tag_input.on('removed', function (e, value) {
+            var sgrid = $(grid_selector)[0];
+            sgrid.triggerToolbar();
+
+        });
     },
     cellFormat: function (rowId, val, rawObject, cm)
     {
@@ -363,7 +388,7 @@ var Structure = {
                         $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
                         jQuery(grid_selector).saveCell(iRow, iCol);
                         $('#textarea_edit').modal('hide');
-                        $('#textarea_editor')[0].innerHTML="";
+                        $('#textarea_editor')[0].innerHTML = "";
                     });
                 }
 
@@ -852,10 +877,10 @@ var Structure = {
                 dropdown_ul.style.left = parseInt(dropdown_ul.style.left) - true_delta;
             }
         });
-        
+
         //run wysiwyg editor
         $('#multiselect_editor, #select_editor, #textarea_editor').ace_wysiwyg({
-			toolbar:{
+            toolbar: {
 //				fontSize:{
 //					name: 'fontSize',
 //					title: 'font size',
@@ -878,37 +903,37 @@ var Structure = {
 //					button_class: 'btn-purple',
 //					button_text: 'ссылка'
 //				}
-			}
-		});
+            }
+        });
 
         //Structure.add_hide_btn();
-        
+
         //show/hide filters
-        var counter=0;
-		if($('tr[class="ui-search-toolbar"][role="rowheader"] th div'))
-		{
-			$('tr[class="ui-search-toolbar"][role="rowheader"] th div').first()[0].innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
-		}
-		else
-		{
-			$('tr[class=""][role="rowheader"] th div').first().innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
-		}
-		$('#hide_search').on('click', function(){
-			counter=!counter;
-			if(counter)
-			{
-				$('.ui-search-table').hide();
-				$(this).removeClass('fa-minus');
-				$(this).addClass('fa-plus');
-			}
-			else
-			{
-				$('.ui-search-table').show();
-				$(this).removeClass('fa-plus');
-				$(this).addClass('fa-minus');
-			}
-		});
-        
+        var counter = 0;
+        if ($('tr[class="ui-search-toolbar"][role="rowheader"] th div'))
+        {
+            $('tr[class="ui-search-toolbar"][role="rowheader"] th div').first()[0].innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
+        }
+        else
+        {
+            $('tr[class=""][role="rowheader"] th div').first().innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
+        }
+        $('#hide_search').on('click', function () {
+            counter = !counter;
+            if (counter)
+            {
+                $('.ui-search-table').hide();
+                $(this).removeClass('fa-minus');
+                $(this).addClass('fa-plus');
+            }
+            else
+            {
+                $('.ui-search-table').show();
+                $(this).removeClass('fa-plus');
+                $(this).addClass('fa-minus');
+            }
+        });
+
     },
     styleCheckbox: function (table) {
 
