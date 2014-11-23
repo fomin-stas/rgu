@@ -68,10 +68,7 @@ class Ajax extends APP_Controller {
             } else {
                 $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             }
-            $history_log['new'] = $insert_data['new_data'];
-            $history_log['old'] = $authority_property['value'];
-            $history_log['id_property'] = $authority_property['id_property'];
-            $this->history_log->insert_log($history_log);
+            $this->save_history($insert_data['new_data'],$service_property['value'],$service_property['id_property']);
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $authority['id_authority']);
         }
         if ($property['id_service_type'] != 6) {
@@ -90,24 +87,18 @@ class Ajax extends APP_Controller {
                     $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
                 }
                 $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
-
-                $history_log['new'] = $insert_data['new_data'];
-                $history_log['old'] = $service_property['value'];
-                if ($history_log['new'] === $history_log['old'])
-                    return;
-                $history_log['id_property'] = $service_property['id_property'];
-                $this->history_log->insert_log($history_log);
+                $this->save_history($insert_data['new_data'],$service_property['value'],$service_property['id_property']);
             } else {
                 echo '-1';
             }
         }
     }
 
-    private function save_history($new_value, $old_value, $id_property) {
-        $history_log = array('new' => $new_value, 'old' => $old_value, 'id_property' => $id_property);
-        if ($new_value === $old_value)
+    private function save_history($new_value, $old_value, $id_property) { 
+        if ($new_value === $old_value){
             return;
-        $history_log['id_property'] = $service_property['id_property'];
+        }
+        $history_log = array('new' => $new_value, 'old' => $old_value, 'id_property' => $id_property);
         $this->history_log->insert_log($history_log);
     }
 

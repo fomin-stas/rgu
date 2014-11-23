@@ -22,11 +22,18 @@ class Property extends APP_Model {
         $result=array();
         $property=$this->get_by(array("code"=>$code));
         $from= $property['id_service_type']!=6?"service_property":'authority_property ';
-        $sql="SELECT value FROM property pr,".$from." sr where pr.code='".$code."' AND pr.id_property=sr.id_property AND sr.value LIKE '%".$text."%' GROUP BY value";
+        $sql="SELECT value FROM property pr,".$from." sr where pr.code='".$code."' AND pr.id_property=sr.id_property AND lower(sr.value) LIKE lower('%".$text."%') GROUP BY value";
         $query = $this->db->query($sql);
         if ($query->num_rows()>0){
             foreach ($query->result() as $row){
-                $result[]=strip_tags($row->value);
+                if($property['id_service_type']==6){
+                    $result[]=strip_tags($row->value);
+                }else{
+                    $values=explode(";", $row->value);
+                    foreach ($values as $value) {
+                        $result[]=$value;
+                    }
+                }
             }
         }
         return $result;

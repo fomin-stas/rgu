@@ -70,6 +70,11 @@ var Structure = {
             sgrid.triggerToolbar();
 
         });
+        tag_input.on('removed', function (e, value) {
+            var sgrid = $(grid_selector)[0];
+            sgrid.triggerToolbar();
+
+        });
     },
     initIOGV: function () {
         console.log('Structure IOGV');

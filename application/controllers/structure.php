@@ -55,7 +55,8 @@ class Structure extends APP_Controller {
 
         if ($this->input->is_ajax_request()) {
             if (isset($_GET['filters'])) {
-                $authority_array = $this->authority->serch($_GET['filters']);
+                $this->load->model('search_table');
+                $authority_array = $this->search_table->searche($_GET['filters']);
                 if (!is_array($authority_array)) {
                     $authorities = $this->authority
                             ->with('status')
@@ -457,9 +458,6 @@ class Structure extends APP_Controller {
         $size_rows = 0;
         $limit_rows = $this->input->get('rows', true);
 
-
-
-
         if (!$limit_rows) {
             $limit_rows = 20;
         }
@@ -471,20 +469,77 @@ class Structure extends APP_Controller {
         if (!$table_index) {
             $table_index = 'all';
         }
-        if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
-            $authorities = $this->authority
-                    ->with('status')
-                    ->with('organization')
-                    ->with('properties')
-                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
-                    ->get_many_by(array('id_organization' => $id_organization));
+
+        if ($this->input->is_ajax_request()) {
+            if (isset($_GET['filters'])) {
+                $this->load->model('search_table');
+                $authority_array = $this->searsh_table->serch($_GET['filters']);
+                if (!is_array($authority_array)) {
+                    if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
+                        $authorities = $this->authority
+                                ->with('status')
+                                ->with('organization')
+                                ->with('properties')
+                                ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                                ->get_many_by(array('id_organization' => $id_organization));
+                    } else {
+                        $authorities = $this->authority
+                                ->with('status')
+                                ->with('organization')
+                                ->with('properties')
+                                ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                                ->get_all();
+                    }
+                } elseif (count($authority_array) == 0) {
+                    $authority_array[0] = 0;
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_many($authority_array);
+                } else {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_many($authority_array);
+                }
+            } else {
+                if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_many_by(array('id_organization' => $id_organization));
+                } else {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->get_all();
+                }
+            }
         } else {
-            $authorities = $this->authority
-                    ->with('status')
-                    ->with('organization')
-                    ->with('properties')
-                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
-                    ->get_all();
+
+            if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
+                $authorities = $this->authority
+                        ->with('status')
+                        ->with('organization')
+                        ->with('properties')
+                        ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                        ->get_many_by(array('id_organization' => $id_organization));
+            } else {
+                $authorities = $this->authority
+                        ->with('status')
+                        ->with('organization')
+                        ->with('properties')
+                        ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                        ->get_all();
+            }
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
 
