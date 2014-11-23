@@ -454,7 +454,7 @@ var Structure = {
         },
         {
             //search form
-            width: 1400,
+            width: 1000,
             recreateForm: true,
             afterShowSearch: function (e) {
                 var form = $(e[0]);

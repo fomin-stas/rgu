@@ -12,7 +12,7 @@ class Search_table extends CI_Model {
         }
         $after = json_decode($request);
         if (is_null($after)) {
-            return array();
+            return 0;
         }
         return $this->groups_search($after);
     }
@@ -45,10 +45,10 @@ class Search_table extends CI_Model {
         $at_array = array();
         if (!isset($property['id_service_type']) || ($property['id_service_type'] != 6)) {
             $from = ",service  sr,  service_property sep";
-            $query = " where ath.id_authority=sr.id_authority and sep.id_service=sr.id_service AND (sep.id_property=" . $property['id_property'] . " AND sep.value LIKE '%" . $rule->data . "%')";
+            $query = " where ath.id_authority=sr.id_authority and sep.id_service=sr.id_service AND (sep.id_property=" . $property['id_property'] . " AND lower(sep.value)" . $this->operators($rule->data, $rule->op) . ")";
         } else {
             $from = ",authority_property ap";
-            $query = " where ap.id_authority=ath.id_authority AND (ap.id_property=" . $property['id_property'] . " AND ap.value LIKE '%" . trim($rule->data) . "%' )";
+            $query = " where ap.id_authority=ath.id_authority AND (ap.id_property=" . $property['id_property'] . " AND lower(ap.value)" . $this->operators($rule->data, $rule->op) . ")";
         }
         $sql = "SELECT ath.id_authority FROM  authority ath " . $from . $query . ' GROUP BY ath.id_authority';
         $res = $this->db->query($sql);
@@ -56,6 +56,39 @@ class Search_table extends CI_Model {
             $at_array[] = $row['id_authority'];
         }
         return $at_array;
+    }
+
+    private function operators($data, $operator) {
+        $data = trim($data);
+        switch ($operator) {
+            case 'cn':
+                return "LIKE lower('%" . $data . "%')";
+                break;
+            case 'nc':
+                return "NOT LIKE lower('%" . $data . "%')";
+                break;
+            case 'eq':
+                return "=lower('" . $data . "')";
+                break;
+            case 'ne':
+                return "!=lower('" . $data . "')";
+                break;
+            case 'bw':
+                return "LIKE lower('" . $data . "%')";
+                break;
+            case 'bn':
+                return "NOT LIKE lower('" . $data . "%')";
+                break;
+            case 'ew':
+                return "LIKE lower('%" . $data . "')";
+                break;
+            case 'en':
+                return "NOT LIKE lower('%" . $data . "')";
+                break;
+            default:
+                return "LIKE lower('%" . $data . "%')";
+                break;
+        }
     }
 
     private function operation($array1, $array2, $operation, &$is_first) {
@@ -68,7 +101,7 @@ class Search_table extends CI_Model {
                     return array_intersect($array1, $array2);
                     break;
                 default:
-                    return array_merge($array1,$array2);
+                    return array_merge($array1, $array2);
                     break;
             }
         }
