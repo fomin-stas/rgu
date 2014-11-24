@@ -473,7 +473,7 @@ class Structure extends APP_Controller {
         if ($this->input->is_ajax_request()) {
             if (isset($_GET['filters'])) {
                 $this->load->model('search_table');
-                $authority_array = $this->searsh_table->serch($_GET['filters']);
+                $authority_array = $this->search_table->searche($_GET['filters']);
                 if (!is_array($authority_array)) {
                     if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
                         $authorities = $this->authority
