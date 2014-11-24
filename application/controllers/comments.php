@@ -4,15 +4,16 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Comments extends APP_Controller {
+
     public $notifications_size = 0;
+
     function __construct() {
         parent::__construct();
         $this->is_loggedIn();
-        if($this->session->userdata('user_type') == 1) {
+        if ($this->session->userdata('user_type') == 1) {
             $this->notifications_size = $this->activity->count_by(array('status' => 1));
-        }
-        else{
-            $this->notifications_size = $this->activity->count_by(array('id_organization' => $this->session->userdata('id_organization'), 'status' => 1));   
+        } else {
+            $this->notifications_size = $this->activity->count_by(array('id_organization' => $this->session->userdata('id_organization'), 'status' => 1));
         }
     }
 
@@ -26,7 +27,7 @@ class Comments extends APP_Controller {
                 'message' => $value['message'],
                 'user_name' => $user['user_name']);
         }
-        $data['comments_data'] = $comments_data;
+        $data['comments_data'] = isset($comments_data)?$comments_data:'У данного полномочия нет комментариев';
         $this->layout->view('timeline', $data);
     }
 
@@ -43,9 +44,9 @@ class Comments extends APP_Controller {
         if (isset($comments_data)) {
             $data['comments_data'] = $comments_data;
             echo $this->load->view('comments/timeline', $data);
-        }
-        else{
+        } else {
             echo 'Комментариев нет';
         }
     }
+
 }
