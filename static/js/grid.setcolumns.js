@@ -72,7 +72,7 @@ $.jgrid.extend({
 				for(i=0;i<this.p.colNames.length;i++){
 					if(!$t.p.colModel[i].hidedlg) { // added from T. Tomov
 						formdata += "<tr id='"+(i)+"_sortable_row'><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
-						((this.p.colModel[i].hidden===false)?"checked":"") + "/>" +  "<label for='col_" + this.p.colModel[i].name + "'>" + this.p.colNames[i] + ((p.colnameview) ? " (" + this.p.colModel[i].name + ")" : "" )+ "</label></td></tr>";
+						(eval(localStorage[Structure.options.grid_selector+'col_'+this.p.colModel[i].name+'_checked'])?"checked":"") + " />" + "<label for='col_" + this.p.colModel[i].name + "'>" + this.p.colNames[i] + ((p.colnameview) ? " (" + this.p.colModel[i].name + ")" : "" )+ "</label></td></tr>";
 					}
 				}
 				formdata += "</tbody></table></div>";
@@ -120,8 +120,10 @@ $.jgrid.extend({
 						if(cn){
 							if(this.checked) {
 								$($t).jqGrid("showCol",cn);
+                                                                localStorage[Structure.options.grid_selector+this.id+'_checked'] = true; //save state to localStorage
 							} else {
 								$($t).jqGrid("hideCol",cn);
+                                                                localStorage[Structure.options.grid_selector+this.id+'_checked'] = false; //save state to localStorage
 							}
 							if(p.ShrinkToFit===true) {
 								$($t).jqGrid("setGridWidth",$t.grid.width-0.001,true);
@@ -157,11 +159,13 @@ $.jgrid.extend({
                                     {
                                         console.log(index_before_reorder);
                                         console.log(ui.item[0].rowIndex);
-                                        var array_of_rowIndexes=$('.ui-sortable tr').map(function()
+                                        var array_of_rowIndexes_obj=$('.ui-sortable tr').map(function()
                                         {
                                           return parseInt(this.id);
                                         });
-                                        $(grid_selector).remapColumns(array_of_rowIndexes,true,false);
+                                        var array_of_rowIndexes = Array.prototype.slice.call(array_of_rowIndexes_obj); //Magic
+                                        localStorage['array_of_rowIndexes'+Structure.options.grid_selector] = '['+array_of_rowIndexes+']';
+                                        $(Structure.options.grid_selector).remapColumns(array_of_rowIndexes,true,false);
                                     }
                                 });
     
