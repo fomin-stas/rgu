@@ -187,6 +187,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="restore_session_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">Доступна сохраненная копия.</h4>
+			</div>
+			<div class="modal-body">
+				Желаете загрузить автоматически сохраненную версию документа?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info btn-sm pull-left" id="restore_session_btn">Восстановить</button>
+				<button type="button" class="btn btn-default btn-sm pull-right" id="delete_saves_btn">Отмена</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -204,28 +224,11 @@
             num_files++;
         });
 
-        $('#send_btn').on('click', function () {
-//            var text_fields = $('#tab_content textarea');
-//            for (var textarea = 0; textarea < text_fields.length; textarea++) {
-//                console.log(text_fields[textarea].value);
-//                if (!text_fields[textarea].value) {
-//                    console.log(text_fields[textarea]);
-////                text_fields[textarea].before("<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='ace-icon fa fa-times'></i></button>Заполните это поле</div>");
-////                text_fields[textarea].css('border','1px solid red');
-//                    $('#alert_fieldrequest').modal('show');
-//                    return 'empty textarea';
-//                }
-//            }
-            $('#comments_modal').modal('show');
-        });
         //add new functions and services
         var num = {sr: 1, sn: 1, sk: 1};
-        restore_progress("<?= $authority_id ?>"); //load state from localstorage
+        if(supports_html5_storage()){restore_progress("<?= $authority_id ?>");};//try to load state from localstorage
         function add_new_tab(type)
         {
-            /*var tab_pane = $('#' + type).clone().attr('id', 'pane_' + type + num[type]); //clone existing tab-pane template and change id
-             tab_pane[0].firstElementChild.id = 'form_' + type + num[type]; //give it new id and name
-             tab_pane[0].firstElementChild.name += num[type];*/
             function tab_text()
             {
                 if (type == 'sr') {
@@ -267,9 +270,6 @@
         });
     });
     
-    //autosave and restore logic   
-    window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);
-            
 	function supports_html5_storage() {
 		try {
 			return 'localStorage' in window && window['localStorage'] !== null;
@@ -280,7 +280,6 @@
    
 	function save_progress(index)
 	{
-		if(!supports_html5_storage(index)){return false;};
 		localStorage[index] = document.getElementById('step2').innerHTML;
 		localStorage[index+'_num_sr'] = num.sr;
 		localStorage[index+'_num_sn'] = num.sn;
@@ -299,25 +298,34 @@
 	
 	function restore_progress(index)
 	{
-		console.log('progress restored');
-		if(!supports_html5_storage()){console.log('local storage not support');return false;};
+		function add_values_from_localstorage(tagname)
+		{
+			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
+			{
+				var elem = document.getElementsByTagName(tagname)[i];
+				if(elem.id){elem.value = localStorage[elem.id+index];}
+			}
+		}
+
 		if (localStorage[index])
 		{
-			document.getElementById('step2').innerHTML = localStorage[index];
-			num.sr = localStorage[index+'_num_sr'] || 1;
-			num.sn = localStorage[index+'_num_sn'] || 1;
-			num.skn = localStorage[index+'_num_skn'] || 1;
-				
-			function add_values_from_localstorage(tagname)
-			{
-				for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
-				{
-					var elem = document.getElementsByTagName(tagname)[i];
-					if(elem.id){elem.value = localStorage[elem.id+index];}
-				}
-			}
-			add_values_from_localstorage("TEXTAREA");
-			add_values_from_localstorage("SELECT");
+			$('#restore_session_modal').modal('show');
+			$('#restore_session_btn').on('click',function(){
+				document.getElementById('step2').innerHTML = localStorage[index];
+				num.sr = localStorage[index+'_num_sr'] || 1;
+				num.sn = localStorage[index+'_num_sn'] || 1;
+				num.skn = localStorage[index+'_num_skn'] || 1;
+				add_values_from_localstorage("TEXTAREA");
+				add_values_from_localstorage("SELECT");
+				$('#restore_session_modal').modal('hide');
+			});
+			$('#delete_saves_btn').on('click',function(){
+				$('#restore_session_modal').modal('hide');
+			});
+			$('#restore_session_modal').on('hide.bs.modal',function(){
+				window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);
+			});
 		}
+		else {window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);}
 	}
 </script>
