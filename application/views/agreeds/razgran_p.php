@@ -280,20 +280,22 @@
    
 	function save_progress(index)
 	{
-		localStorage[index] = document.getElementById('step2').innerHTML;
-		localStorage[index+'_num_sr'] = num.sr;
-		localStorage[index+'_num_sn'] = num.sn;
-		localStorage[index+'_num_skn'] = num.skn;
+		var memory = {};
+		memory.structure = $('#step2 .widget-box')[0].innerHTML;
+		memory.num = num;
 		function tag_values_to_localstorage(tagname)
 		{
 			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
 			{
 				var elem = document.getElementsByTagName(tagname)[i];
-				if(elem.id){localStorage[elem.id+index] = elem.value;}
+				if(elem.id){
+					memory[elem.id+index] = elem.value;
+				}
 			}
 		}
 		tag_values_to_localstorage("TEXTAREA");
 		tag_values_to_localstorage("SELECT");
+		localStorage[index+'_memory'] = JSON.stringify(memory);
 	}
 	
 	function restore_progress(index)
@@ -303,18 +305,20 @@
 			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
 			{
 				var elem = document.getElementsByTagName(tagname)[i];
-				if(elem.id){elem.value = localStorage[elem.id+index];}
+				if(elem.id){
+					elem.value = memory[elem.id+index];
+				}
 			}
 		}
 
-		if (localStorage[index])
+		if (localStorage[index+'_memory'])
 		{
 			$('#restore_session_modal').modal('show');
 			$('#restore_session_btn').on('click',function(){
-				document.getElementById('step2').innerHTML = localStorage[index];
-				num.sr = localStorage[index+'_num_sr'] || 1;
-				num.sn = localStorage[index+'_num_sn'] || 1;
-				num.skn = localStorage[index+'_num_skn'] || 1;
+				$('#step2 .widget-box')[0].innerHTML = memory.structure;
+				num.sr = memory.num.sr;
+				num.sn = memory.num.sn;
+				num.skn = memory.num.skn;
 				add_values_from_localstorage("TEXTAREA");
 				add_values_from_localstorage("SELECT");
 				$('#restore_session_modal').modal('hide');
@@ -327,5 +331,8 @@
 			});
 		}
 		else {window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);}
+		$('form').on('submit',function(){
+			localStorage.removeItem("<?= $authority_id ?>");
+		});
 	}
 </script>
