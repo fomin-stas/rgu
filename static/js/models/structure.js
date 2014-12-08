@@ -228,9 +228,7 @@ var Structure = {
 //                cm[i].edittype = 'textarea';
 //                cm[i].editoptions = {};
 //            }
-            
-            if(localStorage[grid_selector+'col_'+cm[i].name+'_checked']=='false'){$(grid_selector).jqGrid("hideCol",cm[i].name);}
-            
+
             //colorized column
             for (r = 0; r < rowsCount; r++) {
                 if (cm[i].color != '#ffffff') {
@@ -293,11 +291,7 @@ var Structure = {
                         $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
                         50
                         );
-                //save reordering (not tested)
-//                Structure.render_colModel(grid_selector);
-//                if(localStorage['array_of_rowIndexes'+grid_selector]){
-//                    $(grid_selector).remapColumns(eval(localStorage['array_of_rowIndexes_'+grid_selector]),true,false);
-//                }
+                Structure.render_colModel(grid_selector);
                 var table = this;
                 setTimeout(function () {
                     Structure.styleCheckbox(table);

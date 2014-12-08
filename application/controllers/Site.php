@@ -103,29 +103,25 @@ class Site extends APP_Controller {
     }
 
     function parse_properties() {
-        $this->load->library('phpexcel');
+        $this->load->library('PHPExcel/PHPExcel');
         $source_file = APPPATH . 'data/excel/info.xlsx';
         $reader = PHPExcel_IOFactory::createReaderForFile($source_file);
         $excel = $reader->load($source_file);
         $excel->setActiveSheetIndex(0);
         $cell_item = 0;
         while (true) {
+            echo $cell_item;
             $property = array();
             $property['id_property_type'] = 2; // textarea
-            /**
-             * get cell data
-             * FDE9D9 - pink (KIS only)
-             * B6DDE8 - blue (display for all)
-             */
-            $cell = $this->get_cell_value($excel->getActiveSheet(), $cell_item, 2);
+            $cell = $this->get_cell_value($excel->getActiveSheet(), $cell_item, 1);
             if ($cell['value'] == NULL) {
                 break;
             }
-            $property['property_name'] = $cell['value'];
-            $property['property_short_name'] = $cell['value'];
+            $property['property_name'] = str_normalize($cell['value']);
+            $property['property_short_name'] = $property['property_name'];
             $property['code'] = 'kis_' . $cell_item;
             $property['id_service_type'] = ($cell_item < 12) ? 6 : 7;
-            $property['order'] = $cell_item + 50;
+            $property['order'] = $cell_item + 350;
             $property['options'] = array(
                 'property_align' => 'left',
                 'property_width' => '200',
@@ -133,11 +129,7 @@ class Site extends APP_Controller {
                 'property_color' => '#ffffff'
             );
             // set property_required by color matching
-            if ($cell['color'] == 'B6DDE8') {
-                $property['options']['property_iogv_displayed'] = true;
-            } else if ($cell['color'] == 'FDE9D9') {
-                $property['options']['property_iogv_displayed'] = false;
-            }
+            $property['options']['property_iogv_displayed'] = false;
             $property['options'] = json_encode($property['options']);
             $property_id = $this->property->insert($property);
             $cell_item++;
@@ -145,14 +137,21 @@ class Site extends APP_Controller {
         print('Done.');
     }
 
-    function import_content($import_limit=4000) {
+    private function str_normalize($text) {
+        $text = trim($text);
+        $text = str_replace("\n", " ", trim($text));
+        $text = str_replace("^", ";", trim($text));
+        return str_replace("\r", "", trim($text));
+    }
+
+    public function import_content($import_limit = 4000) {
         $properties = $this->property->get_all();
         $properties_keys = array();
         $authority_added_buff = array();
         // prepare properties for search
         foreach ($properties as $key => $value) {
-            $properties[$key]['property_name'] = trim($value['property_name']);
-            $properties[$key]['property_short_name'] = trim($value['property_short_name']);
+            $properties[$key]['property_name'] = str_normalize($value['property_name']);
+            $properties[$key]['property_short_name'] = $properties[$key]['property_name'];
         }
         //@@@@($properties);  
         $csv = fopen(APPPATH . 'data/excel/import_content.csv', 'r');
@@ -160,8 +159,8 @@ class Site extends APP_Controller {
         $impo = 0;
         while (($row = fgetcsv($csv, 0, ';')) !== FALSE) {
             // prepare properties keys
-            /* limits of import*/
-              $impo = $impo + 1;
+            /* limits of import */
+            $impo = $impo + 1;
             if ($impo == $import_limit) {
                 break;
             }
@@ -169,7 +168,7 @@ class Site extends APP_Controller {
                 $x = 0;
                 foreach ($row as $key => $value) {
                     if ($value != '') {
-                        $value = trim(mb_convert_encoding($value, "utf-8", "windows-1251"));
+                        $value = str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
                         $search = $this->recursive_array_search($value, $properties);
 
                         if (FALSE == $search AND '0' != (string) $search) {
@@ -191,7 +190,7 @@ class Site extends APP_Controller {
                 $service_properties = array();
                 foreach ($row as $key => $value) {
                     if ($value != '') {
-                        $value = mb_convert_encoding($value, "utf-8", "windows-1251");
+                        $value = str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
                         if ($key < 12) {
                             if (array_key_exists($key, $properties_keys)) {
                                 $authority_properties[$key]['value'] = $value;
@@ -223,7 +222,7 @@ class Site extends APP_Controller {
                 }
                 $authority['id_authority_status'] = 2;
                 $authority['authority_name'] = $authority_name;
-                $authority['is_new']='true';
+                $authority['is_new'] = 'true';
                 $authority_id = $this->authority->insert($authority);
                 if ($authority_id) {
                     // add authority to BUFF
@@ -289,6 +288,10 @@ class Site extends APP_Controller {
                     //@@@@($service['id_authority']);
                 } else {
                     $service['id_authority'] = $authority_id;
+                }
+                if (!isset($service_properties[12]['value'])) {
+                    show_error($authority_properties[11]['value'] . ' - не определен статус полномочия');
+                    continue;
                 }
                 $service['service_name'] = (isset($service_properties[12]['value'])) ? $service_properties[12]['value'] : '';
                 $service_id = $this->service->insert($service);
