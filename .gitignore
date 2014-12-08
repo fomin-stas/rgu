@@ -47,3 +47,7 @@ application/config/database.php
 application/config/config.php
 file_storage/authority/12.09_.2014_.docx
 file_storage/authority/12.09_.2014_1.docx
+*.doc
+*.docx
+*.pdf
+file_storage/property/default.jpeg
