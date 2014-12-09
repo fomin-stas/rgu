@@ -117,7 +117,7 @@ class Site extends APP_Controller {
             if ($cell['value'] == NULL) {
                 break;
             }
-            $property['property_name'] = str_normalize($cell['value']);
+            $property['property_name'] = $this->str_normalize($cell['value']);
             $property['property_short_name'] = $property['property_name'];
             $property['code'] = 'kis_' . $cell_item;
             $property['id_service_type'] = ($cell_item < 12) ? 6 : 7;
@@ -144,23 +144,27 @@ class Site extends APP_Controller {
         return str_replace("\r", "", trim($text));
     }
 
-    public function import_content($import_limit = 4000) {
+    public function import_content($import_limit = 4000, $start = 0) {
         $properties = $this->property->get_all();
         $properties_keys = array();
         $authority_added_buff = array();
         // prepare properties for search
         foreach ($properties as $key => $value) {
-            $properties[$key]['property_name'] = str_normalize($value['property_name']);
+            $properties[$key]['property_name'] = $this->str_normalize($value['property_name']);
             $properties[$key]['property_short_name'] = $properties[$key]['property_name'];
         }
         //@@@@($properties);  
         $csv = fopen(APPPATH . 'data/excel/import_content.csv', 'r');
         $i = 0;
         $impo = 0;
+        $import_limit = $import_limit + $start;
         while (($row = fgetcsv($csv, 0, ';')) !== FALSE) {
             // prepare properties keys
             /* limits of import */
             $impo = $impo + 1;
+            if ($start > $impo) {
+                continue;
+            }
             if ($impo == $import_limit) {
                 break;
             }
@@ -168,9 +172,8 @@ class Site extends APP_Controller {
                 $x = 0;
                 foreach ($row as $key => $value) {
                     if ($value != '') {
-                        $value = str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
+                        $value = $this->str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
                         $search = $this->recursive_array_search($value, $properties);
-
                         if (FALSE == $search AND '0' != (string) $search) {
                             //echo 'Свойство ' . $value . ' не найдено' . PHP_EOL;
                         } else {
@@ -190,8 +193,8 @@ class Site extends APP_Controller {
                 $service_properties = array();
                 foreach ($row as $key => $value) {
                     if ($value != '') {
-                        $value = str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
-                        if ($key < 12) {
+                        $value = $this->str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
+                        if ($key < 13) {
                             if (array_key_exists($key, $properties_keys)) {
                                 $authority_properties[$key]['value'] = $value;
                                 $authority_properties[$key]['property_id'] = $properties_keys[$key];
@@ -220,52 +223,18 @@ class Site extends APP_Controller {
                     echo $authority_properties[10]['value'] . ' - не соответствует организация<br>';
                     continue;
                 }
-                $authority['id_authority_status'] = 2;
-                $authority['authority_name'] = $authority_name;
-                $authority['is_new'] = 'true';
-                $authority_id = $this->authority->insert($authority);
-                if ($authority_id) {
-                    // add authority to BUFF
-                    if (NULL != $authority_name) {
-                        $authority_added_buff[md5($authority_name)] = $authority_id;
+                if ($this->authority->there_is($authority_name, $organization['id_organization'])) {
+                    $authority_id = $this->authority->get_id_by_name($authority_name);
+                } else {
+                    $authority['id_authority_status'] = 2;
+                    $authority['authority_name'] = $authority_name;
+                    $authority['is_new'] = 'true';
+                    $authority_id = $this->authority->insert($authority);
+                    if (!$authority_id) {
+                        show_error('Полномочие не добавлено. Строка '.$impo);
+                        continue;
                     }
-                    $authority_property['id_property'] = 18;
-                    $authority_property['value'] = 'Отраслевой орган';
-                    $authority_property['id_authority'] = $authority_id;
-                    $this->authority_property_model->insert($authority_property);
-                    $authority_property['id_property'] = 8;
-                    $authority_property['value'] = 'на согласовании';
-                    $authority_property['id_authority'] = $authority_id;
-                    $this->authority_property_model->insert($authority_property);
-                    $authority_property['id_property'] = 8;
-                    $authority_property['value'] = 'на согласовании';
-                    $authority_property['id_authority'] = $authority_id;
-                    $this->authority_property_model->insert($authority_property);
-                    foreach ($authority_properties as $key => $value) {
-                        $authority_property['id_property'] = $value['property_id'];
-                        $authority_property['id_authority'] = $authority_id;
-                        if ($authority_property['id_property'] == 13) {
-                            $authority_property['value'] = '<a href=agreeds/check_status_authority/' . $authority_property['id_authority'] . '/0/1>' . $value['value'] . '</a>';
-                        } elseif ($authority_property['id_property'] == 7) {
-
-                            $authority_property['value'] = $value['value'];
-                            $this->authority_property_model->insert($authority_property);
-                            $authority_property['id_property'] = 11;
-                            $authority_property['value'] = '<a href=agreeds/check_status_authority/' . $authority_property['id_authority'] . '/0/1>' . $authority_id . '-' . $value['value'] . ' ' . rand(1, 99) . '</a>';
-                        } else {
-                            $authority_property['value'] = $value['value'];
-                        }
-                        $this->authority_property_model->insert($authority_property);
-                    }
-                    // add authority CUSTOM ID
-                    //  HACK: Get property id by titile
-                    $custom_authority_id_property = $this->property->get_by('property_name', 'id полномочия');
-                    if (NULL != $custom_authority_id_property) {
-                        $authority_property['id_property'] = $custom_authority_id_property['id_property'];
-                        $authority_property['id_authority'] = $authority_id;
-                        $authority_property['value'] = $this->generate_authority_custom_id();
-                        $this->authority_property_model->insert($authority_property);
-                    }
+                    $this->authority_property_model->add_authority_property($authority_id, $authority_properties,$organization);
                 }
                 //insert service and cervice properties
                 switch ($service_properties[15]['value']) {
@@ -282,13 +251,7 @@ class Site extends APP_Controller {
                         break;
                 }
                 $service['id_authority_status'] = 2;
-                // search authority id by aithority name hash in BUFF array
-                if (NULL != $authority_name AND array_key_exists(md5($authority_name), $authority_added_buff)) {
-                    $service['id_authority'] = $authority_added_buff[md5($authority_name)];
-                    //@@@@($service['id_authority']);
-                } else {
-                    $service['id_authority'] = $authority_id;
-                }
+                $service['id_authority'] = $authority_id;
                 if (!isset($service_properties[12]['value'])) {
                     show_error($authority_properties[11]['value'] . ' - не определен статус полномочия');
                     continue;
@@ -483,10 +446,6 @@ class Site extends APP_Controller {
 
     public function update_property_by_table_01() {
         
-    }
-
-    public function generate_authority_custom_id() {
-        return mt_rand(1, 999) . '.' . mt_rand(1, 999) . '.' . mt_rand(1, 999);
     }
 
     public function property_color_to_defult() {

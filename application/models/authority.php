@@ -36,4 +36,15 @@ class Authority extends APP_Model {
         $this->update($id_authority, array('is_new' => 'true'));
     }
     
+    public function there_is($authority_name,$id_organization=0){
+       $by= $id_organization>0?array('authority_name'=>$authority_name,'id_organization' => $id_organization):array('authority_name'=>$authority_name);
+       $count=$this->count_by($by);
+       return $count>0?true:false;
+    }
+    
+    public function get_id_by_name($authority_name){
+        $result=$this->get_by(array('authority_name'=>$authority_name));
+        return $result[0]['id_authority'];
+    }
+    
 }
