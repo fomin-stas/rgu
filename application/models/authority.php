@@ -44,7 +44,7 @@ class Authority extends APP_Model {
     
     public function get_id_by_name($authority_name){
         $result=$this->get_by(array('authority_name'=>$authority_name));
-        return $result[0]['id_authority'];
+        return isset($result['id_authority'])?$result['id_authority']:$result[0]['id_authority'];
     }
     
 }

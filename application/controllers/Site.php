@@ -162,9 +162,6 @@ class Site extends APP_Controller {
             // prepare properties keys
             /* limits of import */
             $impo = $impo + 1;
-            if ($start > $impo) {
-                continue;
-            }
             if ($impo == $import_limit) {
                 break;
             }
@@ -184,6 +181,9 @@ class Site extends APP_Controller {
                 }
                 //@@@@($properties_keys);
             } else {
+                if ($start > $impo) {
+                    continue;
+                }
                 $x = 0;
                 $authority = array();
                 $authority_property = array();
@@ -194,7 +194,7 @@ class Site extends APP_Controller {
                 foreach ($row as $key => $value) {
                     if ($value != '') {
                         $value = $this->str_normalize(mb_convert_encoding($value, "utf-8", "windows-1251"));
-                        if ($key < 13) {
+                        if ($key < 12) {
                             if (array_key_exists($key, $properties_keys)) {
                                 $authority_properties[$key]['value'] = $value;
                                 $authority_properties[$key]['property_id'] = $properties_keys[$key];
@@ -212,7 +212,7 @@ class Site extends APP_Controller {
                 // try get organiztion by organiztion_name
                 $organization = $this->organization_model->get_by('organization_name', (isset($authority_properties[10]['value'])) ? trim($authority_properties[10]['value']) : '');
                 if (is_null($organization)) {
-                    show_error($authority_properties[10]['value'] . ' - не существует');
+                    //show_error($authority_properties[10]['value'] . ' - не существует');
                     echo $authority_properties[10]['value'] . ' - не существует';
                     continue;
                 }
@@ -220,7 +220,7 @@ class Site extends APP_Controller {
                 if (NULL != $organization) {
                     $authority['id_organization'] = $organization['id_organization'];
                 } else {
-                    echo $authority_properties[10]['value'] . ' - не соответствует организация<br>';
+                    echo $authority_properties[10]['value'] . ' - не соответствует организация. Строка - ' . $impo;
                     continue;
                 }
                 if ($this->authority->there_is($authority_name, $organization['id_organization'])) {
@@ -231,12 +231,13 @@ class Site extends APP_Controller {
                     $authority['is_new'] = 'true';
                     $authority_id = $this->authority->insert($authority);
                     if (!$authority_id) {
-                        show_error('Полномочие не добавлено. Строка '.$impo);
+                        echo 'Полномочие не добавлено. Строка - ' . $impo;
                         continue;
                     }
-                    $this->authority_property_model->add_authority_property($authority_id, $authority_properties,$organization);
+                    $this->authority_property_model->add_authority_property($authority_id, $authority_properties, $organization);
                 }
                 //insert service and cervice properties
+                $service_properties[15]['value'] = mb_strtolower($service_properties[15]['value']);
                 switch ($service_properties[15]['value']) {
                     case 'функция':
                         $service['id_service_type'] = 8;
@@ -252,12 +253,20 @@ class Site extends APP_Controller {
                 }
                 $service['id_authority_status'] = 2;
                 $service['id_authority'] = $authority_id;
-                if (!isset($service_properties[12]['value'])) {
-                    show_error($authority_properties[11]['value'] . ' - не определен статус полномочия');
+                if (!isset($service_properties[15]['value'])) {
+                    echo $authority_properties[11]['value'] . ' - не определен статус полномочия. Строка - ' . $impo;
                     continue;
                 }
                 $service['service_name'] = (isset($service_properties[12]['value'])) ? $service_properties[12]['value'] : '';
                 $service_id = $this->service->insert($service);
+                if (!isset($service_id)) {
+                    echo $service_properties[15]['value'] . " " . $service_properties[12]['value'] . " не может быть записана в БД.Строка - " . $impo;
+                    continue;
+                }
+                if (!isset($service['id_service_type'])) {
+                    echo $service_properties[15]['value'] . ' не определена. Строка - ' . $impo;
+                    continue;
+                }
                 $this->preinstall_property($service_id, $service['id_service_type']);
                 $service_property['id_property'] = 73;
                 $service_property['id_service'] = $service_id;

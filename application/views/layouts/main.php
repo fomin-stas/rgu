@@ -59,7 +59,7 @@
                         <li class="light-blue">
                             <a href="structure/uvedoml">
                                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                                <span class="badge badge-important"><?= isset($this->notifications_size) ? $this->notifications_size : 0 ?></span>
+                                <span class="badge <?= (isset($this->notifications_size) && $this->notifications_size>0) ? 'badge-important">'.$this->notifications_size : 'badge-grey">0' ?></span>
                             </a>
                         </li>
                         <li class="light-blue">
