@@ -109,7 +109,7 @@ class Settings extends APP_Controller {
                 if($result){
                     if($data['id_property_type'] == 3) {
                         $values = $this->input->post('type_values');
-                        if(count($values) > 0) {
+                        if(count($values) > 0 && $values !=false) {
                             foreach ($values as $key => $value) {
                                 $p = array(
                                     'property_id' => (int)$id_property,

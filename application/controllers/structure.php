@@ -48,6 +48,7 @@ class Structure extends APP_Controller {
         if (!$page) {
             $page = 1;
         }
+
         $table_index = $this->input->get('type', true);
         if (!$table_index) {
             $table_index = 'all';
@@ -57,7 +58,9 @@ class Structure extends APP_Controller {
             if (isset($_GET['filters'])) {
                 $this->load->model('search_table');
                 $authority_array = $this->search_table->searche($_GET['filters']);
+                $total_page = (count($authority_array) / $limit_rows) + 1;
                 if (!is_array($authority_array)) {
+                    $total_page = ($this->authority->count_all() / $limit_rows) + 1;
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
@@ -73,6 +76,7 @@ class Structure extends APP_Controller {
                             ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
+
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
@@ -81,6 +85,7 @@ class Structure extends APP_Controller {
                             ->get_many($authority_array);
                 }
             } else {
+                $total_page= floor($this->authority->count_all() / $limit_rows) + 1;
                 $authorities = $this->authority
                         ->with('status')
                         ->with('organization')
@@ -89,7 +94,7 @@ class Structure extends APP_Controller {
                         ->get_all();
             }
         } else {
-
+            $total_page= ($this->authority->count_all() / $limit_rows) + 1;
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
@@ -309,7 +314,7 @@ class Structure extends APP_Controller {
         if ($this->input->is_ajax_request()) {
             $response = array(
                 'Rows' => $grid_data[$table_index],
-                'Total' => 300,
+                'Total' => $total_page,
                 'Records' => 30,
                 'Page' => $this->input->get('page', 1),
             );
@@ -383,6 +388,7 @@ class Structure extends APP_Controller {
                     ->get_all();
         }
         $logs_num = 0;
+        $data[] = "";
         foreach ($history_logs as $history_log) {
             $data['history_logs'][$logs_num]['new'] = $history_log['new'];
             $data['history_logs'][$logs_num]['old'] = $history_log['old'];

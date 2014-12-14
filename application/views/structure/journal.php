@@ -1,5 +1,6 @@
 
         <div class="main-container">
+            <?=isset($history_logs)?'':'<div class="page-header">У Вас пока нет истории изменений</div>';?>
             <div class="col-md-12">
                 <div class="ui-jqgrid ui-corner-all">
                     <table id="grid-table"></table>

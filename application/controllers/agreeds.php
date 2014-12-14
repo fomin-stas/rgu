@@ -73,7 +73,7 @@ class Agreeds extends APP_Controller {
         if ($this->input->post('comment_st1')) {
             $this->comment->insert_comment($id_authority, $this->input->post('comment_st1'));
         }
-        $this->file_insert($id_authority, 'step_file');
+        $this->step_files_insert($id_authority);
         $this->authority->set_is_new($id_authority);
         redirect('structure/arm_kis');
     }
@@ -142,7 +142,8 @@ class Agreeds extends APP_Controller {
         foreach ($services as $name => $property) {
             $property['agreed'] = 2;
             $service['id_authority'] = $id_authority;
-            $service['service_name'] = $name;
+            $propertis_name=explode("_", $name);
+            $service['service_name'] = $property[$propertis_name[0].'_0'];
             switch (substr($name, 0, 2)) {
                 case 'sr':
                     $service['id_service_type'] = 7;
@@ -240,7 +241,8 @@ class Agreeds extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
-                if (($property['id_service_type'] == NULL) || (is_null($property['id_service_type'] == NULL))) continue;
+                if (($property['id_service_type'] == NULL) || (is_null($property['id_service_type'] == NULL)))
+                    continue;
                 $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed']);
             }
         }
@@ -252,7 +254,7 @@ class Agreeds extends APP_Controller {
         $this->step_files_insert($id_authority);
         $data = $_POST;
         $agreeded = 0;
-        $count_properties=0;
+        $count_properties = 0;
         foreach ($data as $key => $value) {
             $name = explode("_", $key);
             if (!(int) $name[0]) {
@@ -264,9 +266,9 @@ class Agreeds extends APP_Controller {
             if ($value != 1) {
                 $agreeded = $agreeded + 1;
             }
-            $count_properties=$count_properties+1;
+            $count_properties = $count_properties + 1;
         }
-        if (($agreeded > 0) || ($count_properties==0)) {
+        if (($agreeded > 0) || ($count_properties == 0)) {
             $update_authority['value'] = 'отправленно на доработку';
         } else {
             $update_authority['value'] = 'согласовано';
@@ -460,6 +462,13 @@ class Agreeds extends APP_Controller {
     }
 
     public function check_status_authority($id_authority, $step_num = 0) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $ref = $_SERVER['HTTP_REFERER'];
+            $ref = explode("/", $ref);
+            if ($ref[count($ref) - 1] == "uvedoml") {
+                $this->activity->update_by(array('id_object' => $id_authority), array('status' => 2));
+            }
+        }
         $authority = $this->authority->get($id_authority);
         $writer = $this->authority_property_model->get_authority_property_by_code($id_authority, 'service_subject');
         $status = $this->authority_property_model->get_authority_property_by_code($id_authority, 'executable_status');
@@ -474,7 +483,7 @@ class Agreeds extends APP_Controller {
                     redirect('agreeds/step2/' . $id_authority);
                 break;
             case 2:
-                if (($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') || ($this->session->userdata('user_type')==1 && $status['value'] == 'отправленно на доработку')) {
+                if (($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') || ($this->session->userdata('user_type') == 1 && $status['value'] == 'отправленно на доработку')) {
                     if ($step_num != 5) {
                         redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
                     }
@@ -528,7 +537,7 @@ class Agreeds extends APP_Controller {
         $config['max_size'] = '0';
         $config['max_width'] = '0';
         $config['max_height'] = '0';
-        //$config['encrypt_name'] = true;
+        $config['encrypt_name'] = true;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload($file_name)) {
             return;
