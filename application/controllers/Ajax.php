@@ -39,7 +39,7 @@ class Ajax extends APP_Controller {
         }
         echo json_encode($result);
     }
-
+    
     public function edit_property() {
         $data = $_POST;
         foreach ($data as $key => $value) {
@@ -176,8 +176,11 @@ class Ajax extends APP_Controller {
     }
 
     function confirm($id_authority) {
-        $authority_data['id_authority_status'] = 3;
-        echo $this->authority->update($id_authority, $authority_data) ? 0 : 1;
+        echo $this->authority->confirm($id_authority);
+    }
+    
+    public function disagred($id_authority){
+        echo $this->authority->disagred_status($id_authority);
     }
 
     public function propertys_array( $code) {

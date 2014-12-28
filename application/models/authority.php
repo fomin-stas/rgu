@@ -98,5 +98,15 @@ class Authority extends APP_Model {
         }
         return $num_page;
     }
+    
+    public function disagred_status($id_authority){
+        $authority_data['id_authority_status'] = 2;
+        return $this->authority->update($id_authority, $authority_data) ? 0 : 1;
+    }
+    
+    function confirm($id_authority) {
+        $authority_data['id_authority_status'] = 3;
+        return $this->authority->update($id_authority, $authority_data) ? 0 : 1;
+    }
 
 }

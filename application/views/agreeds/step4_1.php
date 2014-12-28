@@ -47,15 +47,15 @@
                             </tr>
                             <tr>
                                 <td>Наименование полномочия в соответствии с Положением об ИОГВ:</td>
-                                <td><?= isset($authority_name)?$authority_name:'не установлено' ?></td>
+                                <td><?= isset($authority_name) ? $authority_name : 'не установлено' ?></td>
                             </tr>
                             <tr>
                                 <td>№ пункта в положении об ИОГВ:</td>
-                                <td><?= isset($punkt_iogv)?$punkt_iogv:'не установлен' ?></td>
+                                <td><?= isset($punkt_iogv) ? $punkt_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Наименование ИОГВ СПб:</td>
-                                <td><?= isset($name_iogv)?$name_iogv:'не установлен' ?></td>
+                                <td><?= isset($name_iogv) ? $name_iogv : 'не установлен' ?></td>
                             </tr>
                             <tr>
                                 <td>Срок ответа:</td>
@@ -93,8 +93,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <a href="agreeds/history_polnomoch/<?=$id_authority?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                <div class="col-md-3 col-md-offset-1">
+                    <a href="agreeds/history_polnomoch/<?= $id_authority ?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                </div>
+                <div class="col-md-3 col-md-push-4">
+                    <button id="disagred_status" class="btn btn-danger btn-sm">Рассогласовать статус полномочия</button>
                 </div>
             </div>
             <div class="row">
@@ -146,7 +149,7 @@
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </table>
-                                                <a href="agreeds/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>
+                                                <!--<a href="agreeds/history_usl_func"><button class="btn btn-info btn-sm pull-right">История согласований услуги</button></a>-->
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -163,6 +166,20 @@
             </div>
         </div>
 
+        <div class="modal fade" id="disagred_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Вы уверены что хотите рассогласовать статус полномочия?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <button type="clear" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <button type="button" id="disagred_status_confirm"  data-dismiss="modal" class="btn btn-primary">Рассогласовать статус полномочия</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -175,7 +192,7 @@
         enable_reset: true
     });
 
-    $("#comments_modal2").on("submit", function() {
+    $("#comments_modal2").on("submit", function () {
         location = "step2";
     });
     $('#srok_otveta').datepicker({
@@ -188,7 +205,7 @@
         todayHighlight: true
     });
 
-    $('.com_bt').click(function() {
+    $('.com_bt').click(function () {
         //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
@@ -196,7 +213,7 @@
         $.ajax({
             url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
             type: 'get',
-            success: function(data) {
+            success: function (data) {
                 num = num + 1;
                 comments = data;
                 jQuery.gritter.add({
@@ -205,6 +222,26 @@
                     sticky: true,
                     time: '',
                     class_name: 'gritter-info gritter-light'
+                });
+            }
+        });
+    });
+
+    $('#disagred_status').click(function () {
+        $('#disagred_modal').modal('show');
+    });
+
+    $('#disagred_status_confirm').click(function () {
+        $.ajax({
+            url: App.options.baseURL + 'ajax/disagred/' + <?=$id_authority?>,
+            type: 'get',
+            success: function () {
+                jQuery.gritter.add({
+                    title: 'Полномочие',
+                    text: "Статус полномочия успешно рассогласован",
+                    sticky: false,
+                    time: '',
+                    class_name: 'gritter-light gritter-success gritter-center'
                 });
             }
         });
