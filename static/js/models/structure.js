@@ -279,9 +279,20 @@ var Structure = {
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
             beforeProcessing: function (data)
             {
+               
                 Structure.render_colModel(grid_selector);
             },
+            beforeRequest: function(){
+                dial= bootbox.dialog({
+                    title: "Подождите идет загрузка данных",
+                    message: " ",
+                    closeButton: false,
+                    backdrop: true
+                });
+                
+            },
             loadComplete: function () {
+                bootbox.hideAll();
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
                 $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                         $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -

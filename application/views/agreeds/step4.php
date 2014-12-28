@@ -76,7 +76,7 @@
                                 <td>
                                     <?php if (isset($files)): ?>
                                         <?php foreach ($files as $file): ?>
-                                    <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
+                                            <a href="file_storage/authority/<?= $file['file_name'] ?>"><?= $file['name'] ?></a><br>
                                         <?php endforeach; ?>
                                     <?php else: ?> 
                                         Нет прикрепленных файлов
@@ -88,7 +88,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <a href="agreeds/history_polnomoch/<?=$id_authority?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                        <a href="agreeds/history_polnomoch/<?= $id_authority ?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
                     </div>
                 </div>
                 <div class="row">
@@ -98,9 +98,9 @@
                                 <div class="widget-toolbar">
                                     <ul id="razgran_u_f_tabs" class="nav nav-tabs">
                                         <?php $service_num = 0; ?>
-                                        <?php foreach ($services as $service): ?>
+                                        <?php foreach ($services as $id_service => $service): ?>
                                             <?php $service_num++; ?>
-                                            <li <?php if ($service_num == 1) echo 'class="active"'; ?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'] . ' ' . $service_num; ?></a></li>
+                                            <li <?php if ($service_num == 1) echo 'class="active"'; ?>><a href="#usl_<?= $service_num; ?>" data-toggle="tab"><?= $service['type'] . ' ' . $service_num; ?></a><?= $id_authority_status == 2 ? '<span id="' . $id_service . '" class="close_tab">×</span>' : '' ?></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
@@ -225,7 +225,7 @@
 
 <script type="text/javascript">
     num = 0;
-    
+
     $(".files").ace_file_input({
         no_file: "Присоединить файл",
         btn_choose: "Выбрать",
@@ -258,6 +258,52 @@
                     time: '',
                     class_name: 'gritter-info gritter-light'
                 });
+            }
+        });
+    });
+
+    $(document).on("click", ".close_tab", function () {
+        anchor = $(this).siblings('a');
+        id_service = $(this).attr('id');
+        parent_to_remove=$(this).parent();
+        bootbox.confirm({
+            message: "<h4 align='center'>Вы уверены что хотите перенести услугу (функцию, ФКН) в архив?</h4>",
+            buttons: {
+                confirm: {
+                    label: "Да, перенести",
+                    className: "btn-primary btn-sm"
+                },
+                cancel: {
+                    label: "Нет",
+                    className: "btn-sm"
+                }
+            },
+            callback: function (result) {
+                if (result == 1) {
+                    $.ajax({
+                        url: App.options.baseURL + 'ajax/remove_service/' + id_service,
+                        type: 'get',
+                        success: function (data) {
+                            if (data == 0) {
+                                text = '<h4>Архивация выполненна</h4>';
+                                type_greeter = 'gritter-info';
+                                $(anchor.attr('href')).remove();
+                                parent_to_remove.remove();
+                                $(".nav-tabs li").children('a').first().click();
+                            } else {
+                                text = '<h4>Произошла ошибка при архивации!</h4>';
+                                type_greeter = 'gritter-error';
+                            }
+                            jQuery.gritter.add({
+                                title: "",
+                                text: text,
+                                sticky: false,
+                                time: '',
+                                class_name: 'gritter-center ' + type_greeter
+                            });
+                        }
+                    });
+                }
             }
         });
     });

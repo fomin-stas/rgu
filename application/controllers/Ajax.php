@@ -188,5 +188,11 @@ class Ajax extends APP_Controller {
         $values = $this->property->serch_values_by_code($text, $code);
         echo json_encode($values);
     }
+    
+    public function remove_service($id_service){
+        $this->load->model('service_arh');
+        $this->service_arh->to_arhive($id_service);
+        return 0;
+    }
 
 }

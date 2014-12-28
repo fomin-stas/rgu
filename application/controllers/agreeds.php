@@ -483,7 +483,7 @@ class Agreeds extends APP_Controller {
                     redirect('agreeds/step2/' . $id_authority);
                 break;
             case 2:
-                if (($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') || ($this->session->userdata('user_type') == 1 && $status['value'] == 'отправленно на доработку')) {
+                if (($this->session->userdata('user_type') > 1 && $status['value'] == 'на согласовании') || ($this->session->userdata('user_type') == 1 && $status['value'] == 'отправленно на доработку') && !$is_writer) {
                     if ($step_num != 5) {
                         redirect('agreeds/authority_view/' . $id_authority . '/' . $authority['id_authority_status']);
                     }

@@ -100,6 +100,10 @@ class Authority extends APP_Model {
     }
     
     public function disagred_status($id_authority){
+        $update_authority['value'] = 'отправленно на доработку';
+        $property = $this->property->get_by(array('code' => 'executable_status'));
+        $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
+        $this->authority_property_model->update_by($update_data, $update_authority);
         $authority_data['id_authority_status'] = 2;
         return $this->authority->update($id_authority, $authority_data) ? 0 : 1;
     }

@@ -23,6 +23,6 @@ class Service extends APP_Model {
 	}
         
         public function get_count_services_by_authority($id_authority){
-            return $this->db->query("SELECT COUNT(*) FROM service where id_authority=".$id_authority)->row()->count;;
+            return $this->db->query("SELECT COUNT(*) FROM service where id_authority=".$id_authority)->row()->count;
         }
 }
