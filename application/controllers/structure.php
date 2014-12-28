@@ -58,14 +58,17 @@ class Structure extends APP_Controller {
             if (isset($_GET['filters'])) {
                 $this->load->model('search_table');
                 $authority_array = $this->search_table->searche($_GET['filters']);
-                $total_page = (count($authority_array) / $limit_rows) + 1;
+                $total_rows_is_ajax=$this->service->get_cont_service_by_authorities($authority_array);
+                $total_page = floor( $total_rows_is_ajax/ $limit_rows) + 1;
                 if (!is_array($authority_array)) {
-                    $total_page = ($this->authority->count_all() / $limit_rows) + 1;
+                    $total_rows_is_ajax=$this->service->count_all();
+                    $total_page = floor($total_rows_is_ajax / $limit_rows) + 1;
+                    $limit=$this->authority->calculate_limits($page, $limit_rows);
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->limit($limit['end']- $limit['start'] + 1, $limit['start'])
                             ->get_all();
                 } elseif (count($authority_array) == 0) {
                     $authority_array[0] = 0;
@@ -76,30 +79,32 @@ class Structure extends APP_Controller {
                             ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
-
+                    $limit=$this->authority->calculate_limits($page, $limit_rows, $authority_array);
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                            ->limit($limit['end']- $limit['start'] + 1, $limit['start'])
                             ->get_many($authority_array);
                 }
             } else {
-                $total_page= floor($this->authority->count_all() / $limit_rows) + 1;
+                $limit=$this->authority->calculate_limits($page, $limit_rows);
+                $total_page= $this->authority->total_page($limit_rows);
                 $authorities = $this->authority
                         ->with('status')
                         ->with('organization')
                         ->with('properties')
-                        ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                        ->limit($limit['end']- $limit['start']+1, $limit['start'])
                         ->get_all();
             }
         } else {
-            $total_page= ($this->authority->count_all() / $limit_rows) + 1;
+            $limit=$this->authority->calculate_limits($page, $limit_rows);
+            $total_page= $this->authority->total_page($limit_rows);
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
-                    ->limit($limit_rows, ($limit_rows * ($page - 1)))
+                    ->limit($limit['end']- $limit['start']+1, $limit['start'])
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -315,7 +320,7 @@ class Structure extends APP_Controller {
             $response = array(
                 'Rows' => $grid_data[$table_index],
                 'Total' => $total_page,
-                'Records' => 30,
+                'Records' => $limit_rows,
                 'Page' => $this->input->get('page', 1),
             );
             echo json_encode($response, true);
@@ -422,6 +427,9 @@ class Structure extends APP_Controller {
 
     public function timeline() {
         $this->layout->view('timeline');
+    }
+    public function faq(){
+        $this->layout->view('faq');
     }
 
     private function reestr($user_type = 0) {

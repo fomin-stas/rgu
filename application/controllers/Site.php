@@ -140,11 +140,30 @@ class Site extends APP_Controller {
     private function str_normalize($text) {
         $text = trim($text);
         $text = str_replace("\n", " ", trim($text));
+        $text = str_replace("\t", " ", trim($text));
+        $text = str_replace("                   ", " ", trim($text));
+        $text = str_replace("                  ", " ", trim($text));
+        $text = str_replace("                 ", " ", trim($text));
+        $text = str_replace("                ", " ", trim($text));
+        $text = str_replace("               ", " ", trim($text));
+        $text = str_replace("              ", " ", trim($text));
+        $text = str_replace("             ", " ", trim($text));
+        $text = str_replace("            ", " ", trim($text));
+        $text = str_replace("           ", " ", trim($text));
+        $text = str_replace("          ", " ", trim($text));
+        $text = str_replace("         ", " ", trim($text));
+        $text = str_replace("        ", " ", trim($text));
+        $text = str_replace("       ", " ", trim($text));
+        $text = str_replace("      ", " ", trim($text));
+        $text = str_replace("     ", " ", trim($text));
+        $text = str_replace("    ", " ", trim($text));
+        $text = str_replace("   ", " ", trim($text));
+        $text = str_replace("  ", " ", trim($text));
         $text = str_replace("^", ";", trim($text));
         return str_replace("\r", "", trim($text));
     }
 
-    public function import_content($import_limit = 4000, $start = 0) {
+    public function import_content_colse($import_limit = 4000, $start = 0) {
         $properties = $this->property->get_all();
         $properties_keys = array();
         $authority_added_buff = array();

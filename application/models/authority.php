@@ -35,16 +35,68 @@ class Authority extends APP_Model {
     public function set_is_new($id_authority) {
         $this->update($id_authority, array('is_new' => 'true'));
     }
-    
-    public function there_is($authority_name,$id_organization=0){
-       $by= $id_organization>0?array('authority_name'=>$authority_name,'id_organization' => $id_organization):array('authority_name'=>$authority_name);
-       $count=$this->count_by($by);
-       return $count>0?true:false;
+
+    public function there_is($authority_name, $id_organization = 0) {
+        $by = $id_organization > 0 ? array('authority_name' => $authority_name, 'id_organization' => $id_organization) : array('authority_name' => $authority_name);
+        $count = $this->count_by($by);
+        return $count > 0 ? true : false;
     }
-    
-    public function get_id_by_name($authority_name){
-        $result=$this->get_by(array('authority_name'=>$authority_name));
-        return isset($result['id_authority'])?$result['id_authority']:$result[0]['id_authority'];
+
+    public function get_id_by_name($authority_name) {
+        $result = $this->get_by(array('authority_name' => $authority_name));
+        return isset($result['id_authority']) ? $result['id_authority'] : $result[0]['id_authority'];
     }
-    
+
+    public function calculate_limits($page, $limits, $authoritis = array()) {
+        if (count($authoritis) == 0) {
+            $result = $this->get_all();
+            foreach ($result as $value) {
+                $authoritis[] = $value['id_authority'];
+            }
+        }
+        $num_page = 0;
+        $page_limit = 0;
+        $authority_start = 0;
+        foreach ($authoritis as $key => $id_authority) {
+            $count = $this->service->get_count_services_by_authority($id_authority);
+            if (($count + $page_limit) > $limits) {
+                $num_page++;
+                if ($num_page == $page) {
+                    $data['start'] = $authority_start;
+                    $data['end'] = $key - 1;
+                    return $data;
+                } else {
+                    $page_limit = $count;
+                    $authority_start = $key;
+                }
+            } else {
+                $page_limit = $page_limit + $count;
+            }
+        }
+        $data['start'] = $authority_start;
+        $data['end'] = $key+1;
+        return $data;
+    }
+
+    public function total_page($limits, $authoritis = array()) {
+        if (count($authoritis) == 0) {
+            $result = $this->get_all();
+            foreach ($result as $value) {
+                $authoritis[] = $value['id_authority'];
+            }
+        }
+        $num_page = 1;
+        $page_limit = 0;
+        foreach ($authoritis as $id_authority) {
+            $count = $this->service->get_count_services_by_authority($id_authority);
+            if (($count + $page_limit) > $limits) {
+                $num_page++;
+                $page_limit = $count;
+            } else {
+                $page_limit = $page_limit + $count;
+            }
+        }
+        return $num_page;
+    }
+
 }

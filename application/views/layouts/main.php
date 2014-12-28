@@ -54,6 +54,7 @@
                                  
                                  <li class="divider"></li>-->
                                 <li><a href="structure/journal">Журнал изменений</a></li>
+                                
                             </ul>
                         </li>
                         <li class="light-blue">

@@ -13,6 +13,7 @@
             <li  class="active">
                 <a href="#all" data-toggle="tab">Полный перечень (<?= $authority_sizes['all'] ?>)</a>
             </li>
+            <lable class="col-xs-5 pull-right" style="font-size:16">Техническая поддержка: тел: 417-36-37; e-mail: arm-iogv@iac.spb.ru</lable>
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="new_authorities">
