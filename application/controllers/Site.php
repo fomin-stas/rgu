@@ -484,12 +484,12 @@ class Site extends APP_Controller {
         }
     }
     
-    public function property_color_to_defult(){
-        $properties=$this->property->get_all();
-        foreach ($properties as $key => $property) {
-           $data['options']=str_replace('6e5858', 'ffffff', $property['options']);
-           $this->property->update($property['id_property'],$data);
-        }
-    }
+//    public function property_color_to_defult(){
+//        $properties=$this->property->get_all();
+//        foreach ($properties as $key => $property) {
+//           $data['options']=str_replace('6e5858', 'ffffff', $property['options']);
+//           $this->property->update($property['id_property'],$data);
+//        }
+//    }
 
 }

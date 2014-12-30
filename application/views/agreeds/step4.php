@@ -39,9 +39,10 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <h3 class="center">
-                            Согласовывать результаты технических обследований централизованных 
-                            систем горячего водоснабжения, холодного водоснабжения и водоотведения
+                            Редактирование полномочия
+                           
                         </h3>
+                         <?= $id_authority_status == 2 ? '<h4 class="red center">(доступно редактирование статуса полномочия)</h4>':''?>
                         <table class="table table-striped">
                             <tr>
                                 <td>ID полномочия:</td>
@@ -89,8 +90,20 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <a href="agreeds/history_polnomoch/<?= $id_authority ?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
+                        <button type="button" id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
                     </div>
                 </div>
+                <?= $id_authority_status == 2 ? '
+                <div class="row space-12"></div>
+                <div class="row ">
+                    <div class="col-md-10 col-md-offset-1">
+                        <button type="button" class="btn btn-info btn-sm pull-left add_sr_btn">Добавить услугу</button>
+                        <button type="button"class="btn btn-info btn-sm pull-left add_sn_btn">Добавить функцию</button>
+                        <button type="button"class="btn btn-info btn-sm pull-left add_sk_btn">Добавить функцию контроля и надзора</button>
+
+                    </div>
+                </div>'
+                : '' ?>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="widget-box">
@@ -108,8 +121,9 @@
                             <div class="widget-body">
                                 <form class="form-horizontal" action="agreeds/update_properties/<?= $id_authority ?>" method="post" enctype="multipart/form-data">
                                     <fieldset>
+                                        <input value="<?= $id_authority ?>" name="id_authority" hidden>
                                         <div class="widget-main padding-16">
-                                            <div class="tab-content">
+                                            <div class="tab-content" id="tab_content">
                                                 <?php $tab_num = 0; ?>
                                                 <?php foreach ($services as $id_service => $service): ?>
                                                     <?php $tab_num++; ?>
@@ -172,6 +186,7 @@
                                                             <div class="modal-body">
                                                                 <h4 class="modal-title" id="myModalLabel">Комментарий</h4>
                                                                 <textarea class="input-xxlarge center col-md-11" name="comment"></textarea>
+                                                                <div class="row space-10"></div>
                                                                 <table class="table">
                                                                     <tr>
                                                                         <td> 
@@ -184,9 +199,7 @@
                                                                                 <button type="button" id="add_file" class="btn btn-warning btn-xs col-md-1">
                                                                                     <i class="ace-icon glyphicon-plus  bigger-110 icon-only"></i>
                                                                                 </button>
-                                                                                <script>
-
-                                                                                </script>
+                                                                    
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -265,7 +278,7 @@
     $(document).on("click", ".close_tab", function () {
         anchor = $(this).siblings('a');
         id_service = $(this).attr('id');
-        parent_to_remove=$(this).parent();
+        parent_to_remove = $(this).parent();
         bootbox.confirm({
             message: "<h4 align='center'>Вы уверены что хотите перенести услугу (функцию, ФКН) в архив?</h4>",
             buttons: {
@@ -307,5 +320,53 @@
             }
         });
     });
+
+    ////////////////////////////////////////////////////////////////////////////
+    //add new functions and services
+    var num = {sr: 1, sn: 1, sk: 1};
+    
+    function add_new_tab(type)
+    {
+        function tab_text()
+        {
+            if (type == 'sr') {
+                return 'Услуга';
+            }
+            else if (type == 'sn') {
+                return 'Функция';
+            }
+            else {
+                return 'Функция контроля/надзора';
+            }
+        }
+        //insert navigation-tab and content
+        var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a><span class='close_new_tab'>×</span></li>";
+        $('#razgran_u_f_tabs').append(tab);
+        $.ajax({
+            url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
+            type: 'get',
+            success: function (data) {
+                $('#tab_content').append(data);
+            }
+        });
+        num[type]++;
+    }
+    $(document).on('click', ".add_sr_btn", function () {
+        add_new_tab("sr");
+    });
+    $(document).on('click', ".add_sn_btn", function () {
+        add_new_tab("sn");
+    });
+    $(document).on('click', ".add_sk_btn", function () {
+        add_new_tab("sk");
+    });
+    
+    $(document).on("click", ".close_new_tab", function () {
+            var anchor = $(this).siblings('a');
+            $(anchor.attr('href')).remove();
+            $(this).parent().remove();
+            $(".nav-tabs li").children('a').first().click();
+        });
+
 </script>
 

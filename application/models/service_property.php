@@ -51,6 +51,9 @@ class Service_property extends APP_Model {
                 case 'sk_29':
                     $data['code'] = 'sr_29';
                     break;
+                case 'service_type':
+                    $data['code'] = 'service_type';
+                    break;
             }
             $sql = 'INSERT INTO ' . $this->_table . '(id_service, id_property, value, agreed) SELECT ?,id_property,?,? FROM property WHERE code=?';
             $query = $this->db->query($sql, array($this->_id_service, $data['value'], $data['agreed'], $data['code']));

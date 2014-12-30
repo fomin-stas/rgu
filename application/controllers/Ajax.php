@@ -175,10 +175,10 @@ class Ajax extends APP_Controller {
         var_dump($_POST);
     }
     
-    function confirm($type,$id_service){
-        $property=  $this->service_property->update_where_code();
-        echo 0;
-    }
+//    function confirm($type,$id_service){
+//        $property=  $this->service_property->update_where_code();
+//        echo 0;
+//    }
 
     function confirm($id_authority) {
         echo $this->authority->confirm($id_authority);

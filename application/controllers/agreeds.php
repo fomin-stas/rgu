@@ -127,48 +127,12 @@ class Agreeds extends APP_Controller {
     }
 
     public function step2_submit($update = false) {
+        $this->load->model('submit_property');
+        $submit = new $this->submit_property;
+        $submit->insert_new_services();
+        $id_authority = $submit->get_id_authority();
 
-        $data = $_POST;
-        $id_authority = $data['id_authority'];
-        $this->step_files_insert($id_authority);
-        $services = $this->post_parsing($data);
-        $data = $_FILES;
-        $files = $this->post_parsing($data, true);
-        if ($files != 0) {
-            foreach ($files as $key => $value) {
-                $services[$key] = $services[$key] + $value;
-            }
-        }
-        foreach ($services as $name => $property) {
-            $property['agreed'] = 2;
-            $service['id_authority'] = $id_authority;
-            $propertis_name=explode("_", $name);
-            $service['service_name'] = $property[$propertis_name[0].'_0'];
-            switch (substr($name, 0, 2)) {
-                case 'sr':
-                    $service['id_service_type'] = 7;
-
-                    break;
-                case 'sn':
-                    $service['id_service_type'] = 8;
-
-                    break;
-                case 'sk':
-                    $service['id_service_type'] = 9;
-
-                    break;
-            }
-            if (!$update) {
-                $id_service = $this->service->insert($service);
-                $this->service_property->_id_service = $id_service;
-                $this->service_property->insert_where_code_many($property);
-            } else {
-                $this->service_property->_id_service = $id_service;
-                $this->service_property->insert_where_code_many($property);
-            }
-        }
         $authority_data['id_authority_status'] = 2;
-
         $update = $this->authority->update($id_authority, $authority_data);
         if ($update) {
             $authority = $this->authority->get($id_authority);
@@ -183,39 +147,6 @@ class Agreeds extends APP_Controller {
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
         $this->authority_property_model->update_by($update_data, $update_authority);
         redirect('structure/arm_iogv');
-    }
-
-    private function post_parsing($data, $is_file = false) {
-        foreach ($data as $name => $value) {
-            if ($name{3} == '_') {
-                $service_num = $name{2};
-                if (strlen($name) == 5)
-                    $property_num = $name{4};
-                else
-                    $property_num = substr($name, 4, 2);
-            }
-            else {
-                if (strlen($name) == 6) {
-                    $service_num = $name{5};
-                    $property_num = $name{3};
-                } else {
-                    $service_num = $name{6};
-                    $property_num = substr($name, 3, 2);
-                }
-            }
-            switch (substr($name, 0, 2)) {
-                case 'sr':
-                    $services['sr_' . $service_num]['sr_' . $property_num] = $is_file ? $this->file_insert(0, $name, true) : $value;
-                    break;
-                case 'sn':
-                    $services['sn_' . $service_num]['sn_' . $property_num] = $is_file ? $this->file_insert(0, $name, true) : $value;
-                    break;
-                case 'sk':
-                    $services['sk_' . $service_num]['sk_' . $property_num] = $is_file ? $this->file_insert(0, $name, true) : $value;
-                    break;
-            }
-        }
-        return isset($services) ? $services : 0;
     }
 
     public function step3($id_authority) {
@@ -412,41 +343,11 @@ class Agreeds extends APP_Controller {
     }
 
     public function update_properties($id_authority) {
-        $this->step_files_insert($id_authority);
-        $data = $_POST;
-        foreach ($data as $key => $value) {
-            $name = explode("_", $key);
-            if (!(int) $name[0]) {
-                continue;
-            }
-            $update_data = array('id_service' => $name[1], 'id_property' => $name[0]);
-            $service_property = $this->service_property->get_by($update_data);
-            if ($service_property['value'] != $value) {
-                $update = array('value' => $value);
-                $this->service_property->update_by($update_data, $update);
-                $history_log['new'] = $value;
-                $history_log['old'] = $service_property['value'];
-                $history_log['id_property'] = $service_property['id_property'];
-                $this->history_log->insert_log($history_log);
-            }
-        }
-        $files = $_FILES;
-        foreach ($files as $key => $value) {
-            $name = explode("_", $key);
-            if (!(int) $name[1] || !(int) $name[0])
-                continue;
-            $value = $this->file_insert(0, $key, true);
-            $update_data = array('id_service' => $name[1], 'id_property' => $name[0]);
-            $service_property = $this->service_property->get_by($update_data);
-            if ($service_property['value'] != $value) {
-                $update = array('value' => $value);
-                $this->service_property->update_by($update_data, $update);
-                $history_log['new'] = $value;
-                $history_log['old'] = $service_property['value'];
-                $history_log['id_property'] = $service_property['id_property'];
-                $this->history_log->insert_log($history_log);
-            }
-        }
+        $this->load->model('submit_property');
+        $submit = new $this->submit_property;
+        $submit->insert_new_services();
+        $submit->update_services();
+
         if ($this->input->post('comment')) {
             $this->comment->insert_comment($id_authority, $this->input->post('comment'));
         }
@@ -635,3 +536,5 @@ class Agreeds extends APP_Controller {
     }
 
 }
+
+

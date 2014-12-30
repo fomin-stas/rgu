@@ -27,7 +27,7 @@
                 <form class="form-horizontal" method="post" role="form" action="agreeds/step1_submit" enctype="multipart/form-data">
                     <fieldset>
                         <div class="col-md-offset-1">
-                            <h4 class="col-md-10 center">Добавление нового полномочия</h4>
+                            <h3 class="col-md-10 center">Добавление нового полномочия</h3>
                             <div class="row">
                                 <div class="form-group">
                                     <label for="authority_name" class="control-label col-md-5">Наименование полномочия в соответствии с Положением об ИОГВ</label>
@@ -54,12 +54,12 @@
                                     <?= form_dropdown('service_subject', array("Отраслевой орган" => "Отраслевой орган", "КИС" => "КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
                                 </div>
                                 <br>
-                                <div class="row">
+<!--                                <div class="row">
                                     <div class="col-md-10">
                                         <a href="agreeds/arm_kis"><input type="button" class="btn btn-grey pull-right btn-sm col-md-3" value="Закрыть"></a>
                                         <a href="agreeds/step1"><input type="button" class="btn btn-info pull-right btn-sm col-md-3" value="Сохранить как черновик"></a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <br>
                             <div class="row">
@@ -88,6 +88,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <textarea class="input-xxlarge center" name="comment_st1"></textarea>
+                                        <div class="space-10"></div>
                                         <div class="row">
                                             <div id="file_div">
                                                 <span class="col-md-10">

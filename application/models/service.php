@@ -19,7 +19,8 @@ class Service extends APP_Model {
 	                }
                 }
             }
-            return $this->db->query("SELECT COUNT(*) FROM service where " . $where)->row()->count;
+            $where = $where==""?"":" where " . $where;
+            return $this->db->query("SELECT COUNT(*) FROM service". $where)->row()->count;
 	}
         
         public function get_count_services_by_authority($id_authority){
