@@ -160,6 +160,8 @@ $config['groups']['site'] = array(
         array('grid.locale-ru.js'),
         array('grid.setcolumns.js'),
         array('bootstrap-multiselect.js'),
+        array('jquery.dataTables.min.js'),
+        array('jquery.dataTables.bootstrap.js'),
         array('bootstrap-tag.min.js'),
         array('jquery.hotkeys.min.js'),
         array('bootstrap-wysiwyg.min.js'),

@@ -32,14 +32,27 @@ class Ajax extends APP_Controller {
                 }
                 //prepare options
                 $property['options'] = json_decode($property['options'], true);
-
                 $result['success'] = true;
                 $result['property'] = $property;
             }
         }
         echo json_encode($result);
     }
-    
+
+    public function get_additional_property($id_additional_property) {
+        $this->load->model('additional_property_values');
+        $this->load->model('additional_property');
+        $property = $this->additional_property->get($id_additional_property);
+        $property['values'] = array();
+        if ($property['id_property_format'] == 3) {
+            $property['values'] = $this->additional_property_values->get_many_by('id_additional_property', $id_additional_property);
+        }
+        //prepare options
+        $result['success'] = true;
+        $result['property'] = $property;
+        echo json_encode($result);
+    }
+
     public function edit_property() {
         $data = $_POST;
         foreach ($data as $key => $value) {
@@ -68,7 +81,7 @@ class Ajax extends APP_Controller {
             } else {
                 $this->authority_property_model->update_by(array('id_authority' => $authority['id_authority'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
             }
-            $this->save_history($insert_data['new_data'],$service_property['value'],$service_property['id_property']);
+            $this->save_history($insert_data['new_data'], $service_property['value'], $service_property['id_property']);
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $authority['id_authority']);
         }
         if ($property['id_service_type'] != 6) {
@@ -87,15 +100,15 @@ class Ajax extends APP_Controller {
                     $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
                 }
                 $this->service_property->update_by(array('id_service' => $service['id_service'], 'id_property' => $property['id_property']), array('value' => $insert_data['new_data']));
-                $this->save_history($insert_data['new_data'],$service_property['value'],$service_property['id_property']);
+                $this->save_history($insert_data['new_data'], $service_property['value'], $service_property['id_property']);
             } else {
                 echo '-1';
             }
         }
     }
 
-    private function save_history($new_value, $old_value, $id_property) { 
-        if ($new_value === $old_value){
+    private function save_history($new_value, $old_value, $id_property) {
+        if ($new_value === $old_value) {
             return;
         }
         $history_log = array('new' => $new_value, 'old' => $old_value, 'id_property' => $id_property);
@@ -174,7 +187,7 @@ class Ajax extends APP_Controller {
     function export_excel() {
         var_dump($_POST);
     }
-    
+
 //    function confirm($type,$id_service){
 //        $property=  $this->service_property->update_where_code();
 //        echo 0;
@@ -183,18 +196,18 @@ class Ajax extends APP_Controller {
     function confirm($id_authority) {
         echo $this->authority->confirm($id_authority);
     }
-    
-    public function disagred($id_authority){
+
+    public function disagred($id_authority) {
         echo $this->authority->disagred_status($id_authority);
     }
 
-    public function propertys_array( $code) {
-        $text=$this->input->post('text');
+    public function propertys_array($code) {
+        $text = $this->input->post('text');
         $values = $this->property->serch_values_by_code($text, $code);
         echo json_encode($values);
     }
-    
-    public function remove_service($id_service){
+
+    public function remove_service($id_service) {
         $this->load->model('service_arh');
         $this->service_arh->to_arhive($id_service);
         return 0;
