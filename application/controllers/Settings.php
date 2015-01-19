@@ -41,6 +41,16 @@ class Settings extends APP_Controller {
                     break;
             }
         }
+        $property_select = $this->property->get_all_id_name_property();
+        $property_values_select = $this->property->get_all_property_with_values();
+        $addition_parent = $this->load->view('settings/parent_addition_property',
+                                            array(
+                                                'property_select' => $property_select,
+                                                'name' => 'add_additional',
+                                                'property_values_select' => $property_values_select,
+                                                'select' => ''
+                                            ),
+                                            true);
         $config = array();
         $config['base_url'] = base_url() . 'settings/index/';
         $config['total_rows'] = $this->property->count_all();
@@ -49,7 +59,8 @@ class Settings extends APP_Controller {
             'properties' => $properties,
             'service_types' => $service_types,
             'pages' => $this->pagination->create_links(),
-            'additional_properties' => $additional_property
+            'additional_properties' => $additional_property,
+            'addition_parent' => $addition_parent
         ));
     }
 

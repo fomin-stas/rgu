@@ -2,7 +2,8 @@ var Settings = {
     options: {
         data: ''
     },
-    initIndex: function() {
+    initIndex: function () {
+        //alternativ select
 
         // open modal by URL.hash
         if (window.location.hash) {
@@ -23,7 +24,7 @@ var Settings = {
         }
 
         // remove row on Properties table
-        $('#properties-table .a-remove').on('click', function(e) {
+        $('#properties-table .a-remove').on('click', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
             if (confirm("Вы действительно хотите удалить свойство с id " + id)) {
@@ -32,9 +33,9 @@ var Settings = {
                     type: 'post',
                     data: {id: id},
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
-                            $('#property_' + id).fadeOut('normal', function() {
+                            $('#property_' + id).fadeOut('normal', function () {
                                 $(this).remove();
                             });
                         }
@@ -46,7 +47,7 @@ var Settings = {
 
         function init_property_modals(name, is_edit) {
             // if property type == select => show select values box
-            $('#' + name + '_property_type').on('change', function(e) {
+            $('#' + name + '_property_type').on('change', function (e) {
                 if ($(this).val() == 3) {
                     $('#' + name + '_type_values_row').show();
                 }
@@ -55,37 +56,56 @@ var Settings = {
                 }
             });
 
-            $('#' + name + '_parent_type').on('change', function(e) {
+            $('#' + name + '_parent_type').on('change', function (e) {
                 switch ($(this).val()) {
                     case 'property':
-                        $('#' + name + '_parent_property').show();
+                        $('#' + name + '_parent_property').show(function () {
+                            $('#' + name + '_parent_property_list').chosen();
+                        });
                         $('#' + name + '_parent_property_values').hide();
                         $('#' + name + '_parent_addition_property').hide();
                         $('#' + name + '_parent_addition_property_values').hide();
                         break;
                     case 'property_values':
                         $('#' + name + '_parent_property').hide();
-                        $('#' + name + '_parent_property_values').show();
+                        $('#' + name + '_parent_property_values').show(function () {
+                            $('#' + name + '_parent_property_values_list').chosen();
+                        });
                         $('#' + name + '_parent_addition_property').hide();
                         $('#' + name + '_parent_addition_property_values').hide();
                         break;
                     case 'addition_property':
                         $('#' + name + '_parent_property').hide();
                         $('#' + name + '_parent_property_values').hide();
-                        $('#' + name + '_parent_addition_property').show();
+                        $('#' + name + '_parent_addition_property').show(function () {
+                            $('#' + name + '_parent_addition_property_list').chosen();
+                        });
                         $('#' + name + '_parent_addition_property_values').hide();
                         break;
                     case 'addition_property_values':
                         $('#' + name + '_parent_property').hide();
                         $('#' + name + '_parent_property_values').hide();
                         $('#' + name + '_parent_addition_property').hide();
-                        $('#' + name + '_parent_addition_property_values').show();
+                        $('#' + name + '_parent_addition_property_values').show(function () {
+                            $('#' + name + '_parent_addition_property_values_list').chosen();
+                        });
                         break;
                 }
             });
+            $('#' + name + '_parent_property_values_list').on('change', function (e) {
+                var id = $(this).val();
+                var elem = $(this);
+                $.ajax({
+                    url: App.options.baseURL + 'ajax/get_property_values/' + id + "/" + name,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#' + name + '_parent_property_value_group').html(data.inner_html);
+                    }
+                });
+            });
 
             // add new values for property with select type
-            $('#' + name + '_type_values_btn').on('click', function(e) {
+            $('#' + name + '_type_values_btn').on('click', function (e) {
                 e.preventDefault();
                 var elem = $('#' + name + '_type_values'),
                         value = $(elem).val(),
@@ -97,7 +117,7 @@ var Settings = {
             });
 
             if (!is_edit) {
-                $('#' + name + '_type_values_list').on('click', '.a-value-remove', function(e) {
+                $('#' + name + '_type_values_list').on('click', '.a-value-remove', function (e) {
                     e.preventDefault();
                     $(this).parent('.label').remove();
                 });
@@ -122,7 +142,7 @@ var Settings = {
 
 
 
-        $('#edit_type_values_list').on('click', '.a-value-remove', function(e) {
+        $('#edit_type_values_list').on('click', '.a-value-remove', function (e) {
             e.preventDefault();
             var elem = $(this),
                     property_id = $(elem).data('property-value-id');
@@ -132,7 +152,7 @@ var Settings = {
                     type: 'post',
                     data: {property_id: property_id},
                     dataType: 'json',
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
                             $(elem).parent('.label').remove();
                         }
@@ -141,7 +161,7 @@ var Settings = {
             }
         });
 
-        $('#edit_additional_type_values_list').on('click', '.a-value-remove', function(e) {
+        $('#edit_additional_type_values_list').on('click', '.a-value-remove', function (e) {
             e.preventDefault();
             var elem = $(this),
                     property_id = $(elem).data('property-value-id');
@@ -151,7 +171,7 @@ var Settings = {
         });
 
         // set display value when we are create new property
-        $('#add_property_iogv_displayed').on('change', function() {
+        $('#add_property_iogv_displayed').on('change', function () {
             if ($(this).is(':checked')) {
                 $('#add_property_required_box').show();
                 $('#add_property_other_users_displayed_box').hide();
@@ -163,7 +183,7 @@ var Settings = {
         });
 
         // edit row on Properties table
-        $('#properties-table .a-edit').on('click', function(e) {
+        $('#properties-table .a-edit').on('click', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
             $.ajax({
@@ -171,7 +191,7 @@ var Settings = {
                 type: 'post',
                 data: {id: id},
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
                     if (data.success) {
                         var p = data.property;
                         // load data to modal
@@ -226,14 +246,14 @@ var Settings = {
 
         });
 
-        $('#additional_properties_table .a-edit').on('click', function(e) {
+        $('#additional_properties_table .a-edit').on('click', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
             $.ajax({
                 url: App.options.baseURL + 'ajax/get_additional_property/' + id,
                 type: 'get',
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
                     if (data.success) {
                         var p = data.property;
                         // load data to modal

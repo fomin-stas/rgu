@@ -217,6 +217,15 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
     
+    public function get_property_values($id_property, $name){
+        $result['values'] = $this->property_values_model->get_property_values($id_property);
+        $result['success'] = true;
+        $data = array('name' => $name, 'values' => $result['values']);
+        $result['inner_html'] = $this->load->view('settings/property_values',$data,true);
+        echo json_encode($result);
+    }
+
+
     //******************************************************
 
 }
