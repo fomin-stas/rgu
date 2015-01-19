@@ -39,19 +39,7 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
-    public function get_additional_property($id_additional_property) {
-        $this->load->model('additional_property_values');
-        $this->load->model('additional_property');
-        $property = $this->additional_property->get($id_additional_property);
-        $property['values'] = array();
-        if ($property['id_property_format'] == 3) {
-            $property['values'] = $this->additional_property_values->get_many_by('id_additional_property', $id_additional_property);
-        }
-        //prepare options
-        $result['success'] = true;
-        $result['property'] = $property;
-        echo json_encode($result);
-    }
+    
 
     public function edit_property() {
         $data = $_POST;
@@ -212,5 +200,23 @@ class Ajax extends APP_Controller {
         $this->service_arh->to_arhive($id_service);
         return 0;
     }
+    
+    //*****************************************************
+    //Additional property
+    public function get_additional_property($id_additional_property) {
+        $this->load->model('additional_property_values');
+        $this->load->model('additional_property');
+        $property = $this->additional_property->get($id_additional_property);
+        $property['values'] = array();
+        if ($property['id_property_format'] == 3) {
+            $property['values'] = $this->additional_property_values->get_many_by('id_additional_property', $id_additional_property);
+        }
+        //prepare options
+        $result['success'] = true;
+        $result['property'] = $property;
+        echo json_encode($result);
+    }
+    
+    //******************************************************
 
 }

@@ -3,7 +3,7 @@ var Settings = {
         data: ''
     },
     initIndex: function() {
-        
+
         // open modal by URL.hash
         if (window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
@@ -55,6 +55,35 @@ var Settings = {
                 }
             });
 
+            $('#' + name + '_parent_type').on('change', function(e) {
+                switch ($(this).val()) {
+                    case 'property':
+                        $('#' + name + '_parent_property').show();
+                        $('#' + name + '_parent_property_values').hide();
+                        $('#' + name + '_parent_addition_property').hide();
+                        $('#' + name + '_parent_addition_property_values').hide();
+                        break;
+                    case 'property_values':
+                        $('#' + name + '_parent_property').hide();
+                        $('#' + name + '_parent_property_values').show();
+                        $('#' + name + '_parent_addition_property').hide();
+                        $('#' + name + '_parent_addition_property_values').hide();
+                        break;
+                    case 'addition_property':
+                        $('#' + name + '_parent_property').hide();
+                        $('#' + name + '_parent_property_values').hide();
+                        $('#' + name + '_parent_addition_property').show();
+                        $('#' + name + '_parent_addition_property_values').hide();
+                        break;
+                    case 'addition_property_values':
+                        $('#' + name + '_parent_property').hide();
+                        $('#' + name + '_parent_property_values').hide();
+                        $('#' + name + '_parent_addition_property').hide();
+                        $('#' + name + '_parent_addition_property_values').show();
+                        break;
+                }
+            });
+
             // add new values for property with select type
             $('#' + name + '_type_values_btn').on('click', function(e) {
                 e.preventDefault();
@@ -79,10 +108,10 @@ var Settings = {
                 palettes: ['#125', '#459', '#78b', '#ab0', '#de3', '#f0f']
             });
         }
-        init_property_modals('add_additional',false);
-        init_property_modals('add',false);
-        init_property_modals('edit',true);
-        init_property_modals('edit_additional',true);
+        init_property_modals('add_additional', false);
+        init_property_modals('add', false);
+        init_property_modals('edit', true);
+        init_property_modals('edit_additional', true);
 
 
 
@@ -117,17 +146,7 @@ var Settings = {
             var elem = $(this),
                     property_id = $(elem).data('property-value-id');
             if (confirm('Вы действительно хотите удалить свойство?')) {
-                $.ajax({
-                    url: App.options.baseURL + 'ajax/delete_additional_property_by_id',
-                    type: 'post',
-                    data: {property_id: property_id},
-                    dataType: 'json',
-                    success: function(data) {
-                        if (data.success) {
-                            $(elem).parent('.label').remove();
-                        }
-                    }
-                });
+                $(elem).parent('.label').remove();
             }
         });
 
@@ -219,7 +238,7 @@ var Settings = {
                         var p = data.property;
                         // load data to modal
                         $('#edit_additional_property_name').val(p.additional_property_name)
-                       
+
                         $('#edit_additional_property_type').val(p.id_property_format);
                         // check property tupe == select
                         if (p.id_property_format == 3) {
@@ -228,7 +247,7 @@ var Settings = {
                             var values_html = '';
                             if (p.values.length > 0) {
                                 for (var i = p.values.length - 1; i >= 0; i--) {
-                                    values_html += '<span class="label label-success">' + p.values[i].value + ' <a href="#" class="a-value-remove" data-property-value-id="' + p.values[i].property_value_id + '">x</a></span>';
+                                    values_html += '<span class="label label-success"><input type="hidden" name="type_values[]" value="' + p.values[i].value + '">' + p.values[i].value + ' <a href="#" class="a-value-remove" data-property-value-id="' + p.values[i].property_value_id + '">x</a></span>';
                                 }
                                 ;
                                 if (values_html.length > 0) {

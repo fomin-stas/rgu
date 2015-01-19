@@ -379,6 +379,88 @@
                             </div>
                             <div id="add_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_additional_property_type">Тип родительского свойства</label>
+                                    <select  type="text" class="form-control" id="add_additional_parent_type" name="parent_type">
+                                        <option value="property" >Свойство</option>
+                                        <option value="property_values" >Значение свойства</option>
+                                        <option value="addition_property" >Дополнительное свойство</option>
+                                        <option value="addition_property_values" >Значение дополнительного свойства</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--parent type property-->
+                        <div class="row" id="add_additional_parent_property" style="display:none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_type_values">Список свойств</label>
+                                    <input type="text" class="form-control" id="parent_property_list" name="add_additional_type_values">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_additional_type_values_btn"> &nbsp; </label><br />
+                                    <button type="submit" class="form-control btn btn-primary" id="add_additional_type_values_btn">Добавить значение</button>
+                                </div>
+                            </div>
+                            <div id="add_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
+                        </div>
+
+                        <!--parent type property_values-->
+                        <div class="row" id="add_additional_parent_property_values" style="display:none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_type_values">Свойства</label>
+                                    <input type="text" class="form-control" id="add_additional_type_values" name="add_additional_type_values">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_additional_type_values_btn"> &nbsp; </label><br />
+                                    <button type="submit" class="form-control btn btn-primary" id="add_additional_type_values_btn">Добавить значение</button>
+                                </div>
+                            </div>
+                            <div id="add_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
+                        </div>
+
+                        <!--parent type addition_property-->
+                        <div class="row" id="add_additional_parent_addition_property" style="display:none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_type_values">Список доп. свойств</label>
+                                    <input type="text" class="form-control" id="add_additional_type_values" name="add_additional_type_values">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_additional_type_values_btn"> &nbsp; </label><br />
+                                    <button type="submit" class="form-control btn btn-primary" id="add_additional_type_values_btn">Добавить значение</button>
+                                </div>
+                            </div>
+                            <div id="add_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
+                        </div>
+
+                        <!--parent type addition_property_values-->
+                        <div class="row" id="add_additional_parent_addition_property_values" style="display:none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_type_values">Список значений</label>
+                                    <input type="text" class="form-control" id="add_additional_type_values" name="add_additional_type_values">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="add_additional_type_values_btn"> &nbsp; </label><br />
+                                    <button type="submit" class="form-control btn btn-primary" id="add_additional_type_values_btn">Добавить значение</button>
+                                </div>
+                            </div>
+                            <div id="add_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
+                        </div>
+
                         <input type="hidden" name="method" value="additional">
                         <button type="submit" class="btn btn-default">Добавить</button>
                         </form>
@@ -406,7 +488,7 @@
                             <input type="text" class="form-control" id="edit_additional_property_name" name="property_name" placeholder="Название свойства" value="<?= set_value('property_name') ?>">
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit_additional_property_type">Тип свойства</label>
                                     <select  type="text" class="form-control" id="edit_additional_property_type" name="property_type">
@@ -417,17 +499,7 @@
                                         <option value="5" <?php echo set_select('property_type', '5'); ?> >Число</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="edit_additional_property_align">Выравнивание свойства</label>
-                                    <select  type="text" class="form-control" id="edit_additional_property_align" name="property_align">
-                                        <option value="center" <?php echo set_select('property_align', 'center', TRUE); ?> >по центру</option>
-                                        <option value="left" <?php echo set_select('property_align', 'left'); ?> >слева</option>
-                                        <option value="right" <?php echo set_select('property_align', 'right'); ?> >справа</option>
-                                    </select>
-                                </div>
-                            </div>
+                            </div>         
                         </div>
                         <div class="row" id="edit_additional_type_values_row" style="display:none">
                             <div class="col-md-6">
@@ -444,7 +516,7 @@
                             </div>
                             <div id="edit_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
                         </div>
-                        
+
                         <input type="hidden" name="id_additional_property" id="edit_additional_id_additional_property">
                         <input type="hidden" name="method" value="edit_additional">
                         <button type="submit" class="btn btn-default">Сохранить</button>
