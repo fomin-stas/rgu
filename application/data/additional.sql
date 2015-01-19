@@ -1,16 +1,16 @@
-/*==============================================================*/
+﻿/*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
 /* Created on:     19.01.2015 11:36:32                          */
 /*==============================================================*/
 
 
-drop CASCADE table additional_property;
+drop table additional_property CASCADE;
 
-drop CASCADE table additional_property_values;
+drop table additional_property_values CASCADE;
 
-drop CASCADE table pap;
+drop table pap CASCADE;
 
-drop CASCADE table spap;
+drop table spap CASCADE;
 
 /*==============================================================*/
 /* Table: additional_property                                   */
