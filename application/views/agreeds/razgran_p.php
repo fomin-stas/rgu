@@ -188,23 +188,23 @@
 </div>
 
 <div class="modal fade" id="restore_session_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<h4 class="modal-title">Доступна сохраненная копия.</h4>
-			</div>
-			<div class="modal-body">
-				Желаете загрузить автоматически сохраненную версию документа?
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-sm pull-left" id="restore_session_btn">Восстановить</button>
-				<button type="button" class="btn btn-default btn-sm pull-right" id="delete_saves_btn">Отмена</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Доступна сохраненная копия.</h4>
+            </div>
+            <div class="modal-body">
+                Желаете загрузить автоматически сохраненную версию документа?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-sm pull-left" id="restore_session_btn">Восстановить</button>
+                <button type="button" class="btn btn-default btn-sm pull-right" id="delete_saves_btn">Отмена</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -217,6 +217,19 @@
             enable_reset: true
         });
 
+        $(document).on('click','.addition_property',function(){
+            var id=$(this).data('id');
+            $.ajax({
+                url: App.options.baseURL + 'ajax/get_addition_property_dialog/' + id,
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    $('#div_' + data.id).html(data.innerHTML);
+                    $('#div_' + data.id).modal();
+                }
+            });
+        });
+
         num_files = 1;
         $('#add_file').click(function () {
             var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
@@ -226,7 +239,10 @@
 
         //add new functions and services
         var num = {sr: 1, sn: 1, sk: 1};
-        if(supports_html5_storage()){restore_progress("<?= $authority_id ?>");};//try to load state from localstorage
+        if (supports_html5_storage()) {
+            restore_progress("<?= $authority_id ?>");
+        }
+        ;//try to load state from localstorage
         function add_new_tab(type)
         {
             function tab_text()
@@ -268,77 +284,83 @@
             $(this).parent().remove();
             $(".nav-tabs li").children('a').first().click();
         });
-    
-    $('#send_btn').on('click',function(){
-        $('#comments_modal').modal('show');
-    });
-    
-	function supports_html5_storage() {
-		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
-		} catch (e) {
-			return false;
-		}
-	}
-        
-	function save_progress(index)
-	{
-		var memory = {};
-		memory.structure = $('#step2 .widget-box')[0].innerHTML;
-		memory.num = num;
-		function tag_values_to_localstorage(tagname)
-		{
-			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
-			{
-				var elem = document.getElementsByTagName(tagname)[i];
-				if(elem.id){
-					memory[elem.id+index] = elem.value;
-				}
-			}
-		}
-		tag_values_to_localstorage("TEXTAREA");
-		tag_values_to_localstorage("SELECT");
-		localStorage[index+'_memory'] = JSON.stringify(memory);
-	}
-	
-	function restore_progress(index)
-	{
-            var memory = {};
-		function add_values_from_localstorage(tagname)
-		{
-			for (var i=0; i<document.getElementsByTagName(tagname).length; i++)
-			{
-				var elem = document.getElementsByTagName(tagname)[i];
-				if(elem.id){
-					elem.value = memory[elem.id+index];
-				}
-			}
-		}
 
-		if (localStorage[index+'_memory'])
-		{
-			$('#restore_session_modal').modal('show');
-			$('#restore_session_btn').on('click',function(){
-                                memory=JSON.parse(localStorage[index+'_memory']);
-				$('#step2 .widget-box')[0].innerHTML = memory.structure;
-				num.sr = memory.num.sr;
-				num.sn = memory.num.sn;
-				num.skn = memory.num.skn;
-				add_values_from_localstorage("TEXTAREA");
-				add_values_from_localstorage("SELECT");
-				$('#restore_session_modal').modal('hide');
-			});
-			$('#delete_saves_btn').on('click',function(){
-				$('#restore_session_modal').modal('hide');
-			});
-			$('#restore_session_modal').on('hide.bs.modal',function(){
-				window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);
-			});
-		}
-		else {window.setInterval(function(){save_progress("<?= $authority_id ?>");},5000);}
-		$('form').on('submit',function(){
-			localStorage.removeItem("<?= $authority_id ?>");
-		});
-	}
+        $('#send_btn').on('click', function () {
+            $('#comments_modal').modal('show');
         });
+
+        function supports_html5_storage() {
+            try {
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function save_progress(index)
+        {
+            var memory = {};
+            memory.structure = $('#step2 .widget-box')[0].innerHTML;
+            memory.num = num;
+            function tag_values_to_localstorage(tagname)
+            {
+                for (var i = 0; i < document.getElementsByTagName(tagname).length; i++)
+                {
+                    var elem = document.getElementsByTagName(tagname)[i];
+                    if (elem.id) {
+                        memory[elem.id + index] = elem.value;
+                    }
+                }
+            }
+            tag_values_to_localstorage("TEXTAREA");
+            tag_values_to_localstorage("SELECT");
+            localStorage[index + '_memory'] = JSON.stringify(memory);
+        }
+
+        function restore_progress(index)
+        {
+            var memory = {};
+            function add_values_from_localstorage(tagname)
+            {
+                for (var i = 0; i < document.getElementsByTagName(tagname).length; i++)
+                {
+                    var elem = document.getElementsByTagName(tagname)[i];
+                    if (elem.id) {
+                        elem.value = memory[elem.id + index];
+                    }
+                }
+            }
+
+            if (localStorage[index + '_memory'])
+            {
+                $('#restore_session_modal').modal('show');
+                $('#restore_session_btn').on('click', function () {
+                    memory = JSON.parse(localStorage[index + '_memory']);
+                    $('#step2 .widget-box')[0].innerHTML = memory.structure;
+                    num.sr = memory.num.sr;
+                    num.sn = memory.num.sn;
+                    num.skn = memory.num.skn;
+                    add_values_from_localstorage("TEXTAREA");
+                    add_values_from_localstorage("SELECT");
+                    $('#restore_session_modal').modal('hide');
+                });
+                $('#delete_saves_btn').on('click', function () {
+                    $('#restore_session_modal').modal('hide');
+                });
+                $('#restore_session_modal').on('hide.bs.modal', function () {
+                    window.setInterval(function () {
+                        save_progress("<?= $authority_id ?>");
+                    }, 5000);
+                });
+            }
+            else {
+                window.setInterval(function () {
+                    save_progress("<?= $authority_id ?>");
+                }, 5000);
+            }
+            $('form').on('submit', function () {
+                localStorage.removeItem("<?= $authority_id ?>");
+            });
+        }
+    });
 </script>

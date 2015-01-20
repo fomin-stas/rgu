@@ -135,7 +135,7 @@ if (!function_exists('load_form_dropdown')) {
 if (!function_exists('load_form_textaea_step2')) {
 
     function load_form_textaea_step2($num, $code, $propertis, $comments = false, $buttons = false) {
-        $property = get_property_by_code($code,$propertis);
+        $property = get_property_by_code($code, $propertis);
         if (isset($service['properties'][$code]['value'])) {
             $value = $service['properties'][$code]['value'];
         } else {
@@ -167,7 +167,7 @@ if (!function_exists('load_form_textaea_step2')) {
 if (!function_exists('load_form_dropdown_step2')) {
 
     function load_form_dropdown_step2($num, $code, $selects, $propertis, $comments = false, $multy = false) {
-        $property = get_property_by_code($code,$propertis);
+        $property = get_property_by_code($code, $propertis);
         foreach ($propertis as $property_array) {
             if ($property_array['code'] == $code) {
                 $property = $property_array;
@@ -210,7 +210,7 @@ if (!function_exists('load_form_dropdown_step2')) {
 if (!function_exists('load_form_file_step2')) {
 
     function load_form_file_step2($num, $code, $propertis, $comments = false, $buttons = false) {
-        $property = get_property_by_code($code,$propertis);
+        $property = get_property_by_code($code, $propertis);
         foreach ($propertis as $property_array) {
             if ($property_array['code'] == $code) {
                 $property = $property_array;
@@ -243,6 +243,7 @@ if (!function_exists('load_form_file_step2')) {
             $data['id_property'] = $code;
             $this->load->view('structure/elements/agreement', $data);
         }
+        $textarea_group = $textarea_group . '<label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
         return $textarea_group . '</div>';
     }
 
@@ -260,7 +261,7 @@ function to_multy($selects) {
     return $data;
 }
 
-function get_property_by_code($code,$propertis) {
+function get_property_by_code($code, $propertis) {
     switch ($code) {
         case 'sn_0':
             $d_code = 'sr_0';
@@ -299,7 +300,7 @@ function get_property_by_code($code,$propertis) {
             $d_code = 'sr_29';
             break;
         default :
-            $d_code=$code;
+            $d_code = $code;
             break;
     }
     foreach ($propertis as $property_array) {

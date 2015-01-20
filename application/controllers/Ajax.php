@@ -237,7 +237,7 @@ class Ajax extends APP_Controller {
                         $data['values'] = $this->property_values_model->get_property_values($property_value['property_id']);
                         $data['select'] = $pap['property_value_id'];
                         $data['name'] = 'edit_additional';
-                        $result['inner_html'] = str_replace('"',"'",$this->load->view('settings/property_values', $data, true));
+                        $result['inner_html'] = str_replace('"', "'", $this->load->view('settings/property_values', $data, true));
                         $result['parent_values'] = $this->property_values_model->get_many_by(array('property_id' => $property_value['property_id']));
                         $result['id_property'] = $property_value['property_id'];
                     }
@@ -279,6 +279,100 @@ class Ajax extends APP_Controller {
         $data = array('name' => $name, 'values' => $result['values']);
         $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
         echo json_encode($result);
+    }
+
+    public function get_addition_property_dialog($id_property) {
+        $this->load->model('additional_property_values');
+        $this->load->model('additional_property');
+        $this->load->model('pap');
+        $paps = $this->pap->get_many_by(array('id_property' => $id_property));
+        $modal = '';
+        foreach ($paps as $pap){
+           $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
+        }
+        $result['innerHTML'] = $modal;
+        $result['id'] = $id_property;
+        echo json_encode($result);
+    }
+    
+    private function recursiv_rebuild_additional_property($pap){
+        $this->load->model('additional_property_values');
+        $this->load->model('additional_property');
+        $this->load->model('pap');
+        $modal='<div class="row">';
+        if (!is_nan($pap['id_property'])) {
+                if (!is_null($pap['id_property'])) {
+                    if ($pap['id_property'] != 0) {
+                        $modal=$modal.$this->check_additional_property($pap['id_additional_property'],'property_'.$pap['id_property']);
+                    }
+                }
+            }
+            if (!is_nan($pap['add_id_additional_property'])) {
+                if (!is_null($pap['add_id_additional_property'])) {
+                    if ($pap['add_id_additional_property'] != 0) {
+                        $result['parent'] = 'additional_property';
+                        $result['id_parent'] = $pap['add_id_additional_property'];
+                    }
+                }
+            }
+            if (!is_nan($pap['property_value_id'])) {
+                if (!is_null($pap['property_value_id'])) {
+                    if ($pap['property_value_id'] != 0) {
+                        $result['parent'] = 'property_values';
+                        $result['id_parent'] = $pap['property_value_id'];
+                        $property_value = $this->property_values_model->get($pap['property_value_id']);
+                        $data['values'] = $this->property_values_model->get_property_values($property_value['property_id']);
+                        $data['select'] = $pap['property_value_id'];
+                        $data['name'] = 'edit_additional';
+                        $result['inner_html'] = str_replace('"', "'", $this->load->view('settings/property_values', $data, true));
+                        $result['parent_values'] = $this->property_values_model->get_many_by(array('property_id' => $property_value['property_id']));
+                        $result['id_property'] = $property_value['property_id'];
+                    }
+                }
+            }
+            if (!is_nan($pap['id_additional_property_values'])) {
+                if (!is_null($pap['id_additional_property_values'])) {
+                    if ($pap['id_additional_property_values'] != 0) {
+                        $result['parent'] = 'additional_property_values';
+                        $result['id_parent'] = $pap['id_additional_property_values'];
+                        $property_value = $this->additional_property_values->get($pap['id_additional_property_values']);
+                        $data['values'] = $this->additional_property_values->get_additional_property_values($property_value['id_additional_property']);
+                        $data['select'] = $pap['id_additional_property_values'];
+                        $data['name'] = 'edit_additional';
+                        $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
+                        $result['id_property'] = $property_value['id_additional_property'];
+                    }
+                }
+            }
+            $paps = $this->pap->get_many_by(array('add_id_additional_property' => $pap['id_additional_property']));
+            foreach ($paps as $pap){
+                $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
+            }
+            return $modal=$modal.'</div>';
+    }
+    
+    private function check_additional_property($id_additional_property,$id){
+        $modal='';
+        $this->load->model('additional_property_values');
+        $this->load->model('additional_property');
+        $this->load->model('pap');
+        $ap=$this->additional_property->get($id_additional_property);
+        if($ap['id_property_format'] == 2 ){
+            $data = array(
+              'name'        => $id,
+              'id'          => $id,
+              'value'       => '',
+              'rows'        => '100',
+              'cols'        => '50',
+              'class'       => 'form-control',
+            );
+            $modal=$modal.form_textarea($data);
+        }
+        if($ap['id_property_format'] == 3 ){
+            $options=$this->additional_property_values->get_additional_property_values($id_additional_property);
+            $modal=$modal.form_dropdown($id,$options,'class=\'form-control\'');
+        }
+        return $modal;
     }
 
     //******************************************************
