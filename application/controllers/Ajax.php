@@ -287,9 +287,16 @@ class Ajax extends APP_Controller {
         $this->load->model('pap');
         $paps = $this->pap->get_many_by(array('id_property' => $id_property));
         $modal = '';
+        if(count($paps)>0){
         foreach ($paps as $pap){
            $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
         }
+        }else{
+            $data=array('title' => 'У данного свойства нет дополнительных свойств', 'content' => '');
+            $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
+        }
+        $data=array('title' => 'Дополнительные свойства', 'content' => $modal);
+        $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
         $result['innerHTML'] = $modal;
         $result['id'] = $id_property;
         echo json_encode($result);
@@ -299,7 +306,7 @@ class Ajax extends APP_Controller {
         $this->load->model('additional_property_values');
         $this->load->model('additional_property');
         $this->load->model('pap');
-        $modal='<div class="row">';
+        $modal='';
         if (!is_nan($pap['id_property'])) {
                 if (!is_null($pap['id_property'])) {
                     if ($pap['id_property'] != 0) {
@@ -345,10 +352,12 @@ class Ajax extends APP_Controller {
                 }
             }
             $paps = $this->pap->get_many_by(array('add_id_additional_property' => $pap['id_additional_property']));
+            $modal=$modal."<div class='row'>";
             foreach ($paps as $pap){
                 $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
             }
-            return $modal=$modal.'</div>';
+            $modal=$modal."</div>";
+            return $modal;
     }
     
     private function check_additional_property($id_additional_property,$id){
@@ -357,13 +366,13 @@ class Ajax extends APP_Controller {
         $this->load->model('additional_property');
         $this->load->model('pap');
         $ap=$this->additional_property->get($id_additional_property);
+        $modal=$modal."<div class='form-group'><label for=".$id."> ".$ap['additional_property_name']." </label>";
         if($ap['id_property_format'] == 2 ){
             $data = array(
               'name'        => $id,
               'id'          => $id,
               'value'       => '',
-              'rows'        => '100',
-              'cols'        => '50',
+                'rows'      => 5,
               'class'       => 'form-control',
             );
             $modal=$modal.form_textarea($data);
@@ -372,6 +381,7 @@ class Ajax extends APP_Controller {
             $options=$this->additional_property_values->get_additional_property_values($id_additional_property);
             $modal=$modal.form_dropdown($id,$options,'class=\'form-control\'');
         }
+        $modal=$modal."</div>";
         return $modal;
     }
 
