@@ -39,8 +39,6 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
-    
-
     public function edit_property() {
         $data = $_POST;
         foreach ($data as $key => $value) {
@@ -200,32 +198,88 @@ class Ajax extends APP_Controller {
         $this->service_arh->to_arhive($id_service);
         return 0;
     }
-    
+
     //*****************************************************
     //Additional property
     public function get_additional_property($id_additional_property) {
         $this->load->model('additional_property_values');
         $this->load->model('additional_property');
+        $this->load->model('pap');
         $property = $this->additional_property->get($id_additional_property);
         $property['values'] = array();
         if ($property['id_property_format'] == 3) {
             $property['values'] = $this->additional_property_values->get_many_by('id_additional_property', $id_additional_property);
+        }
+        $pap = $this->pap->get_by('id_additional_property', $id_additional_property);
+        if (count($pap) != 0) {
+            if (!is_nan($pap['id_property'])) {
+                if (!is_null($pap['id_property'])) {
+                    if ($pap['id_property'] != 0) {
+                        $result['parent'] = 'property';
+                        $result['id_parent'] = $pap['id_property'];
+                    }
+                }
+            }
+            if (!is_nan($pap['add_id_additional_property'])) {
+                if (!is_null($pap['add_id_additional_property'])) {
+                    if ($pap['add_id_additional_property'] != 0) {
+                        $result['parent'] = 'additional_property';
+                        $result['id_parent'] = $pap['add_id_additional_property'];
+                    }
+                }
+            }
+            if (!is_nan($pap['property_value_id'])) {
+                if (!is_null($pap['property_value_id'])) {
+                    if ($pap['property_value_id'] != 0) {
+                        $result['parent'] = 'property_values';
+                        $result['id_parent'] = $pap['property_value_id'];
+                        $property_value = $this->property_values_model->get($pap['property_value_id']);
+                        $data['values'] = $this->property_values_model->get_property_values($property_value['property_id']);
+                        $data['select'] = $pap['property_value_id'];
+                        $data['name'] = 'edit_additional';
+                        $result['inner_html'] = str_replace('"',"'",$this->load->view('settings/property_values', $data, true));
+                        $result['parent_values'] = $this->property_values_model->get_many_by(array('property_id' => $property_value['property_id']));
+                        $result['id_property'] = $property_value['property_id'];
+                    }
+                }
+            }
+            if (!is_nan($pap['id_additional_property_values'])) {
+                if (!is_null($pap['id_additional_property_values'])) {
+                    if ($pap['id_additional_property_values'] != 0) {
+                        $result['parent'] = 'additional_property_values';
+                        $result['id_parent'] = $pap['id_additional_property_values'];
+                        $property_value = $this->additional_property_values->get($pap['id_additional_property_values']);
+                        $data['values'] = $this->additional_property_values->get_additional_property_values($property_value['id_additional_property']);
+                        $data['select'] = $pap['id_additional_property_values'];
+                        $data['name'] = 'edit_additional';
+                        $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
+                        $result['id_property'] = $property_value['id_additional_property'];
+                    }
+                }
+            }
         }
         //prepare options
         $result['success'] = true;
         $result['property'] = $property;
         echo json_encode($result);
     }
-    
-    public function get_property_values($id_property, $name){
+
+    public function get_property_values($id_property, $name) {
         $result['values'] = $this->property_values_model->get_property_values($id_property);
         $result['success'] = true;
         $data = array('name' => $name, 'values' => $result['values']);
-        $result['inner_html'] = $this->load->view('settings/property_values',$data,true);
+        $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
         echo json_encode($result);
     }
 
+    public function get_additional_property_values($id_additional_property, $name) {
+        $this->load->model('additional_property_values');
+        $result['values'] = $this->additional_property_values->get_additional_property_values($id_additional_property);
+        $result['success'] = true;
+        $data = array('name' => $name, 'values' => $result['values']);
+        $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
+        echo json_encode($result);
+    }
 
     //******************************************************
-
 }

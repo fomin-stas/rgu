@@ -11,11 +11,11 @@ class Additional_property_values extends APP_Model {
     // Обновление списка значений дополнительного своества, если его тип "Список"
     public function update_values($id_additional_property, $values){
         $addition = $this->get_many_by(array('id_additional_property'  => $id_additional_property));
-        $addition_values = array();
+        $additional_values = array();
         foreach($addition as $value){
-            $addition_values[]=$value['value'];
+            $additional_values[]=$value['value'];
         }
-        $for_deleting = array_diff($addition_values,$values);
+        $for_deleting = array_diff($additional_values,$values);
         foreach($for_deleting as $key => $value){
             $get_by = array(
               'id_additional_property'  => $id_additional_property,
@@ -33,6 +33,15 @@ class Additional_property_values extends APP_Model {
                 $this->insert($get_by);
             }
         }
+    }
+    
+    public function get_additional_property_values($id_additional_property) {
+        $return_array=array('' => '');
+        $values = $this->get_many_by(array('id_additional_property' => $id_additional_property));
+        foreach ($values as $key => $value){
+            $return_array[$value['id_additional_property_values']] = $value['value'];
+        }
+        return $return_array;
     }
 
 }
