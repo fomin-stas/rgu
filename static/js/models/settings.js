@@ -63,35 +63,36 @@ var Settings = {
                             $('#' + name + '_parent_property_list').chosen();
                         });
                         $('#' + name + '_parent_property_values').hide();
-                        $('#' + name + '_parent_addition_property').hide();
-                        $('#' + name + '_parent_addition_property_values').hide();
+                        $('#' + name + '_parent_additional_property').hide();
+                        $('#' + name + '_parent_additional_property_values').hide();
                         break;
                     case 'property_values':
                         $('#' + name + '_parent_property').hide();
                         $('#' + name + '_parent_property_values').show(function () {
                             $('#' + name + '_parent_property_values_list').chosen();
                         });
-                        $('#' + name + '_parent_addition_property').hide();
-                        $('#' + name + '_parent_addition_property_values').hide();
+                        $('#' + name + '_parent_additional_property').hide();
+                        $('#' + name + '_parent_additional_property_values').hide();
                         break;
-                    case 'addition_property':
+                    case 'additional_property':
                         $('#' + name + '_parent_property').hide();
                         $('#' + name + '_parent_property_values').hide();
-                        $('#' + name + '_parent_addition_property').show(function () {
-                            $('#' + name + '_parent_addition_property_list').chosen();
+                        $('#' + name + '_parent_additional_property').show(function () {
+                            $('#' + name + '_parent_additional_property_list').chosen();
                         });
-                        $('#' + name + '_parent_addition_property_values').hide();
+                        $('#' + name + '_parent_additional_property_values').hide();
                         break;
-                    case 'addition_property_values':
+                    case 'additional_property_values':
                         $('#' + name + '_parent_property').hide();
                         $('#' + name + '_parent_property_values').hide();
-                        $('#' + name + '_parent_addition_property').hide();
-                        $('#' + name + '_parent_addition_property_values').show(function () {
-                            $('#' + name + '_parent_addition_property_values_list').chosen();
+                        $('#' + name + '_parent_additional_property').hide();
+                        $('#' + name + '_parent_additional_property_values').show(function () {
+                            $('#' + name + '_parent_additional_property_values_list').chosen();
                         });
                         break;
                 }
             });
+
             $('#' + name + '_parent_property_values_list').on('change', function (e) {
                 var id = $(this).val();
                 var elem = $(this);
@@ -100,6 +101,18 @@ var Settings = {
                     dataType: 'json',
                     success: function (data) {
                         $('#' + name + '_parent_property_value_group').html(data.inner_html);
+                    }
+                });
+            });
+
+            $('#' + name + '_parent_additional_property_values_list').on('change', function (e) {
+                var id = $(this).val();
+                var elem = $(this);
+                $.ajax({
+                    url: App.options.baseURL + 'ajax/get_additional_property_values/' + id + "/" + name,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#' + name + '_parent_additional_property_value_group').html(data.inner_html);
                     }
                 });
             });
@@ -279,6 +292,40 @@ var Settings = {
                             $('#edit_additional_type_values_row').hide();
                         }
                         $('#edit_additional_id_additional_property').val(p.id_additional_property);
+                        $('#edit_additional_parent_type').val(data.parent);
+                        switch (data.parent) {
+                            case 'property':
+                                $('#edit_additional_parent_property_list').val(data.id_parent);
+                                $('#edit_additional_parent_property').show();
+                                $('#edit_additional_parent_property_values').hide();
+                                $('#edit_additional_parent_additional_property').hide();
+                                $('#edit_additional_parent_additional_property_values').hide();
+                                break;
+                            case 'additional_property':
+                                $('#edit_additional_parent_additional_property').val(data.id_parent);
+                                $('#edit_additional_parent_property').hide();
+                                $('#edit_additional_parent_property_values').hide();
+                                $('#edit_additional_parent_additional_property').show();
+                                $('#edit_additional_parent_additional_property_values').hide();
+                                break;
+                            case 'property_values':
+                                $('#edit_additional_parent_property_values_list').val(data.id_property);
+                                $('#edit_additional_parent_property').hide();
+                                $('#edit_additional_parent_property_values').show();
+                                $('#edit_additional_parent_additional_property').hide();
+                                $('#edit_additional_parent_additional_property_values').hide();
+                                $('#edit_additional_parent_property_value_group').html(data.inner_html);
+                                //$("#edit_additional_parent_property_value").chosen();
+                                break;
+                            case 'additional_property_values':
+                                $('#edit_additional_parent_additional_property_values').val(data.id_property);
+                                $('#edit_additional_parent_property').hide();
+                                $('#edit_additional_parent_property_values').hide();
+                                $('#edit_additional_parent_additional_property').hide();
+                                $('#edit_additional_parent_additional_property_values').show();
+                                $('#edit_additional_parent_additional_property_value_group').html(data.inner_html);
+                                break;
+                        }
                         $('#edit_additional_property').modal();
                     }
                 }

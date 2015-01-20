@@ -348,7 +348,7 @@
                         <?= validation_errors(); ?>
                         <div class="form-group">
                             <label for="add_property_name">Название доп. свойства</label>
-                            <input type="text" class="form-control" id="add_additional_property_name" name="additional_property_name" placeholder="Название доп. свойства" value="<?= set_value('add_additional_property_name') ?>">
+                            <input type="text" class="form-control" id="add_additional_property_name" name="add_additional_property_name" placeholder="Название доп. свойства" value="<?= set_value('add_additional_property_name') ?>">
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -379,7 +379,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?=$addition_parent?>
+                        <?=$additional_parent?>
                         <input type="hidden" name="method" value="additional">
                         <button type="submit" class="btn btn-default">Добавить</button>
                         </form>
@@ -404,7 +404,7 @@
                         <?= validation_errors(); ?>
                         <div class="form-group">
                             <label for="edit_additional_property_name">Название свойства</label>
-                            <input type="text" class="form-control" id="edit_additional_property_name" name="property_name" placeholder="Название свойства" value="<?= set_value('property_name') ?>">
+                            <input type="text" class="form-control" id="edit_additional_property_name" name="edit_additional_property_name" placeholder="Название свойства" value="<?= set_value('property_name') ?>">
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -421,21 +421,21 @@
                             </div>         
                         </div>
                         <div class="row" id="edit_additional_type_values_row" style="display:none">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit_additional_type_values">Список значений</label>
                                     <input type="text" class="form-control" id="edit_additional_type_values" name="edit_additional_type_values">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div id="edit_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit_additional_type_values_btn"> &nbsp; </label><br />
                                     <button type="submit" class="form-control btn btn-primary" id="edit_additional_type_values_btn">Добавить значение</button>
                                 </div>
                             </div>
-                            <div id="edit_additional_type_values_list" class="col-md-12 b-type-values-list"></div>
                         </div>
-
+                        <?=$edit_additional_parent?>
                         <input type="hidden" name="id_additional_property" id="edit_additional_id_additional_property">
                         <input type="hidden" name="method" value="edit_additional">
                         <button type="submit" class="btn btn-default">Сохранить</button>

@@ -43,14 +43,24 @@ class Settings extends APP_Controller {
         }
         $property_select = $this->property->get_all_id_name_property();
         $property_values_select = $this->property->get_all_property_with_values();
-        $addition_parent = $this->load->view('settings/parent_addition_property',
-                                            array(
-                                                'property_select' => $property_select,
-                                                'name' => 'add_additional',
-                                                'property_values_select' => $property_values_select,
-                                                'select' => ''
-                                            ),
-                                            true);
+        $additional_property_select = $this->additional_property->get_all_id_name_additional_property();
+        $additional_property_values_select = $this->additional_property->get_all_additional_property_with_values();
+        $additional_parent = $this->load->view('settings/parent_additional_property', array(
+            'property_select' => $property_select,
+            'name' => 'add_additional',
+            'property_values_select' => $property_values_select,
+            'additional_property_values_select' => $additional_property_values_select,
+            'additional_property_select' => $additional_property_select,
+            'select' => ''
+                ), true);
+        $edit_additional_parent = $this->load->view('settings/parent_additional_property', array(
+            'property_select' => $property_select,
+            'name' => 'edit_additional',
+            'property_values_select' => $property_values_select,
+            'additional_property_values_select' => $additional_property_values_select,
+            'additional_property_select' => $additional_property_select,
+            'select' => ''
+                ), true);
         $config = array();
         $config['base_url'] = base_url() . 'settings/index/';
         $config['total_rows'] = $this->property->count_all();
@@ -60,7 +70,8 @@ class Settings extends APP_Controller {
             'service_types' => $service_types,
             'pages' => $this->pagination->create_links(),
             'additional_properties' => $additional_property,
-            'addition_parent' => $addition_parent
+            'additional_parent' => $additional_parent,
+            'edit_additional_parent' => $edit_additional_parent
         ));
     }
 
@@ -144,23 +155,88 @@ class Settings extends APP_Controller {
 
     private function _add_additional() {
         // new property request 
-        $data = array();
-        $data['additional_property_name'] = $this->input->post('additional_property_name');
-        $data['id_property_format'] = (int) $this->input->post('property_type');
         $this->load->model('additional_property');
-        $this->additional_property->insert($data);
-        $this->session->set_flashdata('message', 'Новое доп. свойство успешно создано');
-        redirect('/settings/index#');
+        $this->load->model('additional_property_values');
+        $this->load->model('pap');
+        $data = array();
+        $data['additional_property_name'] = $this->input->post('add_additional_property_name');
+        $data['id_property_format'] = (int) $this->input->post('property_type');
+        $id_additional_property = $this->additional_property->insert($data);
+        if ($id_additional_property) {
+            if ($data['id_property_format'] == 3) {
+                $values = $this->input->post('type_values');
+                if (count($values) > 0) {
+                    foreach ($values as $key => $value) {
+                        $p = array(
+                            'id_additional_property' => $id_additional_property,
+                            'value' => $value
+                        );
+                        $this->additional_property_values->insert($p);
+                    }
+                }
+            }
+            $insert_data['id_additional_property'] = $id_additional_property;
+            switch ($this->input->post('parent_type')) {
+                case 'property':
+                    $insert_data['id_property'] = $this->input->post('add_additional_parent_property_list');
+                    $this->pap->insert($insert_data);
+                    break;
+                case 'property_values':
+                    $insert_data['property_value_id'] = $this->input->post('add_additional_parent_property_value');
+                    $this->pap->insert($insert_data);
+                    break;
+                case 'additional_property':
+                    $insert_data['add_id_additional_property'] = $this->input->post('add_additional_parent_additional_property_list');
+                    $this->pap->insert($insert_data);
+                    break;
+                case 'additional_property_values':
+                    $insert_data['id_additional_property_values'] = $this->input->post('add_additional_parent_additional_property_value');
+                    $this->pap->insert($insert_data);
+                    break;
+            }
+            $this->session->set_flashdata('message', 'Новое доп. свойство успешно создано');
+            redirect('/settings/index#');
+        }
     }
 
     private function _edit_additional() {
-        // new property request 
-        $data = array();
-        $id_property = $this->input->post('id_property');
-        $data['additional_property_name'] = $this->input->post('additional_property_name');
-        $data['id_property_format'] = (int) $this->input->post('property_type');
+        // new property request
         $this->load->model('additional_property');
-        $this->additional_property->update($id_property, $data);
+        $this->load->model('additional_property_values');
+        $this->load->model('pap');
+        $data = array();
+        $id_additional_property = $this->input->post('id_additional_property');
+        $data['additional_property_name'] = $this->input->post('edit_additional_property_name');
+        $data['id_property_format'] = (int) $this->input->post('property_type');
+        $this->additional_property->update($id_additional_property, $data);
+        if ($data['id_property_format'] == 3) {
+            $values = $this->input->post('type_values');
+            $this->additional_property_values->update_values($id_additional_property, $values);
+        }
+        $update_data['id_additional_property'] = $id_additional_property;
+        $pap = $this->pap->get_by($update_data);
+        $update_data['id_property'] = NULL;
+        $update_data['property_value_id'] = NULL;
+        $update_data['add_id_additional_property'] = NULL;
+        $update_data['id_additional_property_values'] = NULL;
+        switch ($this->input->post('parent_type')) {
+            case 'property':
+                $update_data['id_property'] = $this->input->post('edit_additional_parent_property_list');
+                $this->pap->update($pap['id_pap'], $update_data);
+                break;
+            case 'property_values':
+                $update_data['property_value_id'] = $this->input->post('edit_additional_parent_property_value');
+                $this->pap->update($pap['id_pap'], $update_data);
+                break;
+            case 'additional_property':
+                $update_data['add_id_additional_property'] = $this->input->post('edit_additional_parent_additional_property_list');
+                $this->pap->update($pap['id_pap'], $update_data);
+                break;
+            case 'additional_property_values':
+                $update_data['id_additional_property_values'] = $this->input->post('edit_additional_parent_additional_property_value');
+                $this->pap->update($pap['id_pap'], $update_data);
+                break;
+        }
         $this->session->set_flashdata('message', 'Доп. свойство успешно отредактировано');
         redirect('/settings/index#');
     }
