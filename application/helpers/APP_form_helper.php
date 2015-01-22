@@ -159,7 +159,7 @@ if (!function_exists('load_form_textaea_step2')) {
             $data['id_property'] = $code;
             $this->load->view('structure/elements/agreement', $data);
         }
-        $textarea_group = $textarea_group . '<label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
+        $textarea_group = $textarea_group . '<div class="col-md-1"><label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label></div><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
         return $textarea_group . '</div>';
     }
 
@@ -203,7 +203,7 @@ if (!function_exists('load_form_dropdown_step2')) {
                         </button>
                     </div>';
         }
-        $dropdown_group = $dropdown_group . '<label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
+        $dropdown_group = $dropdown_group . '<div class="col-md-1"><label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label></div><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
         return $dropdown_group . '</div>';
     }
 
@@ -245,7 +245,7 @@ if (!function_exists('load_form_file_step2')) {
             $data['id_property'] = $code;
             $this->load->view('structure/elements/agreement', $data);
         }
-        $textarea_group = $textarea_group . '<label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
+        $textarea_group = $textarea_group . '<div class="col-md-1"><label class="btn btn-primary addition_property" data-id="'.$property['id_property'].'"><i class="icon-only ace-icon fa fa-align-justify"></i></label></div><div class="modal fade" id="div_'.$property['id_property'].'" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true"></div>';
         return $textarea_group . '</div>';
     }
 

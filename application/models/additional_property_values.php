@@ -9,6 +9,7 @@ class Additional_property_values extends APP_Model {
     //******************************************
     // @update_values($id_additional_property, $values)
     // Обновление списка значений дополнительного своества, если его тип "Список"
+    
     public function update_values($id_additional_property, $values){
         $addition = $this->get_many_by(array('id_additional_property'  => $id_additional_property));
         $additional_values = array();

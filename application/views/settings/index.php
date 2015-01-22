@@ -359,8 +359,17 @@
                                         <option value="2" <?php echo set_select('property_type', '2'); ?> >Тесковое поле (многострочное)</option>
                                         <option value="3" <?php echo set_select('property_type', '3'); ?> >Выпадающий список</option>
                                         <option value="4" <?php echo set_select('property_type', '4'); ?> >Дата</option>
-                                        <option value="5" <?php echo set_select('property_type', '5'); ?> >Число</option>
+                                        <option value="5" <?php echo set_select('property_type', '6'); ?> >Число</option>
+                                        <option value="5" <?php echo set_select('property_type', '7'); ?> >Файл</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_multiple_add" class="">Множественное добавление свойства</label>
+                                    <input type="checkbox" class="" id="add_multiple_add">
                                 </div>
                             </div>
                         </div>
@@ -415,10 +424,19 @@
                                         <option value="2" <?php echo set_select('property_type', '2'); ?> >Тесковое поле (многострочное)</option>
                                         <option value="3" <?php echo set_select('property_type', '3'); ?> >Выпадающий список</option>
                                         <option value="4" <?php echo set_select('property_type', '4'); ?> >Дата</option>
-                                        <option value="5" <?php echo set_select('property_type', '5'); ?> >Число</option>
+                                        <option value="5" <?php echo set_select('property_type', '6'); ?> >Число</option>
+                                        <option value="5" <?php echo set_select('property_type', '7'); ?> >Файл</option>
                                     </select>
                                 </div>
                             </div>         
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_multiple_add">Множественное добавление свойства</label>
+                                    <input type="checkbox" class="form-control" id="edit_multiple_add">
+                                </div>
+                            </div>
                         </div>
                         <div class="row" id="edit_additional_type_values_row" style="display:none">
                             <div class="col-md-12">

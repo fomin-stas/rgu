@@ -366,20 +366,37 @@ class Ajax extends APP_Controller {
         $this->load->model('additional_property');
         $this->load->model('pap');
         $ap=$this->additional_property->get($id_additional_property);
-        $modal=$modal."<div class='form-group'><label for=".$id."> ".$ap['additional_property_name']." </label>";
+        $id=$id.'_'.$ap['id_additional_property'];
+        $modal=$modal."<div class='form-group col-md-12'><label for=".$id."> ".$ap['additional_property_name']." </label>";
         if($ap['id_property_format'] == 2 ){
             $data = array(
               'name'        => $id,
               'id'          => $id,
               'value'       => '',
-                'rows'      => 5,
-              'class'       => 'form-control',
+              'rows'        => 3,
+              'class'       => 'form-control col-md-8',
             );
             $modal=$modal.form_textarea($data);
         }
         if($ap['id_property_format'] == 3 ){
             $options=$this->additional_property_values->get_additional_property_values($id_additional_property);
-            $modal=$modal.form_dropdown($id,$options,'class=\'form-control\'');
+            $modal=$modal.form_dropdown($id,$options,'','class=\'form-control col-md-8\'');
+        }
+        if($ap['id_property_format'] == 7 ){
+            $data = array(
+              'name'        => $id,
+              'id'          => $id,
+              'value'       => '',
+              'class'       => 'form-control col-md-8 files',
+            );
+            
+            $modal=$modal.form_upload($data);
+            $modal=$modal."<script>$('#".$id."').ace_file_input({
+            no_file: 'Присоединить файл',
+            btn_choose: 'Выбрать',
+            btn_change: 'Изменить',
+            enable_reset: true
+        });</script>";
         }
         $modal=$modal."</div>";
         return $modal;

@@ -1,4 +1,4 @@
-﻿/*==============================================================*/
+/*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
 /* Created on:     19.01.2015 11:36:32                          */
 /*==============================================================*/
@@ -19,6 +19,7 @@ create table additional_property (
    id_additional_property SERIAL not null,
    id_property_format   INT4                 null,
    additional_property_name VARCHAR(1024)        null,
+   multiple boolean					null,
    constraint PK_ADDITIONAL_PROPERTY primary key (id_additional_property)
 );
 
