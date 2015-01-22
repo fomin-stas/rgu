@@ -11,6 +11,7 @@ class Settings extends APP_Controller {
         $this->layout->setLayout('main');
     }
 
+    
     public function index() {
         $this->load->model('additional_property');
         $this->config->load('pagination', TRUE);
