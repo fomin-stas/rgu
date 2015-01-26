@@ -51,4 +51,24 @@ class Property extends APP_Model {
         }
         return $return_array;
     }
+    
+    public function get_all_id_name_property(){
+        $return_array=array('' => '');
+        $sql="SELECT id_property,property_name FROM property";
+        $query = $this->db->query($sql);
+        foreach ($query->result_array() as $row){
+            $return_array[$row['id_property']] = $row['property_name'];
+        }
+        return $return_array;
+    }
+    
+    public function get_all_property_with_values(){
+        $return_array=array('' => '');
+        $sql="SELECT distinct pr.id_property,pr.property_name FROM property pr, property_values pv where pr.id_property=pv.property_id";
+        $query = $this->db->query($sql);
+        foreach ($query->result_array() as $row){
+            $return_array[$row['id_property']] = $row['property_name'];
+        }
+        return $return_array;
+    }
 }

@@ -11,4 +11,43 @@ class Additional_property extends APP_Model {
     );
     protected $return_type = 'array';
 
+    public function get_all_id_name_additional_property() {
+        $return_array = array('' => '');
+        $sql = "SELECT id_additional_property,additional_property_name FROM additional_property";
+        $query = $this->db->query($sql);
+        foreach ($query->result_array() as $row) {
+            $return_array[$row['id_additional_property']] = $row['additional_property_name'];
+        }
+        return $return_array;
+    }
+
+    public function get_all_additional_property_with_values() {
+        $return_array = array('' => '');
+        $sql = "SELECT distinct pr.id_additional_property,pr.additional_property_name FROM additional_property pr, additional_property_values pv where pr.id_additional_property=pv.id_additional_property";
+        $query = $this->db->query($sql);
+        foreach ($query->result_array() as $row) {
+            $return_array[$row['id_additional_property']] = $row['additional_property_name'];
+        }
+        return $return_array;
+    }
+    
+    public function generate_tree_structure($id_property){
+        $data= array();
+
+        $paps=$this->pap->get_many_by('id_property',$id_property);
+        $level=0;
+        foreach ($paps as $key=>$pap){
+            $data['additional_'.$pap['id_additional_property']]=$this->tree_childrens($pap,$level+1);
+           
+        }
+        return $data;
+    }
+    
+    private function tree_childrens($pap,$level){
+
+        $data=array();
+        
+        
+    }
+
 }

@@ -14,6 +14,7 @@ class Site extends APP_Controller {
         redirect('/login');
     }
 
+    
     public function login() {
         global $is_kis;
         // login request
