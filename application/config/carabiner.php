@@ -162,6 +162,7 @@ $config['groups']['site'] = array(
         array('grid.setcolumns.js'),
         array('bootstrap-multiselect.js'),
         array('jquery.dataTables.min.js'),
+        array('fuelux.tree.min.js'),
         array('jquery.dataTables.bootstrap.js'),
         array('bootstrap-tag.min.js'),
         array('jquery.hotkeys.min.js'),

@@ -296,7 +296,7 @@ class Ajax extends APP_Controller {
             $data=array('title' => 'У данного свойства нет дополнительных свойств', 'content' => '');
             $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
         }
-        $data=array('title' => 'Дополнительные свойства', 'content' => $modal);
+        $data=array('title' => 'Дополнительные свойства', 'content' => $modal,'id_property' => $id_property);
         $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
         $result['innerHTML'] = $modal;
         $result['id'] = $id_property;

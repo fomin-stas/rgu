@@ -30,5 +30,24 @@ class Additional_property extends APP_Model {
         }
         return $return_array;
     }
+    
+    public function generate_tree_structure($id_property){
+        $data= array();
+
+        $paps=$this->pap->get_many_by('id_property',$id_property);
+        $level=0;
+        foreach ($paps as $key=>$pap){
+            $data['additional_'.$pap['id_additional_property']]=$this->tree_childrens($pap,$level+1);
+           
+        }
+        return $data;
+    }
+    
+    private function tree_childrens($pap,$level){
+
+        $data=array();
+        
+        
+    }
 
 }
