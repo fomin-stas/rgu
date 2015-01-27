@@ -39,7 +39,6 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
-    
     public function edit_property() {
         $data = $_POST;
         foreach ($data as $key => $value) {
@@ -162,6 +161,17 @@ class Ajax extends APP_Controller {
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num'] = $service_num;
         $data['property'] = $this->property->get_all();
+        foreach ($data['property'] as $key => $property) {
+            $data_additional['id_property'] = $property['id_property'];
+            $data_additional['title'] = $property['property_name'];
+            $data_additional['content'] = 'hi';
+            $data_additional['tree'] = $this->additional_property->generate_tree_structure($property['id_property']);
+            if (count(json_decode($data_additional['tree'])) > 0) {
+                $data['property'][$key]['additional_property'] = $this->load->view('settings/modal_dialog/modal_dialog', $data_additional, true);
+            }else{
+                $data['property'][$key]['additional_property'] = $this->load->view('settings/modal_dialog/without_additional', $data_additional, true);
+            }
+        }
         if ($type === 'sr') {
             $this->load->view('agreeds/step_2/service', $data);
         } elseif ($type === 'sn') {
@@ -288,118 +298,118 @@ class Ajax extends APP_Controller {
         $this->load->model('pap');
         $paps = $this->pap->get_many_by(array('id_property' => $id_property));
         $modal = '';
-        if(count($paps)>0){
-        foreach ($paps as $pap){
-           $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
+        if (count($paps) > 0) {
+            foreach ($paps as $pap) {
+                $modal = $modal . $this->recursiv_rebuild_additional_property($pap);
+            }
+        } else {
+            $data = array('title' => 'У данного свойства нет дополнительных свойств', 'content' => '');
+            $modal = $this->load->view('settings/modal_dialog/modal_dialog', $data, true);
         }
-        }else{
-            $data=array('title' => 'У данного свойства нет дополнительных свойств', 'content' => '');
-            $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
-        }
-        $data=array('title' => 'Дополнительные свойства', 'content' => $modal,'id_property' => $id_property);
-        $modal=$this->load->view('settings/modal_dialog/modal_dialog',$data,true);
+        $data = array('title' => 'Дополнительные свойства', 'content' => $modal, 'id_property' => $id_property);
+        $modal = $this->load->view('settings/modal_dialog/modal_dialog', $data, true);
         $result['innerHTML'] = $modal;
         $result['id'] = $id_property;
         echo json_encode($result);
     }
-    
-    private function recursiv_rebuild_additional_property($pap){
+
+    private function recursiv_rebuild_additional_property($pap) {
         $this->load->model('additional_property_values');
         $this->load->model('additional_property');
         $this->load->model('pap');
-        $modal='';
+        $modal = '';
         if (!is_nan($pap['id_property'])) {
-                if (!is_null($pap['id_property'])) {
-                    if ($pap['id_property'] != 0) {
-                        $modal=$modal.$this->check_additional_property($pap['id_additional_property'],'property_'.$pap['id_property']);
-                    }
+            if (!is_null($pap['id_property'])) {
+                if ($pap['id_property'] != 0) {
+                    $modal = $modal . $this->check_additional_property($pap['id_additional_property'], 'property_' . $pap['id_property']);
                 }
             }
-            if (!is_nan($pap['add_id_additional_property'])) {
-                if (!is_null($pap['add_id_additional_property'])) {
-                    if ($pap['add_id_additional_property'] != 0) {
-                        $result['parent'] = 'additional_property';
-                        $result['id_parent'] = $pap['add_id_additional_property'];
-                    }
+        }
+        if (!is_nan($pap['add_id_additional_property'])) {
+            if (!is_null($pap['add_id_additional_property'])) {
+                if ($pap['add_id_additional_property'] != 0) {
+                    $result['parent'] = 'additional_property';
+                    $result['id_parent'] = $pap['add_id_additional_property'];
                 }
             }
-            if (!is_nan($pap['property_value_id'])) {
-                if (!is_null($pap['property_value_id'])) {
-                    if ($pap['property_value_id'] != 0) {
-                        $result['parent'] = 'property_values';
-                        $result['id_parent'] = $pap['property_value_id'];
-                        $property_value = $this->property_values_model->get($pap['property_value_id']);
-                        $data['values'] = $this->property_values_model->get_property_values($property_value['property_id']);
-                        $data['select'] = $pap['property_value_id'];
-                        $data['name'] = 'edit_additional';
-                        $result['inner_html'] = str_replace('"', "'", $this->load->view('settings/property_values', $data, true));
-                        $result['parent_values'] = $this->property_values_model->get_many_by(array('property_id' => $property_value['property_id']));
-                        $result['id_property'] = $property_value['property_id'];
-                    }
+        }
+        if (!is_nan($pap['property_value_id'])) {
+            if (!is_null($pap['property_value_id'])) {
+                if ($pap['property_value_id'] != 0) {
+                    $result['parent'] = 'property_values';
+                    $result['id_parent'] = $pap['property_value_id'];
+                    $property_value = $this->property_values_model->get($pap['property_value_id']);
+                    $data['values'] = $this->property_values_model->get_property_values($property_value['property_id']);
+                    $data['select'] = $pap['property_value_id'];
+                    $data['name'] = 'edit_additional';
+                    $result['inner_html'] = str_replace('"', "'", $this->load->view('settings/property_values', $data, true));
+                    $result['parent_values'] = $this->property_values_model->get_many_by(array('property_id' => $property_value['property_id']));
+                    $result['id_property'] = $property_value['property_id'];
                 }
             }
-            if (!is_nan($pap['id_additional_property_values'])) {
-                if (!is_null($pap['id_additional_property_values'])) {
-                    if ($pap['id_additional_property_values'] != 0) {
-                        $result['parent'] = 'additional_property_values';
-                        $result['id_parent'] = $pap['id_additional_property_values'];
-                        $property_value = $this->additional_property_values->get($pap['id_additional_property_values']);
-                        $data['values'] = $this->additional_property_values->get_additional_property_values($property_value['id_additional_property']);
-                        $data['select'] = $pap['id_additional_property_values'];
-                        $data['name'] = 'edit_additional';
-                        $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
-                        $result['id_property'] = $property_value['id_additional_property'];
-                    }
+        }
+        if (!is_nan($pap['id_additional_property_values'])) {
+            if (!is_null($pap['id_additional_property_values'])) {
+                if ($pap['id_additional_property_values'] != 0) {
+                    $result['parent'] = 'additional_property_values';
+                    $result['id_parent'] = $pap['id_additional_property_values'];
+                    $property_value = $this->additional_property_values->get($pap['id_additional_property_values']);
+                    $data['values'] = $this->additional_property_values->get_additional_property_values($property_value['id_additional_property']);
+                    $data['select'] = $pap['id_additional_property_values'];
+                    $data['name'] = 'edit_additional';
+                    $result['inner_html'] = $this->load->view('settings/property_values', $data, true);
+                    $result['id_property'] = $property_value['id_additional_property'];
                 }
             }
-            $paps = $this->pap->get_many_by(array('add_id_additional_property' => $pap['id_additional_property']));
-            $modal=$modal."<div class='row'>";
-            foreach ($paps as $pap){
-                $modal = $modal.$this->recursiv_rebuild_additional_property($pap);
-            }
-            $modal=$modal."</div>";
-            return $modal;
+        }
+        $paps = $this->pap->get_many_by(array('add_id_additional_property' => $pap['id_additional_property']));
+        $modal = $modal . "<div class='row'>";
+        foreach ($paps as $pap) {
+            $modal = $modal . $this->recursiv_rebuild_additional_property($pap);
+        }
+        $modal = $modal . "</div>";
+        return $modal;
     }
-    
-    private function check_additional_property($id_additional_property,$id){
-        $modal='';
+
+    private function check_additional_property($id_additional_property, $id) {
+        $modal = '';
         $this->load->model('additional_property_values');
         $this->load->model('additional_property');
         $this->load->model('pap');
-        $ap=$this->additional_property->get($id_additional_property);
-        $id=$id.'_'.$ap['id_additional_property'];
-        $modal=$modal."<div class='form-group col-md-12'><label for=".$id."> ".$ap['additional_property_name']." </label>";
-        if($ap['id_property_format'] == 2 ){
+        $ap = $this->additional_property->get($id_additional_property);
+        $id = $id . '_' . $ap['id_additional_property'];
+        $modal = $modal . "<div class='form-group col-md-12'><label for=" . $id . "> " . $ap['additional_property_name'] . " </label>";
+        if ($ap['id_property_format'] == 2) {
             $data = array(
-              'name'        => $id,
-              'id'          => $id,
-              'value'       => '',
-              'rows'        => 3,
-              'class'       => 'form-control col-md-8',
+                'name' => $id,
+                'id' => $id,
+                'value' => '',
+                'rows' => 3,
+                'class' => 'form-control col-md-8',
             );
-            $modal=$modal.form_textarea($data);
+            $modal = $modal . form_textarea($data);
         }
-        if($ap['id_property_format'] == 3 ){
-            $options=$this->additional_property_values->get_additional_property_values($id_additional_property);
-            $modal=$modal.form_dropdown($id,$options,'','class=\'form-control col-md-8\'');
+        if ($ap['id_property_format'] == 3) {
+            $options = $this->additional_property_values->get_additional_property_values($id_additional_property);
+            $modal = $modal . form_dropdown($id, $options, '', 'class=\'form-control col-md-8\'');
         }
-        if($ap['id_property_format'] == 7 ){
+        if ($ap['id_property_format'] == 7) {
             $data = array(
-              'name'        => $id,
-              'id'          => $id,
-              'value'       => '',
-              'class'       => 'form-control col-md-8 files',
+                'name' => $id,
+                'id' => $id,
+                'value' => '',
+                'class' => 'form-control col-md-8 files',
             );
-            
-            $modal=$modal.form_upload($data);
-            $modal=$modal."<script>$('#".$id."').ace_file_input({
+
+            $modal = $modal . form_upload($data);
+            $modal = $modal . "<script>$('#" . $id . "').ace_file_input({
             no_file: 'Присоединить файл',
             btn_choose: 'Выбрать',
             btn_change: 'Изменить',
             enable_reset: true
         });</script>";
         }
-        $modal=$modal."</div>";
+        $modal = $modal . "</div>";
         return $modal;
     }
 

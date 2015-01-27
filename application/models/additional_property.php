@@ -30,24 +30,34 @@ class Additional_property extends APP_Model {
         }
         return $return_array;
     }
-    
-    public function generate_tree_structure($id_property){
-        $data= array();
 
-        $paps=$this->pap->get_many_by('id_property',$id_property);
-        $level=0;
-        foreach ($paps as $key=>$pap){
-            $data['additional_'.$pap['id_additional_property']]=$this->tree_childrens($pap,$level+1);
-           
+    public function generate_tree_structure($id_property) {
+        $data = array();
+        $paps = $this->pap->get_many_by('id_property', $id_property);
+        foreach ($paps as $key => $pap) {
+            $children = $this->pap->children($pap);
+            $additional_property = $this->get($pap['id_additional_property']);
+            if (count($children) > 0) {
+                $data['additional_' . $pap['id_additional_property']] = array('name' => '<div id="09">'.$additional_property['additional_property_name'].'</div>', "type" => "folder","additionalParameters" => $this->tree_childrens($children));
+            } else {
+                $data['additional_' . $pap['id_additional_property']] = array('name' => $additional_property['additional_property_name'], "type" => "item");
+            }
+        }
+        return json_encode($data);
+    }
+
+    private function tree_childrens($paps) {
+        $data = array();
+        foreach ($paps as $key => $pap) {
+            $children = $this->pap->children($pap);
+            $additional_property = $this->get($pap['id_additional_property']);
+            if (count($children) > 0) {
+                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => '<div id="09">'.$additional_property['additional_property_name'].'</div>', "type" => "folder","additionalParameters" => $this->tree_childrens($children));
+            } else {
+                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => $additional_property['additional_property_name'], "type" => "item");
+            }
         }
         return $data;
-    }
-    
-    private function tree_childrens($pap,$level){
-
-        $data=array();
-        
-        
     }
 
 }

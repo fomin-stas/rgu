@@ -130,7 +130,8 @@ $autoload['model'] = array(
     'activity',
     'property_values_model',
     'property_comments',
-    'pap');
+    'pap',
+    'additional_property');
 
 
 /* End of file autoload.php */

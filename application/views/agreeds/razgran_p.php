@@ -219,15 +219,7 @@
 
         $(document).on('click', '.addition_property', function() {
             var id = $(this).data('id');
-            $.ajax({
-                url: App.options.baseURL + 'ajax/get_addition_property_dialog/' + id,
-                type: 'get',
-                dataType: 'json',
-                success: function(data) {
-                    $('#div_' + data.id).html(data.innerHTML);
-                    $('#div_' + data.id).modal();
-                }
-            });
+            $('#div_' + id).modal();
         });
 
         num_files = 1;
