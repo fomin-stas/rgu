@@ -513,6 +513,10 @@ class Structure extends APP_Controller {
                             ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
+                    $authority_array = $this->search_table->filtered_by_organization($authority_array,$id_organization);
+                    if(count($authority_array) == 0){
+                        $authority_array[0] = 0;
+                    }
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
