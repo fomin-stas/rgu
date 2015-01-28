@@ -42,4 +42,5 @@ $('.files').ace_file_input({
             btn_change: "Изменить",
             enable_reset: true
         });
+        $('.content_tree').hide();
 </script>

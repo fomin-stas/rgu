@@ -1,9 +1,9 @@
 <div class="col-md-1">
-    <label class="btn btn-primary addition_property" data-id="<?=$id_property?>">
+    <label class="btn btn-primary addition_property" data-id="<?=$type?>_<?=$service_num?>_div_<?=$id_property?>">
         <i class="icon-only ace-icon fa fa-align-justify"></i>
     </label>
 </div>
-<div class="modal fade" id="div_<?=$id_property?>" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true">
+<div class="modal fade" id="<?=$type?>_<?=$service_num?>_div_<?=$id_property?>" tabindex="-1" role="dialog" aria-labelledby="add_property_label" aria-hidden="true">
 <div class="container-fluid">
     <div class="modal-content">
         <div class="modal-header">
@@ -13,28 +13,21 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-3">
-                    <div id="tree_<?=$id_property?>" class="tree"></div>
+                    <div id="<?=$type?>_<?=$service_num?>_tree_<?=$id_property?>" class="tree"></div>
                     <script>
-                        var tree_data_<?=$id_property?> = <?=$tree?>
+                        var <?=$type?>_<?=$service_num?>_tree_data_<?=$id_property?> = <?=$tree?>
 
-                        var treeDataSource_<?=$id_property?> = new DataSourceTree({data: tree_data_<?=$id_property?>});
+                        var <?=$type?>_<?=$service_num?>_treeDataSource_<?=$id_property?> = new DataSourceTree({data: <?=$type?>_<?=$service_num?>_tree_data_<?=$id_property?>});
            
-                        $('#tree_<?=$id_property?>').ace_tree({
-                            dataSource: treeDataSource_<?=$id_property?>,
+                        $('#<?=$type?>_<?=$service_num?>_tree_<?=$id_property?>').ace_tree({
+                            dataSource: <?=$type?>_<?=$service_num?>_treeDataSource_<?=$id_property?>,
                             multiSelect: false,
                             loadingHTML: '<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',
                             'open-icon': 'ace-icon tree-minus',
                             'close-icon': 'ace-icon tree-plus',
-                            'selectable': true
+                            'selectable': false
                             
                         });
-                        $('#tree_<?=$id_property?>').on('selected.fu.tree', function() {
-                            // do something
-                            var array_tree=$('#tree_<?=$id_property?>').tree('selectedItems');
-                           
-                            console.log(array_tree);
-                        });
-
                     </script>
                 </div>
                 <div class="col-md-9">

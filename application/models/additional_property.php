@@ -10,6 +10,15 @@ class Additional_property extends APP_Model {
             'primary_key' => 'id_property_format'),
     );
     protected $return_type = 'array';
+    
+    public function get_key_id_all(){
+        $ret = array();
+        $ap=$this->get_all();
+        foreach ($ap as $value){
+            $ret[$value['id_additional_property']]=array('additional_property_name' => $value['additional_property_name'], 'id_property_format' => $value['id_property_format']);
+        }
+        return $ret;
+    }
 
     public function get_all_id_name_additional_property() {
         $return_array = array('' => '');
@@ -31,33 +40,47 @@ class Additional_property extends APP_Model {
         return $return_array;
     }
 
-    public function generate_tree_structure($id_property) {
+    public function generate_tree_structure($id_property,$data_additional) {
         $data = array();
+        $content = array();
         $paps = $this->pap->get_many_by('id_property', $id_property);
         foreach ($paps as $key => $pap) {
             $children = $this->pap->children($pap);
             $additional_property = $this->get($pap['id_additional_property']);
             if (count($children) > 0) {
-                $data['additional_' . $pap['id_additional_property']] = array('name' => '<div id="09">'.$additional_property['additional_property_name'].'</div>', "type" => "folder","additionalParameters" => $this->tree_childrens($children));
+                $chiled = $this->tree_childrens($children,$data_additional);
+                $content = $content + $chiled['content'];
+                $data['additional_' . $pap['id_additional_property']] = array('name' => '<span class="tree_span" data-id="' . $data_additional['type'].'_'.$data_additional['service_num'].'_content_'.$pap['id_additional_property'] . '">' . $additional_property['additional_property_name'] . '</span>', "type" => "folder", "additionalParameters" => $chiled['additionalParameters']);
+                $content[$pap['id_additional_property']] = $additional_property['id_property_format'];
             } else {
-                $data['additional_' . $pap['id_additional_property']] = array('name' => $additional_property['additional_property_name'], "type" => "item");
+                $data['additional_' . $pap['id_additional_property']] = array('name' => '<span class="tree_span" data-id="' . $data_additional['type'].'_'.$data_additional['service_num'].'_content_'.$pap['id_additional_property'] . '">' . $additional_property['additional_property_name'] . '</span>', "type" => "item");
+                $content[$pap['id_additional_property']] = $additional_property['id_property_format'];
             }
         }
-        return json_encode($data);
+        $ret['tree']=json_encode($data);
+        $ret['content']=$content;
+        return $ret;
     }
 
-    private function tree_childrens($paps) {
+    private function tree_childrens($paps,$data_additional) {
         $data = array();
+        $content = array();
         foreach ($paps as $key => $pap) {
             $children = $this->pap->children($pap);
             $additional_property = $this->get($pap['id_additional_property']);
             if (count($children) > 0) {
-                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => '<div id="09">'.$additional_property['additional_property_name'].'</div>', "type" => "folder","additionalParameters" => $this->tree_childrens($children));
+                $chiled = $this->tree_childrens($children,$data_additional);
+                $content = $content + $chiled['content'];
+                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => '<span class="tree_span" data-id="' . $data_additional['type'].'_'.$data_additional['service_num'].'_content_'.$pap['id_additional_property'] . '">' . $additional_property['additional_property_name'] . '</span>', "type" => "folder", "additionalParameters" => $chiled['additionalParameters']);
+                $content[$pap['id_additional_property']] = $additional_property['id_property_format'];
             } else {
-                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => $additional_property['additional_property_name'], "type" => "item");
+                $data['children']['additional_' . $pap['id_additional_property']] = array('name' => '<span class="tree_span" data-id="' . $data_additional['type'].'_'.$data_additional['service_num'].'_content_'.$pap['id_additional_property'] . '">' . $additional_property['additional_property_name'] . '</span>', "type" => "item");
+                $content[$pap['id_additional_property']] = $additional_property['id_property_format'];
             }
         }
-        return $data;
+        $ret['content'] = $content;
+        $ret['additionalParameters'] = $data;
+        return $ret;
     }
 
 }

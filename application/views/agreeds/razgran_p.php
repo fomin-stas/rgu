@@ -219,7 +219,13 @@
 
         $(document).on('click', '.addition_property', function() {
             var id = $(this).data('id');
-            $('#div_' + id).modal();
+            $('#' + id).modal();
+        });
+
+        $(document).on('click', '.tree_span', function() {
+            var id = $(this).data('id');
+            $('.content_tree').hide();
+            $('#' + id).show();
         });
 
         num_files = 1;

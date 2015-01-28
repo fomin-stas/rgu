@@ -160,12 +160,30 @@ class Ajax extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num'] = $service_num;
+        $additional_property=$this->additional_property->get_key_id_all();
         $data['property'] = $this->property->get_all();
         foreach ($data['property'] as $key => $property) {
             $data_additional['id_property'] = $property['id_property'];
             $data_additional['title'] = $property['property_name'];
-            $data_additional['content'] = 'hi';
-            $data_additional['tree'] = $this->additional_property->generate_tree_structure($property['id_property']);
+            $data_additional['content'] = '';
+            $data_additional['type'] = $type;
+            $data_additional['service_num'] = $service_num;
+            $additional_data = $this->additional_property->generate_tree_structure($property['id_property'],$data_additional);
+            $data_additional['tree'] = $additional_data['tree'];
+            foreach ($additional_data['content'] as $id_ap => $id_property_format){
+                if(($id_property_format == 3) || ($id_property_format == 5)){
+                    $options=  $this->additional_property_values->get_additional_property_values($id_ap);
+                }
+                $data_content = array(
+                    'id_property_format' => $id_property_format,
+                    'id_additional_property' => $id_ap,
+                    'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
+                    'type' => $type,
+                    'service_num' => $service_num,
+                    'options' => $options
+                );
+                $data_additional['content'].=$data_additional['content'].$this->load->view('settings/modal_dialog/modal_content',$data_content,true);
+            }
             if (count(json_decode($data_additional['tree'])) > 0) {
                 $data['property'][$key]['additional_property'] = $this->load->view('settings/modal_dialog/modal_dialog', $data_additional, true);
             }else{
