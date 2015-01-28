@@ -13,11 +13,7 @@ class Structure extends APP_Controller {
         SetCookie("organization_name", $this->session->userdata('organization_name'));
         $user_id = $this->session->userdata('id');
         $user_info = $this->user->get($user_id);
-        if ($this->session->userdata('user_type') == 1) {
-            $this->notifications_size = $this->activity->count_by(array('status' => 1));
-        } else {
-            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));
-        }
+        $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));
     }
 
     public function index() {
@@ -58,17 +54,17 @@ class Structure extends APP_Controller {
             if (isset($_GET['filters'])) {
                 $this->load->model('search_table');
                 $authority_array = $this->search_table->searche($_GET['filters']);
-                $total_rows_is_ajax=$this->service->get_cont_service_by_authorities($authority_array);
-                $total_page = floor( $total_rows_is_ajax/ $limit_rows) + 1;
+                $total_rows_is_ajax = $this->service->get_cont_service_by_authorities($authority_array);
+                $total_page = floor($total_rows_is_ajax / $limit_rows) + 1;
                 if (!is_array($authority_array)) {
-                    $total_rows_is_ajax=$this->service->count_all();
+                    $total_rows_is_ajax = $this->service->count_all();
                     $total_page = floor($total_rows_is_ajax / $limit_rows) + 1;
-                    $limit=$this->authority->calculate_limits($page, $limit_rows);
+                    $limit = $this->authority->calculate_limits($page, $limit_rows);
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit['end']- $limit['start'] + 1, $limit['start'])
+                            ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                             ->get_all();
                 } elseif (count($authority_array) == 0) {
                     $authority_array[0] = 0;
@@ -79,32 +75,32 @@ class Structure extends APP_Controller {
                             ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
-                    $limit=$this->authority->calculate_limits($page, $limit_rows, $authority_array);
+                    $limit = $this->authority->calculate_limits($page, $limit_rows, $authority_array);
                     $authorities = $this->authority
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit['end']- $limit['start'] + 1, $limit['start'])
+                            ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                             ->get_many($authority_array);
                 }
             } else {
-                $limit=$this->authority->calculate_limits($page, $limit_rows);
-                $total_page= $this->authority->total_page($limit_rows);
+                $limit = $this->authority->calculate_limits($page, $limit_rows);
+                $total_page = $this->authority->total_page($limit_rows);
                 $authorities = $this->authority
                         ->with('status')
                         ->with('organization')
                         ->with('properties')
-                        ->limit($limit['end']- $limit['start']+1, $limit['start'])
+                        ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                         ->get_all();
             }
         } else {
-            $limit=$this->authority->calculate_limits($page, $limit_rows);
-            $total_page= $this->authority->total_page($limit_rows);
+            $limit = $this->authority->calculate_limits($page, $limit_rows);
+            $total_page = $this->authority->total_page($limit_rows);
             $authorities = $this->authority
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
-                    ->limit($limit['end']- $limit['start']+1, $limit['start'])
+                    ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -428,7 +424,8 @@ class Structure extends APP_Controller {
     public function timeline() {
         $this->layout->view('timeline');
     }
-    public function faq(){
+
+    public function faq() {
         $this->layout->view('faq');
     }
 
@@ -513,8 +510,8 @@ class Structure extends APP_Controller {
                             ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
-                    $authority_array = $this->search_table->filtered_by_organization($authority_array,$id_organization);
-                    if(count($authority_array) == 0){
+                    $authority_array = $this->search_table->filtered_by_organization($authority_array, $id_organization);
+                    if (count($authority_array) == 0) {
                         $authority_array[0] = 0;
                     }
                     $authorities = $this->authority

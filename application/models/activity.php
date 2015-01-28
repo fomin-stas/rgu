@@ -25,6 +25,8 @@ class Activity extends APP_Model {
         		$data['id_service_type'] = $id_service_type;
         		$data['id_object'] = $id_object;
 	            $insert_id = $this->insert($data);
+                    $data['id_organization'] = 31554;
+                    $this->insert($data);
 	            return $insert_id;
         	}
         } else {
