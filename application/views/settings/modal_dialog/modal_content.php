@@ -7,7 +7,7 @@
 <?php if($id_property_format == 3):?>
 <div class="content_tree col-md-9" id="<?=$type?>_<?=$service_num?>_content_<?=$id_additional_property?>">
     <label for="content_select_<?=$id_additional_property?>" class=""><?=$additional_property_name?>:</label>
-        <?=form_dropdown('additional_'.$type.'_'.$service_num.'_content_select_'.$id_additional_property,$options,isset($additional_value)?$additional_value:'','class="col-md-12 form-control dropdown"')?>
+        <?=form_dropdown('additional_'.$type.'_'.$service_num.'_content_select_'.$id_additional_property,isset($options)?$options:'',isset($additional_value)?$additional_value:'','class="col-md-12 form-control dropdown"')?>
 </div>
 <?php endif; ?>
 <?php if($id_property_format == 4):?>

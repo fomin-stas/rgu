@@ -12,11 +12,7 @@ class Agreeds extends APP_Controller {
         $this->is_loggedIn();
         $user_id = $this->session->userdata('id');
         $user_info = $this->user->get($user_id);
-        if ($this->session->userdata('user_type') == 1) {
-            $this->notifications_size = $this->activity->count_by(array('status' => 1));
-        } else {
-            $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));
-        }
+        $this->notifications_size = $this->activity->count_by(array('id_organization' => $user_info['id_organization'], 'status' => 1));
     }
 
     public function index() {
@@ -210,7 +206,11 @@ class Agreeds extends APP_Controller {
         }
         $property = $this->property->get_by(array('code' => 'executable_status'));
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
-        $this->authority_property_model->update_by($update_data, $update_authority);
+        $update = $this->authority_property_model->update_by($update_data, $update_authority);
+        if ($update) {
+            $authority = $this->authority->get($id_authority);
+            $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
+        }
         $url = 'structure/arm_kis';
         $this->authority->set_is_new($id_authority);
         redirect($url);
@@ -274,7 +274,11 @@ class Agreeds extends APP_Controller {
         }
         $property = $this->property->get_by(array('code' => 'executable_status'));
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
-        $this->authority_property_model->update_by($update_data, $update_authority);
+        $update=$this->authority_property_model->update_by($update_data, $update_authority);
+        if ($update) {
+            $authority = $this->authority->get($id_authority);
+            $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
+        }
         $url = 'structure/arm_kis';
         $this->authority->set_is_new($id_authority);
         redirect($url);
@@ -536,5 +540,3 @@ class Agreeds extends APP_Controller {
     }
 
 }
-
-

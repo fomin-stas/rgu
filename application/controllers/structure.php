@@ -342,21 +342,14 @@ class Structure extends APP_Controller {
             $this->activity->update_many($items, array('status' => 2));
         }
         $id_organization = $this->session->userdata('id_organization');
+        $notifications = $this->activity
+                ->order_by('time', 'DESC')
+                ->get_many_by(array('id_organization' => $id_organization, 'status' => 1));
+        $archived_notifications = $this->activity
+                ->order_by('time', 'DESC')
+                ->get_many_by(array('id_organization' => $id_organization, 'status' => 2));
         if ($this->session->userdata('user_type') == 2 || $this->session->userdata('user_type') == 3) {
-            $notifications = $this->activity
-                    ->order_by('time', 'DESC')
-                    ->get_many_by(array('id_organization' => $id_organization, 'status' => 1));
-            $archived_notifications = $this->activity
-                    ->order_by('time', 'DESC')
-                    ->get_many_by(array('id_organization' => $id_organization, 'status' => 2));
             $view = 'uvedoml_iogv';
-        } else {
-            $notifications = $this->activity
-                    ->order_by('time', 'DESC')
-                    ->get_many_by(array('status' => 1));
-            $archived_notifications = $this->activity
-                    ->order_by('time', 'DESC')
-                    ->get_many_by(array('status' => 2));
         }
         $user = $this->session->userdata('user_name');
 
