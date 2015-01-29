@@ -183,7 +183,7 @@ class Settings extends APP_Controller {
                     $this->pap->insert($insert_data);
                     break;
                 case 'property_values':
-                    $insert_data['property_value_id'] = $this->input->post('add_additional_parent_property_value');
+                    $insert_data['property_value_id'] = $this->input->post('add_additional_parent_property_value_list');
                     $this->pap->insert($insert_data);
                     break;
                 case 'additional_property':
@@ -191,7 +191,7 @@ class Settings extends APP_Controller {
                     $this->pap->insert($insert_data);
                     break;
                 case 'additional_property_values':
-                    $insert_data['id_additional_property_values'] = $this->input->post('add_additional_parent_additional_property_value');
+                    $insert_data['id_additional_property_values'] = $this->input->post('add_additional_parent_additional_property_values_list');
                     $this->pap->insert($insert_data);
                     break;
             }

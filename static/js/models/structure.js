@@ -375,7 +375,7 @@ var Structure = {
 //                        console.log('show');
                         $('#select_change').unbind('click').on('click', function () {
                             $('#' + iRow + '_' + cellname)[0].value = $('#select_editor')[0].innerHTML; //if edittype is textares, this should work
-//                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
+                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#select_edit').modal('hide');
 //                            $('#select_select')[0].options = '';
@@ -386,6 +386,7 @@ var Structure = {
                 }
                 else
                 {
+                    
                     $('#textarea_edit').modal('show');
 //                    $('#textarea_edit').on('hide.bs.modal',function(event){
 //                            jQuery(grid_selector).saveCell(iRow,iCol);
