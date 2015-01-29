@@ -168,6 +168,10 @@ class Agreeds extends APP_Controller {
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
                 $property = $this->property->get($value['id_property']);
+                $kis=explode("_", $property['code']);
+                if($kis[0] == 'kis'){
+                    continue;
+                }
                 if (($property['id_service_type'] == NULL) || (is_null($property['id_service_type'] == NULL)))
                     continue;
                 $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed']);

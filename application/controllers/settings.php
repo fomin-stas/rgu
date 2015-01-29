@@ -14,10 +14,10 @@ class Settings extends APP_Controller {
     
     public function index() {
         $this->load->model('additional_property');
-        $this->config->load('pagination', TRUE);
-        $page = (int) $this->uri->segment(3, 1);
-        $limit = $this->config->config['pagination']['per_page'];
-        $properties = $this->property->limit($limit, $page)->order_by('id_property')->with('format')->get_all();
+        //$this->config->load('pagination', TRUE);
+        //$page = (int) $this->uri->segment(3, 1);
+        //$limit = $this->config->config['pagination']['per_page'];
+        $properties = $this->property->order_by('order')->with('format')->get_all();
         $additional_property = $this->additional_property->order_by('id_additional_property')->with('format')->get_all();
         $service_types = $this->service_type->as_array()->get_all();
         $buff = array();
@@ -62,14 +62,9 @@ class Settings extends APP_Controller {
             'additional_property_select' => $additional_property_select,
             'select' => ''
                 ), true);
-        $config = array();
-        $config['base_url'] = base_url() . 'settings/index/';
-        $config['total_rows'] = $this->property->count_all();
-        $this->pagination->initialize($config);
         $this->layout->view('index', array(
             'properties' => $properties,
             'service_types' => $service_types,
-            'pages' => $this->pagination->create_links(),
             'additional_properties' => $additional_property,
             'additional_parent' => $additional_parent,
             'edit_additional_parent' => $edit_additional_parent

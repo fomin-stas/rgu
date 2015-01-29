@@ -66,7 +66,6 @@
                     </table>
                 </div>
                 <div class="row text-center">
-                    <?= $pages; ?>
                 </div>
                 <?else:?>
                 <h2>В базе нет ни одного свойства, пожалуйста добавьте их.</h2>

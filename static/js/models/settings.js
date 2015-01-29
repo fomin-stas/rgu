@@ -146,15 +146,6 @@ var Settings = {
         init_property_modals('edit', true);
         init_property_modals('edit_additional', true);
 
-
-
-
-
-
-
-
-
-
         $('#edit_type_values_list').on('click', '.a-value-remove', function (e) {
             e.preventDefault();
             var elem = $(this),
@@ -335,6 +326,31 @@ var Settings = {
 
 //cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Russian.json
         $('#additional_properties_table').DataTable({
+            "oLanguage": {
+                "sProcessing": "Подождите...",
+                "sSearch": "Поиск:",
+                "sLengthMenu": "Показать _MENU_ записей",
+                "sInfo": "Записи с _START_ до _END_ из _TOTAL_ записей",
+                "sInfoEmpty": "Записи с 0 до 0 из 0 записей",
+                "sInfoFiltered": "(отфильтровано из _MAX_ записей)",
+                "sInfoPostFix": "",
+                "sLoadingRecords": "Загрузка записей...",
+                "sZeroRecords": "Записи отсутствуют.",
+                "sEmptyTable:": "В таблице отсутствуют данные",
+                "oPaginate": {
+                    "sFirst": "Первая",
+                    "sPrevious": "Предыдущая",
+                    "sNext": "Следующая",
+                    "sLast": "Последняя"
+                },
+                "oAria": {
+                    "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                    "sortDescending": ": активировать для сортировки столбца по убыванию"
+                }
+            }
+        });
+        
+        $('#properties-table').DataTable({
             "oLanguage": {
                 "sProcessing": "Подождите...",
                 "sSearch": "Поиск:",
