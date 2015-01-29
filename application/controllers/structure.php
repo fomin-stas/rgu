@@ -130,8 +130,6 @@ class Structure extends APP_Controller {
             }
         }
 
-
-
         if ($this->input->is_ajax_request()) {
             if (isset($_GET['filters'])) {
                 $this->load->model('search_table');
@@ -149,6 +147,13 @@ class Structure extends APP_Controller {
                                 ->with('properties')
                                 ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                                 ->get_many_by('id_authority_status', 3);
+                    } elseif ($table_index == 'new_authorities') {
+                        $authorities = $this->authority
+                                ->with('status')
+                                ->with('organization')
+                                ->with('properties')
+                                ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
+                                ->get_many_by('is_new', 't');
                     } else {
                         $authorities = $this->authority
                                 ->with('status')
@@ -174,6 +179,13 @@ class Structure extends APP_Controller {
                                 ->with('properties')
                                 ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                                 ->get_many_by(array('id_authority_status' => 3, 'id_authority' => $authority_array));
+                    } elseif ($table_index == 'new_authorities') {
+                        $authorities = $this->authority
+                                ->with('status')
+                                ->with('organization')
+                                ->with('properties')
+                                ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
+                                ->get_many_by(array('is_new' => 't', 'id_authority' => $authority_array));
                     } else {
                         $authorities = $this->authority
                                 ->with('status')
@@ -193,6 +205,13 @@ class Structure extends APP_Controller {
                             ->with('properties')
                             ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                             ->get_many_by('id_authority_status', 3);
+                } elseif ($table_index == 'new_authorities') {
+                    $authorities = $this->authority
+                            ->with('status')
+                            ->with('organization')
+                            ->with('properties')
+                            ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
+                            ->get_many_by('is_new', 't');
                 } else {
                     $authorities = $this->authority
                             ->with('status')
