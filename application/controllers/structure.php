@@ -64,7 +64,6 @@ class Structure extends APP_Controller {
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                             ->get_all();
                 } elseif (count($authority_array) == 0) {
                     $authority_array[0] = 0;
@@ -72,7 +71,6 @@ class Structure extends APP_Controller {
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit_rows, ($limit_rows * ($page - 1)))
                             ->get_many($authority_array);
                 } else {
                     $limit = $this->authority->calculate_limits($page, $limit_rows, $authority_array);
@@ -80,7 +78,6 @@ class Structure extends APP_Controller {
                             ->with('status')
                             ->with('organization')
                             ->with('properties')
-                            ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                             ->get_many($authority_array);
                 }
             } else {
@@ -90,7 +87,6 @@ class Structure extends APP_Controller {
                         ->with('status')
                         ->with('organization')
                         ->with('properties')
-                        ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                         ->get_all();
             }
         } else {
@@ -100,7 +96,6 @@ class Structure extends APP_Controller {
                     ->with('status')
                     ->with('organization')
                     ->with('properties')
-                    ->limit($limit['end'] - $limit['start'] + 1, $limit['start'])
                     ->get_all();
         }
         $properties = $this->property->with('format')->order_by('order')->get_all();
@@ -189,6 +184,10 @@ class Structure extends APP_Controller {
         $grid_data['in_process'] = array();
         $grid_data['in_working'] = array();
         $grid_data['new_authorities'] = array();
+        $count_status['all'] = 0;
+        $count_status['in_process'] = 0;
+        $count_status['in_working'] = 0;
+        $count_status['new_authorities'] = 0;
         foreach ((array) $authorities as $authority) {
             $values = array();
 
@@ -202,11 +201,15 @@ class Structure extends APP_Controller {
             switch ($authority['id_authority_status']) {
                 case 3:
                     $executable_status = 'in_process';
+                    $count_status['in_process'] ++;
                     break;
                 default:
                     $executable_status = 'in_working';
+                    $count_status['in_working'] ++;
                     break;
             }
+            $count_status['all'] ++;
+
 
 // add athority properties to grid
             foreach ((array) $authority['properties'] as $p) {
@@ -251,17 +254,26 @@ class Structure extends APP_Controller {
                             }
                         }
                     }
-                    $grid_data[$executable_status][] = $values_buff[$i];
-                    $grid_data['all'][] = $values_buff[$i];
+                    if (count($count_status[$executable_status]) > $limit['start'] && count($count_status[$executable_status]) < $limit['end']) {
+                        $grid_data[$executable_status][] = $values_buff[$i];
+                    }
+                    if (count($count_status['all']) > $limit['start'] && count($count_status['all']) < $limit['end']) {
+                        $grid_data['all'][] = $values_buff[$i];
+                    }
                 }
             } else {
-                $grid_data[$executable_status][] = $values;
-                $grid_data['all'][] = $values;
+                if (count($count_status[$executable_status]) > $limit['start'] && count($count_status[$executable_status]) < $limit['end']) {
+                    $grid_data[$executable_status][] = $values;
+                }
+                if (count($count_status['all']) > $limit['start'] && count($count_status['all']) < $limit['end']) {
+                    $grid_data['all'][] = $values;
+                }
             }
 
 
             if ($authority['is_new'] == 't') {
                 $executable_status = 'new_authorities';
+                $count_status['new_authorities'] ++;
                 // add athority properties to grid
                 foreach ((array) $authority['properties'] as $p) {
                     if (array_key_exists($p['id_property'], $properties_buff)) {
@@ -304,10 +316,14 @@ class Structure extends APP_Controller {
                                 }
                             }
                         }
-                        $grid_data[$executable_status][] = $values_buff[$i];
+                        if (count($count_status[$executable_status]) > $limit['start'] && count($count_status[$executable_status]) < $limit['end']) {
+                            $grid_data[$executable_status][] = $values_buff[$i];
+                        }
                     }
                 } else {
-                    $grid_data[$executable_status][] = $values;
+                    if (count($count_status[$executable_status]) > $limit['start'] && count($count_status[$executable_status]) < $limit['end']) {
+                        $grid_data[$executable_status][] = $values;
+                    }
                 }
             }
         }
