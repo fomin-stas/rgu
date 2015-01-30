@@ -72,13 +72,51 @@
     var data = <?= json_encode($grid_data, true) ?>,
             column_models = <?= $column_models ?>,
             column_names = <?= $column_names ?>;
-    jQuery(function($) {
+    jQuery(function ($) {
 
+//*****************************************инициализация дерева
+        DataSourceTree = function (options) {
+            this._data = options.data;
+            this._delay = options.delay;
+        }
+
+        DataSourceTree.prototype.data = function (options, callback) {
+            var self = this;
+            var $data = null;
+
+            if (!("name" in options) && !("type" in options)) {
+                $data = this._data;//the root tree
+                callback({data: $data});
+                return;
+            }
+            else if ("type" in options && options.type == "folder") {
+                if ("additionalParameters" in options && "children" in options.additionalParameters)
+                    $data = options.additionalParameters.children;
+                else
+                    $data = {}//no data
+            }
+
+            if ($data != null)//this setTimeout is only for mimicking some random delay
+                setTimeout(function () {
+                    callback({data: $data});
+                }, parseInt(Math.random() * 500) + 200);
+
+            //we have used static data here
+            //but you can retrieve your data dynamically from a server using ajax call
+            //checkout examples/treeview.html and examples/treeview.js for more info
+        };
+
+        $(document).on('click', '.tree_span', function() {
+            var id = $(this).data('id');
+            $('.content_tree').hide();
+            $('#' + id).show();
+        });
+//************************************************************************************** 
 
 
         //switch element when editing inline
         function aceSwitch(cellvalue, options, cell) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $(cell).find('input[type=checkbox]')
                         .addClass('ace ace-switch ace-switch-5')
                         .after('<span class="lbl"></span>');
@@ -86,7 +124,7 @@
         }
         //enable datepicker
         function pickDate(cellvalue, options, cell) {
-            setTimeout(function() {
+            setTimeout(function () {
                 $(cell).find('input[type=text]')
                         .datepicker({format: 'yyyy-mm-dd', autoclose: true});
             }, 0);
@@ -120,7 +158,7 @@
                              }
                              }
                              },*/
-                            {title: "Редактировать", action: function(event, ui) {
+                            {title: "Редактировать", action: function (event, ui) {
                                     var rowId = getClickedRowId(event, ui),
                                             // get row data
                                             rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
@@ -128,7 +166,7 @@
                                             cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '') + '_', '');
 
                                     $.ajax({
-                                        url: 'ajax/get_history_cell',
+                                        url: 'ajax/get_service_full_property',
                                         type: 'POST',
                                         data: {
                                             rowId: rowId,
@@ -136,16 +174,18 @@
                                             cellName: cellName,
                                             authority_id: rowData['id_authority']
                                         },
-                                        success: function(data)
+                                        success: function (data)
                                         {
+                                            console.log(data);
                                             $('#textarea_edit').html(data);
+                                            $('#textarea_edit').modal('show');
                                         }
                                     });
 
-                                    $('#textarea_edit').modal('show');
+                                    
                                     //jQuery(Structure.options.grid_selector).jqGrid('editGridRow', getClickedRowId(event, ui), {width: 450});
                                 }},
-                            {title: "История изменений", action: function(event, ui)
+                            {title: "История изменений", action: function (event, ui)
                                 {
                                     var rowId = getClickedRowId(event, ui),
                                             // get row data
@@ -162,7 +202,7 @@
                                             cellName: cellName,
                                             authority_id: rowData['id_authority'],
                                         },
-                                        success: function(data)
+                                        success: function (data)
                                         {
                                             $('#changes').html(data);
                                         }
@@ -204,7 +244,7 @@
         }
         return cellid;
     }
-    $(window).load(function() {
+    $(window).load(function () {
         $('.ui-search-toolbar').removeClass('ui-search-toolbar');
     });
 

@@ -4,10 +4,10 @@ var Structure = {
         grid_selector: '#grid-table-all',
         grid_selector_tab: 'all',
     },
-    init: function() {
+    init: function () {
         console.log('Structure');
     },
-    initKIS: function() {
+    initKIS: function () {
         console.log('Structure KIS');
         var grid_data = data.all,
                 grid_selector = "#grid-table-all",
@@ -16,7 +16,7 @@ var Structure = {
 
         // Tabs init
         $('#gridTabs .nav-tabs a:last').tab('show');
-        $('#gridTabs .nav-tabs a').click(function(e) {
+        $('#gridTabs .nav-tabs a').click(function (e) {
             e.preventDefault();
             $(this).tab('show');
             var tab_hash = e.target.hash.replace('#', '');
@@ -30,7 +30,7 @@ var Structure = {
         });
 
         //resize to fit page size
-        $(window).on('resize.jqGrid', function() {
+        $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
@@ -43,7 +43,7 @@ var Structure = {
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
                 $(grid_selector).jqGrid('setGridWidth', parent_column.width());
             }
@@ -54,30 +54,33 @@ var Structure = {
 
         var tag_input = $('.ui-search-input').children();
         tag_input.tag({
-            source: function(query, process) {
+            source: function (query, process) {
                 var r1 = this.$element[0].previousSibling.name;
                 $.ajax({
                     method: 'POST',
                     url: 'ajax/propertys_array/' + r1,
                     data: 'text=' + query
-                }).done(function(result_items) {
+                }).done(function (result_items) {
                     results = $.parseJSON(result_items);
                     process(results);
                 });
             }
         });
-        tag_input.on('added', function(e, value) {
+        tag_input.on('added', function (e, value) {
             var sgrid = $(grid_selector)[0];
             sgrid.triggerToolbar();
 
         });
-        tag_input.on('removed', function(e, value) {
+        tag_input.on('removed', function (e, value) {
             var sgrid = $(grid_selector)[0];
             sgrid.triggerToolbar();
 
         });
+
+
+         
     },
-    initIOGV: function() {
+    initIOGV: function () {
         console.log('Structure IOGV');
         var grid_data = data.all,
                 grid_selector = "#grid-table-all",
@@ -86,7 +89,7 @@ var Structure = {
 
         // Tabs init
         $('#gridTabs .nav-tabs a:last').tab('show');
-        $('#gridTabs .nav-tabs a').click(function(e) {
+        $('#gridTabs .nav-tabs a').click(function (e) {
             e.preventDefault();
             $(this).tab('show');
             var tab_hash = e.target.hash.replace('#', '');
@@ -99,7 +102,7 @@ var Structure = {
 
 
         //resize to fit page size
-        $(window).on('resize.jqGrid', function() {
+        $(window).on('resize.jqGrid', function () {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
@@ -112,7 +115,7 @@ var Structure = {
         });
         //resize on sidebar collapse/expand
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(document).on('settings.ace.jqGrid', function(ev, event_name, collapsed) {
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
             if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
                 $(grid_selector).jqGrid('setGridWidth', parent_column.width());
             }
@@ -122,30 +125,30 @@ var Structure = {
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
         var tag_input = $('.ui-search-input').children();
         tag_input.tag({
-            source: function(query, process) {
+            source: function (query, process) {
                 var r1 = this.$element[0].previousSibling.name;
                 $.ajax({
                     method: 'POST',
                     url: 'ajax/propertys_array/' + r1,
                     data: 'text=' + query
-                }).done(function(result_items) {
+                }).done(function (result_items) {
                     results = $.parseJSON(result_items);
                     process(results);
                 });
             }
         });
-        tag_input.on('added', function(e, value) {
+        tag_input.on('added', function (e, value) {
             var sgrid = $(grid_selector)[0];
             sgrid.triggerToolbar();
 
         });
-        tag_input.on('removed', function(e, value) {
+        tag_input.on('removed', function (e, value) {
             var sgrid = $(grid_selector)[0];
             sgrid.triggerToolbar();
 
         });
     },
-    cellFormat: function(rowId, val, rawObject, cm)
+    cellFormat: function (rowId, val, rawObject, cm)
     {
         if (rawObject.attr) {
             var attr = rawObject.attr[cm.name],
@@ -164,7 +167,7 @@ var Structure = {
         }
         return result;
     },
-    table_data_to_options: function(col)
+    table_data_to_options: function (col)
     {
         var cells = $('tr[tabindex=-1] td[role="gridcell"]');
         var column = [];
@@ -193,7 +196,7 @@ var Structure = {
         }
         return result;
     },
-    render_colModel: function(grid_selector) {
+    render_colModel: function (grid_selector) {
         var cm = $(grid_selector).jqGrid('getGridParam', 'colModel'),
                 rowsCount = $(grid_selector).getGridParam("records");
 
@@ -237,7 +240,7 @@ var Structure = {
             }
         }
     },
-    renderGrid: function(grid_selector, pager_selector, grid_data) {
+    renderGrid: function (grid_selector, pager_selector, grid_data) {
         organization_name = $.cookie('organization_name');
         jQuery(grid_selector).jqGrid({
             subGrid: false,
@@ -277,12 +280,12 @@ var Structure = {
                 //id: "Id"
             },
 //				ajaxCellOptions:	object - This option allow to set global ajax settings for the cell editing when we save the data to the server. 
-            beforeProcessing: function(data)
+            beforeProcessing: function (data)
             {
 
                 Structure.render_colModel(grid_selector);
             },
-            beforeRequest: function() {
+            beforeRequest: function () {
                 dial = bootbox.dialog({
                     title: "Подождите идет загрузка данных",
                     message: " ",
@@ -291,7 +294,7 @@ var Structure = {
                 });
 
             },
-            loadComplete: function() {
+            loadComplete: function () {
                 bootbox.hideAll();
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
                 $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
@@ -304,17 +307,17 @@ var Structure = {
                         );
                 Structure.render_colModel(grid_selector);
                 var table = this;
-                setTimeout(function() {
+                setTimeout(function () {
                     Structure.styleCheckbox(table);
                     Structure.updateActionIcons(table);
                     Structure.updatePagerIcons(table);
                     Structure.enableTooltips(table);
                 }, 0);
             },
-            beforeSelectRow: function(rowid) {
+            beforeSelectRow: function (rowid) {
                 return false;
             },
-            ondblClickRow: function(rowid, iRow, iCol)
+            ondblClickRow: function (rowid, iRow, iCol)
             {
                 // get row data by dblclick on cell
                 var rowData = $(this).jqGrid("getGridParam", "data")[rowid - 1];
@@ -323,7 +326,7 @@ var Structure = {
 
                 jQuery(grid_selector).editCell(iRow, iCol, true);
             },
-            beforeEditCell: function(rowid, cellname, value, iRow, iCol)
+            beforeEditCell: function (rowid, cellname, value, iRow, iCol)
             {
                 var cm = $(grid_selector).jqGrid('getGridParam', 'colModel')[iCol];
                 if (cm.stype === 'select')
@@ -339,12 +342,12 @@ var Structure = {
 //                        console.log(soptions);
 //
                         $('#multiselect_edit').modal('show');
-                        $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal', function(event) {
+                        $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
                             jQuery(grid_selector).restoreCell(iRow, iCol);
                         });
                         $('#multiselect_editor')[0].innerHTML = value;
 //                        console.log('show');
-                        $('#mselect_change').unbind('click').on('click', function() {
+                        $('#mselect_change').unbind('click').on('click', function () {
                             $('#' + iRow + '_' + cellname)[0].value = $('#multiselect_editor')[0].innerHTML;
                             jQuery(grid_selector).saveCell(iRow, iCol);
                             $('#multiselect_edit').modal('hide');
@@ -367,13 +370,13 @@ var Structure = {
 //                        $('#select_edit').on('hide.bs.modal',function(event){
 //                            jQuery(grid_selector).saveCell(iRow,iCol);
 //                        });
-                        $('#select_edit').unbind('hide.bs.modal').on('hide.bs.modal', function(event) {
+                        $('#select_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
                             jQuery(grid_selector).restoreCell(iRow, iCol);
                         });
 //                        $('#select_select')[0].value = value;
                         $('#select_editor')[0].innerHTML = value;
 //                        console.log('show');
-                        $('#select_change').unbind('click').on('click', function() {
+                        $('#select_change').unbind('click').on('click', function () {
                             $('#' + iRow + '_' + cellname)[0].value = $('#select_editor')[0].innerHTML; //if edittype is textares, this should work
                             $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
                             jQuery(grid_selector).saveCell(iRow, iCol);
@@ -401,12 +404,12 @@ var Structure = {
                             cellName: cellName,
                             authority_id: rowData['id_authority']
                         },
-                        success: function(data)
+                        success: function (data)
                         {
                             $('#textarea_edit').html(data);
                         }
                     });
-                    
+
                     $('#textarea_edit').modal('show');
 //                    $('#textarea_edit').on('hide.bs.modal',function(event){
 //                            jQuery(grid_selector).saveCell(iRow,iCol);
@@ -438,7 +441,7 @@ var Structure = {
 //                    }
 //                });
             },
-            beforeSubmitCell: function(rowid, celname, value, iRow, iCol) {
+            beforeSubmitCell: function (rowid, celname, value, iRow, iCol) {
                 var result = {};
                 // get row data by dblclick on cell
                 var rowData = $(this).jqGrid("getGridParam", "data")[rowid - 1];
@@ -474,7 +477,7 @@ var Structure = {
             width: 450,
             recreateForm: true,
             viewPagerButtons: false,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
                 Structure.style_edit_form(form);
@@ -485,7 +488,7 @@ var Structure = {
             width: 450,
             recreateForm: true,
             viewPagerButtons: false,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                         .wrapInner('<div class="widget-header" />');
@@ -495,7 +498,7 @@ var Structure = {
         {
             //delete record form
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 if (form.data('styled'))
                     return false;
@@ -505,7 +508,7 @@ var Structure = {
 
                 form.data('styled', true);
             },
-            onClick: function(e) {
+            onClick: function (e) {
                 alert(1);
             }
         },
@@ -513,12 +516,12 @@ var Structure = {
             //search form
             width: 1000,
             recreateForm: true,
-            afterShowSearch: function(e) {
+            afterShowSearch: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
                 Structure.style_search_form(form);
             },
-            afterRedraw: function() {
+            afterRedraw: function () {
                 Structure.style_search_filters($(this));
             },
             multipleSearch: true,
@@ -529,7 +532,7 @@ var Structure = {
             width: 700,
             //viewPagerButtons:true,
             recreateForm: true,
-            beforeShowForm: function(e) {
+            beforeShowForm: function (e) {
                 var form = $(e[0]);
                 form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header"/>');
             }
@@ -545,7 +548,7 @@ var Structure = {
                         buttonicon: "ace-icon fa fa-plus-circle purple",
                         caption: "",
                         title: "Новое полномочие",
-                        onClickButton: function() {
+                        onClickButton: function () {
                             location = "structure/step1";
                         }
 
@@ -559,7 +562,7 @@ var Structure = {
                     buttonicon: "ace-icon fa fa-cog",
                     caption: "",
                     title: "Настройки отображения таблицы",
-                    onClickButton: function()
+                    onClickButton: function ()
                     {
                         jQuery(grid_selector).setColumns(
                                 {
@@ -574,7 +577,7 @@ var Structure = {
                                     left: 29
                                 });
 
-                        $("#search_columns").on('keyup', function()
+                        $("#search_columns").on('keyup', function ()
                         {
                             var rows = $(".ColTable tr"); //get all colum-names rows.
                             for (var i = 2; i < rows.length; i++) //start from second row - the first row whith meaning data
@@ -609,7 +612,7 @@ var Structure = {
                     buttonicon: "ace-icon fa fa-external-link red",
                     caption: "",
                     title: "Выгрузить в Excel",
-                    onClickButton: function(e) {
+                    onClickButton: function (e) {
                         var cols = [];
                         var colModel = $(this).getGridParam('colModel');
                         var selRows = $(this).getGridParam('selrow');
@@ -632,7 +635,7 @@ var Structure = {
         //footer (pager) search
         $(pager_selector + "_right").empty();
         $(pager_selector + "_right").append("<i class='ace-icon fa fa-search nav-search-icon'></i><input type='text' id='my_pag_search'>"); //place search input in footer
-        $("#my_pag_search").on('change keyup', function(event, ui)
+        $("#my_pag_search").on('change keyup', function (event, ui)
         {
             var rows = $("tr[role='row']"); //get all rows.
             for (var i = 1; i <= rows.length; i++) //start from second row - the first row whith meaning data
@@ -648,7 +651,7 @@ var Structure = {
         });
 
 
-        $("#timeline_search_input").on('change keyup', function(event, ui)
+        $("#timeline_search_input").on('change keyup', function (event, ui)
         {
             var timeline_items = $(".timeline-item");
             for (var i = 0; i < timeline_items.length; i++)
@@ -681,12 +684,12 @@ var Structure = {
         {
             var filters = $(".ui-search-input>input,.ui-search-input>select");
 
-            filters.map(function() {
-                $(this).on('change keyup', function() {
+            filters.map(function () {
+                $(this).on('change keyup', function () {
                     var value = $(this).val();
                     console.log("value: " + value);
                     var filter_index = getColumnIndexByName(this.name);
-                    var column = $('tr[tabindex=-1] td[role="gridcell"]').map(function() {
+                    var column = $('tr[tabindex=-1] td[role="gridcell"]').map(function () {
                         if (this.cellIndex == filter_index) {
                             return this;
                         }
@@ -787,7 +790,7 @@ var Structure = {
             enableClear: true,
             stringResult: true,
             clearSearch: true,
-            beforeSearch: function()
+            beforeSearch: function ()
             {
                 var postData = $(grid_selector).jqGrid('getGridParam', 'postData');
                 postData.filters = $.parseJSON(postData.filters);
@@ -861,7 +864,7 @@ var Structure = {
             numberDisplayed: 1,
             maxHeight: 300,
             selectAllText: "Все",
-            onChange: function() {
+            onChange: function () {
                 console.log('search');
             },
             templates: {
@@ -870,7 +873,7 @@ var Structure = {
         });
 
         //multiselect cell editing
-        $('#mselect_add').on('click', function() {
+        $('#mselect_add').on('click', function () {
             if (!$('#mselect_textarea')[0].value)
             {
                 $('#mselect_textarea')[0].value += $('#mselect_select')[0].value;
@@ -881,7 +884,7 @@ var Structure = {
             }
         });
 
-        $('#mselect_reset').on('click', function() {
+        $('#mselect_reset').on('click', function () {
             $('#mselect_textarea')[0].value = '';
         });
 
@@ -895,7 +898,7 @@ var Structure = {
         }
 
         var delta;
-        $('div.ui-jqgrid-bdiv')[0].addEventListener('scroll', function()
+        $('div.ui-jqgrid-bdiv')[0].addEventListener('scroll', function ()
         {
             var dropdown_ul;
             if (!delta) {
@@ -950,7 +953,7 @@ var Structure = {
         {
             $('tr[class=""][role="rowheader"] th div').first().innerHTML = '<span id="hide_search" class="ui-icon ace-icon fa fa-minus"></span>';
         }
-        $('#hide_search').on('click', function() {
+        $('#hide_search').on('click', function () {
             counter = !counter;
             if (counter)
             {
@@ -967,14 +970,14 @@ var Structure = {
         });
 
     },
-    styleCheckbox: function(table) {
+    styleCheckbox: function (table) {
 
     },
-    updateActionIcons: function(table) {
+    updateActionIcons: function (table) {
 
     },
     //replace icons with FontAwesome icons
-    updatePagerIcons: function(table) {
+    updatePagerIcons: function (table) {
         var replacement =
                 {
                     'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
@@ -982,7 +985,7 @@ var Structure = {
                     'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
                     'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
                 };
-        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
@@ -990,30 +993,30 @@ var Structure = {
                 icon.attr('class', 'ui-icon ' + replacement[$class]);
         });
     },
-    enableTooltips: function(table) {
+    enableTooltips: function (table) {
         $('.navtable .ui-pg-button').tooltip({container: 'body'});
         $(table).find('.ui-pg-div').tooltip({container: 'body'});
     },
-    style_delete_form: function(form) {
+    style_delete_form: function (form) {
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
         buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
         buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>');
     },
-    style_search_filters: function(form) {
+    style_search_filters: function (form) {
         form.find('.delete-rule').val('X');
         form.find('.add-rule').addClass('btn btn-xs btn-primary');
         form.find('.add-group').addClass('btn btn-xs btn-success');
         form.find('.delete-g,roup').addClass('btn btn-xs btn-danger');
     },
-    style_search_form: function(form) {
+    style_search_form: function (form) {
         var dialog = form.closest('.ui-jqdialog');
         var buttons = dialog.find('.EditTable');
         buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
         buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
         buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
     },
-    style_edit_form: function(form) {
+    style_edit_form: function (form) {
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
         buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
@@ -1024,7 +1027,7 @@ var Structure = {
         buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
         buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
     },
-    beforeDeleteCallback: function(e) {
+    beforeDeleteCallback: function (e) {
         var form = $(e[0]);
         if (form.data('styled'))
             return false;
@@ -1034,12 +1037,12 @@ var Structure = {
 
         form.data('styled', true);
     },
-    beforeEditCallback: function(e) {
+    beforeEditCallback: function (e) {
         var form = $(e[0]);
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
         Structure.style_edit_form(form);
     },
-    restyle_setcol_icons: function() {
+    restyle_setcol_icons: function () {
         var replacement = {
             'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
             'ui-icon-seek-prev': 'ace-icon fa fa-angle-left bigger-140',
@@ -1048,7 +1051,7 @@ var Structure = {
             'ui-icon-minus': 'ace-icon fa fa-angle-double-right bigger-140'
         };
 
-        $('.ui-multiselect > .selected > ul > li > a > .ui-icon').each(function() {
+        $('.ui-multiselect > .selected > ul > li > a > .ui-icon').each(function () {
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
@@ -1056,7 +1059,7 @@ var Structure = {
                 icon.attr('class', 'ui-icon ' + replacement[$class]);
         });
     },
-    add_hide_btn: function() //add hide icons
+    add_hide_btn: function () //add hide icons
     {
         var row_length = document.getElementsByTagName('th').length;
         if (!document.getElementsByClassName('ui-search-input')) {
@@ -1067,7 +1070,7 @@ var Structure = {
             $("table[role='grid'] thead tr:first-child th[role='columnheader']:nth-child(" + i + ")").prepend("<i class='fa fa-times red2 hide_col_btn' id='close_btn_" + i + "' onclick='javascript:Structure.hide_column(" + i + ")'></i>");
         }
     },
-    hide_column: function(button_num) //hide selected column
+    hide_column: function (button_num) //hide selected column
     {
         var close_icon = document.getElementById("close_btn_" + button_num); //take close icon by
         var all_icons = document.getElementsByClassName("hide_col_btn"); //take array of all icons of this type
@@ -1082,9 +1085,9 @@ var Structure = {
         $("table[role='grid'] thead tr th[role='columnheader']:nth-child(" + requested_col_num + ")").hide(); //hide all th of this column
         $("table[role='grid'] tbody tr td[role='gridcell']:nth-child(" + requested_col_num + ")").hide(); //hide all td of this column
     },
-    initNotifications: function() {
+    initNotifications: function () {
         //select all
-        $('#selectAll').on('click', function() {
+        $('#selectAll').on('click', function () {
             if ($(this).is(':checked')) {
                 $('.delete_trigger').prop('checked', true);
             }

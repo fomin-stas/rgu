@@ -207,6 +207,74 @@ class Ajax extends APP_Controller {
         }
     }
 
+    public function get_service_full_property() {
+        $row_id = $this->input->post('rowId');
+        $coll_index = $this->input->post('collIndex');
+        $code = $this->input->post('cellName');
+        $id_authority = $this->input->post('authority_id');
+        $additional_property = $this->additional_property->get_key_id_all();
+        $property = $this->property->get_by('code', $code);
+        $data_additional['id_property'] = $property['id_property'];
+        $data_additional['title'] = $property['property_name'];
+        $data_additional['content'] = '';
+        $data_additional['type'] = 'adiceed_'.$property['id_property'];;
+        $data_additional['service_num'] = $id_authority;
+        $additional_data = $this->additional_property->generate_tree_structure($property['id_property'], $data_additional);
+        $data_additional['tree'] = $additional_data['tree'];
+        
+        //обработка свойства
+        if (($property['id_property_type'] == 3) || ($property['id_property_type'] == 5)) {
+                $options = $this->property_values_model->get_property_values($property['id_property']);
+                $data_content = array(
+                    'id_property_format' => $property['id_property_type'],
+                    'id_additional_property' => $property['id_property'],
+                    'additional_property_name' => $property['property_name'],
+                    'type' => 'adiceed_'.$property['id_property'],
+                    'service_num' => $id_authority,
+                    'options' => $options
+                );
+            } else {
+                $data_content = array(
+                    'id_property_format' => $property['id_property_type'],
+                    'id_additional_property' => $property['id_property'],
+                    'additional_property_name' => $property['property_name'],
+                    'type' => 'adiceed_'.$property['id_property'],
+                    'service_num' => $id_authority
+                );
+            }
+        $data_additional['property_content']=$this->load->view('settings/modal_dialog/modal_content', $data_content, true);
+        //*********************************
+        
+        foreach ($additional_data['content'] as $id_ap => $id_property_format) {
+            if (($id_property_format == 3) || ($id_property_format == 5)) {
+                $options = $this->additional_property_values->get_additional_property_values($id_ap);
+                $data_content = array(
+                    'id_property_format' => $id_property_format,
+                    'id_additional_property' => $id_ap,
+                    'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
+                    'type' => 'adiceed_'.$property['id_property'],
+                    'service_num' => $id_authority,
+                    'options' => $options
+                );
+            } else {
+                $data_content = array(
+                    'id_property_format' => $id_property_format,
+                    'id_additional_property' => $id_ap,
+                    'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
+                    'type' => 'adiceed_'.$property['id_property'],
+                    'service_num' => $id_authority
+                );
+            }
+            $data_additional['content'].=$data_additional['content'] . $this->load->view('settings/modal_dialog/modal_content', $data_content, true);
+        }
+        if (count(json_decode($data_additional['tree'])) > 0) {
+            $property['additional_property'] = $this->load->view('structure/property_edit', $data_additional, true);
+        }else{
+            $property['additional_property'] = $this->load->view('structure/without_additional_property', $data_additional, true);
+        }
+        echo $property['additional_property'];
+    }
+
     function export_excel() {
         var_dump($_POST);
     }
