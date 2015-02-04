@@ -508,4 +508,24 @@ class Ajax extends APP_Controller {
     }
 
     //******************************************************
+    
+    public function upload(){
+
+        $config['upload_path'] = "/static/img/articles";
+        $config['allowed_types'] = "jpg|jpeg|png|gif|flv|mp4|wmv|doc|docx|xsl|xslx|ppt|pptx|zip|rar|tar";
+        $config['max_size']	= 2048;
+        $config['max_width'] = 800;
+        $config['max_height'] = 600;
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload() == false) {
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode($error);
+        }else{
+            $data = $this->upload->data();
+            echo json_encode($data);
+        }
+    }
 }

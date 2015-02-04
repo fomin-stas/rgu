@@ -247,7 +247,7 @@ var Structure = {
             altRows: true,
             data: grid_data,
             //datatype: "local",
-            height: "auto",
+            height: "20%",
             colNames: column_names,
             colModel: column_models,
             viewrecords: true,
@@ -257,7 +257,7 @@ var Structure = {
             pager: pager_selector,
             pgbuttons: true,
             pginput: true,
-            sortable: true,
+            sortable: false,
             multiselect: true,
             multiboxonly: true,
             deepempty: true,
@@ -287,7 +287,7 @@ var Structure = {
             },
             beforeRequest: function () {
                 dial = bootbox.dialog({
-                    title: "Подождите идет загрузка данных",
+                    title: "Подождите, идет загрузка данных...",
                     message: " ",
                     closeButton: false,
                     backdrop: true
@@ -389,42 +389,44 @@ var Structure = {
                 }
                 else
                 {
-                    var rowId = getClickedRowId(event, ui),
-                            // get row data
-                            rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
-                            // get cell name by grid selector
-                            cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '') + '_', '');
-
-                    $.ajax({
-                        url: 'ajax/get_history_cell',
-                        type: 'POST',
-                        data: {
-                            rowId: rowId,
-                            collIndex: getClickedColNum(event, ui),
-                            cellName: cellName,
-                            authority_id: rowData['id_authority']
-                        },
-                        success: function (data)
-                        {
-                            $('#textarea_edit').html(data);
-                        }
+//                    var rowId = getClickedRowId(event, ui),
+//                            // get row data
+//                            rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
+//                            // get cell name by grid selector
+//                            cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '') + '_', '');
+//
+//                    $.ajax({
+//                        url: 'ajax/get_history_cell',
+//                        type: 'POST',
+//                        data: {
+//                            rowId: rowId,
+//                            collIndex: getClickedColNum(event, ui),
+//                            cellName: cellName,
+//                            authority_id: rowData['id_authority']
+//                        },
+//                        success: function (data)
+//                        {
+//                            $('#textarea_edit').html(data);
+//                        }
+//                    });
+//
+//                    $('#textarea_edit').modal('show');
+                    
+                    
+                    $('#textarea_edit').on('hide.bs.modal',function(event){
+                            jQuery(grid_selector).saveCell(iRow,iCol);
+                        });
+                    $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
+                        jQuery(grid_selector).restoreCell(iRow, iCol);
                     });
-
-                    $('#textarea_edit').modal('show');
-//                    $('#textarea_edit').on('hide.bs.modal',function(event){
-//                            jQuery(grid_selector).saveCell(iRow,iCol);
-//                        });
-//                    $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
-//                        jQuery(grid_selector).restoreCell(iRow, iCol);
-//                    });
-//                    $('#textarea_editor')[0].innerHTML = value;
-//                    console.log('show');
-//                    $('#textarea_change').unbind('click').on('click', function () {
-//                        $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
-//                        jQuery(grid_selector).saveCell(iRow, iCol);
-//                        $('#textarea_edit').modal('hide');
-//                        $('#textarea_editor')[0].innerHTML = "";
-//                    });
+                  // $('#textarea_editor')[0].innerHTML = value;
+                    console.log('show');
+                    $('#textarea_change').unbind('click').on('click', function () {
+                        $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
+                        jQuery(grid_selector).saveCell(iRow, iCol);
+                        $('#textarea_edit').modal('hide');
+                        $('#textarea_editor')[0].innerHTML = "";
+                    });
                 }
 
 //                $('#mselect_select,#select_select').multiselect({

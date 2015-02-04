@@ -358,8 +358,8 @@
                                         <option value="2" <?php echo set_select('property_type', '2'); ?> >Тесковое поле (многострочное)</option>
                                         <option value="3" <?php echo set_select('property_type', '3'); ?> >Выпадающий список</option>
                                         <option value="4" <?php echo set_select('property_type', '4'); ?> >Дата</option>
-                                        <option value="5" <?php echo set_select('property_type', '6'); ?> >Число</option>
-                                        <option value="5" <?php echo set_select('property_type', '7'); ?> >Файл</option>
+                                        <option value="6" <?php echo set_select('property_type', '6'); ?> >Число</option>
+                                        <option value="7" <?php echo set_select('property_type', '7'); ?> >Файл</option>
                                     </select>
                                 </div>
                             </div>
