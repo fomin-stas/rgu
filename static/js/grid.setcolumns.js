@@ -70,10 +70,11 @@ $.jgrid.extend({
                                 formdata += "<div id='"+dtbl+"' class='formdata' style='width:100%;overflow:auto;position:relative;height:"+dh+";'>";
                                 formdata += "<table class='ColTable settings_list' cellspacing='1' cellpading='2' border='0'><tbody>";
 				for(i=0;i<this.p.colNames.length;i++){
-					if(!$t.p.colModel[i].hidedlg) { // added from T. Tomov
-						formdata += "<tr id='"+(i)+"_sortable_row'><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
-						((localStorage[Structure.options.grid_selector+'col_'+this.p.colModel[i].name+'_checked']=='true')?"checked":"") + " />" + "<label for='col_" + this.p.colModel[i].name + "'>" + this.p.colNames[i] + ((p.colnameview) ? " (" + this.p.colModel[i].name + ")" : "" )+ "</label></td></tr>";
-					}
+					if(!$t.p.colModel[i].hidedlg) { // added from T. Tomov, changed to work with localStorage
+		                            var is_checked = localStorage['col_'+this.p.colModel[i].name+'_checked'];
+		                            formdata += "<tr id='"+(i)+"_sortable_row'><td style='white-space: pre;'><input type='checkbox' style='margin-right:5px;' id='col_" + this.p.colModel[i].name + "' class='cbox' value='T' " + 
+		                            (((is_checked=='true')||(is_checked==undefined))?"checked":"") + " />" + "<label for='col_" + this.p.colModel[i].name + "'>" + this.p.colNames[i] + ((p.colnameview) ? " (" + this.p.colModel[i].name + ")" : "" )+ "</label></td></tr>";
+		                        }
 				}
 				formdata += "</tbody></table></div>";
                                 formdata += "<div class='formdata' style='width:100%;overflow:auto;position:relative;'>";
