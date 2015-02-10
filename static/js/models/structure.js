@@ -78,7 +78,7 @@ var Structure = {
         });
 
 
-         
+
     },
     initIOGV: function () {
         console.log('Structure IOGV');
@@ -247,7 +247,7 @@ var Structure = {
             altRows: true,
             data: grid_data,
             //datatype: "local",
-            height: "20%",
+            height: 400,
             colNames: column_names,
             colModel: column_models,
             viewrecords: true,
@@ -262,7 +262,11 @@ var Structure = {
             multiboxonly: true,
             deepempty: true,
             ignoreCase: true,
-            autowidth: true,
+            autowidth: false,
+            
+            hoverrows:true, 
+            loadui:"disable",
+            
             //shrinkToFit:false,
             cellEdit: true,
             cellsubmit: "remote",
@@ -286,16 +290,11 @@ var Structure = {
                 Structure.render_colModel(grid_selector);
             },
             beforeRequest: function () {
-                dial = bootbox.dialog({
-                    title: "Подождите, идет загрузка данных...",
-                    message: " ",
-                    closeButton: false,
-                    backdrop: true
-                });
-
+                $('#spiner').modal('show');
             },
             loadComplete: function () {
-                bootbox.hideAll();
+                $('#spiner').modal('hide');
+                //bootbox.hideAll();
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
                 $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                         $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
@@ -328,120 +327,40 @@ var Structure = {
             },
             beforeEditCell: function (rowid, cellname, value, iRow, iCol)
             {
+                $('#spiner').modal('show');
                 var cm = $(grid_selector).jqGrid('getGridParam', 'colModel')[iCol];
-                if (cm.stype === 'select')
-                {
-                    if (cm.searchoptions.attr.multiple)
+                rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowid - 1],
+                $.ajax({
+                    url: 'ajax/get_service_full_property',
+                    type: 'POST',
+                    data: {
+                        rowId: rowid,
+                        collIndex: iCol,
+                        cellName: cellname,
+                        value: value,
+                        authority_id: rowData['id_authority']
+                    },
+                    success: function (data)
                     {
-//                        var soptions = cm.searchoptions.value.split(';');
-//                        for (i = 0; i < soptions.length; i++)
-//                        {
-//                            soptions[i] = soptions[i].split(':');
-//                            $('#mselect_select').append('<option value="' + soptions[i][0] + '">' + soptions[i][1] + '</option>');
-//                        }
-//                        console.log(soptions);
-//
-                        $('#multiselect_edit').modal('show');
-                        $('#multiselect_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
-                            jQuery(grid_selector).restoreCell(iRow, iCol);
-                        });
-                        $('#multiselect_editor')[0].innerHTML = value;
-//                        console.log('show');
-                        $('#mselect_change').unbind('click').on('click', function () {
-                            $('#' + iRow + '_' + cellname)[0].value = $('#multiselect_editor')[0].innerHTML;
-                            jQuery(grid_selector).saveCell(iRow, iCol);
-                            $('#multiselect_edit').modal('hide');
-                            $('#multiselect_editor')[0].innerHTML = '';
-//                            $('#mselect_select')[0].options = '';
-                        });
-
+                        console.log(data);
+                        $('#textarea_edit').html(data);
+                        $('#textarea_edit').modal('show');
+                        $('#spiner').modal('hide');
                     }
-                    else
-                    {
-//                        var soptions = cm.searchoptions.value.split(';');
-//                        for (i = 0; i < soptions.length; i++)
-//                        {
-//                            soptions[i] = soptions[i].split(':');
-//                            $('#select_select').append('<option value="' + soptions[i][0] + '">' + soptions[i][1] + '</option>');
-//                        }
-//                        console.log(soptions);
-//
-                        $('#select_edit').modal('show');
-//                        $('#select_edit').on('hide.bs.modal',function(event){
-//                            jQuery(grid_selector).saveCell(iRow,iCol);
-//                        });
-                        $('#select_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
-                            jQuery(grid_selector).restoreCell(iRow, iCol);
-                        });
-//                        $('#select_select')[0].value = value;
-                        $('#select_editor')[0].innerHTML = value;
-//                        console.log('show');
-                        $('#select_change').unbind('click').on('click', function () {
-                            $('#' + iRow + '_' + cellname)[0].value = $('#select_editor')[0].innerHTML; //if edittype is textares, this should work
-                            $('#' + iRow + ' td[aria-describedby=' + grid_selector + '_' + cellname + '] select')[0].value = $('#select_select')[0].value; //if edittype is select
-                            jQuery(grid_selector).saveCell(iRow, iCol);
-                            $('#select_edit').modal('hide');
-//                            $('#select_select')[0].options = '';
-                            $('#select_editor')[0].innerHTML = '';
-                        });
-                    }
-
-                }
-                else
-                {
-//                    var rowId = getClickedRowId(event, ui),
-//                            // get row data
-//                            rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowId - 1],
-//                            // get cell name by grid selector
-//                            cellName = ui.target[0].getAttribute('aria-describedby').replace(Structure.options.grid_selector.replace('#', '') + '_', '');
-//
-//                    $.ajax({
-//                        url: 'ajax/get_history_cell',
-//                        type: 'POST',
-//                        data: {
-//                            rowId: rowId,
-//                            collIndex: getClickedColNum(event, ui),
-//                            cellName: cellName,
-//                            authority_id: rowData['id_authority']
-//                        },
-//                        success: function (data)
-//                        {
-//                            $('#textarea_edit').html(data);
-//                        }
-//                    });
-//
-//                    $('#textarea_edit').modal('show');
-                    
-                    
-                    $('#textarea_edit').on('hide.bs.modal',function(event){
-                            jQuery(grid_selector).saveCell(iRow,iCol);
-                        });
-                    $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
-                        jQuery(grid_selector).restoreCell(iRow, iCol);
-                    });
-                  // $('#textarea_editor')[0].innerHTML = value;
-                    console.log('show');
-                    $('#textarea_change').unbind('click').on('click', function () {
-                        $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
-                        jQuery(grid_selector).saveCell(iRow, iCol);
-                        $('#textarea_edit').modal('hide');
-                        $('#textarea_editor')[0].innerHTML = "";
-                    });
-                }
-
-//                $('#mselect_select,#select_select').multiselect({
-//                    buttonClass: 'btn btn-white btn-sm col-md-10',
-//                    buttonContainer: "<span class='dropdown'>",
-//                    checkboxName: "edit_chb[]",
-//                    nonSelectedText: "Не выбрано",
-//                    includeSelectAllOption: true,
-//                    selectAllText: "Все",
-//                    enableCaseInsensitiveFiltering: true,
-//                    filterBehavior: 'both',
-//                    filterPlaceholder: "Поиск",
-//                    onChange: function () {
-//                    }
-//                });
+                });
+                $('#textarea_edit').on('hide.bs.modal', function (event) {
+                    jQuery(grid_selector).saveCell(iRow, iCol);
+                });
+                $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
+                    jQuery(grid_selector).restoreCell(iRow, iCol);
+                });
+                // $('#textarea_editor')[0].innerHTML = value;
+                $('#textarea_change').unbind('click').on('click', function () {
+                    $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
+                    jQuery(grid_selector).saveCell(iRow, iCol);
+                    $('#textarea_edit').modal('hide');
+                    $('#textarea_editor')[0].innerHTML = "";
+                });
             },
             beforeSubmitCell: function (rowid, celname, value, iRow, iCol) {
                 var result = {};

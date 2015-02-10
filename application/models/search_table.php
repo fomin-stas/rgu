@@ -57,13 +57,17 @@ class Search_table extends CI_Model {
         }
         return $at_array;
     }
-    
-    public function filtered_by_organization($authorities_array,$id_organization){
-        $result_array=array();
-        $authorities=$this->authority->get_many($authorities_array);
-        foreach($authorities as $authority){
-            if($authority['id_organization'] == $id_organization){
-                $result_array[]=$authority['id_authority'];
+
+    public function filtered_by_organization($authorities_array, $id_organization) {
+        $result_array = array();
+        if ($this->session->userdata('user_type') == 3) {
+            $authorities = $this->authority->get_by_service_property('sr_3',"Администрация района");
+        } else {
+            $authorities = $this->authority->get_many($authorities_array);
+        }
+        foreach ($authorities as $authority) {
+            if ($authority['id_organization'] == $id_organization) {
+                $result_array[] = $authority['id_authority'];
             }
         }
         return $result_array;

@@ -211,6 +211,7 @@ class Ajax extends APP_Controller {
         $row_id = $this->input->post('rowId');
         $coll_index = $this->input->post('collIndex');
         $code = $this->input->post('cellName');
+        $value = $this->input->post('value');
         $id_authority = $this->input->post('authority_id');
         $additional_property = $this->additional_property->get_key_id_all();
         $property = $this->property->get_by('code', $code);
@@ -231,7 +232,8 @@ class Ajax extends APP_Controller {
                     'additional_property_name' => $property['property_name'],
                     'type' => 'adiceed_'.$property['id_property'],
                     'service_num' => $id_authority,
-                    'options' => $options
+                    'options' => $options,
+                    'additional_value' => $value
                 );
             } else {
                 $data_content = array(
@@ -239,7 +241,8 @@ class Ajax extends APP_Controller {
                     'id_additional_property' => $property['id_property'],
                     'additional_property_name' => $property['property_name'],
                     'type' => 'adiceed_'.$property['id_property'],
-                    'service_num' => $id_authority
+                    'service_num' => $id_authority,
+                    'additional_value' => $value
                 );
             }
         $data_additional['property_content']=$this->load->view('settings/modal_dialog/modal_content', $data_content, true);

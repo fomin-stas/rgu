@@ -56,6 +56,7 @@ class Structure extends APP_Controller {
             $column_names[] = $property['property_short_name'] == '' || is_null($property['property_short_name']) ? $property['property_name'] : $property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
+            $model['sortable'] = false;
             switch ($property['format']['property_format_name']) {
                 case 'system':
                     $model['editable'] = false;
@@ -604,6 +605,7 @@ class Structure extends APP_Controller {
             $column_names[] = $property['property_short_name'] == '' || is_null($property['property_short_name']) ? $property['property_name'] : $property['property_short_name'];
             $model['name'] = $property['code'];
             $model['index'] = $property['code'];
+            $model['sortable'] = false;
             switch ($property['format']['property_format_name']) {
                 case 'system':
                     $model['editable'] = false;

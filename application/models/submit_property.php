@@ -49,6 +49,7 @@ class Submit_property extends CI_Model {
             $service['id_authority'] = $this->id_authority;
             $propertis_name = explode("_", $name);
             $service['service_name'] = $property[$propertis_name[0] . '_0'];
+            $service["service_status"] = "на согласовании";
             switch (substr($name, 0, 2)) {
                 case 'sr':
                     $service['id_service_type'] = 7;

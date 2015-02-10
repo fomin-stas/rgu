@@ -65,6 +65,17 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="spiner" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style='height:800px;width:200px'>
+        <div class="modal-content" style='border:0px;background-color: transparent'>
+
+            <div class="modal-body" id="">
+                <div id='spin_spin' style='height:800px'></div> <script>  var opts = {lines: 25, length: 20, width: 10, radius: 40,corners: 1,rotate: 58, direction: 1, color: '#FFF', speed: 1, trail: 60, shadow: true, hwaccel: false,className: 'spinner', top: '50%', left: '50%'  };var target = document.getElementById('spin_spin'); var spinner = new Spinner(opts).spin(target); </script>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -106,7 +117,7 @@
             //checkout examples/treeview.html and examples/treeview.js for more info
         };
 
-        $(document).on('click', '.tree_span', function() {
+        $(document).on('click', '.tree_span', function () {
             var id = $(this).data('id');
             $('.content_tree').hide();
             $('#' + id).show();
@@ -182,7 +193,7 @@
                                         }
                                     });
 
-                                    
+
                                     //jQuery(Structure.options.grid_selector).jqGrid('editGridRow', getClickedRowId(event, ui), {width: 450});
                                 }},
                             {title: "История изменений", action: function (event, ui)

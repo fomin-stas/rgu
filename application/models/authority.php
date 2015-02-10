@@ -74,7 +74,7 @@ class Authority extends APP_Model {
             }
         }
         $data['start'] = $authority_start;
-        $data['end'] = $key+1;
+        $data['end'] = $key + 1;
         return $data;
     }
 
@@ -98,8 +98,8 @@ class Authority extends APP_Model {
         }
         return $num_page;
     }
-    
-    public function disagred_status($id_authority){
+
+    public function disagred_status($id_authority) {
         $update_authority['value'] = 'отправленно на доработку';
         $property = $this->property->get_by(array('code' => 'executable_status'));
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
@@ -107,10 +107,24 @@ class Authority extends APP_Model {
         $authority_data['id_authority_status'] = 2;
         return $this->authority->update($id_authority, $authority_data) ? 0 : 1;
     }
-    
+
     function confirm($id_authority) {
         $authority_data['id_authority_status'] = 3;
         return $this->authority->update($id_authority, $authority_data) ? 0 : 1;
+    }
+
+    public function get_by_service_property($property_name, $value) {
+        $property = $this->property->get_by(array('code' => $property_name));
+        $sql = "SELECT id_authority from service sr, service_property sp WHERE sp.id_property=" . $property['id_property'] . " AND sp.value = '" . $value . "' AND sp.id_service = sr.id_service";
+        $query = $this->db->query($sql);
+        $authority=array();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $authority[]=$row->id_authority;
+                
+            }
+        }
+        return $authority;
     }
 
 }

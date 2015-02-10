@@ -34,36 +34,48 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
-                            <tr id="property_<?= $property['id_property'] ?>">
-                                <td><?= $property['id_property'] ?></td>
-                                <td><?= $property['property_name'] ?></td>
-                                <td><?= $property['property_short_name'] ?></td>
-                                <td><?= $property['format']['property_format_name'] ?></td>
-                                <td><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></td>
-                                <td><?= $options['property_align'] ?></td>
-                                <td><?= $options['property_width'] ?></td>
-                                <td>
-                                    <?if($options['property_required']):?>
-                                    <span class="badge badge-success">Да</span>
-                                    <?else:?>
-                                    <span class="badge badge-danger">Нет</span>
-                                    <?endif;?>
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
-                                            <i class="fa fa-pencil"></i> Редактировать
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
-                                            <i class="fa fa-times"></i> Удалить
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?endforeach;?>
                         </tbody>
                     </table>
+                    <div class="col-md-12 dd" style="max-width:2100px">
+                        <ol class="col-md-12 dd-list">
+                            <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
+                            <li class="dd-item dd2-item dd-colored">
+                                <div class="dd-handle">
+                                   
+                                        <div id="property_<?= $property['id_property'] ?>" class="col-lg-12">
+                                            <div class="col-md-1"><?= $property['id_property'] ?></div>
+                                            <div class="col-md-3"><?= $property['property_name'] ?></div>
+                                            <div class="col-md-2"><?= $property['property_short_name'] ?></div>
+                                            <div class="col-md-1"><?= $property['format']['property_format_name'] ?></div>
+                                            <div class="col-md-1"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
+                                            <div class="col-md-1"><?= $options['property_align'] ?></div>
+                                            <div class="col-md-1"><?= $options['property_width'] ?></div>
+                                            <div class="col-md-1">
+                                                <?if($options['property_required']):?>
+                                                <span class="badge badge-success">Да</span>
+                                                <?else:?>
+                                                <span class="badge badge-danger">Нет</span>
+                                                <?endif;?>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-pencil"></i> Редактировать
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-times"></i> Удалить
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </li>
+                            <?endforeach;?>
+                        </ol>
+                        <!--                        </tbody>
+                                            </table>-->
+                    </div>
                 </div>
                 <div class="row text-center">
                 </div>
@@ -387,7 +399,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?=$additional_parent?>
+                        <?= $additional_parent ?>
                         <input type="hidden" name="method" value="additional">
                         <button type="submit" class="btn btn-default">Добавить</button>
                         </form>
@@ -452,7 +464,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?=$edit_additional_parent?>
+                        <?= $edit_additional_parent ?>
                         <input type="hidden" name="id_additional_property" id="edit_additional_id_additional_property">
                         <input type="hidden" name="method" value="edit_additional">
                         <button type="submit" class="btn btn-default">Сохранить</button>

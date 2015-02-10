@@ -52,7 +52,7 @@ class Agreeds extends APP_Controller {
         $property["information_system_roiv"] = $this->input->post("information_system_roiv") ? $this->input->post('information_system_roiv') : '';
         $property['project_post'] = $this->input->post('project_post') ? $this->input->post('project_post') : '';
         $property['srok_otveta'] = $this->input->post('srok_otveta') ? $this->input->post('srok_otveta') : '';
-        $property['executable_status'] = 'в разработке';
+        $property['executable_status'] = 'на согласовании';
         $property['service_subject'] = $this->input->post('service_subject') ? $this->input->post('service_subject') : '';
         $authority['id_organization'] = $this->input->post('name_iogv');
         $authority['id_authority_status'] = 1;
@@ -186,15 +186,21 @@ class Agreeds extends APP_Controller {
         $data = $_POST;
         $agreeded = 0;
         $count_properties = 0;
+        $status = array();
         foreach ($data as $key => $value) {
             $name = explode("_", $key);
             if (!(int) $name[0]) {
                 continue;
             }
+           
             $update_data = array('id_service' => $name[0], 'id_property' => $name[1]);
+            if(!isset($status[$name[0]])){
+                $status[$name[0]]=0;
+            }
             $update = array('agreed' => $value);
             $this->service_property->update_by($update_data, $update);
             if ($value != 1) {
+                $status[$name[0]]=1;
                 $agreeded = $agreeded + 1;
             }
             $count_properties = $count_properties + 1;
@@ -203,6 +209,17 @@ class Agreeds extends APP_Controller {
             $update_authority['value'] = 'отправленно на доработку';
         } else {
             $update_authority['value'] = 'согласовано';
+        }
+        foreach ($status as $key => $value){
+            if($value > 0){
+                $update_data = array('id_service' => $key, 'id_property' => 15);
+                $update = array('value' => 'отправлено на доработку');
+                $this->service_property->update_by($update_data, $update);
+            }else{
+                $update_data = array('id_service' => $key, 'id_property' => 15);
+                $update = array('value' => 'согласовано');
+                $this->service_property->update_by($update_data, $update);
+            }
         }
         //$this->authority->update($id_authority, $authority_data);
         if ($this->input->post('comment_st3_disagree')) {

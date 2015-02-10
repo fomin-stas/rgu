@@ -349,31 +349,34 @@ var Settings = {
                 }
             }
         });
-        
-        $('#properties-table').DataTable({
-            "oLanguage": {
-                "sProcessing": "Подождите...",
-                "sSearch": "Поиск:",
-                "sLengthMenu": "Показать _MENU_ записей",
-                "sInfo": "Записи с _START_ до _END_ из _TOTAL_ записей",
-                "sInfoEmpty": "Записи с 0 до 0 из 0 записей",
-                "sInfoFiltered": "(отфильтровано из _MAX_ записей)",
-                "sInfoPostFix": "",
-                "sLoadingRecords": "Загрузка записей...",
-                "sZeroRecords": "Записи отсутствуют.",
-                "sEmptyTable:": "В таблице отсутствуют данные",
-                "oPaginate": {
-                    "sFirst": "Первая",
-                    "sPrevious": "Предыдущая",
-                    "sNext": "Следующая",
-                    "sLast": "Последняя"
-                },
-                "oAria": {
-                    "sortAscending": ": активировать для сортировки столбца по возрастанию",
-                    "sortDescending": ": активировать для сортировки столбца по убыванию"
-                }
-            }
+        $('.dd').nestable();
+        $('.dd-handle a').on('mousedown', function (e) {
+            e.stopPropagation();
         });
+//        $('#properties-table').DataTable({
+//            "oLanguage": {
+//                "sProcessing": "Подождите...",
+//                "sSearch": "Поиск:",
+//                "sLengthMenu": "Показать _MENU_ записей",
+//                "sInfo": "Записи с _START_ до _END_ из _TOTAL_ записей",
+//                "sInfoEmpty": "Записи с 0 до 0 из 0 записей",
+//                "sInfoFiltered": "(отфильтровано из _MAX_ записей)",
+//                "sInfoPostFix": "",
+//                "sLoadingRecords": "Загрузка записей...",
+//                "sZeroRecords": "Записи отсутствуют.",
+//                "sEmptyTable:": "В таблице отсутствуют данные",
+//                "oPaginate": {
+//                    "sFirst": "Первая",
+//                    "sPrevious": "Предыдущая",
+//                    "sNext": "Следующая",
+//                    "sLast": "Последняя"
+//                },
+//                "oAria": {
+//                    "sortAscending": ": активировать для сортировки столбца по возрастанию",
+//                    "sortDescending": ": активировать для сортировки столбца по убыванию"
+//                }
+//            }
+//        });
 
     }
 
