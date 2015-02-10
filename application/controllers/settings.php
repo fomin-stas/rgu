@@ -236,5 +236,12 @@ class Settings extends APP_Controller {
         $this->session->set_flashdata('message', 'Доп. свойство успешно отредактировано');
         redirect('/settings/index#');
     }
+    
+    public function reordering(){
+        $serialised =  $this->input->post('order');
+        $order = json_decode($serialised);
+        $i=90;
+        
+    }
 
 }

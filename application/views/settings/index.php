@@ -18,39 +18,39 @@
         <div class="tab-content">
             <div class="tab-pane in active" id="properties">
                 <?if(count($properties) > 0):?>
-                <div class="table-responsive">
+               
                     <table class="table" id="properties-table">
-                        <thead class="text-center">
+                        <thead class="text-center col-md-12">
                             <tr>
-                                <td>id</td>
-                                <td>Название</td>
-                                <td>Краткое название</td>
-                                <td>Тип</td>
-                                <td>Тип к которому относится</td>
-                                <td>Форматирование</td>
-                                <td>Ширина</td>
-                                <td>Обязательный</td>
-                                <td>Действия</td>
+                                <td class="col-md-1">id</td>
+                                <td class="col-md-3">Название</td>
+                                <td class="col-md-3">Краткое название</td>
+                                <td class="col-md-1">Тип</td>
+                                <td class="col-md-1">Тип к которому относится</td>
+                                <td class="col-md-1">Форматирование</td>
+                                <td class="col-md-1">Ширина/Обязательный</td>
+                      
+                                <td class="col-md-1">Действия</td>
                             </tr>
                         </thead>
                         <tbody class="text-center">
                         </tbody>
                     </table>
-                    <div class="col-md-12 dd" style="max-width:2100px">
-                        <ol class="col-md-12 dd-list">
+                    <div class="dd col-md-12" style="max-width:2100px">
+                        <ol class="dd-list col-md-12 ">
                             <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
-                            <li class="dd-item dd2-item dd-colored">
-                                <div class="dd-handle">
+                            <li class="dd-item dd2-item dd-colored col-md-12">
+                                <div class="dd-handle col-md-12">
                                    
-                                        <div id="property_<?= $property['id_property'] ?>" class="col-lg-12">
+                                        <div id="property_<?= $property['id_property'] ?>" class="col-md-12" data-id="<?= $property['id_property'] ?>">
                                             <div class="col-md-1"><?= $property['id_property'] ?></div>
                                             <div class="col-md-3"><?= $property['property_name'] ?></div>
-                                            <div class="col-md-2"><?= $property['property_short_name'] ?></div>
+                                            <div class="col-md-3"><?= $property['property_short_name'] ?></div>
                                             <div class="col-md-1"><?= $property['format']['property_format_name'] ?></div>
                                             <div class="col-md-1"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
                                             <div class="col-md-1"><?= $options['property_align'] ?></div>
-                                            <div class="col-md-1"><?= $options['property_width'] ?></div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1"><?= $options['property_width'] ?>/
+                                            
                                                 <?if($options['property_required']):?>
                                                 <span class="badge badge-success">Да</span>
                                                 <?else:?>
@@ -60,11 +60,9 @@
                                             <div class="col-md-1">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
-                                                        <i class="fa fa-pencil"></i> Редактировать
-                                                    </button>
+                                                        <i class="fa fa-pencil"></i></button>
                                                     <button type="button" class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
-                                                        <i class="fa fa-times"></i> Удалить
-                                                    </button>
+                                                        <i class="fa fa-times"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +74,7 @@
                         <!--                        </tbody>
                                             </table>-->
                     </div>
-                </div>
+                
                 <div class="row text-center">
                 </div>
                 <?else:?>
