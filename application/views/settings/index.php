@@ -19,7 +19,7 @@
             <div class="tab-pane in active" id="properties">
                 <?if(count($properties) > 0):?>
                
-                    <table class="table" id="properties-table">
+                    <table class="table col-md-12" id="properties-table">
                         <thead class="text-center col-md-12">
                             <tr>
                                 <td class="col-md-1">id</td>
@@ -37,19 +37,19 @@
                         </tbody>
                     </table>
                     <div class="dd col-md-12" style="max-width:2100px">
-                        <ol class="dd-list col-md-12 ">
+                        <ol class="dd-list col-md-12">
                             <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
-                            <li class="dd-item dd2-item dd-colored col-md-12">
-                                <div class="dd-handle col-md-12">
+                            <li class="dd-item dd2-item dd-colored" data-id="<?= $property['id_property'] ?>" >
+                                <div class="dd-handle">
                                    
-                                        <div id="property_<?= $property['id_property'] ?>" class="col-md-12" data-id="<?= $property['id_property'] ?>">
-                                            <div class="col-md-1"><?= $property['id_property'] ?></div>
-                                            <div class="col-md-3"><?= $property['property_name'] ?></div>
-                                            <div class="col-md-3"><?= $property['property_short_name'] ?></div>
-                                            <div class="col-md-1"><?= $property['format']['property_format_name'] ?></div>
-                                            <div class="col-md-1"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
-                                            <div class="col-md-1"><?= $options['property_align'] ?></div>
-                                            <div class="col-md-1"><?= $options['property_width'] ?>/
+                                        <div id="property_<?= $property['id_property'] ?>" class="col-md-12" >
+                                            <div class="col-md-1 nestable_div_text"><?= $property['id_property'] ?></div>
+                                            <div class="col-md-3 nestable_div_text" title="<?= $property['property_name'] ?>"><?= $property['property_name'] ?></div>
+                                            <div class="col-md-3 nestable_div_text" title="<?= $property['property_short_name'] ?>"><?= $property['property_short_name'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $property['format']['property_format_name'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $options['property_align'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $options['property_width'] ?>/
                                             
                                                 <?if($options['property_required']):?>
                                                 <span class="badge badge-success">Да</span>

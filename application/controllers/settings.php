@@ -11,7 +11,6 @@ class Settings extends APP_Controller {
         $this->layout->setLayout('main');
     }
 
-    
     public function index() {
         $this->load->model('additional_property');
         //$this->config->load('pagination', TRUE);
@@ -236,12 +235,19 @@ class Settings extends APP_Controller {
         $this->session->set_flashdata('message', 'Доп. свойство успешно отредактировано');
         redirect('/settings/index#');
     }
-    
-    public function reordering(){
-        $serialised =  $this->input->post('order');
-        $order = json_decode($serialised);
-        $i=90;
-        
+
+    public function reordering() {
+        $serialised = $this->input->post('order');
+        $property = $this->property->get_all();
+        $property_order = array();
+        foreach ($property as $key => $value) {
+            $property_order[$value['id_property']] = $value['order'];
+        }
+        foreach ($serialised as $order => $value) {
+            if ($property_order[$value['id']] != $order){
+                $this->property->update($value['id'],array('order' => $order));
+            }
+        }
     }
 
 }

@@ -18,3 +18,8 @@
 .nav-tabs > li:hover > span {
     display: inline-block;
 }
+
+.nestable_div_text{
+    white-space: nowrap;
+overflow: hidden;
+}
