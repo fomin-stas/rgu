@@ -25,8 +25,8 @@ var Structure = {
             Structure.options.grid_selector = grid_selector;
             var pager_selector = "#grid-pager-" + tab_hash;
             var grid_data = eval('data.' + tab_hash);
-            $(window).triggerHandler('resize.jqGrid');
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
+            $(window).triggerHandler('resize.jqGrid'); //maybe here is issue
         });
 
         //resize to fit page size
