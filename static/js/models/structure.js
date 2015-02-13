@@ -34,9 +34,9 @@ var Structure = {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                    $('.ui-state-default.ui-jqgrid-hdiv').height() -
-                    $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                    $('.ui-pager-control').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
                     $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
                     50
                     );
@@ -96,8 +96,8 @@ var Structure = {
             var grid_selector = "#grid-table-" + tab_hash;
             var pager_selector = "#grid-pager-" + tab_hash;
             var grid_data = eval('data.' + tab_hash);
-            $(window).triggerHandler('resize.jqGrid');
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
+            $(window).triggerHandler('resize.jqGrid');
         });
 
 
@@ -106,9 +106,9 @@ var Structure = {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                    $('.ui-state-default.ui-jqgrid-hdiv').height() -
-                    $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                    $('.ui-pager-control').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
                     $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
                     50
                     );
