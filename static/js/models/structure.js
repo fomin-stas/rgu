@@ -22,11 +22,12 @@ var Structure = {
             var tab_hash = e.target.hash.replace('#', '');
             Structure.options.grid_selector_tab = tab_hash;
             var grid_selector = "#grid-table-" + tab_hash;
-            Structure.options.grid_selector = grid_selector;
+            д = grid_selector;
             var pager_selector = "#grid-pager-" + tab_hash;
-            var grid_data = eval('data.' + tab_hash);
+            //var grid_data = eval('data.' + tab_hash);
+            var grid_data = data[tab_hash];
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
-            $(window).triggerHandler('resize.jqGrid'); //maybe here is issue
+            $(window).triggerHandler('resize.jqGrid');
         });
 
         //resize to fit page size
@@ -95,7 +96,7 @@ var Structure = {
             var tab_hash = e.target.hash.replace('#', '');
             var grid_selector = "#grid-table-" + tab_hash;
             var pager_selector = "#grid-pager-" + tab_hash;
-            var grid_data = eval('data.' + tab_hash);
+            var grid_data = data[tab_hash];
             Structure.renderGrid(grid_selector, pager_selector, grid_data);
             $(window).triggerHandler('resize.jqGrid');
         });
@@ -163,7 +164,6 @@ var Structure = {
             else {
                 result = val;
             }
-            console.log(rawObject.attr[cm.name]);
         }
         return result;
     },
@@ -247,7 +247,7 @@ var Structure = {
             altRows: true,
             data: grid_data,
             //datatype: "local",
-            height: 400,
+            height: 'auto',
             colNames: column_names,
             colModel: column_models,
             viewrecords: true,
@@ -296,14 +296,14 @@ var Structure = {
                 $('#spiner').modal('hide');
                 //bootbox.hideAll();
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-                $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
-                        $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                        $('.ui-state-default.ui-jqgrid-hdiv').height() -
-                        $('.ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                        $('.ui-pager-control').height() -
-                        $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
-                        50
-                        );
+				$(grid_selector).jqGrid('setGridHeight', window.innerHeight -
+                    $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
+                    $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
+                    50
+                    );
                 Structure.render_colModel(grid_selector);
                 var table = this;
                 setTimeout(function () {
@@ -342,7 +342,6 @@ var Structure = {
                     },
                     success: function (data)
                     {
-                        console.log(data);
                         $('#textarea_edit').html(data);
                         $('#textarea_edit').modal('show');
                         $('#spiner').modal('hide');
@@ -537,7 +536,6 @@ var Structure = {
                         var cols = [];
                         var colModel = $(this).getGridParam('colModel');
                         var selRows = $(this).getGridParam('selrow');
-                        console.log(selRows, colModel);
                         /*$.each(colModel, function(i) {
                          if (!this.hidden) {
                          cols.push(this.name);
@@ -608,7 +606,6 @@ var Structure = {
             filters.map(function () {
                 $(this).on('change keyup', function () {
                     var value = $(this).val();
-                    console.log("value: " + value);
                     var filter_index = getColumnIndexByName(this.name);
                     var column = $('tr[tabindex=-1] td[role="gridcell"]').map(function () {
                         if (this.cellIndex == filter_index) {
@@ -634,7 +631,6 @@ var Structure = {
 
 
                                 var siblings = $(column[i]).siblings();
-                                console.log(siblings);
                                 for (var j = 0; j < siblings.length; j++)
                                 {
                                     if (siblings[j].searchCheck === 1)
@@ -651,9 +647,6 @@ var Structure = {
                                 {
                                     column[i].parentNode.style.display = 'none';
                                 }
-                                console.log("controll: " + controll);
-
-                                console.log("searchCheck: " + column[i].searchCheck);
                             }
                         }
                         else if (typeof value === 'object')
@@ -672,7 +665,6 @@ var Structure = {
                                     column[i].parentNode.style.display = 'table-row';
 
                                     var siblings = $(column[i]).siblings();
-                                    console.log(siblings);
                                     for (var j = 0; j < siblings.length; j++)
                                     {
                                         if (siblings[j].searchCheck === 1)
@@ -689,9 +681,6 @@ var Structure = {
                                     {
                                         column[i].parentNode.style.display = 'none';
                                     }
-                                    console.log("controll: " + controll);
-
-                                    console.log("searchCheck: " + column[i].searchCheck);
                                 }
                             }
 
@@ -715,7 +704,6 @@ var Structure = {
             {
                 var postData = $(grid_selector).jqGrid('getGridParam', 'postData');
                 postData.filters = $.parseJSON(postData.filters);
-                console.log(postData.filters);
 //                return true; //prevents triggering
 
                 var filters = postData.filters;
@@ -747,7 +735,6 @@ var Structure = {
                                     rules: []
                                 };
                                 filters.groups.push(group);
-                                console.log(filters.groups);
                                 for (j = 0, l = parts.length; j < l; j++) {
                                     str = parts[j];
                                     if (str) {
