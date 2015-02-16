@@ -237,5 +237,4 @@
 
         });
     </script>
-    </div>
 <?php endif; ?>
