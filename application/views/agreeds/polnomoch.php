@@ -42,6 +42,10 @@
                                     <?= form_dropdown('name_iogv', $db, '', 'id="name_iogv" class="col-md-5"'); ?>
                                 </div>
                                 <div class="form-group">
+                                    <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>
+                                    <?= form_dropdown('service_subject', $db, '', 'id="service_subject" class="col-md-5"'); ?>
+                                </div>
+                                <div class="form-group">
                                     <label for="rekvisit_npa" class="control-label col-md-5">Реквизиты НПА, которыми полномочие передано для осуществления ИОГВ субъекта РФ с федерального уровня</label>
                                     <textarea id="rekvisit_npa" name="rekvisit_npa" class="col-md-5"></textarea>
                                 </div>
@@ -49,17 +53,8 @@
                                     <label for="project_post" class="control-label col-md-5">Наименование информационной системы органа власти, с использованием которой осуществляется полномочие</label>
                                     <textarea id="project_post" name="information_system_roiv" class="col-md-5"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="service_subject" class="control-label col-md-5">Разработчик полномочия</label>
-                                    <?= form_dropdown('service_subject', array("Отраслевой орган" => "Отраслевой орган", "КИС" => "КИС"), 'РОИВ', 'id="service_subject" class="col-md-5"'); ?>
-                                </div>
+
                                 <br>
-<!--                                <div class="row">
-                                    <div class="col-md-10">
-                                        <a href="agreeds/arm_kis"><input type="button" class="btn btn-grey pull-right btn-sm col-md-3" value="Закрыть"></a>
-                                        <a href="agreeds/step1"><input type="button" class="btn btn-info pull-right btn-sm col-md-3" value="Сохранить как черновик"></a>
-                                    </div>
-                                </div>-->
                             </div>
                             <br>
                             <div class="row">
@@ -140,7 +135,7 @@
     });
 
     num_files = 1;
-    $('#add_file').click(function () {
+    $('#add_file').click(function() {
         var str = '<span class="col-md-10"><input type="file" multiple id="step_file' + num_files + '" name="step_file' + num_files + '" class="files"></span><script>    $("#step_file' + num_files + '").ace_file_input({no_file: "Присоединить файл",btn_choose: "Выбрать",btn_change: "Изменить",enable_reset: true});';
         $('#file_div').append(str);
         num_files++;

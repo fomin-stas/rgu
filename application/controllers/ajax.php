@@ -1,4 +1,3 @@
-
 <?php
 
 if (!defined('BASEPATH'))
@@ -157,10 +156,12 @@ class Ajax extends APP_Controller {
         $this->property_comments->insert_comment($property_array[1], $comment);
     }
 
-    public function get_service($type, $service_num) {
+    public function get_service($type, $service_num, $id_authority) {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num'] = $service_num;
+        $service_subject=$this->authority_property_model->get_authority_property_by_code($id_authority,'service_subject');
+        $data['service_subject']=  $service_subject['value'];
         $additional_property = $this->additional_property->get_key_id_all();
         $data['property'] = $this->property->get_all();
         foreach ($data['property'] as $key => $property) {

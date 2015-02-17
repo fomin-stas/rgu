@@ -11,7 +11,7 @@ class Submit_property extends CI_Model {
         parent::__construct();
 
         $this->data = $_POST;
-        if(count($this->data)== 0) {
+        if (count($this->data) == 0) {
             return;
         }
         $this->id_authority = $this->data['id_authority'];
@@ -44,34 +44,35 @@ class Submit_property extends CI_Model {
     }
 
     public function insert_new_services() {
-        foreach ($this->services as $name => $property) {
-            $property['agreed'] = 2;
-            $service['id_authority'] = $this->id_authority;
-            $propertis_name = explode("_", $name);
-            $service['service_name'] = $property[$propertis_name[0] . '_0'];
-            $service["service_status"] = "на согласовании";
-            switch (substr($name, 0, 2)) {
-                case 'sr':
-                    $service['id_service_type'] = 7;
-                    $property['service_type'] = "услуга";
-                    break;
-                case 'sn':
-                    $service['id_service_type'] = 8;
-                    $property['service_type'] = "функция";
+        if (count($this->services) > 0) {
+            foreach ($this->services as $name => $property) {
+                $property['agreed'] = 2;
+                $service['id_authority'] = $this->id_authority;
+                $propertis_name = explode("_", $name);
+                $service['service_name'] = $property[$propertis_name[0] . '_0'];
+                $property["service_status"] = "на согласовании";
+                switch (substr($name, 0, 2)) {
+                    case 'sr':
+                        $service['id_service_type'] = 7;
+                        $property['service_type'] = "услуга";
+                        break;
+                    case 'sn':
+                        $service['id_service_type'] = 8;
+                        $property['service_type'] = "функция";
 
-                    break;
-                case 'sk':
-                    $service['id_service_type'] = 9;
-                    $property['service_type'] = "функция контроля и надзора";
-                    break;
+                        break;
+                    case 'sk':
+                        $service['id_service_type'] = 9;
+                        $property['service_type'] = "функция контроля и надзора";
+                        break;
+                }
+                /* $this->load->model('service');
+                  $this->load->model('service_property'); */
+                $id_service = $this->service->insert($service);
+                $this->service_property->_id_service = $id_service;
+                $this->service_property->insert_where_code_many($property);
             }
-            /*$this->load->model('service');
-            $this->load->model('service_property');*/
-            $id_service = $this->service->insert($service);
-            $this->service_property->_id_service = $id_service;
-            $this->service_property->insert_where_code_many($property);
         }
-        
     }
 
     public function update_services() {
@@ -91,7 +92,6 @@ class Submit_property extends CI_Model {
                 $this->history_log->insert_log($history_log);
             }
         }
-
         foreach ($this->submit_files as $key => $value) {
             $name = explode("_", $key);
             if (!(int) $name[1] || !(int) $name[0])
@@ -183,4 +183,3 @@ class Submit_property extends CI_Model {
     }
 
 }
-

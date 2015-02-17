@@ -4,7 +4,7 @@
             <?= load_form_textaea_step2($service_num, 'sr_0', $property, false); ?>
             <?= load_form_textaea_step2($service_num, 'sr_1', $property, false); ?>
             <?= load_form_dropdown_step2($service_num, 'sr_2', $spher, $property, false) ?>
-            <?= load_form_dropdown_step2($service_num, 'sr_3', array('Не выбрано'=>'Не выбрано', 'Администрация района'=>'Администрация района', 'Внебюджетный фонд'=>'Внебюджетный фонд', 'Государственное учреждение'=>'Государственное учреждение', 'ГУЖА'=>'ГУЖА', 'Органы местного самоуправления'=>'Органы местного самоуправления', 'Федеральный орган исполнительной власти'=>'Федеральный орган исполнительной власти'), $property, false, false) ?>
+            <?= load_form_dropdown_step2($service_num, 'sr_3', array($service_subject=>$service_subject, 'Администрация района'=>'Администрация района', 'Внебюджетный фонд'=>'Внебюджетный фонд', 'Государственное учреждение'=>'Государственное учреждение', 'ГУЖА'=>'ГУЖА', 'Органы местного самоуправления'=>'Органы местного самоуправления', 'Федеральный орган исполнительной власти'=>'Федеральный орган исполнительной власти'), $property, false, false) ?>
             <?= load_form_textaea_step2($service_num, 'sr_4', $property, false); ?>
             <?= '';//load_form_textaea_step2($service_num, 'sr_5', $property, false); ?>
             <?= load_form_dropdown_step2($service_num, 'sr_6', array("в традиционном порядке" => "в традиционном порядке", "через МФЦ" => "через МФЦ", "в электронном виде" => "в электронном виде"), $property, false, true) ?>

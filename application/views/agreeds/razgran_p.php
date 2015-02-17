@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <form name="step2_com" method="post" action="agreeds/step2_submit" enctype="multipart/form-data">
-                    <input value="<?= $id_authority ?>" name="id_authority" hidden>
+                    <input value="<?= $id_authority ?>" name="id_authority" id="id_authority" hidden>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="widget-box">
@@ -258,8 +258,9 @@
             //insert navigation-tab and content
             var tab = "<li id='navtab_" + type + num[type] + "'><a href='#" + 'pane_' + type + num[type] + "' data-toggle='tab'>" + tab_text() + " " + num[type] + "</a><span class='close_tab'>×</span></li>";
             $('#razgran_u_f_tabs').append(tab);
+            var id_authority=$('#id_authority').val();
             $.ajax({
-                url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type],
+                url: App.options.baseURL + 'ajax/get_service/' + type + '/' + num[type] + '/' + id_authority,
                 type: 'get',
                 success: function(data) {
                     $('#tab_content').append(data);

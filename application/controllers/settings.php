@@ -123,7 +123,7 @@ class Settings extends APP_Controller {
                 $data['options']['property_width'] = $this->input->post('property_width');
                 $data['options']['property_required'] = $this->input->post('property_required');
                 $data['options']['property_color'] = $this->input->post('property_color');
-                $data['options']['property_show_other_users'] = $this->input->post('property_show_other_users');
+                $data['options']['property_other_users_displayed'] = $this->input->post('property_other_users_displayed');
                 $data['options'] = json_encode($data['options']);
                 //$data['code'] = NULL;
                 // update property

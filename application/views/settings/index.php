@@ -316,7 +316,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="add_property_color">Цвет свойства</label>
+                                    <label for="edit_property_color">Цвет свойства</label>
                                     <input type="text" class="form-control" id="edit_property_color" name="property_color" placeholder="Цвет" value="<?= set_value('property_color', '#FFFFFF') ?>">
                                     <span class="help-block">По умолчанию белый</span>
                                 </div>  
@@ -329,7 +329,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="property_show_other_users" id="edit_property_show_other_users" <?php echo set_checkbox('property_show_other_users', '1'); ?>> доступен ли столбец для просмотра другимпользователям в таблице полномочий?
+                                <input type="checkbox" name="property_other_users_displayed" id="edit_property_show_other_users" <?php echo set_checkbox('property_show_other_users', '1'); ?>> доступен ли столбец для просмотра другимпользователям в таблице полномочий?
                             </label>
                         </div>
                         <input type="hidden" name="id_property" id="edit_id_property">
