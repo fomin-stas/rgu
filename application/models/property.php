@@ -22,8 +22,27 @@ class Property extends APP_Model {
     public function serch_values_by_code($text, $code) {
         $result = array();
         $property = $this->get_by(array("code" => $code));
-        $from = $property['id_service_type'] != 6 ? "service_property" : 'authority_property ';
-        $sql = "SELECT value FROM property pr," . $from . " sr where pr.code='" . $code . "' AND pr.id_property=sr.id_property AND lower(sr.value) LIKE lower('%" . $text . "%') GROUP BY value";
+        $from = '';
+        $where = '';
+        $id_organization = $this->session->userdata('id_organization');
+        $user_type = $this->session->userdata('user_type');
+        if ($property['id_service_type'] != 6) {
+            $from = "service sv, service_property";
+            if ($user_type == 1 || $user_type == 4) {
+                $where = " sr.id_service=sv.id_service AND sv.id_authority=ay.id_authority ";
+            } else {
+                $where = " sr.id_service=sv.id_service AND sv.id_authority=ay.id_authority AND ay.id_organization=" . $id_organization;
+            }
+        } else {
+            $from = 'authority_property ';
+            if ($user_type == 1 || $user_type == 4) {
+                $where = "sr.id_authority=ay.id_authority";
+            } else {
+                $where = "sr.id_authority=ay.id_authority AND ay.id_organization=" . $id_organization;
+            }
+        }
+
+        $sql = "SELECT value FROM property pr, authority ay, " . $from . " sr where pr.code='" . $code . "' AND " . $where . " AND pr.id_property=sr.id_property AND lower(sr.value) LIKE lower('%" . $text . "%') GROUP BY value  ORDER BY value";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
