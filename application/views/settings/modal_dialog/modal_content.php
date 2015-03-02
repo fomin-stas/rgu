@@ -1,19 +1,19 @@
 <?php if ($id_property_format == 2): ?>
     <div class="content_tree col-md-12" id="<?= $type ?>_<?= $service_num ?>_content_<?= $id_additional_property ?>">
         <label for="content_textarea_<?= $id_additional_property ?>" class=""><?= $additional_property_name ?>:</label>
-        <textarea id="<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" name="additional_<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" class="col-md-12 form-control"><?= isset($additional_value) ? $additional_value : '' ?></textarea>
+        <textarea id="<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" data-service_num="<?= $service_num ?>" data-id_additional_property="<?= $id_additional_property ?>" name="additional_<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" class="col-md-12 form-control <?= isset($additional_class) ? $additional_class : '' ?>"><?= isset($additional_value) ? $additional_value : '' ?></textarea>
     </div>
 <?php endif; ?>
 <?php if ($id_property_format == 3): ?>
     <div class="content_tree col-md-9" id="<?= $type ?>_<?= $service_num ?>_content_<?= $id_additional_property ?>">
         <label for="content_select_<?= $id_additional_property ?>" class=""><?= $additional_property_name ?>:</label>
-        <?= form_dropdown('additional_' . $type . '_' . $service_num . '_content_select_' . $id_additional_property, isset($options) ? $options : '', isset($additional_value) ? $additional_value : '', 'class="col-md-12 form-control dropdown" data-type="select"') ?>
+        <?= form_dropdown('additional_' . $type . '_' . $service_num . '_content_select_' . $id_additional_property, isset($options) ? $options : '', isset($additional_value) ? $additional_value : '', 'class="col-md-12 form-control dropdown'. isset($additional_class) ? $additional_class : "" .'" data-type="select" data-service_num="'.$service_num.'" data-id_additional_property="'.$id_additional_property.'"') ?>
     </div>
 <?php endif; ?>
 <?php if ($id_property_format == 4): ?>
     <div class="content_tree col-md-9" id="<?= $type ?>_<?= $service_num ?>_content_<?= $id_additional_property ?>">
         <label for="content_date_<?= $id_additional_property ?>" class=""><?= $additional_property_name ?>:</label>
-        <input id="<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" name="additional_<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" class="col-md-12 form-control"><?= isset($additional_value) ? $additional_value : '' ?></input>
+        <input id="<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" data-service_num="<?= $service_num ?>" data-id_additional_property="<?= $id_additional_property ?>" name="additional_<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>" class="col-md-12 form-control <?= isset($additional_class) ? $additional_class : '' ?>"><?= isset($additional_value) ? $additional_value : '' ?></input>
         <script>
             $('#<?= $type ?>_<?= $service_num ?>_content_textarea_<?= $id_additional_property ?>').datepicker({
                 format: "dd-mm-yyyy",
@@ -233,7 +233,7 @@
 
 
             if (location.protocol == 'file:')
-                alert("For uploading to server, you should access this page using 'http' protocal, i.e. via a webserver.");
+                alert("Для загрузки на сервер, вы должны иметь доступ через 'http' протокол, например через веб-браузер.");
 
         });
     </script>

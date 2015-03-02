@@ -35,9 +35,9 @@ var Structure = {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
+                    $('#gview_' + grid_selector.slice(1) + ' .ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('#gview_' + grid_selector.slice(1) + ' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('#pg_grid-pager-' + grid_selector.slice(12)).height() -
                     $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
                     50
                     );
@@ -107,9 +107,9 @@ var Structure = {
             $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
             $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
                     $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
+                    $('#gview_' + grid_selector.slice(1) + ' .ui-state-default.ui-jqgrid-hdiv').height() -
+                    $('#gview_' + grid_selector.slice(1) + ' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                    $('#pg_grid-pager-' + grid_selector.slice(12)).height() -
                     $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
                     50
                     );
@@ -263,10 +263,8 @@ var Structure = {
             deepempty: true,
             ignoreCase: true,
             autowidth: false,
-            
-            hoverrows:true, 
-            loadui:"disable",
-            
+            hoverrows: true,
+            loadui: "disable",
             //shrinkToFit:false,
             cellEdit: true,
             cellsubmit: "remote",
@@ -296,14 +294,14 @@ var Structure = {
                 $('#spiner').modal('hide');
                 //bootbox.hideAll();
                 $(grid_selector).jqGrid('setGridWidth', $(".page-container").width());
-				$(grid_selector).jqGrid('setGridHeight', window.innerHeight -
-                    $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-state-default.ui-jqgrid-hdiv').height() -
-                    $('#gview_'+grid_selector.slice(1)+' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
-                    $('#pg_grid-pager-'+grid_selector.slice(12)).height() -
-                    $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
-                    50
-                    );
+                $(grid_selector).jqGrid('setGridHeight', window.innerHeight -
+                        $('.tabbable.col-md-12>ul.nav.nav-tabs.tab-color-blue').height() -
+                        $('#gview_' + grid_selector.slice(1) + ' .ui-state-default.ui-jqgrid-hdiv').height() -
+                        $('#gview_' + grid_selector.slice(1) + ' .ui-jqgrid-titlebar.ui-jqgrid-caption.ui-widget-header.ui-corner-top.ui-helper-clearfix').height() -
+                        $('#pg_grid-pager-' + grid_selector.slice(12)).height() -
+                        $('.navbar.navbar-default.navbar-fixed-top.h-navbar').height() -
+                        50
+                        );
                 Structure.render_colModel(grid_selector);
                 var table = this;
                 setTimeout(function () {
@@ -330,35 +328,54 @@ var Structure = {
                 $('#spiner').modal('show');
                 var cm = $(grid_selector).jqGrid('getGridParam', 'colModel')[iCol];
                 rowData = $(Structure.options.grid_selector).jqGrid("getGridParam", "data")[rowid - 1],
-                $.ajax({
-                    url: 'ajax/get_service_full_property',
-                    type: 'POST',
-                    data: {
-                        rowId: rowid,
-                        collIndex: iCol,
-                        cellName: cellname,
-                        value: value,
-                        authority_id: rowData['id_authority']
-                    },
-                    success: function (data)
-                    {
-                        $('#textarea_edit').html(data);
-                        $('#textarea_edit').modal('show');
-                        $('#spiner').modal('hide');
-                    }
-                });
+                        $.ajax({
+                            url: 'ajax/get_service_full_property',
+                            type: 'POST',
+                            data: {
+                                rowId: rowid,
+                                collIndex: iCol,
+                                cellName: cellname,
+                                value: value,
+                                authority_id: rowData['id_authority']
+                            },
+                            success: function (data)
+                            {
+                                $('#textarea_edit').html(data);
+                                $('#textarea_edit').modal('show');
+                                $('#spiner').modal('hide');
+                            }
+                        });
                 $('#textarea_edit').on('hide.bs.modal', function (event) {
-                    jQuery(grid_selector).saveCell(iRow, iCol);
+                    var cell_data = $('#t_s_content_textarea_0').val();
+                    jQuery(grid_selector).saveCell(iRow, iCol, cell_data);
                 });
                 $('#textarea_edit').unbind('hide.bs.modal').on('hide.bs.modal', function (event) {
-                    jQuery(grid_selector).restoreCell(iRow, iCol);
+                    $('#' + iRow + '_' + cellname)[0].value = $('#t_s_content_textarea_0').val();
+                    var cell_data = $('#t_s_content_textarea_0').val();
+                    additional_value = [];
+                    i = 0;
+                    $('.additional').each(function () {
+                        var id_additional_propert = $(this).data('id_additional_property');
+                        additional_value[i] = {
+                            id_additional_property: $(this).data('id_additional_property'),
+                            service_num: $(this).data('service_num')
+                        };
+                        i++;
+                    });
+                    $.ajax({
+                        url: 'ajax/update_service_full_property',
+                        type: 'POST',
+                        data: {data: additional_value}
+                    });
+                    jQuery(grid_selector).saveCell(iRow, iCol, cell_data);
+
                 });
                 // $('#textarea_editor')[0].innerHTML = value;
-                $('#textarea_change').unbind('click').on('click', function () {
-                    $('#' + iRow + '_' + cellname)[0].value = $('#textarea_editor')[0].innerHTML;
+                $('#save_change').unbind('click').on('click', function () {
+                    $('#' + iRow + '_' + cellname)[0].value = $('#t_s_content_textarea_0').val();
                     jQuery(grid_selector).saveCell(iRow, iCol);
                     $('#textarea_edit').modal('hide');
-                    $('#textarea_editor')[0].innerHTML = "";
+                    $('#t_s_content_textarea_0').val('');
                 });
             },
             beforeSubmitCell: function (rowid, celname, value, iRow, iCol) {

@@ -19,7 +19,7 @@
             <div class="tab-pane in active" id="properties">
                 <?if(count($properties) > 0):?>
                
-                    <table class="table col-md-12" id="properties-table">
+                    <table class="table col-md-12" >
                         <thead class="text-center col-md-12">
                             <tr>
                                 <td class="col-md-1">id</td>
@@ -36,7 +36,7 @@
                         <tbody class="text-center">
                         </tbody>
                     </table>
-                    <div class="dd col-md-12" style="max-width:2100px">
+                    <div class="dd col-md-12" id="properties-table" style="max-width:2100px">
                         <ol class="dd-list col-md-12">
                             <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
                             <li class="dd-item dd2-item dd-colored" data-id="<?= $property['id_property'] ?>" >
@@ -59,10 +59,10 @@
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
-                                                        <i class="fa fa-pencil"></i></button>
-                                                    <button type="button" class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
-                                                        <i class="fa fa-times"></i></button>
+                                                    <a href="#" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-pencil"></i></a>
+                                                    <a href="#"  class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-times"></i></a>
                                                 </div>
                                             </div>
                                         </div>
