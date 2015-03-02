@@ -20,6 +20,15 @@ class Ajax extends APP_Controller {
         echo json_encode($result);
     }
 
+    public function remove_additional_property() {
+        $result = array();
+        $id = $this->input->post('id');
+        if (isset($id)) {
+            $result['success'] = $this->additional_property->delete($id);
+        }
+        echo json_encode($result);
+    }
+
     public function get_property_by_id() {
         $result = array();
         $id = $this->input->post('id');
@@ -160,8 +169,8 @@ class Ajax extends APP_Controller {
         $data['organization_provide_service'] = $this->organization_model->dropdown('organization_name', 'organization_name');
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num'] = $service_num;
-        $service_subject=$this->authority_property_model->get_authority_property_by_code($id_authority,'service_subject');
-        $organization= $this->organization_model->get($service_subject['value']);
+        $service_subject = $this->authority_property_model->get_authority_property_by_code($id_authority, 'service_subject');
+        $organization = $this->organization_model->get($service_subject['value']);
         $data['service_subject'] = $organization['organization_name'];
         $additional_property = $this->additional_property->get_key_id_all();
         $data['property'] = $this->property->get_all();
@@ -221,38 +230,39 @@ class Ajax extends APP_Controller {
         $data_additional['id_property'] = $property['id_property'];
         $data_additional['title'] = $property['property_name'];
         $data_additional['content'] = '';
-        $data_additional['type'] = 'adiceed_'.$property['id_property'];;
+        $data_additional['type'] = 'adiceed_' . $property['id_property'];
+        ;
         $data_additional['service_num'] = $id_authority;
         $additional_data = $this->additional_property->generate_tree_structure($property['id_property'], $data_additional);
         $data_additional['tree'] = $additional_data['tree'];
-        
+
         //обработка свойства
         if (($property['id_property_type'] == 3) || ($property['id_property_type'] == 5)) {
-                $options = $this->property_values_model->get_property_values($property['id_property']);
-                $data_content = array(
-                    'id_property_format' => $property['id_property_type'],
-                    'id_additional_property' => 0,
-                    'additional_property_name' => $property['property_name'],
-                    'type' => 't',
-                    'service_num' => 's',
-                    'options' => $options,
-                    'additional_value' => $value
-                );
-            } else {
-                $data_content = array(
-                    'id_property_format' => $property['id_property_type'],
-                    'id_additional_property' => 0,
-                    'additional_property_name' => $property['property_name'],
-                    'type' => 't',
-                    'service_num' => 's',
-                    'additional_value' => $value
-                );
-            }
-        $data_additional['property_content']=$this->load->view('settings/modal_dialog/modal_content', $data_content, true);
+            $options = $this->property_values_model->get_property_values($property['id_property']);
+            $data_content = array(
+                'id_property_format' => $property['id_property_type'],
+                'id_additional_property' => 0,
+                'additional_property_name' => $property['property_name'],
+                'type' => 't',
+                'service_num' => 's',
+                'options' => $options,
+                'additional_value' => $value
+            );
+        } else {
+            $data_content = array(
+                'id_property_format' => $property['id_property_type'],
+                'id_additional_property' => 0,
+                'additional_property_name' => $property['property_name'],
+                'type' => 't',
+                'service_num' => 's',
+                'additional_value' => $value
+            );
+        }
+        $data_additional['property_content'] = $this->load->view('settings/modal_dialog/modal_content', $data_content, true);
         //*********************************
-        
+
         foreach ($additional_data['content'] as $id_ap => $id_property_format) {
-            $data_content= array();
+            $data_content = array();
             if (($id_property_format == 3) || ($id_property_format == 5)) {
                 $options = $this->additional_property_values->get_additional_property_values($id_ap);
                 $data_content = array(
@@ -260,7 +270,7 @@ class Ajax extends APP_Controller {
                     'id_property_format' => $id_property_format,
                     'id_additional_property' => $id_ap,
                     'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
-                    'type' => 'adiceed_'.$property['id_property'],
+                    'type' => 'adiceed_' . $property['id_property'],
                     'service_num' => $id_authority,
                     'options' => $options
                 );
@@ -270,7 +280,7 @@ class Ajax extends APP_Controller {
                     'additional_class' => 'additional',
                     'id_additional_property' => $id_ap,
                     'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
-                    'type' => 'adiceed_'.$property['id_property'],
+                    'type' => 'adiceed_' . $property['id_property'],
                     'service_num' => $id_authority
                 );
             }
@@ -278,17 +288,17 @@ class Ajax extends APP_Controller {
         }
         if (count(json_decode($data_additional['tree'])) > 0) {
             $property['additional_property'] = $this->load->view('structure/property_edit', $data_additional, true);
-        }else{
+        } else {
             $property['additional_property'] = $this->load->view('structure/without_additional_property', $data_additional, true);
         }
         echo $property['additional_property'];
     }
 
-    public function update_service_full_property(){
-        $i=0;
+    public function update_service_full_property() {
+        $i = 0;
         $i++;
     }
-            
+
     function export_excel() {
         var_dump($_POST);
     }
@@ -522,12 +532,12 @@ class Ajax extends APP_Controller {
     }
 
     //******************************************************
-    
-    public function upload(){
+
+    public function upload() {
 
         $config['upload_path'] = "/static/img/articles";
         $config['allowed_types'] = "jpg|jpeg|png|gif|flv|mp4|wmv|doc|docx|xsl|xslx|ppt|pptx|zip|rar|tar";
-        $config['max_size']	= 2048;
+        $config['max_size'] = 2048;
         $config['max_width'] = 800;
         $config['max_height'] = 600;
         $config['encrypt_name'] = TRUE;
@@ -537,9 +547,10 @@ class Ajax extends APP_Controller {
         if ($this->upload->do_upload() == false) {
             $error = array('error' => $this->upload->display_errors());
             echo json_encode($error);
-        }else{
+        } else {
             $data = $this->upload->data();
             echo json_encode($data);
         }
     }
+
 }

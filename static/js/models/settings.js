@@ -45,6 +45,29 @@ var Settings = {
             }
         });
 
+        $('#additional_properties_table .a-remove').on('click', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            if (confirm("Вы действительно хотите удалить свойство с id " + id)) {
+                $.ajax({
+                    url: App.options.baseURL + 'ajax/remove_additional_property',
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.success) {
+                            $('#additional_property_' + id).fadeOut('normal', function() {
+                                $(this).remove();
+                            });
+                        }else{
+                            alert('Ошибка при удалении свойства, возможно, от него зависят другие свойства.');
+                        }
+                    }
+                });
+
+            }
+        });
+
         function init_property_modals(name, is_edit) {
             // if property type == select => show select values box
             $('#' + name + '_property_type').on('change', function(e) {
@@ -350,19 +373,19 @@ var Settings = {
             }
         });
         $('.dd').nestable();
-        $('.dd-handle a').on('mousedown', function (e) {
+        $('.dd-handle a').on('mousedown', function(e) {
             e.stopPropagation();
         });
         $('.dd').on('change', function() {
             var ordering = $('.dd').nestable('serialize');
             $.ajax({
-                    url: App.options.baseURL + 'settings/reordering',
-                    type: 'post',
-                    data: {order : ordering},
-                    success: function(data) {
-                        
-                    }
-                });
+                url: App.options.baseURL + 'settings/reordering',
+                type: 'post',
+                data: {order: ordering},
+                success: function(data) {
+
+                }
+            });
         });
 //        $('#properties-table').DataTable({
 //            "oLanguage": {

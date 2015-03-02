@@ -3,14 +3,14 @@
 /* Created on:     19.01.2015 11:36:32                          */
 /*==============================================================*/
 
-
+/*
 drop table additional_property CASCADE;
 
 drop table additional_property_values CASCADE;
 
 drop table pap CASCADE;
 
-drop table spap CASCADE;
+drop table spap CASCADE;*/
 
 /*==============================================================*/
 /* Table: additional_property                                   */
