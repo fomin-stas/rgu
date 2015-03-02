@@ -23,51 +23,53 @@
                     </button>
                 </div>
                 <?if(count($properties) > 0):?>
-
-                <table class="table" id="properties-table">
-                    <thead class="text-center">
-                        <tr>
-                            <td class="col-md-1">id</td>
-                            <td class="col-md-3">Название</td>
-                            <td class="col-md-3">Краткое название</td>
-                            <td class="col-md-1">Тип</td>
-                            <td class="col-md-1">Тип к которому относится</td>
-                            <td class="col-md-1">Форматирование</td>
-                            <td class="col-md-1">Ширина/Обязательный</td>
-
-                            <td class="col-md-1">Действия</td>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                    </tbody>
-                </table>
-                <div class="dd col-md-12" id="properties-table" style="max-width:2100px">
-                    <ol class="dd-list col-md-12">
-                        <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
-                        <li class="dd-item dd2-item dd-colored" data-id="<?= $property['id_property'] ?>" >
-                            <div class="dd-handle">
-
-                                <div id="property_<?= $property['id_property'] ?>" class="col-md-12" >
-                                    <div class="col-md-1 nestable_div_text"><?= $property['id_property'] ?></div>
-                                    <div class="col-md-3 nestable_div_text" title="<?= $property['property_name'] ?>"><?= $property['property_name'] ?></div>
-                                    <div class="col-md-3 nestable_div_text" title="<?= $property['property_short_name'] ?>"><?= $property['property_short_name'] ?></div>
-                                    <div class="col-md-1 nestable_div_text"><?= $property['format']['property_format_name'] ?></div>
-                                    <div class="col-md-1 nestable_div_text"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
-                                    <div class="col-md-1 nestable_div_text"><?= $options['property_align'] ?></div>
-                                    <div class="col-md-1 nestable_div_text"><?= $options['property_width'] ?>/
-
-                                        <?if($options['property_required']):?>
-                                        <span class="badge badge-success">Да</span>
-                                        <?else:?>
-                                        <span class="badge badge-danger">Нет</span>
-                                        <?endif;?>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="btn-group">
-                                            <a class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
-                                                <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
-                                                <i class="fa fa-times"></i></a>
+               
+                    <table class="table col-md-12" >
+                        <thead class="text-center col-md-12">
+                            <tr>
+                                <td class="col-md-1">id</td>
+                                <td class="col-md-3">Название</td>
+                                <td class="col-md-3">Краткое название</td>
+                                <td class="col-md-1">Тип</td>
+                                <td class="col-md-1">Тип к которому относится</td>
+                                <td class="col-md-1">Форматирование</td>
+                                <td class="col-md-1">Ширина/Обязательный</td>
+                      
+                                <td class="col-md-1">Действия</td>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                        </tbody>
+                    </table>
+                    <div class="dd col-md-12" id="properties-table" style="max-width:2100px">
+                        <ol class="dd-list col-md-12">
+                            <?foreach((array)$properties as $property): $options = json_decode($property['options'], TRUE);?>
+                            <li class="dd-item dd2-item dd-colored" data-id="<?= $property['id_property'] ?>" >
+                                <div class="dd-handle">
+                                   
+                                        <div id="property_<?= $property['id_property'] ?>" class="col-md-12" >
+                                            <div class="col-md-1 nestable_div_text"><?= $property['id_property'] ?></div>
+                                            <div class="col-md-3 nestable_div_text" title="<?= $property['property_name'] ?>"><?= $property['property_name'] ?></div>
+                                            <div class="col-md-3 nestable_div_text" title="<?= $property['property_short_name'] ?>"><?= $property['property_short_name'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $property['format']['property_format_name'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= (isset($property['id_service_type'])) ? $service_types[$property['id_service_type']]['service_type_name'] : '' ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $options['property_align'] ?></div>
+                                            <div class="col-md-1 nestable_div_text"><?= $options['property_width'] ?>/
+                                            
+                                                <?if($options['property_required']):?>
+                                                <span class="badge badge-success">Да</span>
+                                                <?else:?>
+                                                <span class="badge badge-danger">Нет</span>
+                                                <?endif;?>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="btn-group">
+                                                    <a href="#" class="btn btn-primary btn-sm a-edit" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-pencil"></i></a>
+                                                    <a href="#"  class="btn btn-danger btn-sm a-remove" data-id="<?= $property['id_property'] ?>">
+                                                        <i class="fa fa-times"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

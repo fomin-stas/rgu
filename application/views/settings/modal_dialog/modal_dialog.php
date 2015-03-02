@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+            <button type="button" id="save_change" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
         </div>
     </div>
 </div>

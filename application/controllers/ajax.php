@@ -161,7 +161,8 @@ class Ajax extends APP_Controller {
         $data['spher'] = $this->spher->dropdown('name', 'name');
         $data['service_num'] = $service_num;
         $service_subject=$this->authority_property_model->get_authority_property_by_code($id_authority,'service_subject');
-        $data['service_subject']=  $service_subject['value'];
+        $organization= $this->organization_model->get($service_subject['value']);
+        $data['service_subject'] = $organization['organization_name'];
         $additional_property = $this->additional_property->get_key_id_all();
         $data['property'] = $this->property->get_all();
         foreach ($data['property'] as $key => $property) {
@@ -230,20 +231,20 @@ class Ajax extends APP_Controller {
                 $options = $this->property_values_model->get_property_values($property['id_property']);
                 $data_content = array(
                     'id_property_format' => $property['id_property_type'],
-                    'id_additional_property' => $property['id_property'],
+                    'id_additional_property' => 0,
                     'additional_property_name' => $property['property_name'],
-                    'type' => 'adiceed_'.$property['id_property'],
-                    'service_num' => $id_authority,
+                    'type' => 't',
+                    'service_num' => 's',
                     'options' => $options,
                     'additional_value' => $value
                 );
             } else {
                 $data_content = array(
                     'id_property_format' => $property['id_property_type'],
-                    'id_additional_property' => $property['id_property'],
+                    'id_additional_property' => 0,
                     'additional_property_name' => $property['property_name'],
-                    'type' => 'adiceed_'.$property['id_property'],
-                    'service_num' => $id_authority,
+                    'type' => 't',
+                    'service_num' => 's',
                     'additional_value' => $value
                 );
             }
@@ -251,9 +252,11 @@ class Ajax extends APP_Controller {
         //*********************************
         
         foreach ($additional_data['content'] as $id_ap => $id_property_format) {
+            $data_content= array();
             if (($id_property_format == 3) || ($id_property_format == 5)) {
                 $options = $this->additional_property_values->get_additional_property_values($id_ap);
                 $data_content = array(
+                    'additional_class' => 'additional',
                     'id_property_format' => $id_property_format,
                     'id_additional_property' => $id_ap,
                     'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
@@ -264,6 +267,7 @@ class Ajax extends APP_Controller {
             } else {
                 $data_content = array(
                     'id_property_format' => $id_property_format,
+                    'additional_class' => 'additional',
                     'id_additional_property' => $id_ap,
                     'additional_property_name' => $additional_property[$id_ap]['additional_property_name'],
                     'type' => 'adiceed_'.$property['id_property'],
@@ -280,6 +284,11 @@ class Ajax extends APP_Controller {
         echo $property['additional_property'];
     }
 
+    public function update_service_full_property(){
+        $i=0;
+        $i++;
+    }
+            
     function export_excel() {
         var_dump($_POST);
     }
