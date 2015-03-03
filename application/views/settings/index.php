@@ -109,7 +109,9 @@
                             <tr id="additional_property_<?= $additional_property['id_additional_property'] ?>">
                                 <td><?= $additional_property['id_additional_property'] ?></td>
                                 <td><?= $additional_property['additional_property_name'] ?></td>
-                                <td></td>
+                                <td>
+                                    
+                                </td>
                                 <td><?= $additional_property['format']['property_format_name'] ?></td>
                                 <td>
                                     <div class="btn-group">

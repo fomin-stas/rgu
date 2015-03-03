@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-
 if (!function_exists('load_form_textaea')) {
 
     function load_form_textaea($id_service, $code, $service, $comments = false, $buttons = false) {
@@ -26,12 +25,13 @@ if (!function_exists('load_form_textaea')) {
                                                             <textarea id="' . $id_property . '_' . $id_service . '" name="' . $id_property . '_' . $id_service . '" class="col-md-6" ' . $disabled . '>' . $value . '</textarea>
                                                         ';
         if ($comments) {
-            $textarea_group = $textarea_group .
-                    '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $id_service . '_' . $id_property . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+            $textarea_group = $textarea_group .'<div  class=" col-sm-2">
+             <button type="button" class="com_bt btn btn-app btn-sm btn-primary col-sm-12" id="bt_' . $id_service . '_' . $id_property . '">
+             <span class="badge badge-left"><font color=#fff>' . $service['properties'][$code]['comments']['all'] . '</font></span><i class="ace-icon fa fa-comment"></i>';
+            if ($service['properties'][$code]['comments']['not'] > 0) {
+                $textarea_group = $textarea_group . '<span class="badge badge-danger"><font color=#fff>' . $service['properties'][$code]['comments']['not'] . '</font></span>';
+            }
+            $textarea_group = $textarea_group . '</button></div>';
         }
         if ($buttons != false) {
             $data['buttons'] = $buttons;
@@ -64,13 +64,14 @@ if (!function_exists('load_form_file')) {
         $textarea_group = '<div class="form-group ' . $has_essror . '">'
                 . '<label for="' . $id_property . '_' . $id_service . '" class="control-label col-md-4">' . $property_name . '</label>';
         $textarea_group .= $disabled != ' disabled' ? '<span class="col-md-6"><input type="file" multiple  id="' . $id_property . '_' . $id_service . '" name="' . $id_property . '_' . $id_service . '" class="col-md-6 files">' . $value . '</span>' : '<span class="col-md-6">' . $value . '</span>';
-        if ($comments) {
-            $textarea_group = $textarea_group .
-                    '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $id_service . '_' . $id_property . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+         if ($comments) {
+            $textarea_group = $textarea_group .'<div  class=" col-sm-2">
+             <button type="button" class="com_bt btn btn-app btn-sm btn-primary col-sm-12" id="bt_' . $id_service . '_' . $id_property . '">
+             <span class="badge badge-left"><font color=#fff>' . $service['properties'][$code]['comments']['all'] . '</font></span><i class="ace-icon fa fa-comment"></i>';
+            if ($service['properties'][$code]['comments']['not'] > 0) {
+                $textarea_group = $textarea_group . '<span class="badge badge-danger"><font color=#fff>' . $service['properties'][$code]['comments']['not'] . '</font></span>';
+            }
+            $textarea_group = $textarea_group . '</button></div>';
         }
         if ($buttons != false) {
             $data['buttons'] = $buttons;
@@ -108,24 +109,24 @@ if (!function_exists('load_form_dropdown')) {
                     . '<div class="multy_tags col-md-6" ' . $disabled . '>'
                     . '             <input class="input-tag" id="' . $name . '" type="text" name="' . $name . '" value="' . $value . '" ' . $disabled . '>'
                     . '</div>'
-                    . " <script> 
-                            $('#" . $name . "').tag({source:$selects});";
+                    . " <script>
+        $('#" . $name . "').tag({source:$selects}); ";
 
             $dropdown_group .= $disabled == ' disabled' ? "$('#" . $name . "').next().attr('disabled','" . $disabled . "');
-                                                        $('#" . $name . "').prev().children('button').attr('disabled','" . $disabled . "');
-                                                    </script>" : "</script>";
+                $('#" . $name . "').prev().children('button').attr('disabled', '" . $disabled . "');    </script>" : "</script>";
         } else {
             $dropdown_group = '<div class="form-group ' . $has_essror . '">'
                     . '        <label for = "' . $code . '_' . $id_service . '" class = "control-label col-md-4">' . $property_name . '</label>'
                     . form_dropdown($name, $selects, $value, 'id="' . $name . '" name="' . $name . '" class="col-md-6"' . $disabled);
         }
-        if ($comments) {
-            $dropdown_group = $dropdown_group .
-                    '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $id_service . '_' . $id_property . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+         if ($comments) {
+            $dropdown_group = $dropdown_group .'<div  class=" col-sm-2">
+             <button type="button" class="com_bt btn btn-app btn-sm btn-primary col-sm-12" id="bt_' . $id_service . '_' . $id_property . '">
+             <span class="badge badge-left"><font color=#fff>' . $service['properties'][$code]['comments']['all'] . '</font></span><i class="ace-icon fa fa-comment"></i>';
+            if ($service['properties'][$code]['comments']['not'] > 0) {
+                $dropdown_group = $dropdown_group . '<span class="badge badge-danger"><font color=#fff>' . $service['properties'][$code]['comments']['not'] . '</font></span>';
+            }
+            $dropdown_group = $dropdown_group . '</button></div>';
         }
         return $dropdown_group . '</div>';
     }
@@ -143,15 +144,15 @@ if (!function_exists('load_form_textaea_step2')) {
         }
         $textarea_group = '<div class="form-group">'
                 . '<label for="' . $code . '_' . $num . '" class="control-label col-md-4">' . $property['property_name'] . '</label>
-                                                            <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:100px"></textarea>
-                                                        ';
+    <textarea id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6" style="height:100px"></textarea>
+    ';
         if ($comments) {
             $textarea_group = $textarea_group .
                     '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
+            <i class="ace-icon fa fa-comment icon-only"></i>
+        </button>
+    </div>';
         }
         if ($buttons != false) {
             $data['buttons'] = $buttons;
@@ -187,9 +188,9 @@ if (!function_exists('load_form_dropdown_step2')) {
                     . '<div class="multy_tags col-md-6">'
                     . '             <input class="input-tag" id="' . $code . '_' . $num . '" type="text" name="' . $code . '_' . $num . '" >'
                     . '</div>'
-                    . " <script> 
-                            $('#" . $code . "_" . $num . "').tag({source:$selects});
-                        </script>";
+                    . " <script>
+                $('#" . $code . "_" . $num . "').tag({source:$selects});
+    </script>";
         } else {
             $dropdown_group = '<div class="form-group">'
                     . '        <label for = "' . $code . '_' . $num . '" class = "control-label col-md-4">' . $property_name . '</label>'
@@ -198,10 +199,10 @@ if (!function_exists('load_form_dropdown_step2')) {
         if ($comments) {
             $dropdown_group = $dropdown_group .
                     '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+            <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
+                <i class="ace-icon fa fa-comment icon-only"></i>
+            </button>
+        </div>';
         }
         $dropdown_group = $dropdown_group . $property['additional_property'];
         return $dropdown_group . '</div>';
@@ -227,17 +228,17 @@ if (!function_exists('load_form_file_step2')) {
         }
         $textarea_group = '<div class="form-group">'
                 . '<label for="' . $code . '_' . $num . '" class="control-label col-md-4">' . $property['property_name'] . '</label>
-                    <span class="col-md-6">
-                                                                <input type="file" multiple id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6 files">
-</span>                                                        
-';
+        <span class="col-md-6">
+            <input type="file" multiple id="' . $code . '_' . $num . '" name="' . $code . '_' . $num . '" class="col-md-6 files">
+        </span>                                                        
+        ';
         if ($comments) {
             $textarea_group = $textarea_group .
                     '<div  class=" col-md-2">
-                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
-                            <i class="ace-icon fa fa-comment icon-only"></i>
-                        </button>
-                    </div>';
+            <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_' . $code . '_' . $num . '">
+                <i class="ace-icon fa fa-comment icon-only"></i>
+            </button>
+        </div>';
         }
         if ($buttons != false) {
             $data['buttons'] = $buttons;

@@ -27,6 +27,7 @@
             type: 'post',
             data: data_comment,
             success: function(data) {
+                    $('#<?=$id?>').children('.badge-left').text(Number($('#<?=$id?>').children('.badge-left').text())+1);
                     $.gritter.removeAll();
                 }
             });

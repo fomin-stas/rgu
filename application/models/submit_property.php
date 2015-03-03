@@ -44,7 +44,7 @@ class Submit_property extends CI_Model {
     }
 
     public function insert_new_services() {
-        if (count($this->services) > 0) {
+        if (is_array($this->services)) {
             foreach ($this->services as $name => $property) {
                 $property['agreed'] = 2;
                 $service['id_authority'] = $this->id_authority;

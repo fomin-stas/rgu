@@ -167,14 +167,15 @@ class Agreeds extends APP_Controller {
             $service_type = $this->service_type->get($service['id_service_type']);
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
+                $comments = $this->property_comments->get_count_comments($value['id_service_property']);
                 $property = $this->property->get($value['id_property']);
-                $kis=explode("_", $property['code']);
-                if($kis[0] == 'kis'){
+                $kis = explode("_", $property['code']);
+                if ($kis[0] == 'kis') {
                     continue;
                 }
                 if (($property['id_service_type'] == NULL) || (is_null($property['id_service_type'] == NULL)))
                     continue;
-                $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed']);
+                $data['services'][$service['id_service']]['properties'][$property['id_property']] = array('property_name' => $property['property_name'], 'value' => $value['value'], 'agreed' => $value['agreed'], 'comments' => $comments);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);
@@ -192,15 +193,15 @@ class Agreeds extends APP_Controller {
             if (!(int) $name[0]) {
                 continue;
             }
-           
+
             $update_data = array('id_service' => $name[0], 'id_property' => $name[1]);
-            if(!isset($status[$name[0]])){
-                $status[$name[0]]=0;
+            if (!isset($status[$name[0]])) {
+                $status[$name[0]] = 0;
             }
             $update = array('agreed' => $value);
             $this->service_property->update_by($update_data, $update);
             if ($value != 1) {
-                $status[$name[0]]=1;
+                $status[$name[0]] = 1;
                 $agreeded = $agreeded + 1;
             }
             $count_properties = $count_properties + 1;
@@ -210,12 +211,12 @@ class Agreeds extends APP_Controller {
         } else {
             $update_authority['value'] = 'согласовано';
         }
-        foreach ($status as $key => $value){
-            if($value > 0){
+        foreach ($status as $key => $value) {
+            if ($value > 0) {
                 $update_data = array('id_service' => $key, 'id_property' => 15);
                 $update = array('value' => 'отправлено на доработку');
                 $this->service_property->update_by($update_data, $update);
-            }else{
+            } else {
                 $update_data = array('id_service' => $key, 'id_property' => 15);
                 $update = array('value' => 'согласовано');
                 $this->service_property->update_by($update_data, $update);
@@ -295,7 +296,7 @@ class Agreeds extends APP_Controller {
         }
         $property = $this->property->get_by(array('code' => 'executable_status'));
         $update_data = array('id_authority' => $id_authority, 'id_property' => $property['id_property']);
-        $update=$this->authority_property_model->update_by($update_data, $update_authority);
+        $update = $this->authority_property_model->update_by($update_data, $update_authority);
         if ($update) {
             $authority = $this->authority->get($id_authority);
             $this->activity->add_notification('authority_changed', 6, $authority['id_organization'], $id_authority);
@@ -329,8 +330,10 @@ class Agreeds extends APP_Controller {
             $service_type = $this->service_type->get($service['id_service_type']);
             $data['services'][$service['id_service']]['type'] = $service_type->service_type_name;
             foreach ($properties as $value) {
+                $comments = $this->property_comments->get_count_comments($value['id_service_property']);
                 $property = $this->property->get($value['id_property']);
-                $data['services'][$service['id_service']]['properties'][$property['code']] = array('value' => $value['value'], 'agreed' => $value['agreed'], 'property_name' => $property['property_name'], 'id_property' => $property['id_property']);
+                $property = $this->property->get($value['id_property']);
+                $data['services'][$service['id_service']]['properties'][$property['code']] = array('value' => $value['value'], 'agreed' => $value['agreed'], 'property_name' => $property['property_name'], 'id_property' => $property['id_property'], 'comments' => $comments);
             }
         }
         $data['comments'] = $this->view_only_timeline($id_authority);

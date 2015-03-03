@@ -32,7 +32,7 @@ class Activity extends APP_Model {
                 }
                 if ($user_info['id_organization'] != 31554) {
                     $data['id_organization'] = 31554;
-                    $this->insert($data);
+                    $insert_id = $this->insert($data);
                 }
                 
                 return $insert_id;

@@ -154,7 +154,9 @@ class Ajax extends APP_Controller {
         $property_array = explode("_", $id);
         $service_property = $this->service_property->get_by(array('id_service' => $property_array[1], 'id_property' => $property_array[2]));
         $service_property['num'] = $num;
+        $this->property_comments->update_is_read($service_property['id_service_property']);
         $service_property['property_comments'] = $this->property_comments->get_many_by(array('id_service_property' => $service_property['id_service_property']));
+        $service_property['id']=$id;
         $this->load->view('ajax/comments_property', $service_property);
     }
 

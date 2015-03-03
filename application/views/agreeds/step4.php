@@ -90,7 +90,7 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <a href="agreeds/history_polnomoch/<?= $id_authority ?>"><button class="btn btn-info btn-sm">История согласований полномочия</button></a>
-                        <button type="button" id="send_btn" class="btn btn-info btn-sm pull-right">Отправить на согласование</button>
+                        <button id="send_btn_top" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#comments_modal">Отправить на согласование</button>
                     </div>
                 </div>
                 <?= $id_authority_status == 2 ? '
@@ -237,7 +237,7 @@
 
 
 <script type="text/javascript">
-    num = 0;
+    num_com = 0;
 
     $(".files").ace_file_input({
         no_file: "Присоединить файл",
@@ -252,17 +252,17 @@
         num_files++;
     });
 
-
+    
     $('.com_bt').click(function () {
         //сделать ajax запрос за коментариями
         id_service_property = $(this).attr('id');
         comments = '';
-
+        $(this).children('.badge-danger').hide(500);
         $.ajax({
-            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
+            url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num_com,
             type: 'get',
             success: function (data) {
-                num = num + 1;
+                num_com = num_com + 1;
                 comments = data;
                 jQuery.gritter.add({
                     title: 'Комментарии',

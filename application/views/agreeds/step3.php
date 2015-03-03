@@ -116,9 +116,9 @@
                                                         <?php if(isset($service['properties']))foreach ($service['properties'] as $name => $value): ?>
                                                             <tr>
                                                                 <td class="col-md-4"><?= $value['property_name']; ?></td>
-                                                                <td class="col-md-5"><?= $value['value']; ?></td>
-                                                                <td class="col-md-3" style="padding-left: 2px">
-                                                                    <div class="col-sm-9" style="padding-left: 2px">
+                                                                <td class="col-md-4"><?= $value['value']; ?></td>
+                                                                <td class="col-md-4" style="padding-left: 2px">
+                                                                    <div class="col-sm-8" style="padding-left: 2px">
                                                                         <label>
                                                                             <input type="radio" class="ace " value="1" <?php if ($value['agreed'] == 1) echo 'checked'; ?> name="<?= $id_services . '_' . $name ?>"> 
                                                                             <span class="lbl">Согласовано</span>
@@ -132,9 +132,11 @@
                                                                             <span class="lbl">Не согласовано</span>
                                                                         </label>
                                                                     </div>
-                                                                    <div  class=" col-sm-3" style="padding-left: 2px">
-                                                                        <button type="button" class="com_bt btn btn-sm btn-primary col-md-12" id="bt_<?= $id_services ?>_<?= $name; ?>">
+                                                                    <div  class=" col-sm-4" style="padding-left: 2px">
+                                                                        <button type="button" class="com_bt btn btn-sm btn-app btn-primary col-md-12" id="bt_<?= $id_services ?>_<?= $name; ?>">
+                                                                            <span class="badge badge-grey badge-left"><?=$value['comments']['all']?></span>
                                                                             <i class="ace-icon fa fa-comment icon-only"></i>
+                                                                            <?php if($value['comments']['not']>0):?><span class="badge badge-danger"><font color=#fff><?=$value['comments']['not']?></font></span><?php endif; ?>
                                                                         </button>
                                                                     </div>
                                                                 </td>
@@ -248,7 +250,7 @@
     $('.com_bt').click(function () {
         id_service_property = $(this).attr('id');
         comments = '';
-
+        $(this).children('.badge-danger').hide(500);
         $.ajax({
             url: App.options.baseURL + 'ajax/get_property_comments/' + id_service_property + '/' + num,
             type: 'get',
