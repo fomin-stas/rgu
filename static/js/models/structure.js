@@ -198,10 +198,14 @@ var Structure = {
     },
     render_colModel: function (grid_selector) {
         var cm = $(grid_selector).jqGrid('getGridParam', 'colModel'),
-                rowsCount = $(grid_selector).getGridParam("records");
+                rowsCount = $(grid_selector).getGridParam("records"),
+                cn = $(grid_selector).jqGrid('getGridParam', 'colNames');//take data from colNames array
 
         for (var i = 0; i < cm.length; i++)
         {
+			if((cm[i].name!=='rn')&&(cm[i].name!=='cb')){
+				$(grid_selector).jqGrid('setLabel',cm[i].name, cn[i]); //set headers text to cn[i]. 
+			}
             if (cm[i].stype == 'multiselect')
             {
                 //cm[i].stype = 'select';
@@ -253,6 +257,7 @@ var Structure = {
             viewrecords: true,
             rowNum: 100,
             rownumbers: true,
+            headertitles:true,
             rowList: [100],
             pager: pager_selector,
             pgbuttons: true,
